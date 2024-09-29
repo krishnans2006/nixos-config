@@ -39,7 +39,6 @@
     tree
     gnused
     gnutar
-    gnupg
 
     # it provides the command `nom` works just like `nix`
     # with more details log output
@@ -53,6 +52,10 @@
     enable = true;
     userName = "Krishnan Shankar";
     userEmail = "krishnans2006@gmail.com";
+    signing = {
+      key = "A30C1843F47048435D543D6829CB06A840D0E14A";
+      signByDefault = true;
+    };
   };
 
   # starship - an customizable prompt for any shell
