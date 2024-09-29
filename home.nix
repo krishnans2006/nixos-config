@@ -45,6 +45,8 @@
     nix-output-monitor
 
     lm_sensors # for `sensors` command
+
+    discord
   ];
 
   # basic configuration of git, please change to your own
