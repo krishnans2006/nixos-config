@@ -94,8 +94,6 @@
     description = "Krishnan Shankar";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
-    #  thunderbird
     ];
   };
 
@@ -115,6 +113,7 @@
     wget
     curl
     gnupg
+    kdePackages.kate
     kdePackages.bluedevil
   ];
 
