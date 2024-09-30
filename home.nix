@@ -46,7 +46,11 @@
 
     lm_sensors # for `sensors` command
 
-    discord
+    (discord.override {
+      withOpenASAR = true;
+      withVencord = true;
+      withTTS = true;
+    })
   ];
 
   # basic configuration of git, please change to your own
