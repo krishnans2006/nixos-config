@@ -78,6 +78,12 @@
   # Enable bluetooth
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  # A2DP
+  hardware.bluetooth.settings = {
+    General = {
+      Enable = "Source,Sink,Media,Socket";
+    };
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -109,6 +115,7 @@
     wget
     curl
     gnupg
+    kdePackages.bluedevil
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
