@@ -51,6 +51,8 @@
       withVencord = true;
       withTTS = true;
     })
+
+    spotify
   ];
 
   # basic configuration of git, please change to your own

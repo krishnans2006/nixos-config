@@ -115,6 +115,7 @@
     gnupg
     kdePackages.kate
     kdePackages.bluedevil
+    config.nur.repos.nltch.spotify-adblock
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
