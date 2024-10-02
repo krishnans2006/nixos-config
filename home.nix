@@ -54,6 +54,8 @@
 
     spotify
 
+    element-desktop
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
