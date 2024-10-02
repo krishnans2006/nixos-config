@@ -14,6 +14,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Disable dev-tpmrm0.device
+  # See https://github.com/systemd/systemd/issues/33412
+  systemd.units."dev-tpmrm0.device".enable = false;
+
   networking.hostName = "krishnan-nix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
