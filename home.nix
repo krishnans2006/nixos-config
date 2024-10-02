@@ -46,11 +46,7 @@
 
     lm_sensors # for `sensors` command
 
-    (discord.override {
-      withOpenASAR = true;
-      withVencord = true;
-      withTTS = true;
-    })
+    vesktop
 
     spotify
 
