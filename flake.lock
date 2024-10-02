@@ -56,7 +56,21 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nur": "nur"
+        "nur": "nur",
+        "rust": "rust"
+      }
+    },
+    "rust": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-bw/CmPB8gs7yUQdX5RcU2SILoEf+3ZxZ7iRPmhomQlg=",
+        "path": "rust.nix",
+        "type": "path"
+      },
+      "original": {
+        "path": "rust.nix",
+        "type": "path"
       }
     }
   },

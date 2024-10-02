@@ -10,6 +10,11 @@
     };
 
     nur.url = "github:nix-community/NUR";
+
+    rust = {
+      url = "path:rust.nix";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, nur, ... }@inputs: {
