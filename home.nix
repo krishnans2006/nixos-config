@@ -53,6 +53,11 @@
 
     element-desktop
 
+    jetbrains.pycharm-professional
+    jetbrains.webstorm
+    jetbrains.idea-ultimate
+    jetbrains.clion
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
