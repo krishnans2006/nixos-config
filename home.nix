@@ -39,6 +39,7 @@
     tree
     gnused
     gnutar
+    htop
 
     # it provides the command `nom` works just like `nix`
     # with more details log output
