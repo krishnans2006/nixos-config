@@ -18,10 +18,6 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nur, ... }@inputs: {
-    overlays = {
-      spotx = import ./spotx.nix;
-    };
-
     nixosConfigurations.krishnan-nix = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [

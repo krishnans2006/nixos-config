@@ -49,7 +49,7 @@
 
     vesktop
 
-    spotify
+    spotube
 
     element-desktop
 
