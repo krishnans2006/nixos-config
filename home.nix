@@ -58,6 +58,8 @@
     jetbrains.idea-ultimate
     jetbrains.clion
 
+    kicad
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
