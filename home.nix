@@ -79,7 +79,7 @@
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = 'yes';
+    addKeysToAgent = "yes";
   };
 
   # starship - an customizable prompt for any shell
