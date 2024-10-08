@@ -41,6 +41,8 @@
     gnutar
     htop
 
+    dig
+
     # it provides the command `nom` works just like `nix`
     # with more details log output
     nix-output-monitor
@@ -115,6 +117,7 @@
         hostname = "ras2.tjhsst.edu";  # 198.38.18.201
         user = "2024kshankar";
       };
+    };
   };
 
   # starship - an customizable prompt for any shell
