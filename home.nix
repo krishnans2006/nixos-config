@@ -82,6 +82,10 @@
   programs.ssh = {
     enable = true;
     addKeysToAgent = "yes";
+
+    controlMaster = "auto";
+    controlPath = "~/.ssh/master-%r@%h:%p";
+    controlPersist = "3s";
   };
 
   # starship - an customizable prompt for any shell
