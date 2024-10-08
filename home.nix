@@ -86,6 +86,35 @@
     controlMaster = "auto";
     controlPath = "~/.ssh/master-%r@%h:%p";
     controlPersist = "3s";
+
+    matchBlocks = {
+      "oracle-amp" = {
+        hostname = "150.136.13.65";
+        identityFile = "~/.ssh/id_ed25519";
+        user = "ubuntu";
+      };
+      "oracle-vm1" = {
+        hostname = "150.136.122.56";
+        identityFile = "~/.ssh/id_ed25519";
+        user = "ubuntu";
+      };
+      "oracle-vm2" = {
+        hostname = "129.153.27.23";
+        identityFile = "~/.ssh/id_ed25519";
+        user = "ubuntu";
+      };
+      "piserver.local" = {
+        hostname = "piserver.local";
+        user = "krishnan";
+      };
+      "tjfridge" = {
+        hostname = "fridge.tjhsst.edu";  # 198.38.23.53
+        user = "kshankar";
+      };
+      "tjras" = {
+        hostname = "ras2.tjhsst.edu";  # 198.38.18.201
+        user = "2024kshankar";
+      };
   };
 
   # starship - an customizable prompt for any shell
