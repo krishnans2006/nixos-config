@@ -89,6 +89,9 @@
     };
   };
 
+  # Enable KDE Connect (Phone Integration)
+  programs.kdeconnect.enable = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
