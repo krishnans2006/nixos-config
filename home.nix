@@ -62,6 +62,10 @@
 
     kicad
 
+    # experimentation
+    kdePackages.audiotube
+    youtube-music
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
