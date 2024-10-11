@@ -51,7 +51,7 @@
 
     vesktop
 
-    spotube
+    youtube-music
 
     element-desktop
 
@@ -61,10 +61,6 @@
     jetbrains.clion
 
     kicad
-
-    # experimentation
-    kdePackages.audiotube
-    youtube-music
 
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
