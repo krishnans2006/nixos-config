@@ -66,6 +66,7 @@
       dontPatchELF = true;
       nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.kdePackages.wrapQtAppsHook ];
     }))
+    google-chrome
   ];
 
   # basic configuration of git, please change to your own
