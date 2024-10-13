@@ -51,8 +51,6 @@
 
     vesktop
 
-    youtube-music
-
     element-desktop
 
     jetbrains.pycharm-professional
