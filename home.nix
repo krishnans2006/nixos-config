@@ -93,6 +93,16 @@
     controlPersist = "3s";
 
     matchBlocks = {
+      "ews" = {
+        hostname = "linux.ews.illinois.edu";
+        identityFile = "~/.ssh/id_ed25519";
+        user = "ks128";
+        forwardX11 = true;
+        extraOptions = {
+          RequestTTY = "yes";
+          RemoteCommand = "/bin/zsh";
+        };
+      };
       "oracle-amp" = {
         hostname = "150.136.13.65";
         identityFile = "~/.ssh/id_ed25519";
