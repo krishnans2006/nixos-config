@@ -60,6 +60,8 @@
     jetbrains.idea-ultimate
     jetbrains.clion
 
+    platformio
+
     kicad
 
     # temp

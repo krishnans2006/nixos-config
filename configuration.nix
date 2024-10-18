@@ -89,6 +89,12 @@
     };
   };
 
+  # udev rules
+  services.udev.packages = with pkgs; [
+    platformio-core
+    openocd
+  ];
+
   # Enable KDE Connect (Phone Integration)
   programs.kdeconnect.enable = true;
 
