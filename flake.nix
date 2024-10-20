@@ -18,10 +18,11 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nur, ... }@inputs: {
-    nixosConfigurations.krishnan-nix = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
+        ./krishnan-lap.nix
 
         home-manager.nixosModules.home-manager
         {
