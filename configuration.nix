@@ -13,7 +13,9 @@
   # See https://github.com/systemd/systemd/issues/33412
   systemd.units."dev-tpmrm0.device".enable = false;
 
-  networking.hostName = "krishnan-nix"; # Define your hostname.
+  # Hostname should be defined in device-specific nix file!
+  # networking.hostName = "krishnan-nix"; # Define your hostname.
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
