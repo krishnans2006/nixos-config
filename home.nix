@@ -63,6 +63,7 @@
     platformio
 
     kicad
+    gimp
 
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
