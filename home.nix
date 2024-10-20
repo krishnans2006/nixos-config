@@ -133,6 +133,26 @@
     };
   };
 
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium;
+    extensions = with pkgs.vscode-extensions; [
+      pkief.material-icon-theme
+
+      #ms-vscode-remote.vscode-remote-extensionpack
+      ms-vsliveshare.vsliveshare
+
+      eamodio.gitlens
+      github.vscode-pull-request-github
+
+      #donjayamanne.python-extension-pack
+      ms-toolsai.jupyter
+      wakatime.vscode-wakatime
+      redhat.vscode-yaml
+      davidanson.vscode-markdownlint
+    ];
+  };
+
   # starship - an customizable prompt for any shell
   # programs.starship = {
   #   enable = true;
