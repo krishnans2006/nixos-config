@@ -69,6 +69,8 @@
     kicad
     gimp
 
+    qmk
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
