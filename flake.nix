@@ -23,7 +23,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nur, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, plasma-manager, nur, ... }@inputs: {
     nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [

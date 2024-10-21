@@ -101,8 +101,7 @@
         height = 44;
         screen = "all";
 
-        widgets = {
-
+        widgets = [
           # Application Launcher
           {
             kickoff = {
@@ -113,17 +112,17 @@
           # Pager
           {
             pager = {};  # default config; customize later if needed
-          };
+          }
 
           # Icons-Only Task Manager
           {
             iconTasks = {
-              launchers = {
+              launchers = [
                 "applications:org.kde.dolphin.desktop"
                 "applications:org.kde.konsole.desktop"
                 "applications:firefox.desktop"
                 "applications:kdesystemsettings.desktop"
-              };
+              ];
               appearance = {
                 showTooltips = true;  # Show small window previews when hovering over tasks
                 highlightWindows = true;  # Hide other windows when hovering over previews
@@ -133,8 +132,10 @@
                 iconSpacing = "medium";  # Normal
               };
               behavior = {
-                grouping = "byProgramName";  # Group: By program name
-                clickAction = "cycle";  # Clicking grouped task: Cycles through tasks
+                grouping = {
+                  method = "byProgramName";  # Group: By program name
+                  clickAction = "cycle";  # Clicking grouped task: Cycles through tasks
+                };
                 sortingMethod = "manually";  # Sort: Manually
                 minimizeActiveTaskOnClick = true;  # Clicking active task: Minimizes the task
                 middleClickAction = "newInstance";  # Middle-clicking any task: Opens a new window
@@ -152,7 +153,7 @@
                 newTasksAppearOn = "right";  # New tasks appear: To the right
               };
             };
-          };
+          }
 
           # Margins Separator
           "org.kde.plasma.marginsseparator"
@@ -173,7 +174,7 @@
                 ];
               };
             };
-          };
+          }
 
           # Digital Clock
           {
@@ -196,12 +197,12 @@
                 showWeekNumbers = false;
               };
             };
-          };
+          }
 
           # Peek At Desktop
           "org.kde.plasma.showdesktop"
-        };
-      };
+        ];
+      }
     ];
   };
 
