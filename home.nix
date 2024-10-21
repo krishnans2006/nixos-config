@@ -56,7 +56,7 @@
     lm_sensors # for `sensors` command
 
     vesktop
-
+    slack
     element-desktop
 
     jetbrains.pycharm-professional
