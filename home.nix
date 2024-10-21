@@ -41,6 +41,10 @@
     gnutar
     htop
 
+    nodejs
+    npm-check-updates
+    sass
+
     dig
 
     git-subrepo
