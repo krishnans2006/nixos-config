@@ -215,6 +215,9 @@
       key = "A30C1843F47048435D543D6829CB06A840D0E14A";
       signByDefault = true;
     };
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
   };
 
   programs.ssh = {
