@@ -210,6 +210,13 @@
     ];
   };
 
+  # direnv for auto-activation of .envrc (and devenv)
+  programs.direnv = {
+    enable = true;
+    #enableBashIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
