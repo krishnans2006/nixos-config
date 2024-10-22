@@ -59,6 +59,8 @@
     slack
     element-desktop
 
+    devenv
+
     jetbrains.pycharm-professional
     jetbrains.webstorm
     jetbrains.idea-ultimate
