@@ -95,6 +95,30 @@
       "kdeglobals"."General"."AccentColor" = "0,211,184";
     };
 
+    kscreenlocker = {
+      appearance = {
+        alwaysShowClock = true;
+        showMediaControls = true;  # Show under unlocking prompt
+        #wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images_dark/5120x2880.png";
+        wallpaperSlideShow = {
+          path = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/";
+          interval = 300;  # 5 minutes
+        };
+      };
+
+      # Automatic
+      autoLock = false;
+      timeout = 0;
+
+      # Sleep/Lock
+      lockOnResume = true;
+      passwordRequired = true;
+      passwordRequiredDelay = 0;
+
+      # Startup
+      lockOnStartup = true;
+    };
+
     panels = [
       {
         location = "bottom";
