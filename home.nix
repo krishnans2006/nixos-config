@@ -119,6 +119,87 @@
       lockOnStartup = true;
     };
 
+    powerdevil = {
+      AC = {
+        # Suspend Session
+        autoSuspend = {
+          action = "nothing";  # When inactive: Do nothing
+          idleTimeout = null;
+        };
+        powerButtonAction = "showLogoutScreen";  # When power button pressed: Show logout screen
+        whenLaptopLidClosed = "sleep";  # When laptop lid closed: Sleep
+        inhibitLidActionWhenExternalMonitorConnected = true;  # Even when an external monitor is connected: Unchecked
+        whenSleepingEnter = "standby";  # When sleeping, enter: Standby
+
+        # Display and Brightness
+        displayBrightness = null;  # Change screen brightness: Unchecked
+        dimDisplay = {
+          enable = false;  # Dim automatically: Never
+          idleTimeout = null;
+        };
+        turnOffDisplay = {
+          idleTimeout = "never";  # Turn off screen: Never
+          #idleTimeoutWhenLocked = 60;  # ...When locked: 1 minute
+          # The above is commented due to the below error:
+          # Setting programs.plasma.powerdevil.AC.turnOffDisplay.idleTimeoutWhenLocked for idleTimeout "never" is not supported.
+        };
+      };
+
+      battery = {
+        # Suspend Session
+        autoSuspend = {
+          action = "sleep";  # When inactive: Sleep
+          idleTimeout = 600;  # ...After 10 minutes
+        };
+        powerButtonAction = "showLogoutScreen";  # When power button pressed: Show logout screen
+        whenLaptopLidClosed = "sleep";  # When laptop lid closed: Sleep
+        inhibitLidActionWhenExternalMonitorConnected = true;  # Even when an external monitor is connected: Unchecked
+        whenSleepingEnter = "standby";  # When sleeping, enter: Standby
+
+        # Display and Brightness
+        displayBrightness = null;  # Change screen brightness: Unchecked
+        dimDisplay = {
+          enable = true;  # Dim automatically:
+          idleTimeout = 120;  # ...2 minutes
+        };
+        turnOffDisplay = {
+          idleTimeout = 300;  # Turn off screen: 5 minutes
+          idleTimeoutWhenLocked = 60;  # ...When locked: 1 minute
+        };
+      };
+
+      lowBattery = {
+        # Suspend Session
+        autoSuspend = {
+          action = "sleep";  # When inactive: Sleep
+          idleTimeout = 300;  # ...After 5 minutes
+        };
+        powerButtonAction = "showLogoutScreen";  # When power button pressed: Show logout screen
+        whenLaptopLidClosed = "sleep";  # When laptop lid closed: Sleep
+        inhibitLidActionWhenExternalMonitorConnected = true;  # Even when an external monitor is connected: Unchecked
+        whenSleepingEnter = "standby";  # When sleeping, enter: Standby
+
+        # Display and Brightness
+        displayBrightness = 30;  # Change screen brightness: 30%
+        dimDisplay = {
+          enable = true;  # Dim automatically:
+          idleTimeout = 60;  # ...1 minute
+        };
+        turnOffDisplay = {
+          idleTimeout = 120;  # Turn off screen: 2 minutes
+          idleTimeoutWhenLocked = 60;  # ...When locked: 1 minute
+        };
+      };
+
+      # Advanced Power Settings
+      batteryLevels = {
+        lowLevel = 15;  # Low level: 15%
+        criticalLevel = 5;  # Critical level: 5%
+        criticalAction = "hibernate";
+      };
+      general.pausePlayersOnSuspend = true;  # Media playback:: Pause media players when suspending
+    };
+
     panels = [
       {
         location = "bottom";
