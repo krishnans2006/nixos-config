@@ -252,6 +252,7 @@
     };
     extraConfig = {
       init.defaultBranch = "main";
+      core.autocrlf = "input";
     };
   };
 
