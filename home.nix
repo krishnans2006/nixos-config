@@ -43,6 +43,7 @@
 
     kdePackages.kate
     kdePackages.bluedevil
+    kdePackages.filelight
 
     nodejs
     npm-check-updates
