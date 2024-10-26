@@ -230,7 +230,7 @@
                 "applications:org.kde.dolphin.desktop"
                 "applications:org.kde.konsole.desktop"
                 "applications:firefox.desktop"
-                "applications:kdesystemsettings.desktop"
+                "applications:systemsettings.desktop"
               ];
               appearance = {
                 showTooltips = true;  # Show small window previews when hovering over tasks
