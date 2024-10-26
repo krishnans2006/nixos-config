@@ -41,6 +41,9 @@
     gnutar
     htop
 
+    kdePackages.kate
+    kdePackages.bluedevil
+
     nodejs
     npm-check-updates
     sass

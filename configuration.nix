@@ -141,9 +141,6 @@
     wget
     curl
     gnupg
-    kdePackages.kate
-    kdePackages.bluedevil
-    config.nur.repos.nltch.spotify-adblock
   ];
 
   services.flatpak.enable = true;
