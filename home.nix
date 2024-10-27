@@ -96,7 +96,13 @@
     };
 
     configFile = {
-      "kdeglobals"."General"."AccentColor" = "0,211,184";
+      kdeglobals.General.AccentColor = "0,211,184";
+      spectaclerc.General = {
+        autoSaveImage = true;  # After taking a screenshot: Save file to default folder
+        clipboardGroup = "PostScreenshotCopyImage";  # After taking a screenshot: Copy image to clipboard
+        launchAction = "DoNotTakeScreenshot";  # When launching Spectacle: Do not take a screenshot automatically
+        rememberSelectionRect = "Always";  # Remember selected area: Always (Hint: Use right-click to clear selection)
+      };
     };
 
     shortcuts = {
