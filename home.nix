@@ -99,6 +99,28 @@
       "kdeglobals"."General"."AccentColor" = "0,211,184";
     };
 
+    shortcuts = {
+      plasmashell = {
+        "stop current activity" = "";  # Free up Meta+S
+      };
+      kaccess = {
+        "Toggle Screen Reader On and Off" = "";  # Free up Meta+Alt+S
+      };
+    };
+
+    spectacle.shortcuts = {
+      captureActiveWindow = [ "Meta+S" "Meta+Print" ];                       # Meta+Print
+      captureCurrentMonitor = [ "Meta+Alt+S" "Meta+Alt+Print" ];             # <None>
+      captureEntireDesktop = [ "Meta+Alt+Shift+S" "Meta+Alt+Shift+Print" ];  # Shift+Print
+      captureRectangularRegion = [ "Meta+Shift+S" "Meta+Shift+Print" ];      # Meta+Shift+Print
+      captureWindowUnderCursor = [];                                         # Meta+Ctrl+Print
+      launch = [];                                                           # Print, Meta+Shift+S
+      launchWithoutCapturing = [];                                           # <None>
+      recordRegion = [ "Meta+Shift+R" ];                                     # Meta+Shift+R, Meta+R
+      recordScreen = [ "Meta+Alt+R" ];                                       # Meta+Alt+R
+      recordWindow = [ "Meta+R" ];                                           # Meta+Ctrl+R
+    };
+
     kscreenlocker = {
       appearance = {
         alwaysShowClock = true;
