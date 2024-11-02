@@ -418,6 +418,45 @@
     };
   };
 
+  programs.firefox = {
+    enable = true;
+
+    profiles.default = {
+      id = 0;
+      name = "default";
+      isDefault = true;
+      settings = {
+        "app.update.auto" = false;
+        "browser.bookmarks.restore_default_bookmarks" = false;
+        "browser.contentblocking.category" = "strict";
+        "browser.ctrlTab.sortByRecentlyUsed" = false;
+        "browser.download.dir" = "/home/krishnan/Downloads/Firefox";
+        "browser.download.open_pdf_attachments_inline" = true;
+        "browser.download.useDownloadDir" = false;
+        "browser.download.panel.shown" = true;
+        "browser.laterrun.enabled" = false;
+        "browser.ml.chat.enabled" = true;
+        "browser.ml.chat.provider" = "https://gemini.google.com";
+        "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+        "browser.newtabpage.activity-stream.showSponsored" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        "browser.urlbar.shortcuts.bookmarks" = false;
+        "browser.urlbar.shortcuts.history" = false;
+        "browser.urlbar.shortcuts.tabs" = false;
+        "browser.urlbar.suggest.engines" = false;
+        "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+        "datareporting.policy.dataSubmissionEnable" = false;
+        "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
+        "extensions.pocket.enabled" = false;
+        "services.sync.username" = "krishnans2006@gmail.com";
+        #"services.sync.syncInterval" = 600000;
+        #"services.sync.syncThreshold" = 300;
+        "svg.context-properties.content.enabled" = true;
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
+      };
+    };
+  };
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;

@@ -35,7 +35,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
-          home-manager.users.krishnan = import ./home.nix;
+          home-manager.users.krishnan.imports = [ ./home.nix ./krishnan-lap-home.nix ];
         }
 
         nur.nixosModules.nur
@@ -52,7 +52,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
-          home-manager.users.krishnan = import ./home.nix;
+          home-manager.users.krishnan.imports = [ ./home.nix ./krishnan-pc-home.nix ];
         }
 
         nur.nixosModules.nur
