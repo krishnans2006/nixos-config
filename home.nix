@@ -58,6 +58,7 @@
     nix-output-monitor
 
     lm_sensors # for `sensors` command
+    memtester
 
     vesktop
     slack

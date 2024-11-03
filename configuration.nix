@@ -9,6 +9,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Memtest86+
+  boot.loader.grub.memtest86.enable = true;
+
   # Disable dev-tpmrm0.device
   # See https://github.com/systemd/systemd/issues/33412
   systemd.units."dev-tpmrm0.device".enable = false;
