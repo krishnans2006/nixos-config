@@ -388,6 +388,7 @@
         identityFile = "~/.ssh/id_ed25519";
         user = "ks128";
         forwardX11 = true;
+        forwardX11Trusted = true;
         extraOptions = {
           RequestTTY = "yes";
           RemoteCommand = "/bin/zsh";
