@@ -87,6 +87,9 @@
     google-chrome
   ];
 
+  # KDE Connect
+  #services.kdeconnect.enable = true;
+
   # plasma-manager (KDE Plasma 6 Configuration)
   programs.plasma = {
     enable = true;

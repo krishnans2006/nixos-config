@@ -115,6 +115,10 @@
 
   # Enable KDE Connect (Phone Integration)
   programs.kdeconnect.enable = true;
+  #networking.firewall = rec {
+  #  allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+  #  allowedUDPPortRanges = allowedTCPPortRanges;
+  #};
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
