@@ -120,6 +120,9 @@
   #  allowedUDPPortRanges = allowedTCPPortRanges;
   #};
 
+  # Enable Partition Manager
+  programs.partition-manager.enable = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 

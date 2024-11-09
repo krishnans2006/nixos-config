@@ -44,6 +44,7 @@
     kdePackages.kate
     kdePackages.bluedevil
     kdePackages.filelight
+    #kdePackages.partitionmanager
 
     nodejs
     npm-check-updates
