@@ -79,6 +79,9 @@
 
     qmk
 
+    quickemu
+    #quickgui
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
