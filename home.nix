@@ -86,6 +86,8 @@
     audacity
     vlc
 
+    lc3tools
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
