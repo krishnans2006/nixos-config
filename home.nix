@@ -45,6 +45,7 @@
     kdePackages.bluedevil
     kdePackages.filelight
     #kdePackages.partitionmanager
+    kdePackages.kdenlive
 
     nodejs
     npm-check-updates
@@ -81,6 +82,9 @@
 
     quickemu
     #quickgui
+
+    audacity
+    vlc
 
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
