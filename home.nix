@@ -118,6 +118,17 @@
         launchAction = "DoNotTakeScreenshot";  # When launching Spectacle: Do not take a screenshot automatically
         rememberSelectionRect = "Always";  # Remember selected area: Always (Hint: Use right-click to clear selection)
       };
+      kwinrc = {
+        Effect-overview.TouchBorderActivate = 4;
+        Effect-shakecursor.Magnification = 10;
+        ElectricBorders = {
+          BottomLeft = "ApplicationLauncher";
+        };
+        TouchEdges = {
+          Left = "ActivityManager";
+          Top = "KRunner";
+        };
+      };
     };
 
     shortcuts = {
@@ -164,6 +175,18 @@
 
       # Startup
       lockOnStartup = true;
+    };
+
+    kwin = {
+      borderlessMaximizedWindows = true;
+      cornerBarrier = true;
+      edgeBarrier = 100;
+      #effects = {}
+      #nightLight = {}
+      #scripts.polonium = {}
+      #tiling = {}
+      #titlebarButtons = {}
+      #virtualDesktops = {}
     };
 
     powerdevil = {
