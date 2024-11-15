@@ -95,6 +95,7 @@
       nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.kdePackages.wrapQtAppsHook ];
     }))
     google-chrome
+    spotify
   ];
 
   # KDE Connect
