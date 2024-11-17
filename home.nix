@@ -62,6 +62,8 @@
     lm_sensors # for `sensors` command
     memtester
 
+    rclone
+
     vesktop
     slack
     element-desktop
@@ -96,6 +98,8 @@
     }))
     google-chrome
     spotify
+    duplicity
+    deja-dup
   ];
 
   # KDE Connect
