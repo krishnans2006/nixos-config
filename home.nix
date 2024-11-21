@@ -78,6 +78,7 @@
 
     python312
     poetry
+    octodns
 
     platformio
 
