@@ -49,6 +49,10 @@
     #kdePackages.partitionmanager
     kdePackages.kdenlive
 
+    libreoffice-qt
+    hunspell
+    hunspellDicts.en_US
+
     nodejs
     npm-check-updates
     sass
