@@ -76,6 +76,9 @@
     jetbrains.idea-ultimate
     jetbrains.clion
 
+    python312
+    poetry
+
     platformio
 
     kicad
