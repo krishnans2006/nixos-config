@@ -65,6 +65,7 @@
     rclone
 
     vesktop
+    #libunity  # required for vesktop
     slack
     element-desktop
 
