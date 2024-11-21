@@ -41,6 +41,8 @@
     gnutar
     htop
 
+    micro
+
     kdePackages.kate
     kdePackages.bluedevil
     kdePackages.filelight
