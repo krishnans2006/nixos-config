@@ -81,6 +81,7 @@
     jetbrains.webstorm
     jetbrains.idea-ultimate
     jetbrains.clion
+    jetbrains.goland
 
     python312
     poetry
