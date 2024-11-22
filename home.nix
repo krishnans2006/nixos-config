@@ -194,7 +194,7 @@
     };
 
     kwin = {
-      borderlessMaximizedWindows = true;
+      borderlessMaximizedWindows = false;
       cornerBarrier = true;
       edgeBarrier = 100;
       #effects = {}
