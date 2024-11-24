@@ -93,6 +93,8 @@
     gimp
 
     qmk
+    via
+    #vial
 
     quickemu
     #quickgui

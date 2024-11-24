@@ -111,6 +111,7 @@
   services.udev.packages = with pkgs; [
     platformio-core
     openocd
+    via
   ];
 
   # Enable KDE Connect (Phone Integration)
