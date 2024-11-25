@@ -134,7 +134,7 @@
   users.users.krishnan = {
     isNormalUser = true;
     description = "Krishnan Shankar";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" ];
     packages = with pkgs; [
     ];
   };
