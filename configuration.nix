@@ -103,6 +103,9 @@
   hardware.bluetooth.settings = {
     General = {
       Enable = "Source,Sink,Media,Socket";
+      FastConnectable = "true";
+      MultiProfile = "multiple";
+      Experimental = true;
     };
   };
   #services.blueman.enable = true;
