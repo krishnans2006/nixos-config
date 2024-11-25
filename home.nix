@@ -48,6 +48,7 @@
     kdePackages.filelight
     #kdePackages.partitionmanager
     kdePackages.kdenlive
+    krita
 
     libreoffice-qt
     hunspell
