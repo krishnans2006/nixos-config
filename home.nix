@@ -1,6 +1,13 @@
 { config, pkgs, ... }:
 
-{
+let
+  nixpkgs_with_working_kdenlive = import (builtins.fetchTree {
+    type = "github";
+    owner = "NixOS";
+    repo = "nixpkgs";
+    rev = "5785b6bb5eaae44e627d541023034e1601455827";
+  }) { inherit (pkgs) system; };
+in {
   home.username = "krishnan";
   home.homeDirectory = "/home/krishnan";
 
@@ -47,7 +54,7 @@
     kdePackages.bluedevil
     kdePackages.filelight
     #kdePackages.partitionmanager
-    kdePackages.kdenlive
+    nixpkgs_with_working_kdenlive.kdePackages.kdenlive
     krita
 
     libreoffice-qt
