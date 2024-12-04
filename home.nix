@@ -83,6 +83,8 @@ in {
     slack
     element-desktop
 
+    zoom-us
+
     devenv
 
     jetbrains.pycharm-professional
