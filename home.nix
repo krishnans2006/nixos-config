@@ -1,12 +1,13 @@
 { config, pkgs, ... }:
 
 let
-  nixpkgs_with_working_kdenlive = import (builtins.fetchTree {
+  # For Kdenlive and CLion
+  nixpkgs_old = import (builtins.fetchTree {
     type = "github";
     owner = "NixOS";
     repo = "nixpkgs";
     rev = "5785b6bb5eaae44e627d541023034e1601455827";
-  }) { inherit (pkgs) system; };
+  }) { inherit (pkgs) system; config.allowUnfree = true; };
 in {
   home.username = "krishnan";
   home.homeDirectory = "/home/krishnan";
@@ -54,7 +55,7 @@ in {
     kdePackages.bluedevil
     kdePackages.filelight
     #kdePackages.partitionmanager
-    nixpkgs_with_working_kdenlive.kdePackages.kdenlive
+    nixpkgs_old.kdePackages.kdenlive
     krita
 
     libreoffice-qt
@@ -90,7 +91,7 @@ in {
     jetbrains.pycharm-professional
     jetbrains.webstorm
     jetbrains.idea-ultimate
-    jetbrains.clion
+    nixpkgs_old.jetbrains.clion
     jetbrains.goland
 
     python312
