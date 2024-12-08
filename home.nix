@@ -49,6 +49,7 @@ in {
     gnused
     gnutar
     htop
+    ncdu
 
     micro
 
