@@ -99,6 +99,7 @@ in {
     python312
     poetry
     octodns
+    python312Packages.tqdm
 
     platformio
 
