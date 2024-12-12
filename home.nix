@@ -115,6 +115,7 @@ in {
 
     audacity
     vlc
+    obs-studio
 
     lc3tools
 
