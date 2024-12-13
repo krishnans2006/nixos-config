@@ -101,6 +101,8 @@ in {
     octodns
     python312Packages.tqdm
 
+    jdk
+
     platformio
 
     kicad
