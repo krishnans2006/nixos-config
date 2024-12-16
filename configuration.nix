@@ -117,6 +117,10 @@
     via
   ];
 
+  # Shell
+  programs.zsh.enable = true;
+  environment.pathsToLink = [ "/share/zsh" ];
+
   # Enable KDE Connect (Phone Integration)
   programs.kdeconnect.enable = true;
   #networking.firewall = rec {
@@ -135,8 +139,8 @@
     isNormalUser = true;
     description = "Krishnan Shankar";
     extraGroups = [ "networkmanager" "wheel" "dialout" ];
-    packages = with pkgs; [
-    ];
+    packages = with pkgs; [ ];
+    shell = pkgs.zsh;
   };
   security.sudo.wheelNeedsPassword = false;
 
