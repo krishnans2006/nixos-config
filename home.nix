@@ -609,6 +609,7 @@ in {
         "browser.urlbar.shortcuts.tabs" = false;
         "browser.urlbar.suggest.engines" = false;
         "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+        "datareporting.healthreport.uploadEnabled" = false;
         "datareporting.policy.dataSubmissionEnable" = false;
         "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
         "extensions.pocket.enabled" = false;
