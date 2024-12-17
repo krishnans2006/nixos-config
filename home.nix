@@ -121,6 +121,8 @@ in {
 
     lc3tools
 
+    lutris-free
+
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
       dontWrapQtApps = false;
