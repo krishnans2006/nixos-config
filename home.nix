@@ -420,6 +420,27 @@ in {
     ];
   };
 
+  programs.konsole = {
+    enable = true;
+    defaultProfile = "Krishnan";
+
+    profiles = {
+      Krishnan = {
+        name = "Krishnan";
+        command = "/run/current-system/sw/bin/zsh";
+        font = {
+          name = "Hack";
+          size = 10;
+        };
+
+        extraConfig = {
+          General.Parent = "FALLBACK/";
+          Scrolling.HistoryMode = "2";
+        };
+      };
+    };
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
