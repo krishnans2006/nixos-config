@@ -98,6 +98,7 @@ in {
 
     python312
     poetry
+    pipenv
     octodns
     python312Packages.tqdm
 
