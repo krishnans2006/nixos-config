@@ -12,6 +12,11 @@
   # Memtest86+
   boot.loader.grub.memtest86.enable = true;
 
+  # Swappiness
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 15;
+  };
+
   # Disable dev-tpmrm0.device
   # See https://github.com/systemd/systemd/issues/33412
   systemd.units."dev-tpmrm0.device".enable = false;
