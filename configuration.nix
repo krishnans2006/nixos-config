@@ -181,6 +181,7 @@
   services.tailscale.enable = true;
 
   services.redis.servers."".enable = true;
+  programs.firejail.enable = true;
 
   programs.steam = {
     enable = true;
