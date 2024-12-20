@@ -645,6 +645,8 @@ in {
       wakatime.vscode-wakatime
       redhat.vscode-yaml
       davidanson.vscode-markdownlint
+
+      #qili.vscode-lc3
     ];
   };
 
