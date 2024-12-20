@@ -616,6 +616,9 @@ in {
         "datareporting.policy.dataSubmissionEnable" = false;
         "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
         "extensions.pocket.enabled" = false;
+        "privacy.globalprivacycontrol.enabled" = true;
+        "privacy.globalprivacycontrol.functionality.enabled" = true;
+        "privacy.globalprivacycontrol.was_ever_enabled" = true;
         "services.sync.username" = "krishnans2006@gmail.com";
         #"services.sync.syncInterval" = 600000;
         #"services.sync.syncThreshold" = 300;
