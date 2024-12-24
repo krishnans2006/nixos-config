@@ -53,6 +53,8 @@ in {
 
     micro
 
+    undollar
+
     kdePackages.kate
     kdePackages.bluedevil
     kdePackages.filelight
