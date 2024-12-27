@@ -74,6 +74,8 @@ in {
     npm-check-updates
     sass
 
+    wireguard-tools
+
     dig
 
     git-subrepo
