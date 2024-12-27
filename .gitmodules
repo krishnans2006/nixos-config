@@ -1,3 +1,6 @@
 [submodule "secrets"]
 	path = secrets
 	url = git@github.com:krishnans2006/nixos-secrets.git
+[submodule "dotfiles"]
+	path = dotfiles
+	url = git@github.com:krishnans2006/dotfiles.git

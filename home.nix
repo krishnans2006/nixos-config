@@ -12,27 +12,6 @@ in {
   home.username = "krishnan";
   home.homeDirectory = "/home/krishnan";
 
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
-
-  # set cursor size and dpi for 4k monitor
-  # xresources.properties = {
-  #   "Xcursor.size" = 16;
-  #   "Xft.dpi" = 172;
-  # };
-
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     neofetch
@@ -488,6 +467,15 @@ in {
       plugins = [ "git" "git-auto-fetch" "poetry" "sudo" ];
       theme = "robbyrussell";
     };
+
+    initExtra = "source $HOME/.dotfiles/aliases-nix.zsh";
+  };
+
+  # link all files in `./dotfiles` to `~/.dotfiles`
+  home.file.".dotfiles" = {
+   source = ./dotfiles;
+   recursive = true;   # link recursively
+   executable = true;  # make all files executable
   };
 
   programs.atuin = {
