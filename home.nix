@@ -100,6 +100,8 @@ in {
 
     platformio
 
+    nixfmt-rfc-style
+
     kicad
     gimp
 
