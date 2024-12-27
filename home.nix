@@ -485,7 +485,7 @@ in {
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "git-auto-fetch" "poetry" ];
+      plugins = [ "git" "git-auto-fetch" "poetry" "sudo" ];
       theme = "robbyrussell";
     };
   };
