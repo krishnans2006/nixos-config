@@ -51,6 +51,10 @@ in {
     htop
     ncdu
 
+    sops
+    age
+    ssh-to-age
+
     micro
 
     undollar
@@ -137,6 +141,17 @@ in {
     duplicity
     deja-dup
   ];
+
+  # Secrets
+  sops = {
+    age.keyFile = "/home/krishnan/.config/sops/age/keys.txt";
+    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    secrets = {
+      example_key = { };
+    };
+  };
 
   # KDE Connect
   #services.kdeconnect.enable = true;

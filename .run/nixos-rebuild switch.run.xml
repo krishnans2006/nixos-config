@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="nixos-rebuild switch" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="sudo /run/current-system/sw/bin/nixos-rebuild switch" />
+    <option name="SCRIPT_TEXT" value="sudo /run/current-system/sw/bin/nixos-rebuild switch --flake '.?submodules=1'" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />

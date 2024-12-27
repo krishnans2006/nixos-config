@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,7 +28,7 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, nix-index-database, nur, ... }@inputs: {
+  outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, nur, ... }@inputs: {
     nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -34,7 +39,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
+          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeManagerModules.plasma-manager ];
           home-manager.users.krishnan.imports = [ ./home.nix ./krishnan-lap-home.nix ];
         }
 
@@ -56,7 +61,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
+          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeManagerModules.plasma-manager ];
           home-manager.users.krishnan.imports = [ ./home.nix ./krishnan-pc-home.nix ];
         }
 
