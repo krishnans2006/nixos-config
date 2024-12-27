@@ -190,6 +190,9 @@
     localNetworkGameTransfers.openFirewall = true;  # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
+  networking.wg-quick.interfaces.tjcsl.configFile = "/home/krishnan/.config/wireguard/tjcsl.conf";
+  systemd.user.services."wg-quick-tjcsl".after = [ "sops-nix.service" ];
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.

@@ -153,7 +153,7 @@ in {
     defaultSopsFormat = "yaml";
 
     secrets = {
-      example_key = { };
+      "tjcsl/vpn_conf".path = "/home/krishnan/.config/wireguard/tjcsl.conf";
     };
   };
 
