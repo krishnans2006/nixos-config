@@ -30,6 +30,8 @@ in {
     htop
     ncdu
 
+    wl-clipboard
+
     sops
     age
     ssh-to-age
