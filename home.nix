@@ -112,6 +112,9 @@ in {
     octodns
     python312Packages.tqdm
 
+    ansible
+    sshpass
+
     jdk
 
     platformio
