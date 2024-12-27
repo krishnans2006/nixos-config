@@ -77,6 +77,7 @@ in {
     wireguard-tools
 
     dig
+    nmap
 
     git-subrepo
 
