@@ -58,6 +58,7 @@ in {
     micro
 
     undollar
+    thefuck
 
     kdePackages.kate
     kdePackages.bluedevil
