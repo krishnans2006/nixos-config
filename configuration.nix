@@ -192,7 +192,11 @@
   };
 
   networking.wg-quick.interfaces.tjcsl.configFile = "/home/krishnan/.config/wireguard/tjcsl.conf";
-  systemd.user.services."wg-quick-tjcsl".after = [ "sops-nix.service" ];
+  systemd.services."wg-quick-tjcsl".preStart = ''
+    while [ ! -f /home/krishnan/.config/wireguard/tjcsl.conf ]; do
+      sleep 1
+    done
+  '';
 
   # List services that you want to enable:
 
