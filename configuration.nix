@@ -191,7 +191,19 @@
     localNetworkGameTransfers.openFirewall = true;  # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
-  networking.wg-quick.interfaces.tjcsl.configFile = "/home/krishnan/.config/wireguard/tjcsl.conf";
+  networking.wg-quick.interfaces.proton = {
+    autostart = false;
+    configFile = "/home/krishnan/.config/wireguard/proton.conf";
+  };
+  systemd.services."wg-quick-proton".preStart = ''
+    while [ ! -f /home/krishnan/.config/wireguard/proton.conf ]; do
+      sleep 1
+    done
+  '';
+  networking.wg-quick.interfaces.tjcsl = {
+    autostart = false;
+    configFile = "/home/krishnan/.config/wireguard/tjcsl.conf";
+  };
   systemd.services."wg-quick-tjcsl".preStart = ''
     while [ ! -f /home/krishnan/.config/wireguard/tjcsl.conf ]; do
       sleep 1

@@ -140,6 +140,7 @@ in {
 
     secrets = {
       "tjcsl/vpn_conf".path = "/home/krishnan/.config/wireguard/tjcsl.conf";
+      "proton_vpn_conf".path = "/home/krishnan/.config/wireguard/proton.conf";
     };
   };
 
