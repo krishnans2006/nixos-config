@@ -507,7 +507,7 @@ in {
 
       search_mode = "fuzzy";
       filter_mode = "global";
-      workspaces = true;  # Filter mode for when in a git repository
+      workspaces = false;  # Filter mode for when in a git repository
 
       style = "auto";  # Full when possible
       invert = false;
