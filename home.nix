@@ -30,6 +30,8 @@ in {
     htop
     ncdu
 
+    ffmpeg
+
     wl-clipboard
 
     sops
