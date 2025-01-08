@@ -179,6 +179,12 @@ in {
           Top = "KRunner";
         };
       };
+      klipperrc = {
+        General = {
+          IgnoreImages = false;
+          MaxClipItems = 2048;
+        };
+      };
     };
 
     shortcuts = {
