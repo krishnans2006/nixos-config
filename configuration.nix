@@ -29,7 +29,8 @@
     defaultSopsFormat = "yaml";
 
     secrets = {
-      "example_key" = {};
+      "wireguard/tjcsl".path = "/etc/wireguard/tjcsl.conf";
+      "wireguard/proton".path = "/etc/wireguard/proton.conf";
     };
   };
 
@@ -213,24 +214,14 @@
     localNetworkGameTransfers.openFirewall = true;  # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
+  networking.wg-quick.interfaces.tjcsl = {
+    autostart = true;
+    configFile = config.sops.secrets."wireguard/tjcsl".path;
+  };
   networking.wg-quick.interfaces.proton = {
     autostart = false;
-    configFile = "/home/krishnan/.config/wireguard/proton.conf";
+    configFile = config.sops.secrets."wireguard/proton".path;
   };
-  systemd.services."wg-quick-proton".preStart = ''
-    while [ ! -f /home/krishnan/.config/wireguard/proton.conf ]; do
-      sleep 1
-    done
-  '';
-  networking.wg-quick.interfaces.tjcsl = {
-    autostart = false;
-    configFile = "/home/krishnan/.config/wireguard/tjcsl.conf";
-  };
-  systemd.services."wg-quick-tjcsl".preStart = ''
-    while [ ! -f /home/krishnan/.config/wireguard/tjcsl.conf ]; do
-      sleep 1
-    done
-  '';
 
   # List services that you want to enable:
 
