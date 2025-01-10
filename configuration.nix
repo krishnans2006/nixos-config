@@ -167,7 +167,7 @@
   users.users.krishnan = {
     isNormalUser = true;
     description = "Krishnan Shankar";
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" ];
     packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
@@ -241,5 +241,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }

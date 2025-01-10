@@ -101,6 +101,8 @@ in {
     ansible
     sshpass
 
+    sshfs
+
     jdk
 
     platformio
@@ -621,6 +623,22 @@ in {
         hostname = "ras2.tjhsst.edu";  # 198.38.18.201
         user = "2024kshankar";
       };
+    };
+  };
+
+  # SSHFS mount for tjCSL filesystem
+  systemd.user.mounts."home-krishnan-2024kshankar" = {
+    Unit = {
+      Description = "tjCSL filesystem mount";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
+    Install.WantedBy = [ "default.target" ];
+    Mount = {
+      What = "2024kshankar@ras2.tjhsst.edu:/csl/users/2024kshankar";
+      Where = "/home/krishnan/2024kshankar";
+      Type = "fuse.sshfs";
+      Options = "reconnect,ServerAliveInterval=15,IdentityFile=/home/krishnan/.ssh/id_ed25519";
     };
   };
 
