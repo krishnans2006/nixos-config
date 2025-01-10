@@ -33,8 +33,15 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Use systemd-resolved
-  services.resolved.enable = true;
+  # Configure DNS
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
+  services.resolved = {
+    enable = true;
+    domains = [ "~." ];
+    fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
+    dnssec = "allow-downgrade";
+    dnsovertls = "opportunistic";  # maybe "true" is possible?
+  };
 
   # Set your time zone.
   #time.timeZone = "America/Chicago";
