@@ -40,6 +40,9 @@ in {
 
     micro
 
+    zsh-powerlevel10k
+    meslo-lgs-nf
+
     undollar
     thefuck
 
@@ -481,17 +484,26 @@ in {
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "git-auto-fetch" "poetry" "sudo" ];
-      theme = "robbyrussell";
+      theme = "";  # powerlevel10k
     };
 
-    initExtra = "source $HOME/.dotfiles/aliases-nix.zsh";
+    localVariables = {
+      POWERLEVEL9K_CONFIG_FILE = "~/.dotfiles/.p10k.zsh";
+    };
+
+    initExtra = ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      [[ ! -f ~/.dotfiles/.p10k.zsh ]] || source ~/.dotfiles/.p10k.zsh
+
+      source ~/.dotfiles/aliases-nix.zsh
+    '';
   };
 
   # link all files in `./dotfiles` to `~/.dotfiles`
   home.file.".dotfiles" = {
-   source = ./dotfiles;
-   recursive = true;   # link recursively
-   executable = true;  # make all files executable
+    source = ./dotfiles;
+    recursive = true;   # link recursively
+    executable = true;  # make all files executable
   };
 
   programs.atuin = {
