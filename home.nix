@@ -121,6 +121,7 @@ in {
     lc3tools
 
     lutris-free
+    prismlauncher  # minecraft
 
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
