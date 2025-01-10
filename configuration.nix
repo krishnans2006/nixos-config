@@ -33,6 +33,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Use systemd-resolved
+  services.resolved.enable = true;
+
   # Set your time zone.
   #time.timeZone = "America/Chicago";
   services.automatic-timezoned.enable = true;
