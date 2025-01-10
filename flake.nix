@@ -35,6 +35,8 @@
         ./configuration.nix
         ./krishnan-lap.nix
 
+        sops-nix.nixosModules.sops
+
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -56,6 +58,8 @@
       modules = [
         ./configuration.nix
         ./krishnan-pc.nix
+
+        sops-nix.nixosModules.sops
 
         home-manager.nixosModules.home-manager
         {

@@ -70,5 +70,6 @@ Finally, re-encrypt the secrets:
 
 ```bash
 sops updatekeys secrets/secrets.yaml
+sops updatekeys secrets/secrets-home.yaml
 sudo nixos-rebuild switch --flake '.?submodules=1'
 ```

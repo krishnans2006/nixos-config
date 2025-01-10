@@ -21,6 +21,18 @@
   # See https://github.com/systemd/systemd/issues/33412
   systemd.units."dev-tpmrm0.device".enable = false;
 
+  # Secrets
+  sops = {
+    age.keyFile = "/home/krishnan/.config/sops/age/keys.txt";
+    age.generateKey = false;  # Do it manually from an SSH key (see README.md)
+    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    secrets = {
+      "example_key" = {};
+    };
+  };
+
   # Hostname should be defined in device-specific nix file!
   # networking.hostName = "krishnan-nix"; # Define your hostname.
 

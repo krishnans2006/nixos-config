@@ -141,7 +141,7 @@ in {
   # Secrets
   sops = {
     age.keyFile = "/home/krishnan/.config/sops/age/keys.txt";
-    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFile = ./secrets/secrets-home.yaml;
     defaultSopsFormat = "yaml";
 
     secrets = {
