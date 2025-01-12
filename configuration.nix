@@ -29,25 +29,126 @@
     defaultSopsFormat = "yaml";
 
     secrets = {
-      "wireguard/tjcsl".path = "/etc/wireguard/tjcsl.conf";
-      "wireguard/proton".path = "/etc/wireguard/proton.conf";
+      "wireguard/tjcsl" = {};
+      "wireguard/proton" = {};
+      "networks" = {};
     };
   };
 
-  # Hostname should be defined in device-specific nix file!
-  # networking.hostName = "krishnan-nix"; # Define your hostname.
+  # Networking
+  networking = {
+    nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    networkmanager = {
+      enable = true;
+      dns = "systemd-resolved";
+      wifi.backend = "wpa_supplicant";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+      ensureProfiles = {
+        environmentFiles = [ config.sops.secrets."networks".path ];
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+        profiles = {
+          net0 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net0_name";
+            wifi.ssid = "$net0_ssid";
+            wifi-security.key-mgmt = "wpa-psk";
+            wifi-security.psk = "$net0_psk";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
+          net1 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net1_name";
+            wifi.ssid = "$net1_ssid";
+            wifi-security.key-mgmt = "wpa-psk";
+            wifi-security.psk = "$net1_psk";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
+          net2 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net2_name";
+            wifi.ssid = "$net2_ssid";
+            wifi-security.key-mgmt = "wpa-eap";
+            "802-1x".eap = "$net2_eap";
+            "802-1x".phase2-auth = "$net2_phase2_auth";
+            "802-1x".identity = "$net2_identity";
+            "802-1x".password = "$net2_password";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
+          net3 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net3_name";
+            wifi.ssid = "$net3_ssid";
+            wifi-security.key-mgmt = "wpa-eap";
+            "802-1x".eap = "$net3_eap";
+            "802-1x".phase2-auth = "$net3_phase2_auth";
+            "802-1x".identity = "$net3_identity";
+            "802-1x".password = "$net3_password";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
+          net4 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net4_name";
+            wifi.ssid = "$net4_ssid";
+            wifi-security.key-mgmt = "wpa-psk";
+            wifi-security.psk = "$net4_psk";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
+          net5 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net5_name";
+            wifi.ssid = "$net5_ssid";
+            wifi-security.key-mgmt = "wpa-psk";
+            wifi-security.psk = "$net5_psk";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
+          net6 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net6_name";
+            wifi.ssid = "$net6_ssid";
+            wifi-security.key-mgmt = "wpa-psk";
+            wifi-security.psk = "$net6_psk";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
+        };
+      };
+    };
 
-  # Configure DNS
-  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
+    wireless.enable = false;
+
+    wg-quick.interfaces = {
+      tjcsl = {
+        autostart = true;
+        configFile = config.sops.secrets."wireguard/tjcsl".path;
+      };
+      proton = {
+        autostart = false;
+        configFile = config.sops.secrets."wireguard/proton".path;
+      };
+    };
+  };
+
   services.resolved = {
     enable = true;
     domains = [ "~." ];
@@ -152,10 +253,6 @@
 
   # Enable KDE Connect (Phone Integration)
   programs.kdeconnect.enable = true;
-  #networking.firewall = rec {
-  #  allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
-  #  allowedUDPPortRanges = allowedTCPPortRanges;
-  #};
 
   # Enable Partition Manager
   programs.partition-manager.enable = true;
@@ -212,15 +309,6 @@
     remotePlay.openFirewall = true;  # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true;  # Open ports in the firewall for Source Dedicated Server
     localNetworkGameTransfers.openFirewall = true;  # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
-  networking.wg-quick.interfaces.tjcsl = {
-    autostart = true;
-    configFile = config.sops.secrets."wireguard/tjcsl".path;
-  };
-  networking.wg-quick.interfaces.proton = {
-    autostart = false;
-    configFile = config.sops.secrets."wireguard/proton".path;
   };
 
   # List services that you want to enable:
