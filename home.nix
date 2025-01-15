@@ -147,8 +147,9 @@ in {
     defaultSopsFormat = "yaml";
 
     secrets = {
-      "wakatime/wakatime".path = "/home/krishnan/.wakatime.cfg";
+      "wakatime/wakatime" = {};
       "wakatime/wakapi" = {};
+      "wakatime/hackatime".path = "/home/krishnan/.wakatime.cfg";
     };
   };
 
