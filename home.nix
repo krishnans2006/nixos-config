@@ -81,6 +81,7 @@ in {
     #libunity  # required for vesktop
     slack
     element-desktop
+    signal-desktop
 
     zoom-us
 
