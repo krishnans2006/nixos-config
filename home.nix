@@ -494,6 +494,8 @@ in {
     };
 
     initExtra = ''
+      autoload zmv
+
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       [[ ! -f ~/.dotfiles/.p10k.zsh ]] || source ~/.dotfiles/.p10k.zsh
 
