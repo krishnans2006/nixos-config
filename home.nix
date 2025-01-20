@@ -151,6 +151,8 @@ in {
       "wakatime/wakatime" = {};
       "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
       "wakatime/hackatime" = {};
+
+      "atuin/key" = {};
     };
   };
 
