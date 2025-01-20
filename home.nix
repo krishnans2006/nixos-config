@@ -153,6 +153,7 @@ in {
       "wakatime/hackatime" = {};
 
       "atuin/key" = {};
+      "atuin/key_b64" = {};
     };
   };
 
@@ -525,7 +526,7 @@ in {
     # https://docs.atuin.sh/configuration/config/
     settings = {
       db_path = "~/.local/share/atuin/history.db";
-      key_path = "~/.local/share/atuin/key";
+      key_path = config.sops.secrets."atuin/key_b64".path;
       session_path = "~/.local/share/atuin/session";
       dialect = "us";
 
