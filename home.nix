@@ -149,8 +149,8 @@ in {
 
     secrets = {
       "wakatime/wakatime" = {};
-      "wakatime/wakapi" = {};
-      "wakatime/hackatime".path = "/home/krishnan/.wakatime.cfg";
+      "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
+      "wakatime/hackatime" = {};
     };
   };
 
