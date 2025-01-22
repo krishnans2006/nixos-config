@@ -194,6 +194,12 @@ in {
           MaxClipItems = 2048;
         };
       };
+      ksplashrc = {
+        KSplash = {
+          Engine = "none";
+          Theme = "None";
+        };
+      };
     };
 
     shortcuts = {
