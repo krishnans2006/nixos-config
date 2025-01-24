@@ -106,6 +106,9 @@ in {
 
     jdk
 
+    nodejs_22
+    pnpm
+
     platformio
 
     nixfmt-rfc-style
