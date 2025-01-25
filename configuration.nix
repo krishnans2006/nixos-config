@@ -31,6 +31,7 @@
     secrets = {
       "wireguard/tjcsl" = {};
       "wireguard/proton" = {};
+      "wireguard/surfshark" = {};
       "networks" = {};
     };
   };
@@ -145,6 +146,10 @@
       proton = {
         autostart = false;
         configFile = config.sops.secrets."wireguard/proton".path;
+      };
+      surfshark = {
+        autostart = false;
+        configFile = config.sops.secrets."wireguard/surfshark".path;
       };
     };
   };
