@@ -642,8 +642,8 @@ in {
     };
   };
 
-  # SSHFS mount for tjCSL filesystem
-  systemd.user.mounts."home-krishnan-2024kshankar" = {
+  # SSHFS mounts
+  systemd.user.mounts."home-krishnan-Filesystems-tjCSL" = {
     Unit = {
       Description = "tjCSL filesystem mount";
       After = [ "network-online.target" ];
@@ -652,7 +652,21 @@ in {
     Install.WantedBy = [ "default.target" ];
     Mount = {
       What = "2024kshankar@ras2.tjhsst.edu:/csl/users/2024kshankar";
-      Where = "/home/krishnan/2024kshankar";
+      Where = "/home/krishnan/Filesystems/tjCSL";
+      Type = "fuse.sshfs";
+      Options = "reconnect,ServerAliveInterval=15,IdentityFile=/home/krishnan/.ssh/id_ed25519";
+    };
+  };
+  systemd.user.mounts."home-krishnan-Filesystems-EWS" = {
+    Unit = {
+      Description = "tjCSL filesystem mount";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
+    Install.WantedBy = [ "default.target" ];
+    Mount = {
+      What = "ks128@linux.ews.illinois.edu:/home/ks128";
+      Where = "/home/krishnan/Filesystems/EWS";
       Type = "fuse.sshfs";
       Options = "reconnect,ServerAliveInterval=15,IdentityFile=/home/krishnan/.ssh/id_ed25519";
     };
