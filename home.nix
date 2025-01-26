@@ -659,7 +659,7 @@ in {
   };
   systemd.user.mounts."home-krishnan-Filesystems-EWS" = {
     Unit = {
-      Description = "tjCSL filesystem mount";
+      Description = "EWS filesystem mount";
       After = [ "network-online.target" ];
       Wants = [ "network-online.target" ];
     };
