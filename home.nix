@@ -98,6 +98,9 @@ in {
     pipenv
     octodns
     python312Packages.tqdm
+    python312Packages.matplotlib
+    python312Packages.numpy
+    python312Packages.scipy
 
     ansible
     sshpass
