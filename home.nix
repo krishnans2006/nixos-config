@@ -93,14 +93,17 @@ in {
     nixpkgs_old.jetbrains.clion
     jetbrains.goland
 
-    jupyter  # python312
+    (python312.withPackages (ps: with ps; [
+      jupyterlab
+      tqdm
+      matplotlib
+      numpy
+      scipy
+      pandas
+    ]))
     poetry
     pipenv
     octodns
-    python312Packages.tqdm
-    python312Packages.matplotlib
-    python312Packages.numpy
-    python312Packages.scipy
 
     ansible
     sshpass
