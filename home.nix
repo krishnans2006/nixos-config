@@ -95,6 +95,7 @@ in {
 
     (python312.withPackages (ps: with ps; [
       jupyterlab
+      jupyterlab-lsp
       tqdm
       matplotlib
       numpy
