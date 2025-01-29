@@ -96,6 +96,7 @@ in {
     (python312.withPackages (ps: with ps; [
       jupyterlab
       jupyterlab-lsp
+      jedi-language-server
       tqdm
       matplotlib
       numpy
