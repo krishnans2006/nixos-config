@@ -66,6 +66,8 @@ in {
     dig
     nmap
 
+    libxml2
+
     git-subrepo
 
     # it provides the command `nom` works just like `nix`
