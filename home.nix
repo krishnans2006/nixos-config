@@ -82,6 +82,7 @@ in {
     slack
     element-desktop
     signal-desktop
+    mattermost-desktop
 
     zoom-us
 
