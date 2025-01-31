@@ -50,7 +50,7 @@
           programs.nix-index-database.comma.enable = true;
         }
 
-        nur.nixosModules.nur
+        nur.modules.nixos.default
       ];
     };
     nixosConfigurations.krishnan-pc = nixpkgs.lib.nixosSystem {
@@ -74,7 +74,7 @@
           programs.nix-index-database.comma.enable = true;
         }
 
-        nur.nixosModules.nur
+        nur.modules.nixos.default
       ];
     };
   };
