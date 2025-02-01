@@ -69,6 +69,7 @@ in {
     libxml2
 
     git-subrepo
+    git-filter-repo
 
     # it provides the command `nom` works just like `nix`
     # with more details log output
