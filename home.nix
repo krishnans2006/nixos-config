@@ -34,6 +34,8 @@ in {
 
     wl-clipboard
 
+    easyeffects
+
     sops
     age
     ssh-to-age
