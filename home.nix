@@ -96,6 +96,7 @@ in {
     jetbrains.idea-ultimate
     nixpkgs_old.jetbrains.clion
     jetbrains.goland
+    jetbrains.rust-rover
 
     (python312.withPackages (ps: with ps; [
       jupyterlab
