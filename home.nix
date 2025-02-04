@@ -45,6 +45,8 @@ in {
     zsh-powerlevel10k
     meslo-lgs-nf
 
+    jq
+
     undollar
     thefuck
 
