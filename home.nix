@@ -49,6 +49,7 @@ in {
 
     undollar
     thefuck
+    moreutils
 
     kdePackages.kate
     kdePackages.bluedevil
