@@ -76,6 +76,7 @@ in {
     git-subrepo
     git-filter-repo
     meld
+    kdiff3
 
     # it provides the command `nom` works just like `nix`
     # with more details log output
