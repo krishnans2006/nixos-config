@@ -30,6 +30,8 @@ in {
     htop
     ncdu
 
+    pkg-config
+
     ffmpeg
 
     wl-clipboard
