@@ -610,6 +610,12 @@ in {
       core.autocrlf = "input";
       pull.rebase = false;
     };
+    ignores = [
+      ".idea/"
+      ".vscode/"
+      ".direnv/"
+      ".envrc"
+    ];
   };
 
   programs.ssh = {
