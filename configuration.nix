@@ -258,6 +258,12 @@
     via
   ];
 
+  # Docker
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings.userland-proxy = false;
+  };
+
   # Shell
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
@@ -275,7 +281,7 @@
   users.users.krishnan = {
     isNormalUser = true;
     description = "Krishnan Shankar";
-    extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" "docker" ];
     packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
