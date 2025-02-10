@@ -2,7 +2,7 @@
   description = "Uses configuration.nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs?rev=23e89b7da85c3640bbc2173fe04f4bd114342367";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -24,11 +24,9 @@
         url = "github:nix-community/nix-index-database";
         inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, nur, ... }@inputs: {
+  outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, ... }@inputs: {
     nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -49,8 +47,6 @@
         {
           programs.nix-index-database.comma.enable = true;
         }
-
-        nur.nixosModules.nur
       ];
     };
     nixosConfigurations.krishnan-pc = nixpkgs.lib.nixosSystem {
@@ -73,8 +69,6 @@
         {
           programs.nix-index-database.comma.enable = true;
         }
-
-        nur.nixosModules.nur
       ];
     };
   };
