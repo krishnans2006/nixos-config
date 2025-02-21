@@ -223,6 +223,9 @@ in {
           Theme = "None";
         };
       };
+      kxkbrc = {
+        Layout.Options = "compose:rctrl";
+      };
     };
 
     shortcuts = {
