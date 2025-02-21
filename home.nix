@@ -224,7 +224,7 @@ in {
         };
       };
       kxkbrc = {
-        Layout.Options = "compose:rctrl";
+        Layout.Options = "compose:rctrl,caps:none";
       };
     };
 
