@@ -480,6 +480,20 @@ in {
         ];
       }
     ];
+
+    input.keyboard = {
+      layouts = [
+        {
+          displayName = "-";
+          layout = "us";
+        }
+        {
+          displayName = "^";
+          layout = "us";
+          variant = "colemak_dh";
+        }
+      ];
+    };
   };
 
   programs.konsole = {
