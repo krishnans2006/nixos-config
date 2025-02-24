@@ -280,7 +280,15 @@ in {
       cornerBarrier = true;
       edgeBarrier = 100;
       #effects = {}
-      #nightLight = {}
+      nightLight = {
+        enable = true;
+        mode = "times";
+        time.evening = "19:30";
+        time.morning = "06:30";
+        transitionTime = 60;
+        temperature.day = 6500;
+        temperature.night = 4000;
+      };
       #scripts.polonium = {}
       #tiling = {}
       #titlebarButtons = {}
