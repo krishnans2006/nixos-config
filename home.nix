@@ -114,6 +114,7 @@ in {
       numpy
       scipy
       pandas
+      discordpy
     ]))
     poetry
     pipenv
