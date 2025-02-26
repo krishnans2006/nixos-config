@@ -2,7 +2,7 @@
   description = "Uses configuration.nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs?rev=23e89b7da85c3640bbc2173fe04f4bd114342367";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
