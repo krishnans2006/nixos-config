@@ -15,6 +15,7 @@
   # Swappiness
   boot.kernel.sysctl = {
     "vm.swappiness" = 15;
+    "fs.inotify.max_user_watches" = 1048576;
   };
 
   # Disable dev-tpmrm0.device
