@@ -773,7 +773,8 @@ in {
     extensions = with pkgs.vscode-extensions; [
       pkief.material-icon-theme
 
-      ms-vscode-remote.vscode-remote-extensionpack
+      ms-vscode-remote.remote-ssh
+      ms-vscode-remote.remote-containers
       ms-vsliveshare.vsliveshare
 
       eamodio.gitlens
