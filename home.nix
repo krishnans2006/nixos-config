@@ -773,13 +773,13 @@ in {
     extensions = with pkgs.vscode-extensions; [
       pkief.material-icon-theme
 
-      #ms-vscode-remote.vscode-remote-extensionpack
+      ms-vscode-remote.vscode-remote-extensionpack
       ms-vsliveshare.vsliveshare
 
       eamodio.gitlens
       github.vscode-pull-request-github
 
-      #donjayamanne.python-extension-pack
+      ms-python.python
       ms-toolsai.jupyter
       wakatime.vscode-wakatime
       redhat.vscode-yaml
