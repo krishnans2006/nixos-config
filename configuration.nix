@@ -187,7 +187,11 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    autoLogin.enable = true;
+    autoLogin.user = "krishnan";
+  };
   services.desktopManager.plasma6.enable = true;
 
   # Fix blurry vscode
@@ -279,7 +283,7 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.krishnan = {
+  users.users."krishnan" = {
     isNormalUser = true;
     description = "Krishnan Shankar";
     extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" "docker" ];
