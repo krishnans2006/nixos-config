@@ -769,40 +769,6 @@ in {
 
   programs.vscode = {
     enable = true;
-    #package = pkgs.vscodium;
-    extensions = with pkgs.vscode-extensions; [
-      pkief.material-icon-theme
-
-      visualstudioexptteam.vscodeintellicode
-      github.copilot
-
-      ms-vscode-remote.remote-ssh
-      ms-vscode-remote.remote-containers
-      ms-vsliveshare.vsliveshare
-
-      eamodio.gitlens
-      github.vscode-pull-request-github
-
-      ms-python.python
-      ms-python.debugpy
-      #kevinrose.vsc-python-indent
-      njpwerner.autodocstring
-      wholroyd.jinja
-      batisteo.vscode-django
-      ms-toolsai.jupyter
-      #donjayamanne.python-environment-manager
-
-      ms-vscode.cpptools-extension-pack
-      ms-vscode.cpptools
-      ms-vscode.cmake-tools
-      #ms-vscode.cpptools-themes
-
-      wakatime.vscode-wakatime
-      redhat.vscode-yaml
-      davidanson.vscode-markdownlint
-
-      #qili.vscode-lc3
-    ];
   };
 
   # This value determines the home Manager release that your
