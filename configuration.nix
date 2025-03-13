@@ -256,6 +256,12 @@
   };
   #services.blueman.enable = true;
 
+  # HP Pen
+  hardware.opentabletdriver = {
+    enable = true;
+    daemon.enable = true;
+  };
+
   # udev rules
   services.udev.packages = with pkgs; [
     platformio-core
