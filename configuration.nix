@@ -327,7 +327,10 @@
     enableSSHSupport = true;
   };
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    extraUpFlags = [ "--ssh" ];
+  };
 
   services.redis.servers."".enable = true;
   programs.firejail.enable = true;
@@ -340,13 +343,13 @@
   };
 
   # LLDB fix
-#  nixpkgs.overlays = [
-#    (final: prev: {
-#      lldb = prev.lldb.overrideAttrs {
-#       dontCheckForBrokenSymlinks = true;
-#      };
-#    })
-#  ];
+  #nixpkgs.overlays = [
+  #  (final: prev: {
+  #    lldb = prev.lldb.overrideAttrs {
+  #      dontCheckForBrokenSymlinks = true;
+  #    };
+  #  })
+  #];
 
   # List services that you want to enable:
 
