@@ -30,10 +30,18 @@
     defaultSopsFormat = "yaml";
 
     secrets = {
-      "wireguard/tjcsl" = {};
-      "wireguard/proton" = {};
-      "wireguard/surfshark" = {};
-      "networks" = {};
+      "wireguard/tjcsl" = {
+        restartUnits = [ "wg-quick-tjcsl.service" ];
+      };
+      "wireguard/proton" = {
+        restartUnits = [ "wg-quick-proton.service" ];
+      };
+      "wireguard/surfshark" = {
+        restartUnits = [ "wg-quick-surfshark.service" ];
+      };
+      "networks" = {
+        restartUnits = [ "NetworkManager.service" ];
+      };
     };
   };
 
