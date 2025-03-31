@@ -337,7 +337,6 @@
 
   services.tailscale = {
     enable = true;
-    extraUpFlags = [ "--ssh" ];
   };
 
   services.redis.servers."".enable = true;

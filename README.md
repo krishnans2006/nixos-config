@@ -26,6 +26,7 @@ Note: This list is incomplete.
 
 - Generate a user SSH key, copy it to GitHub and all remotes that are SSHFS-mounted
 - Remove the password for `kdewallet` (KWallet)
+- Tailscale: `sudo tailscale login`, `sudo tailscale set --ssh --operator=krishnan`
 
 ## Command Snippets
 

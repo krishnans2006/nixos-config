@@ -71,6 +71,8 @@ in {
     dig
     nmap
 
+    tail-tray
+
     libxml2
 
     git-subrepo
