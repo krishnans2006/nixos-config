@@ -181,8 +181,8 @@ in {
     }))
     google-chrome
     spotify
-    duplicity
-    deja-dup
+    #duplicity
+    #deja-dup
   ];
 
   # Secrets
