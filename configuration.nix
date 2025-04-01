@@ -298,9 +298,10 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."krishnan" = {
+    uid = 1000;
     isNormalUser = true;
     description = "Krishnan Shankar";
-    extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" "docker" "davfs2" ];
     packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
@@ -335,8 +336,10 @@
     enableSSHSupport = true;
   };
 
-  services.tailscale = {
+  services.tailscale.enable = true;
+  services.davfs2 = {
     enable = true;
+    davGroup = "davfs2";
   };
 
   services.redis.servers."".enable = true;
@@ -347,6 +350,21 @@
     remotePlay.openFirewall = true;  # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true;  # Open ports in the firewall for Source Dedicated Server
     localNetworkGameTransfers.openFirewall = true;  # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+
+  # fstab entries for mounts
+  fileSystems."/home/krishnan/Filesystems/Tailscale" = {
+    device = "http://100.100.100.100:8080";
+    mountPoint = "/home/krishnan/Filesystems/Tailscale";
+    depends = [ "/" ];
+    noCheck = true;
+    fsType = "davfs";
+    options = [ "_netdev" "rw" "file_mode=0664" "dir_mode=2775" "user" "uid=${toString config.users.users."krishnan".uid}" "grpid" ];
+  };
+  environment.etc."davfs2/secrets" = {
+    enable = true;
+    text = "http://100.100.100.100:8080 \"\" \"\"";
+    mode = "0600";
   };
 
   # LLDB fix

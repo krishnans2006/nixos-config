@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, osConfig, ... }:
 
 let
   # For Kdenlive and CLion
@@ -745,6 +745,20 @@ in {
       Options = "reconnect,ServerAliveInterval=15,IdentityFile=/home/krishnan/.ssh/id_ed25519";
     };
   };
+#   systemd.user.mounts."home-krishnan-Filesystems-Tailscale" = {
+#     Unit = {
+#       Description = "Tailscale Taildrive filesystem mount";
+#       After = [ "network-online.target" "tailscaled.service" ];
+#       Wants = [ "network-online.target" "tailscaled.service" ];
+#     };
+#     Install.WantedBy = [ "default.target" ];
+#     Mount = {
+#       What = "http://100.100.100.100:8080";
+#       Where = "/home/krishnan/Filesystems/Tailscale";
+#       Type = "davfs";
+#       Options = "uid=${toString osConfig.users.users."krishnan".uid},file_mode=0664,dir_mode=2775,grpid";
+#     };
+#   };
 
   programs.firefox = {
     enable = true;
