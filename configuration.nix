@@ -141,6 +141,17 @@
             ipv4.dns = "1.1.1.1;1.0.0.1;";
             ipv4.ignore-auto-dns = "true";
           };
+          net7 = {
+            connection.type = "wifi";
+            wifi.mode = "infrastructure";
+            connection.id = "$net7_name";
+            wifi.ssid = "$net7_ssid";
+            wifi-security.key-mgmt = "wpa-psk";
+            wifi-security.psk = "$net7_psk";
+            ipv4.method = "auto";
+            ipv4.dns = "1.1.1.1;1.0.0.1;";
+            ipv4.ignore-auto-dns = "true";
+          };
         };
       };
     };
