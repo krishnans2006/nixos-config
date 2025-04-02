@@ -152,6 +152,8 @@ in {
 
     lc3tools
 
+    mission-planner
+
     lutris-free
     prismlauncher  # minecraft
     (sauerbraten.overrideAttrs (old: rec {
