@@ -32,7 +32,7 @@ in {
 
     pkg-config
 
-    ffmpeg
+    #ffmpeg
 
     wl-clipboard
 
@@ -40,7 +40,7 @@ in {
     age
     ssh-to-age
 
-    micro
+    #micro
 
     zsh-powerlevel10k
     meslo-lgs-nf
@@ -55,39 +55,39 @@ in {
     kdePackages.bluedevil
     kdePackages.filelight
     #kdePackages.partitionmanager
-    nixpkgs_old.kdePackages.kdenlive
-    krita
+    #nixpkgs_old.kdePackages.kdenlive
+    #krita
 
-    libreoffice-qt
-    hunspell
-    hunspellDicts.en_US
+    #libreoffice-qt
+    #hunspell
+    #hunspellDicts.en_US
 
-    nodejs
-    npm-check-updates
-    sass
+    #nodejs
+    #npm-check-updates
+    #sass
 
-    wireguard-tools
+    #wireguard-tools
 
-    dig
-    nmap
+    #dig
+    #nmap
 
     tail-tray
 
-    libxml2
+    #libxml2
 
     git-subrepo
     git-filter-repo
-    meld
-    kdiff3
+    #meld
+    #kdiff3
 
     # it provides the command `nom` works just like `nix`
     # with more details log output
     nix-output-monitor
 
-    lm_sensors # for `sensors` command
-    memtester
+    #lm_sensors # for `sensors` command
+    #memtester
 
-    rclone
+    #rclone
 
     vesktop
     #libunity  # required for vesktop
@@ -96,16 +96,16 @@ in {
     signal-desktop
     mattermost-desktop
 
-    zoom-us
+    #zoom-us
 
     devenv
 
     jetbrains.pycharm-professional
-    jetbrains.webstorm
-    jetbrains.idea-ultimate
+    #jetbrains.webstorm
+    #jetbrains.idea-ultimate
     nixpkgs_old.jetbrains.clion
-    jetbrains.goland
-    jetbrains.rust-rover
+    #jetbrains.goland
+    #jetbrains.rust-rover
 
     (python312.withPackages (ps: with ps; [
       jupyterlab
@@ -120,62 +120,44 @@ in {
     ]))
     poetry
     pipenv
-    octodns
+    #octodns
 
-    ansible
-    sshpass
+    #ansible
+    #sshpass
 
     sshfs
 
-    jdk
+    #jdk
 
-    nodejs_22
-    pnpm
+    #nodejs_22
+    #pnpm
 
-    platformio
+    #platformio
 
     nixfmt-rfc-style
 
-    kicad
-    gimp
+    #kicad
+    #gimp
 
-    qmk
-    via
+    #qmk
+    #via
     #vial
 
-    quickemu
+    #quickemu
     #quickgui
 
-    audacity
-    vlc
-    obs-studio
+    #audacity
+    #vlc
+    #obs-studio
 
     lc3tools
 
-    mission-planner
+    #mission-planner
 
-    lutris-free
-    prismlauncher  # minecraft
-    (sauerbraten.overrideAttrs (old: rec {
-      installPhase = ''
-         runHook preInstall
-
-         mkdir -p $out/bin $out/share/icon/ $out/share/sauerbraten $out/share/doc/sauerbraten
-         cp -r "../docs/"* $out/share/doc/sauerbraten/
-         cp sauer_client sauer_server $out/share/sauerbraten/
-         cp -r ../packages ../data $out/share/sauerbraten/
-         ln -s $out/share/sauerbraten/data/cube.png $out/share/icon/sauerbraten.png
-
-         makeWrapper $out/share/sauerbraten/sauer_server $out/bin/sauerbraten_server \
-           --chdir "$out/share/sauerbraten"
-         makeWrapper $out/share/sauerbraten/sauer_client $out/bin/sauerbraten_client \
-           --chdir "$out/share/sauerbraten" \
-           --add-flags "-q\''${HOME}/.config/sauerbraten"
-
-         runHook postInstall
-       '';
-    }))
-    superTuxKart
+    #lutris-free
+    #prismlauncher  # minecraft
+    #sauerbraten
+    #superTuxKart
 
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
@@ -645,6 +627,9 @@ in {
     enable = true;
     #enableBashIntegration = true;
     nix-direnv.enable = true;
+    config = {
+      global."warn_timeout" = 0;
+    };
   };
 
   # basic configuration of git, please change to your own
