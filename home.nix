@@ -225,6 +225,7 @@ in {
         launchAction = "DoNotTakeScreenshot";  # When launching Spectacle: Do not take a screenshot automatically
         rememberSelectionRect = "Always";  # Remember selected area: Always (Hint: Use right-click to clear selection)
       };
+      ksmserverrc.General.loginMode = "emptySession";
       kwinrc = {
         Effect-overview.TouchBorderActivate = 4;
         Effect-shakecursor.Magnification = 10;
