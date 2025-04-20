@@ -748,6 +748,17 @@ in {
   #  };
   #};
 
+  # Flatpaks
+  services.flatpak = {
+    remotes = [
+      { name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo"; }
+    ];
+    packages = [
+      "app.zen_browser.zen"
+    ];
+    update.onActivation = true;
+  };
+
   programs.firefox = {
     enable = true;
 
