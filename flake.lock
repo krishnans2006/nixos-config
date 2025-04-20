@@ -85,7 +85,8 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "plasma-manager": "plasma-manager",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "zen-browser": "zen-browser"
       }
     },
     "sops-nix": {
@@ -105,6 +106,29 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745024827,
+        "narHash": "sha256-NjYyRsHrWwUVjbd78FV8E/HZC+gH4CYS6Qnjh2O29b4=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "e6893892b832d92f1ceb508fcdae250d41927b38",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }
