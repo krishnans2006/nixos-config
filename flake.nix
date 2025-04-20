@@ -26,15 +26,9 @@
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, nix-flatpak, zen-browser, ... }@inputs: {
+  outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, nix-flatpak, ... }@inputs: {
     nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -52,7 +46,6 @@
             ./home.nix
             ./krishnan-lap-home.nix
             nix-flatpak.homeManagerModules.nix-flatpak
-            zen-browser.homeModules.beta
           ];
         }
 
@@ -79,7 +72,6 @@
             ./home.nix
             ./krishnan-pc-home.nix
             nix-flatpak.homeManagerModules.nix-flatpak
-            zen-browser.homeModules.beta
           ];
         }
 

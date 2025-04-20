@@ -802,15 +802,6 @@ in {
     };
   };
 
-  programs.zen-browser = {
-    enable = true;
-    policies = {
-      DisableAppUpdate = true;
-      DisableTelemetry = true;
-    };
-    nativeMessagingHosts = [pkgs.firefoxpwa];
-  };
-
   programs.vscode.enable = true;
 
   # This value determines the home Manager release that your
