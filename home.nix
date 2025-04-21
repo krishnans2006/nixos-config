@@ -75,6 +75,7 @@ in {
 
     libxml2
 
+    gh
     git-subrepo
     git-filter-repo
     meld
@@ -156,7 +157,7 @@ in {
 
     lutris-free
     prismlauncher  # minecraft
-    sauerbraten
+    #sauerbraten
     superTuxKart
 
     # temp
