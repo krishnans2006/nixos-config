@@ -413,8 +413,9 @@ in {
               launchers = [
                 "applications:org.kde.dolphin.desktop"
                 "applications:org.kde.konsole.desktop"
-                "applications:firefox.desktop"
-                "applications:systemsettings.desktop"
+                "applications:app.zen_browser.zen.desktop"
+                "applications:vesktop.desktop"
+                "applications:code-url-handler.desktop"
               ];
               appearance = {
                 showTooltips = true;  # Show small window previews when hovering over tasks
