@@ -821,8 +821,6 @@ in {
         "browser.download.useDownloadDir" = false;
         "browser.download.panel.shown" = true;
         "browser.laterrun.enabled" = false;
-        "browser.ml.chat.enabled" = true;
-        "browser.ml.chat.provider" = "https://gemini.google.com";
         "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
         "browser.newtabpage.activity-stream.showSponsored" = false;
         "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
