@@ -560,7 +560,7 @@ in {
       POWERLEVEL9K_CONFIG_FILE = "~/.dotfiles/.p10k.zsh";
     };
 
-    initExtra = ''
+    initContent = ''
       autoload zmv
 
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
