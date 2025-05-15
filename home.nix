@@ -666,7 +666,7 @@ in {
 
     matchBlocks = {
       "ews" = {
-        hostname = "linux-ssh-01.ews.illinois.edu";
+        hostname = "linux.ews.illinois.edu";
         identityFile = "~/.ssh/id_ed25519";
         user = "ks128";
         forwardX11 = true;
