@@ -294,6 +294,9 @@
     daemon.settings.userland-proxy = false;
   };
 
+  # Waydroid (Android apps)
+  virtualisation.waydroid.enable = true;
+
   # Shell
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
