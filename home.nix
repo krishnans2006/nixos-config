@@ -76,6 +76,7 @@ in {
     libxml2
 
     gh
+    git-lfs
     git-subrepo
     git-filter-repo
     meld
