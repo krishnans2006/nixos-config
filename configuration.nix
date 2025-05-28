@@ -291,7 +291,6 @@
   # Docker
   virtualisation.docker = {
     enable = true;
-    daemon.settings.userland-proxy = false;
   };
 
   # Waydroid (Android apps)
