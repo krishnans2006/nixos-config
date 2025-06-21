@@ -152,6 +152,9 @@ in {
     vlc
     obs-studio
 
+    openconnect
+    networkmanager-openconnect
+
     lc3tools
 
     mission-planner
