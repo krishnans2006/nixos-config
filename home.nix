@@ -189,6 +189,8 @@ in {
 
       "atuin/key" = {};
       "atuin/key_b64" = {};
+
+      "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
     };
   };
 

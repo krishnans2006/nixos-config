@@ -45,6 +45,12 @@
     };
   };
 
+  # Yubikey Auth (see yubikey/u2f_keys in secrets-home)
+  security.pam.services = {
+    login.u2fAuth = true;
+    # sudo.u2fAuth = true;  # sudo is passwordless, so no need for U2F
+  };
+
   # Networking
   networking = {
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
