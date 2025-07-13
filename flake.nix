@@ -30,7 +30,6 @@
 
   outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, nix-flatpak, ... }@inputs: {
     nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       modules = [
         ./configuration.nix
         ./krishnan-lap.nix
@@ -56,7 +55,6 @@
       ];
     };
     nixosConfigurations.krishnan-pc = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       modules = [
         ./configuration.nix
         ./krishnan-pc.nix
