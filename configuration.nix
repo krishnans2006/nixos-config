@@ -98,6 +98,34 @@ in {
           net5 = (makePSKNetworkProfileConfig "5");
           net6 = (makePSKNetworkProfileConfig "6");
           net7 = (makePSKNetworkProfileConfig "7");
+
+          uiucvpn = {
+            connection.id = "UIUC";
+            connection.type = "vpn";
+
+            vpn.cookie-flags = "2";
+            vpn.enable_csd_trojan = "no";
+            vpn.gateway = "vpn.illinois.edu";
+            vpn.gateway-flags = "2";
+            vpn.gwcert-flags = "2";
+            vpn.pem_passphrase_fsid = "no";
+            vpn.prevent_invalid_cert = "no";
+            vpn.protocol = "anyconnect";
+            vpn.reported_os = "";
+            vpn.stoken_source = "";
+            vpn.stoken_string-flags = "0";
+            vpn.service-type = "org.freedesktop.NetworkManager.openconnect";
+
+            vpn-secrets.autoconnect = "yes";
+            vpn-secrets.save_passwords = "yes";
+            vpn-secrets.save_plaintext_cookies = "no";
+            vpn-secrets."form:main:group_list" = "DuoSplitTunnel";
+            vpn-secrets."form:main:username" = "ks128";
+
+            ipv4.method = "auto";
+            ipv6.method = "auto";
+            ipv6.addr-gen-mode = "default";
+          };
         };
       };
     };
