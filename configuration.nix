@@ -4,7 +4,33 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  makePSKNetworkProfileConfig = id: {
+    connection.type = "wifi";
+    wifi.mode = "infrastructure";
+    connection.id = "$net${id}_name";
+    wifi.ssid = "$net${id}_ssid";
+    wifi-security.key-mgmt = "wpa-psk";
+    wifi-security.psk = "$net${id}_psk";
+    ipv4.method = "auto";
+    ipv4.dns = "1.1.1.1;1.0.0.1;";
+    ipv4.ignore-auto-dns = "true";
+  };
+  makeEAPNetworkProfileConfig = id: {
+    connection.type = "wifi";
+    wifi.mode = "infrastructure";
+    connection.id = "$net${id}_name";
+    wifi.ssid = "$net${id}_ssid";
+    wifi-security.key-mgmt = "wpa-eap";
+    "802-1x".eap = "$net${id}_eap";
+    "802-1x".phase2-auth = "$net${id}_phase2_auth";
+    "802-1x".identity = "$net${id}_identity";
+    "802-1x".password = "$net${id}_password";
+    ipv4.method = "auto";
+    ipv4.dns = "1.1.1.1;1.0.0.1;";
+    ipv4.ignore-auto-dns = "true";
+  };
+in {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -64,100 +90,14 @@
         environmentFiles = [ config.sops.secrets."networks".path ];
 
         profiles = {
-          net0 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net0_name";
-            wifi.ssid = "$net0_ssid";
-            wifi-security.key-mgmt = "wpa-psk";
-            wifi-security.psk = "$net0_psk";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
-          net1 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net1_name";
-            wifi.ssid = "$net1_ssid";
-            wifi-security.key-mgmt = "wpa-psk";
-            wifi-security.psk = "$net1_psk";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
-          net2 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net2_name";
-            wifi.ssid = "$net2_ssid";
-            wifi-security.key-mgmt = "wpa-eap";
-            "802-1x".eap = "$net2_eap";
-            "802-1x".phase2-auth = "$net2_phase2_auth";
-            "802-1x".identity = "$net2_identity";
-            "802-1x".password = "$net2_password";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
-          net3 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net3_name";
-            wifi.ssid = "$net3_ssid";
-            wifi-security.key-mgmt = "wpa-eap";
-            "802-1x".eap = "$net3_eap";
-            "802-1x".phase2-auth = "$net3_phase2_auth";
-            "802-1x".identity = "$net3_identity";
-            "802-1x".password = "$net3_password";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
-          net4 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net4_name";
-            wifi.ssid = "$net4_ssid";
-            wifi-security.key-mgmt = "wpa-psk";
-            wifi-security.psk = "$net4_psk";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
-          net5 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net5_name";
-            wifi.ssid = "$net5_ssid";
-            wifi-security.key-mgmt = "wpa-psk";
-            wifi-security.psk = "$net5_psk";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
-          net6 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net6_name";
-            wifi.ssid = "$net6_ssid";
-            wifi-security.key-mgmt = "wpa-psk";
-            wifi-security.psk = "$net6_psk";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
-          net7 = {
-            connection.type = "wifi";
-            wifi.mode = "infrastructure";
-            connection.id = "$net7_name";
-            wifi.ssid = "$net7_ssid";
-            wifi-security.key-mgmt = "wpa-psk";
-            wifi-security.psk = "$net7_psk";
-            ipv4.method = "auto";
-            ipv4.dns = "1.1.1.1;1.0.0.1;";
-            ipv4.ignore-auto-dns = "true";
-          };
+          net0 = (makePSKNetworkProfileConfig "0");
+          net1 = (makePSKNetworkProfileConfig "1");
+          net2 = (makeEAPNetworkProfileConfig "2");
+          net3 = (makeEAPNetworkProfileConfig "3");
+          net4 = (makePSKNetworkProfileConfig "4");
+          net5 = (makePSKNetworkProfileConfig "5");
+          net6 = (makePSKNetworkProfileConfig "6");
+          net7 = (makePSKNetworkProfileConfig "7");
         };
       };
     };
