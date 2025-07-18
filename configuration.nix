@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 let
@@ -31,6 +27,10 @@ let
     ipv4.ignore-auto-dns = "true";
   };
 in {
+  imports = [
+    ./config/secrets.nix
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -47,29 +47,6 @@ in {
   # Disable dev-tpmrm0.device
   # See https://github.com/systemd/systemd/issues/33412
   systemd.units."dev-tpmrm0.device".enable = false;
-
-  # Secrets
-  sops = {
-    age.keyFile = "/home/krishnan/.config/sops/age/keys.txt";
-    age.generateKey = false;  # Do it manually from an SSH key (see README.md)
-    defaultSopsFile = ./secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
-
-    secrets = {
-      "wireguard/tjcsl" = {
-        restartUnits = [ "wg-quick-tjcsl.service" ];
-      };
-      "wireguard/proton" = {
-        restartUnits = [ "wg-quick-proton.service" ];
-      };
-      "wireguard/surfshark" = {
-        restartUnits = [ "wg-quick-surfshark.service" ];
-      };
-      "networks" = {
-        restartUnits = [ "NetworkManager.service" ];
-      };
-    };
-  };
 
   # Yubikey Auth (see yubikey/u2f_keys in secrets-home)
   security.pam.services = {

@@ -9,6 +9,10 @@ let
     rev = "5785b6bb5eaae44e627d541023034e1601455827";
   }) { inherit (pkgs) system; config.allowUnfree = true; };
 in {
+  imports = [
+    ./config/secrets-home.nix
+  ];
+
   home.username = "krishnan";
   home.homeDirectory = "/home/krishnan";
 
@@ -175,24 +179,6 @@ in {
     #duplicity
     #deja-dup
   ];
-
-  # Secrets
-  sops = {
-    age.keyFile = "/home/krishnan/.config/sops/age/keys.txt";
-    defaultSopsFile = ./secrets/secrets-home.yaml;
-    defaultSopsFormat = "yaml";
-
-    secrets = {
-      "wakatime/wakatime" = {};
-      "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
-      "wakatime/hackatime" = {};
-
-      "atuin/key" = {};
-      "atuin/key_b64" = {};
-
-      "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
-    };
-  };
 
   # KDE Connect
   #services.kdeconnect.enable = true;
