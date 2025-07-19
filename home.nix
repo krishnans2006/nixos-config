@@ -12,11 +12,13 @@ in {
   imports = [
     ./config/secrets-home.nix
 
-    ./config/plasma.nix
+    ./modules/plasma.nix
   ];
 
   home.username = "krishnan";
   home.homeDirectory = "/home/krishnan";
+
+  modules.plasma.enable = true;
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
