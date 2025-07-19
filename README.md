@@ -11,7 +11,6 @@ The system:
 
 The configuration:
 - Multi-device (PC, laptop)
-- "One-file" setup (as opposed to the heavily-nested standard)
 - Nixpkgs `unstable`
 - Flakes
 - Secrets management with `sops` and `sops-nix` (as a submodule)
