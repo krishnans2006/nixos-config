@@ -60,7 +60,6 @@ in {
     kdePackages.kate
     kdePackages.bluedevil
     kdePackages.filelight
-    #kdePackages.partitionmanager
     nixpkgs_old.kdePackages.kdenlive
     krita
 
