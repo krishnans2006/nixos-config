@@ -29,7 +29,11 @@ let
 in {
   imports = [
     ./config/secrets.nix
+
+    ./modules/plasma.nix
   ];
+
+  modules.plasma.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -152,27 +156,6 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager = {
-    sddm.enable = true;
-    autoLogin.enable = true;
-    autoLogin.user = "krishnan";
-  };
-  services.desktopManager.plasma6.enable = true;
-
-  # Fix blurry vscode
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
   # Printer autodiscovery
@@ -251,12 +234,6 @@ in {
   # Shell
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
-
-  # Enable KDE Connect (Phone Integration)
-  programs.kdeconnect.enable = true;
-
-  # Enable Partition Manager
-  programs.partition-manager.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

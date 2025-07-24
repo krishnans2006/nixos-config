@@ -13,7 +13,7 @@ in {
     ./config/basic-home.nix
     ./config/secrets-home.nix
 
-    ./modules/plasma.nix
+    ./modules/plasma-home.nix
   ];
 
   modules.plasma.enable = true;
