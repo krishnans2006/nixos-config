@@ -6,10 +6,12 @@
 
     ./modules/plasma.nix
     ./modules/networks.nix
+    ./modules/gaming.nix
   ];
 
   modules.plasma.enable = true;
   modules.networks.enable = true;
+  modules.gaming.enable = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -183,13 +185,6 @@
 
   services.redis.servers."".enable = true;
   programs.firejail.enable = true;
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;  # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true;  # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true;  # Open ports in the firewall for Steam Local Network Game Transfers
-  };
 
   # fstab entries for mounts
   fileSystems."/home/krishnan/Filesystems/Tailscale" = {
