@@ -7,11 +7,13 @@
     ./modules/plasma.nix
     ./modules/networks.nix
     ./modules/gaming.nix
+    ./modules/printing.nix
   ];
 
   modules.plasma.enable = true;
   modules.networks.enable = true;
   modules.gaming.enable = false;
+  modules.printing.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -53,15 +55,6 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  # Printer autodiscovery
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
   };
 
   # Enable sound with pipewire.
