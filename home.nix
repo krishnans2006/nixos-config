@@ -54,7 +54,7 @@ in {
     jq
 
     undollar
-    thefuck
+    pay-respects
     moreutils
 
     kdePackages.kate
