@@ -58,6 +58,10 @@ in {
         dns = "systemd-resolved";
         wifi.backend = "wpa_supplicant";
 
+        plugins = with pkgs; [
+          networkmanager-openconnect
+        ];
+
         ensureProfiles = {
           environmentFiles = [ config.sops.secrets."networks".path ];
 
