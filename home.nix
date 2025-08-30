@@ -244,6 +244,11 @@ in {
     executable = true;  # make all files executable
   };
 
+  # GDB (for ECE 391)
+  home.file.".config/gdb/gdbinit" = {
+    text = "set auto-load safe-path /";
+  };
+
   programs.atuin = {
     enable = true;
 
