@@ -424,6 +424,7 @@ in {
     ];
     packages = [
       "app.zen_browser.zen"
+      "com.bitwarden.desktop"
     ];
     update.onActivation = true;
   };
