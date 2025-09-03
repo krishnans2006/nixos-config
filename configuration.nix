@@ -123,6 +123,10 @@
   # Waydroid (Android apps)
   virtualisation.waydroid.enable = true;
 
+  # VirtualBox
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "krishnan" ];
+
   # Shell
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
