@@ -47,6 +47,31 @@ let
     ipv4.ignore-auto-dns = "true";
   };
 
+  makeWireguardVPNProfileConfig = id: {
+    connection = {
+      id = "$wg${id}_name";
+      interface-name = "$wg${id}_interface";
+      type = "wireguard";
+    };
+    wireguard = {
+      private-key = "$wg${id}_key";
+    };
+    "wireguard-peer\.$wg${id}_peer" = {
+      endpoint = "$wg${id}_endpoint";
+      allowed-ips = "$wg${id}_allowed_ips";
+    };
+    ipv4 = {
+      method = "manual";
+      address1 = "$wg${id}_address";
+      dns = "$wg${id}_dns_ips";
+      dns-search = "$wg${id}_dns_names";
+    };
+    ipv6 = {
+      method = "disabled";
+      addr-gen-mode = "stable-privacy";
+    };
+  };
+
 in
 {
   imports = [
@@ -111,6 +136,10 @@ in
             net10 = (makeOpenNetworkProfileConfig "10");
             net11 = (makeOpenNetworkProfileConfig "11");
 
+            wg0 = (makeWireguardVPNProfileConfig "0");
+            # wg1 = (makeWireguardVPNProfileConfig "1");
+            # wg2 = (makeWireguardVPNProfileConfig "2");
+
             uiucvpn = {
               connection.id = "UIUC";
               connection.type = "vpn";
@@ -143,10 +172,6 @@ in
       };
 
       wg-quick.interfaces = {
-        tjcsl = {
-          autostart = true;
-          configFile = config.sops.secrets."wireguard/tjcsl".path;
-        };
         proton = {
           autostart = false;
           configFile = config.sops.secrets."wireguard/proton".path;
