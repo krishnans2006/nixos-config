@@ -1,14 +1,29 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.modules.networks;
 
-  makePSKNetworkProfileConfig = id: {
+  makeOpenNetworkProfileConfig = id: {
+    connection.id = "$net${id}_name";
     connection.type = "wifi";
     wifi.mode = "infrastructure";
+    wifi.ssid = "$net${id}_ssid";
+    ipv4.method = "auto";
+    ipv4.dns = "1.1.1.1;1.0.0.1;";
+    ipv4.ignore-auto-dns = "true";
+  };
+
+  makePSKNetworkProfileConfig = id: {
     connection.id = "$net${id}_name";
+    connection.type = "wifi";
+    wifi.mode = "infrastructure";
     wifi.ssid = "$net${id}_ssid";
     wifi-security.key-mgmt = "wpa-psk";
     wifi-security.psk = "$net${id}_psk";
@@ -16,10 +31,11 @@ let
     ipv4.dns = "1.1.1.1;1.0.0.1;";
     ipv4.ignore-auto-dns = "true";
   };
+
   makeEAPNetworkProfileConfig = id: {
+    connection.id = "$net${id}_name";
     connection.type = "wifi";
     wifi.mode = "infrastructure";
-    connection.id = "$net${id}_name";
     wifi.ssid = "$net${id}_ssid";
     wifi-security.key-mgmt = "wpa-eap";
     "802-1x".eap = "$net${id}_eap";
@@ -30,7 +46,9 @@ let
     ipv4.dns = "1.1.1.1;1.0.0.1;";
     ipv4.ignore-auto-dns = "true";
   };
-in {
+
+in
+{
   imports = [
     ../config/secrets.nix
   ];
@@ -43,13 +61,19 @@ in {
     services.resolved = {
       enable = true;
       domains = [ "~." ];
-      fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
+      fallbackDns = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
       dnssec = "allow-downgrade";
-      dnsovertls = "opportunistic";  # maybe "true" is possible?
+      dnsovertls = "opportunistic"; # maybe "true" is possible?
     };
 
     networking = {
-      nameservers = [ "1.1.1.1" "1.0.0.1" ];
+      nameservers = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
 
       wireless.enable = false;
 
@@ -73,7 +97,7 @@ in {
               ipv4.dns = "1.1.1.1;1.0.0.1;";
               ipv4.ignore-auto-dns = "true";
             };
-            
+
             net0 = (makePSKNetworkProfileConfig "0");
             net1 = (makePSKNetworkProfileConfig "1");
             net2 = (makeEAPNetworkProfileConfig "2");
@@ -84,6 +108,8 @@ in {
             net7 = (makePSKNetworkProfileConfig "7");
             net8 = (makePSKNetworkProfileConfig "8");
             net9 = (makePSKNetworkProfileConfig "9");
+            net10 = (makeOpenNetworkProfileConfig "10");
+            net11 = (makeOpenNetworkProfileConfig "11");
 
             uiucvpn = {
               connection.id = "UIUC";
