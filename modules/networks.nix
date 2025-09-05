@@ -82,6 +82,8 @@ in {
             net5 = (makePSKNetworkProfileConfig "5");
             net6 = (makePSKNetworkProfileConfig "6");
             net7 = (makePSKNetworkProfileConfig "7");
+            net8 = (makePSKNetworkProfileConfig "8");
+            net9 = (makePSKNetworkProfileConfig "9");
 
             uiucvpn = {
               connection.id = "UIUC";
