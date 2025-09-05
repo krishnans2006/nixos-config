@@ -66,6 +66,14 @@ in {
           environmentFiles = [ config.sops.secrets."networks".path ];
 
           profiles = {
+            ethernet = {
+              connection.type = "ethernet";
+              connection.id = "Ethernet";
+              ipv4.method = "auto";
+              ipv4.dns = "1.1.1.1;1.0.0.1;";
+              ipv4.ignore-auto-dns = "true";
+            };
+            
             net0 = (makePSKNetworkProfileConfig "0");
             net1 = (makePSKNetworkProfileConfig "1");
             net2 = (makeEAPNetworkProfileConfig "2");
