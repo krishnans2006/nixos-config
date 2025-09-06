@@ -11,40 +11,64 @@ let
   cfg = config.modules.networks;
 
   makeOpenNetworkProfileConfig = id: {
-    connection.id = "$net${id}_name";
-    connection.type = "wifi";
-    wifi.mode = "infrastructure";
-    wifi.ssid = "$net${id}_ssid";
-    ipv4.method = "auto";
-    ipv4.dns = "1.1.1.1;1.0.0.1;";
-    ipv4.ignore-auto-dns = "true";
+    connection = {
+      id = "$net${id}_name";
+      type = "wifi";
+    };
+    wifi = {
+      mode = "infrastructure";
+      ssid = "$net${id}_ssid";
+    };
+    ipv4 = {
+      method = "auto";
+      dns = "1.1.1.1;1.0.0.1;";
+      ignore-auto-dns = "true";
+    };
   };
 
   makePSKNetworkProfileConfig = id: {
-    connection.id = "$net${id}_name";
-    connection.type = "wifi";
-    wifi.mode = "infrastructure";
-    wifi.ssid = "$net${id}_ssid";
-    wifi-security.key-mgmt = "wpa-psk";
-    wifi-security.psk = "$net${id}_psk";
-    ipv4.method = "auto";
-    ipv4.dns = "1.1.1.1;1.0.0.1;";
-    ipv4.ignore-auto-dns = "true";
+    connection = {
+      id = "$net${id}_name";
+      type = "wifi";
+    };
+    wifi = {
+      mode = "infrastructure";
+      ssid = "$net${id}_ssid";
+    };
+    wifi-security = {
+      key-mgmt = "wpa-psk";
+      psk = "$net${id}_psk";
+    };
+    ipv4 = {
+      method = "auto";
+      dns = "1.1.1.1;1.0.0.1;";
+      ignore-auto-dns = "true";
+    };
   };
 
   makeEAPNetworkProfileConfig = id: {
-    connection.id = "$net${id}_name";
-    connection.type = "wifi";
-    wifi.mode = "infrastructure";
-    wifi.ssid = "$net${id}_ssid";
-    wifi-security.key-mgmt = "wpa-eap";
-    "802-1x".eap = "$net${id}_eap";
-    "802-1x".phase2-auth = "$net${id}_phase2_auth";
-    "802-1x".identity = "$net${id}_identity";
-    "802-1x".password = "$net${id}_password";
-    ipv4.method = "auto";
-    ipv4.dns = "1.1.1.1;1.0.0.1;";
-    ipv4.ignore-auto-dns = "true";
+    connection = {
+      id = "$net${id}_name";
+      type = "wifi";
+    };
+    wifi = {
+      mode = "infrastructure";
+      ssid = "$net${id}_ssid";
+    };
+    wifi-security = {
+      key-mgmt = "wpa-eap";
+    };
+    "802-1x" = {
+      eap = "$net${id}_eap";
+      phase2-auth = "$net${id}_phase2_auth";
+      identity = "$net${id}_identity";
+      password = "$net${id}_password";
+    };
+    ipv4 = {
+      method = "auto";
+      dns = "1.1.1.1;1.0.0.1;";
+      ignore-auto-dns = "true";
+    };
   };
 
   makeWireguardVPNProfileConfig = id: {
