@@ -137,8 +137,7 @@ in
             net11 = (makeOpenNetworkProfileConfig "11");
 
             wg0 = (makeWireguardVPNProfileConfig "0");
-            # wg1 = (makeWireguardVPNProfileConfig "1");
-            # wg2 = (makeWireguardVPNProfileConfig "2");
+            wg1 = (makeWireguardVPNProfileConfig "1");
 
             uiucvpn = {
               connection.id = "UIUC";
@@ -168,17 +167,6 @@ in
               ipv6.addr-gen-mode = "default";
             };
           };
-        };
-      };
-
-      wg-quick.interfaces = {
-        proton = {
-          autostart = false;
-          configFile = config.sops.secrets."wireguard/proton".path;
-        };
-        surfshark = {
-          autostart = false;
-          configFile = config.sops.secrets."wireguard/surfshark".path;
         };
       };
     };
