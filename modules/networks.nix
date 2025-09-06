@@ -26,50 +26,28 @@ let
     };
   };
 
-  makePSKNetworkProfileConfig = id: {
-    connection = {
-      id = "$net${id}_name";
-      type = "wifi";
-    };
-    wifi = {
-      mode = "infrastructure";
-      ssid = "$net${id}_ssid";
-    };
-    wifi-security = {
-      key-mgmt = "wpa-psk";
-      psk = "$net${id}_psk";
-    };
-    ipv4 = {
-      method = "auto";
-      dns = "1.1.1.1;1.0.0.1;";
-      ignore-auto-dns = "true";
-    };
-  };
+  makePSKNetworkProfileConfig = id:
+    (makeOpenNetworkProfileConfig id) //
+      {
+        wifi-security = {
+          key-mgmt = "wpa-psk";
+          psk = "$net${id}_psk";
+        };
+      };
 
-  makeEAPNetworkProfileConfig = id: {
-    connection = {
-      id = "$net${id}_name";
-      type = "wifi";
-    };
-    wifi = {
-      mode = "infrastructure";
-      ssid = "$net${id}_ssid";
-    };
-    wifi-security = {
-      key-mgmt = "wpa-eap";
-    };
-    "802-1x" = {
-      eap = "$net${id}_eap";
-      phase2-auth = "$net${id}_phase2_auth";
-      identity = "$net${id}_identity";
-      password = "$net${id}_password";
-    };
-    ipv4 = {
-      method = "auto";
-      dns = "1.1.1.1;1.0.0.1;";
-      ignore-auto-dns = "true";
-    };
-  };
+  makeEAPNetworkProfileConfig = id:
+    (makeOpenNetworkProfileConfig id) //
+      {
+        wifi-security = {
+          key-mgmt = "wpa-eap";
+        };
+        "802-1x" = {
+          eap = "$net${id}_eap";
+          phase2-auth = "$net${id}_phase2_auth";
+          identity = "$net${id}_identity";
+          password = "$net${id}_password";
+        };
+      };
 
   makeWireguardVPNProfileConfig = id: {
     connection = {
