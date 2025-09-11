@@ -83,8 +83,8 @@
     enableSSHSupport = true;
   };
 
-  services.redis.servers."".enable = true;
-  programs.firejail.enable = true;
+  # services.redis.servers."".enable = true;
+  # programs.firejail.enable = true;
 
   # LLDB fix
   #nixpkgs.overlays = [
