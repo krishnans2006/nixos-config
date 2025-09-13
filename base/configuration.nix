@@ -87,11 +87,6 @@
     via
   ];
 
-  # Docker
-  virtualisation.docker = {
-    enable = true;
-  };
-
   # Shell
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];

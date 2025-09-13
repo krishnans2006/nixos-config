@@ -10,6 +10,7 @@
     ../../modules/networks.nix
     ../../modules/bluetooth.nix
     ../../modules/printing.nix
+    ../../modules/docker.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
@@ -25,6 +26,7 @@
   modules.networks.enable = true;
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
+  modules.docker.enable = true;
 
   modules.gaming.enable = true;
   modules.waydroid.enable = true;
