@@ -11,6 +11,7 @@
     ../../modules/bluetooth.nix
     ../../modules/printing.nix
     ../../modules/docker.nix
+    ../../modules/tailscale.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
@@ -27,6 +28,10 @@
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
   modules.docker.enable = true;
+  modules.tailscale = {
+    enable = true;
+    enableTaildrive = false;
+  };
 
   modules.gaming.enable = true;
   modules.waydroid.enable = true;

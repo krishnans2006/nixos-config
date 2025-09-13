@@ -11,6 +11,7 @@
     ../../modules/bluetooth.nix
     ../../modules/printing.nix
     ../../modules/docker.nix
+    ../../modules/tailscale.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
@@ -27,6 +28,11 @@
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
   modules.docker.enable = true;
+  modules.tailscale = {
+    enable = true;
+    enableTaildrive = true;
+    taildrivePath = "/home/krishnan/Filesystems/Tailscale";
+  };
 
   modules.gaming.enable = false;
   modules.waydroid.enable = false;
