@@ -39,7 +39,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeManagerModules.plasma-manager ];
+          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeModules.plasma-manager ];
           home-manager.users.krishnan.imports = [
             ./systems/krishnan-lap/home.nix
             nix-flatpak.homeManagerModules.nix-flatpak
@@ -62,7 +62,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeManagerModules.plasma-manager ];
+          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeModules.plasma-manager ];
           home-manager.users.krishnan.imports = [
             ./systems/krishnan-pc/home.nix
             nix-flatpak.homeManagerModules.nix-flatpak
