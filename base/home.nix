@@ -326,13 +326,15 @@ in {
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
-
-    controlMaster = "auto";
-    controlPath = "~/.ssh/master-%r@%h:%p";
-    controlPersist = "3s";
+    enableDefaultConfig = false;
 
     matchBlocks = {
+      "*" = {
+        addKeysToAgent = "yes";
+        controlMaster = "auto";
+        controlPath = "~/.ssh/master-%r@%h:%p";
+        controlPersist = "3s";
+      };
       "ews" = {
         hostname = "linux.ews.illinois.edu";
         identityFile = "~/.ssh/id_ed25519";
