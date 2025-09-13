@@ -31,8 +31,7 @@
   outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, nix-flatpak, ... }@inputs: {
     nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
       modules = [
-        ./configuration.nix
-        ./krishnan-lap.nix
+        ./systems/krishnan-lap/configuration.nix
 
         sops-nix.nixosModules.sops
 
@@ -42,8 +41,7 @@
           home-manager.useUserPackages = true;
           home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeManagerModules.plasma-manager ];
           home-manager.users.krishnan.imports = [
-            ./home.nix
-            ./krishnan-lap-home.nix
+            ./systems/krishnan-lap/home.nix
             nix-flatpak.homeManagerModules.nix-flatpak
           ];
         }
@@ -56,8 +54,7 @@
     };
     nixosConfigurations.krishnan-pc = nixpkgs.lib.nixosSystem {
       modules = [
-        ./configuration.nix
-        ./krishnan-pc.nix
+        ./systems/krishnan-pc/configuration.nix
 
         sops-nix.nixosModules.sops
 
@@ -67,8 +64,7 @@
           home-manager.useUserPackages = true;
           home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeManagerModules.plasma-manager ];
           home-manager.users.krishnan.imports = [
-            ./home.nix
-            ./krishnan-pc-home.nix
+            ./systems/krishnan-pc/home.nix
             nix-flatpak.homeManagerModules.nix-flatpak
           ];
         }

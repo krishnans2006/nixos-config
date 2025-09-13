@@ -2,18 +2,8 @@
 
 {
   imports = [
-    ./config/secrets.nix
-
-    ./modules/plasma.nix
-    ./modules/networks.nix
-    ./modules/gaming.nix
-    ./modules/printing.nix
+    ../config/secrets.nix
   ];
-
-  modules.plasma.enable = true;
-  modules.networks.enable = true;
-  modules.gaming.enable = false;
-  modules.printing.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -119,9 +109,6 @@
   virtualisation.docker = {
     enable = true;
   };
-
-  # Waydroid (Android apps)
-  virtualisation.waydroid.enable = true;
 
   # VirtualBox
   virtualisation.virtualbox.host.enable = true;

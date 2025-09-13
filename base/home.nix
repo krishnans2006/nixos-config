@@ -10,13 +10,9 @@ let
   }) { inherit (pkgs) system; config.allowUnfree = true; };
 in {
   imports = [
-    ./config/basic-home.nix
-    ./config/secrets-home.nix
-
-    ./modules/plasma-home.nix
+    ../config/basic-home.nix
+    ../config/secrets-home.nix
   ];
-
-  modules.plasma.enable = true;
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
@@ -239,7 +235,7 @@ in {
 
   # link all files in `./dotfiles` to `~/.dotfiles`
   home.file.".dotfiles" = {
-    source = ./dotfiles;
+    source = ../dotfiles;
     recursive = true;   # link recursively
     executable = true;  # make all files executable
   };
