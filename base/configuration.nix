@@ -77,20 +77,8 @@
     #};
   };
 
-  # Enable bluetooth
+  # TODO: check if necessary
   hardware.enableAllFirmware = true;
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
-  # A2DP
-  hardware.bluetooth.settings = {
-    General = {
-      Enable = "Source,Sink,Media,Socket";
-      FastConnectable = "true";
-      MultiProfile = "multiple";
-      Experimental = true;
-    };
-  };
-  #services.blueman.enable = true;
 
   # udev rules
   services.udev.packages = with pkgs; [
