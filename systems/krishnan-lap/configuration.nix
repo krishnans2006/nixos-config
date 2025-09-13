@@ -11,6 +11,7 @@
     ../../modules/gaming.nix
     ../../modules/printing.nix
     ../../modules/waydroid.nix
+    ../../modules/virtualbox.nix
 
     # Base configuration
     ../../base/configuration.nix
@@ -21,6 +22,7 @@
   modules.gaming.enable = false;
   modules.printing.enable = true;
   modules.waydroid.enable = false;
+  modules.virtualbox.enable = false;
 
   networking.hostName = "krishnan-lap"; # Define your hostname.
 }
