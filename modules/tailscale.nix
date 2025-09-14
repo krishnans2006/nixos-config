@@ -16,27 +16,33 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    services.tailscale.enable = true;
+  config = mkIf cfg.enable (
+    mkMerge [
+      {
+        services.tailscale.enable = true;
+      }
 
-    services.davfs2 = mkIf cfg.enableTaildrive {
-      enable = true;
-      davGroup = "davfs2";
-    };
-    users.users."krishnan".extraGroups = mkIf cfg.enableTaildrive [ "davfs2" ];
+      (mkIf cfg.enableTaildrive {
+        services.davfs2 = {
+          enable = true;
+          davGroup = "davfs2";
+        };
+        users.users."krishnan".extraGroups = [ "davfs2" ];
 
-    fileSystems."${cfg.taildrivePath}" = mkIf cfg.enableTaildrive {
-      device = "http://100.100.100.100:8080";
-      mountPoint = "${cfg.taildrivePath}";
-      depends = [ "/" ];
-      noCheck = true;
-      fsType = "davfs";
-      options = [ "_netdev" "rw" "file_mode=0664" "dir_mode=2775" "user" "uid=${toString config.users.users."krishnan".uid}" "grpid" ];
-    };
-    environment.etc."davfs2/secrets" = mkIf cfg.enableTaildrive {
-      enable = true;
-      text = "http://100.100.100.100:8080 \"\" \"\"";
-      mode = "0600";
-    };
-  };
+        fileSystems."${cfg.taildrivePath}" = {
+          device = "http://100.100.100.100:8080";
+          mountPoint = "${cfg.taildrivePath}";
+          depends = [ "/" ];
+          noCheck = true;
+          fsType = "davfs";
+          options = [ "_netdev" "rw" "file_mode=0664" "dir_mode=2775" "user" "uid=${toString config.users.users."krishnan".uid}" "grpid" ];
+        };
+        environment.etc."davfs2/secrets" = {
+          enable = true;
+          text = "http://100.100.100.100:8080 \"\" \"\"";
+          mode = "0600";
+        };
+      })
+    ]
+  );
 }

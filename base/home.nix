@@ -72,8 +72,6 @@ in {
     dig
     nmap
 
-    tail-tray
-
     libxml2
 
     gh
