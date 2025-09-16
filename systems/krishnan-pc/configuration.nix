@@ -7,6 +7,7 @@
 
     # Custom modules
     ../../modules/plasma.nix
+    ../../modules/audio.nix
     ../../modules/networks.nix
     ../../modules/bluetooth.nix
     ../../modules/printing.nix
@@ -25,6 +26,7 @@
   ];
 
   modules.plasma.enable = true;
+  modules.audio.enable = true;
   modules.networks = {
     enable = true;
     ethernetOnly = true;  # To avoid bluetooth issues (and since Ethernet is always plugged in)
