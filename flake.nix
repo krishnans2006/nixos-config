@@ -4,6 +4,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # UEFI Secure Boot
+    # https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,10 +35,12 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, plasma-manager, nix-index-database, nix-flatpak, ... }@inputs: {
+  outputs = { self, nixpkgs, lanzaboote, sops-nix, home-manager, plasma-manager, nix-index-database, nix-flatpak, ... }@inputs: {
     nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
       modules = [
         ./systems/krishnan-lap/configuration.nix
+
+        lanzaboote.nixosModules.lanzaboote
 
         sops-nix.nixosModules.sops
 

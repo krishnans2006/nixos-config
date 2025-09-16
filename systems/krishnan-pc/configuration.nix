@@ -17,6 +17,7 @@
     ../../modules/waydroid.nix
     ../../modules/virtualbox.nix
 
+    ../../modules/secure-boot.nix
     ../../modules/hp-pen.nix
 
     # Base configuration
@@ -37,6 +38,8 @@
   modules.waydroid.enable = true;
   modules.virtualbox.enable = true;
 
+  # TODO: Set up secure boot on krishnan-pc
+  modules.secure-boot.enable = false;
   modules.hp-pen.enable = false;
 
   networking.hostName = "krishnan-pc"; # Define your hostname.

@@ -17,6 +17,7 @@
     ../../modules/waydroid.nix
     ../../modules/virtualbox.nix
 
+    ../../modules/secure-boot.nix
     ../../modules/hp-pen.nix
 
     # Base configuration
@@ -38,6 +39,7 @@
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
 
+  modules.secure-boot.enable = true;
   modules.hp-pen.enable = true;
 
   networking.hostName = "krishnan-lap"; # Define your hostname.
