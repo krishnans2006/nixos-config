@@ -25,7 +25,10 @@
   ];
 
   modules.plasma.enable = true;
-  modules.networks.enable = true;
+  modules.networks = {
+    enable = true;
+    ethernetOnly = true;  # To avoid bluetooth issues (and since Ethernet is always plugged in)
+  };
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
   modules.docker.enable = true;

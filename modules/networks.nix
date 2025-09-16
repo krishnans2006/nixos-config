@@ -10,10 +10,11 @@ with lib;
 let
   cfg = config.modules.networks;
 
-  makeOpenNetworkProfileConfig = id: {
+  makeOpenNetworkProfileConfig = id: autoconnect: {
     connection = {
       id = "$net${id}_name";
       type = "wifi";
+      autoconnect = (if autoconnect then "true" else "false");
     };
     wifi = {
       mode = "infrastructure";
@@ -26,8 +27,8 @@ let
     };
   };
 
-  makePSKNetworkProfileConfig = id:
-    (makeOpenNetworkProfileConfig id) //
+  makePSKNetworkProfileConfig = id: autoconnect:
+    (makeOpenNetworkProfileConfig id autoconnect) //
       {
         wifi-security = {
           key-mgmt = "wpa-psk";
@@ -35,8 +36,8 @@ let
         };
       };
 
-  makeEAPNetworkProfileConfig = id:
-    (makeOpenNetworkProfileConfig id) //
+  makeEAPNetworkProfileConfig = id: autoconnect:
+    (makeOpenNetworkProfileConfig id autoconnect) //
       {
         wifi-security = {
           key-mgmt = "wpa-eap";
@@ -82,6 +83,11 @@ in
 
   options.modules.networks = {
     enable = mkEnableOption "Enable a customized NetworkManager with known networks and VPNs";
+    ethernetOnly = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Disable autoconnect for WiFi networks";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -125,18 +131,18 @@ in
               ipv4.ignore-auto-dns = "true";
             };
 
-            net0 = (makePSKNetworkProfileConfig "0");
-            net1 = (makePSKNetworkProfileConfig "1");
-            net2 = (makeEAPNetworkProfileConfig "2");
-            net3 = (makeEAPNetworkProfileConfig "3");
-            net4 = (makePSKNetworkProfileConfig "4");
-            net5 = (makePSKNetworkProfileConfig "5");
-            net6 = (makePSKNetworkProfileConfig "6");
-            net7 = (makePSKNetworkProfileConfig "7");
-            net8 = (makePSKNetworkProfileConfig "8");
-            net9 = (makePSKNetworkProfileConfig "9");
-            net10 = (makeOpenNetworkProfileConfig "10");
-            net11 = (makeOpenNetworkProfileConfig "11");
+            net0 = (makePSKNetworkProfileConfig "0" (!cfg.ethernetOnly));
+            net1 = (makePSKNetworkProfileConfig "1" (!cfg.ethernetOnly));
+            net2 = (makeEAPNetworkProfileConfig "2" (!cfg.ethernetOnly));
+            net3 = (makeEAPNetworkProfileConfig "3" (!cfg.ethernetOnly));
+            net4 = (makePSKNetworkProfileConfig "4" (!cfg.ethernetOnly));
+            net5 = (makePSKNetworkProfileConfig "5" (!cfg.ethernetOnly));
+            net6 = (makePSKNetworkProfileConfig "6" (!cfg.ethernetOnly));
+            net7 = (makePSKNetworkProfileConfig "7" (!cfg.ethernetOnly));
+            net8 = (makePSKNetworkProfileConfig "8" (!cfg.ethernetOnly));
+            net9 = (makePSKNetworkProfileConfig "9" (!cfg.ethernetOnly));
+            net10 = (makeOpenNetworkProfileConfig "10" (!cfg.ethernetOnly));
+            net11 = (makeOpenNetworkProfileConfig "11" (!cfg.ethernetOnly));
 
             wg0 = (makeWireguardVPNProfileConfig "0");
             wg1 = (makeWireguardVPNProfileConfig "1");
