@@ -38,8 +38,7 @@
   modules.waydroid.enable = true;
   modules.virtualbox.enable = true;
 
-  # TODO: Set up secure boot on krishnan-pc
-  modules.secure-boot.enable = false;
+  modules.secure-boot.enable = true;
   modules.hp-pen.enable = false;
 
   networking.hostName = "krishnan-pc"; # Define your hostname.
