@@ -51,23 +51,8 @@
     via
   ];
 
-  # Shell
-  programs.zsh.enable = true;
-  environment.pathsToLink = [ "/share/zsh" ];
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users."krishnan" = {
-    uid = 1000;
-    isNormalUser = true;
-    description = "Krishnan Shankar";
-    extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" "docker" ];
-    packages = with pkgs; [ ];
-    shell = pkgs.zsh;
-  };
-  security.sudo.wheelNeedsPassword = false;
 
   # Install firefox.
   #programs.firefox.enable = true;

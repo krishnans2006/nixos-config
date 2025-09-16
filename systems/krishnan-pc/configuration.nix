@@ -14,6 +14,7 @@
     ../../modules/docker.nix
     ../../modules/tailscale.nix
     ../../modules/secure-boot.nix
+    ../../modules/krishnan-user.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
@@ -40,6 +41,7 @@
     enableTaildrive = false;
   };
   modules.secure-boot.enable = true;
+  modules.krishnan-user.enable = true;
 
   modules.gaming.enable = true;
   modules.waydroid.enable = true;
