@@ -13,13 +13,14 @@
     ../../modules/printing.nix
     ../../modules/docker.nix
     ../../modules/tailscale.nix
+    ../../modules/secure-boot.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
     ../../modules/virtualbox.nix
 
-    ../../modules/secure-boot.nix
     ../../modules/hp-pen.nix
+    ../../modules/yubikey-auth.nix
 
     # Base configuration
     ../../base/configuration.nix
@@ -36,13 +37,14 @@
     enableTaildrive = true;
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
+  modules.secure-boot.enable = true;
 
   modules.gaming.enable = false;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
 
-  modules.secure-boot.enable = true;
   modules.hp-pen.enable = true;
+  modules.yubikey-auth.enable = true;
 
   networking.hostName = "krishnan-lap"; # Define your hostname.
 }

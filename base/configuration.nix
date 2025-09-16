@@ -22,12 +22,6 @@
   # See https://github.com/systemd/systemd/issues/33412
   systemd.units."dev-tpmrm0.device".enable = false;
 
-  # Yubikey Auth (see yubikey/u2f_keys in secrets-home)
-  security.pam.services = {
-    login.u2fAuth = true;
-    # sudo.u2fAuth = true;  # sudo is passwordless, so no need for U2F
-  };
-
   # Set your time zone.
   #time.timeZone = "America/Chicago";
   services.automatic-timezoned.enable = true;

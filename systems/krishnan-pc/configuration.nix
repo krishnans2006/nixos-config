@@ -13,13 +13,14 @@
     ../../modules/printing.nix
     ../../modules/docker.nix
     ../../modules/tailscale.nix
+    ../../modules/secure-boot.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
     ../../modules/virtualbox.nix
-
-    ../../modules/secure-boot.nix
+  
     ../../modules/hp-pen.nix
+    ../../modules/yubikey-auth.nix
 
     # Base configuration
     ../../base/configuration.nix
@@ -38,13 +39,14 @@
     enable = true;
     enableTaildrive = false;
   };
+  modules.secure-boot.enable = true;
 
   modules.gaming.enable = true;
   modules.waydroid.enable = true;
   modules.virtualbox.enable = true;
 
-  modules.secure-boot.enable = true;
   modules.hp-pen.enable = false;
+  modules.yubikey-auth.enable = false;
 
   networking.hostName = "krishnan-pc"; # Define your hostname.
 }
