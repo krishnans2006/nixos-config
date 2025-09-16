@@ -65,6 +65,8 @@
       modules = [
         ./systems/krishnan-pc/configuration.nix
 
+        lanzaboote.nixosModules.lanzaboote
+
         sops-nix.nixosModules.sops
 
         home-manager.nixosModules.home-manager
