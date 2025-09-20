@@ -35,56 +35,14 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
   };
 
-  outputs = { self, nixpkgs, lanzaboote, sops-nix, home-manager, plasma-manager, nix-index-database, nix-flatpak, ... }@inputs: {
-    nixosConfigurations.krishnan-lap = nixpkgs.lib.nixosSystem {
-      modules = [
-        ./systems/krishnan-lap/configuration.nix
-
-        lanzaboote.nixosModules.lanzaboote
-
-        sops-nix.nixosModules.sops
-
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeModules.plasma-manager ];
-          home-manager.users.krishnan.imports = [
-            ./systems/krishnan-lap/home.nix
-            nix-flatpak.homeManagerModules.nix-flatpak
-          ];
-        }
-
-        nix-index-database.nixosModules.nix-index
-        {
-          programs.nix-index-database.comma.enable = true;
-        }
-      ];
-    };
-    nixosConfigurations.krishnan-pc = nixpkgs.lib.nixosSystem {
-      modules = [
-        ./systems/krishnan-pc/configuration.nix
-
-        lanzaboote.nixosModules.lanzaboote
-
-        sops-nix.nixosModules.sops
-
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeModules.plasma-manager ];
-          home-manager.users.krishnan.imports = [
-            ./systems/krishnan-pc/home.nix
-            nix-flatpak.homeManagerModules.nix-flatpak
-          ];
-        }
-
-        nix-index-database.nixosModules.nix-index
-        {
-          programs.nix-index-database.comma.enable = true;
-        }
-      ];
+  outputs = { self, ... }@inputs: {
+    nixosConfigurations = {
+      krishnan-lap = import ./systems/krishnan-lap {
+        inherit inputs;
+      };
+      krishnan-pc = import ./systems/krishnan-pc {
+        inherit inputs;
+      };
     };
   };
 }
