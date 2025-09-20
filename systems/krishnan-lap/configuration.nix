@@ -35,7 +35,7 @@
   modules.docker.enable = true;
   modules.tailscale = {
     enable = true;
-    enableTaildrive = true;
+    enableTaildrive = false;  # Temporary: due to davfs2 build issues
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
   modules.secure-boot.enable = true;
