@@ -29,14 +29,26 @@ in
         };
         users.users."krishnan".extraGroups = [ "davfs2" ];
 
-        fileSystems."${cfg.taildrivePath}" = {
-          device = "http://100.100.100.100:8080";
-          mountPoint = "${cfg.taildrivePath}";
-          depends = [ "/" ];
-          noCheck = true;
-          fsType = "davfs";
-          options = [ "_netdev" "rw" "file_mode=0664" "dir_mode=2775" "user" "uid=${toString config.users.users."krishnan".uid}" "grpid" ];
-        };
+        systemd.mounts = [
+          {
+            what = "http://100.100.100:8080";
+            where = "${cfg.taildrivePath}";
+            type = "davfs";
+            
+            wants = [ "tailscaled.service" ];
+            after = [ "tailscaled.service" ];
+
+            options = [ "noatime" "_netdev" "file_mode=0664" "dir_mode=2775" "user" "uid=${toString config.users.users."krishnan".uid}" "grpid" ];
+          }
+        ];
+        systemd.automounts = [
+          {
+            wantedBy = [ "multi-user.target" ];
+            where = "${cfg.taildrivePath}";
+            automountConfig.TimeoutIdleSec = "30m";
+          }
+        ];
+
         environment.etc."davfs2/secrets" = {
           enable = true;
           text = "http://100.100.100.100:8080 \"\" \"\"";
