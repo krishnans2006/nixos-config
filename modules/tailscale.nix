@@ -31,14 +31,14 @@ in
 
         systemd.mounts = [
           {
-            what = "http://100.100.100:8080";
+            what = "http://100.100.100.100:8080";
             where = "${cfg.taildrivePath}";
             type = "davfs";
             
             wants = [ "tailscaled.service" ];
             after = [ "tailscaled.service" ];
 
-            options = [ "noatime" "_netdev" "file_mode=0664" "dir_mode=2775" "user" "uid=${toString config.users.users."krishnan".uid}" "grpid" ];
+            options = lib.concatStringsSep "," [ "noatime" "_netdev" "file_mode=0664" "dir_mode=2775" "user" "uid=${toString config.users.users."krishnan".uid}" "grpid" ];
           }
         ];
         systemd.automounts = [
