@@ -374,50 +374,6 @@ in {
     };
   };
 
-  # SSHFS mounts
-  systemd.user.mounts."home-krishnan-Filesystems-tjCSL" = {
-    Unit = {
-      Description = "tjCSL filesystem mount";
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
-    };
-    Install.WantedBy = [ "default.target" ];
-    Mount = {
-      What = "2024kshankar@ras2.tjhsst.edu:/csl/users/2024kshankar";
-      Where = "/home/krishnan/Filesystems/tjCSL";
-      Type = "fuse.sshfs";
-      Options = "reconnect,ServerAliveInterval=15,IdentityFile=/home/krishnan/.ssh/id_ed25519";
-    };
-  };
-  systemd.user.mounts."home-krishnan-Filesystems-EWS" = {
-    Unit = {
-      Description = "EWS filesystem mount";
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
-    };
-    Install.WantedBy = [ "default.target" ];
-    Mount = {
-      What = "ks128@linux.ews.illinois.edu:/home/ks128";
-      Where = "/home/krishnan/Filesystems/EWS";
-      Type = "fuse.sshfs";
-      Options = "reconnect,ServerAliveInterval=15,IdentityFile=/home/krishnan/.ssh/id_ed25519";
-    };
-  };
-  #systemd.user.mounts."home-krishnan-Filesystems-Tailscale" = {
-  #  Unit = {
-  #    Description = "Tailscale Taildrive filesystem mount";
-  #    After = [ "network-online.target" "tailscaled.service" ];
-  #    Wants = [ "network-online.target" "tailscaled.service" ];#  
-  #  };
-  #  Install.WantedBy = [ "default.target" ];
-  #  Mount = {
-  #    What = "http://100.100.100.100:8080";
-  #    Where = "/home/krishnan/Filesystems/Tailscale";
-  #    Type = "davfs";
-  #    Options = "uid=${toString osConfig.users.users."krishnan".uid},file_mode=0664,dir_mode=2775,grpid";
-  #  };
-  #};
-
   # Flatpaks
   services.flatpak = {
     remotes = [

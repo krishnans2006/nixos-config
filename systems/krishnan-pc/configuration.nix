@@ -15,6 +15,7 @@
     ../../modules/tailscale.nix
     ../../modules/secure-boot.nix
     ../../modules/krishnan-user.nix
+    ../../modules/fs-mounts.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
@@ -42,6 +43,10 @@
   };
   modules.secure-boot.enable = true;
   modules.krishnan-user.enable = true;
+  modules.fs-mounts = {
+    tjcsl = true;
+    ews = true;
+  };
 
   modules.gaming.enable = true;
   modules.waydroid.enable = true;
