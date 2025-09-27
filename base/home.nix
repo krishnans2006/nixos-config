@@ -344,6 +344,17 @@ in {
           RemoteCommand = "/bin/zsh";
         };
       };
+      "ews-391" = {
+        hostname = "eceb-3026.ews.illinois.edu";
+        identityFile = "~/.ssh/id_ed25519";
+        user = "ks128";
+        forwardX11 = true;
+        forwardX11Trusted = true;
+        extraOptions = {
+          RequestTTY = "yes";
+          RemoteCommand = "/bin/zsh";
+        };
+      };
       "oracle-amp" = {
         hostname = "150.136.13.65";
         identityFile = "~/.ssh/id_ed25519";
