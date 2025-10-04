@@ -41,7 +41,7 @@
     enable = true;
     enableTaildrive = false;
   };
-  modules.secure-boot.enable = true;
+  modules.secure-boot.enable = false;
   modules.krishnan-user.enable = true;
   modules.fs-mounts = {
     tjcsl = true;
