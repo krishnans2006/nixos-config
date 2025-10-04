@@ -10,7 +10,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Memtest86+
-  boot.loader.grub.memtest86.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
 
   # Swappiness
   boot.kernel.sysctl = {
