@@ -91,6 +91,7 @@ in {
     rclone
 
     vesktop
+    discord-canary
     #libunity  # required for vesktop
     slack
     element-desktop
