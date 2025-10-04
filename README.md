@@ -27,6 +27,11 @@ Note: This list is incomplete.
 - Remove the password for `kdewallet` (KWallet)
 - Tailscale: `sudo tailscale login`, `sudo tailscale set --ssh --operator=krishnan`
 - Waydroid: `sudo waydroid init -s GAPPS -f`
+- Secure Boot: (see [documentation](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md))
+  - `sudo , sbctl create-keys`
+  - `modules.secure-boot.enable = true;`
+  - Set BIOS to setup mode (erase Platform Key)
+  - `sudo sbctl enroll-keys --microsoft`
 
 ## Command Snippets
 

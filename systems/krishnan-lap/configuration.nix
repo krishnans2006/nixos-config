@@ -53,5 +53,5 @@
   modules.hp-pen.enable = true;
   modules.yubikey-auth.enable = true;
 
-  networking.hostName = "krishnan-lap"; # Define your hostname.
+  networking.hostName = "krishnan-lap";  # Define your hostname.
 }
