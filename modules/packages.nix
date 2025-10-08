@@ -1,0 +1,32 @@
+{ config, lib, pkgs, ... }:
+
+with lib;
+
+let
+  cfg = config.modules.packages;
+in
+{
+  options.modules.packages = {
+    logic2 = mkEnableOption "Install Saleae Logic 2";
+  };
+
+  config = mkMerge [
+    (mkIf cfg.logic2 {
+      environment.systemPackages = [ pkgs.saleae-logic-2 ];
+
+      services.udev.extraRules = ''
+        # Saleae Logic Analyzer
+        # This file should be installed to /etc/udev/rules.d so that you can access the Logic hardware without being root
+        #
+        # type this at the command prompt: sudo cp 99-SaleaeLogic.rules /etc/udev/rules.d
+
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0925", ATTR{idProduct}=="3881", MODE="0666"
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1001", MODE="0666"
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1003", MODE="0666"
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1004", MODE="0666"
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1005", MODE="0666"
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1006", MODE="0666"
+      '';
+    })
+  ];
+}

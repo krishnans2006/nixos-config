@@ -24,6 +24,8 @@
     ../../modules/hp-pen.nix
     ../../modules/yubikey-auth.nix
 
+    ../../modules/packages.nix
+
     # Base configuration
     ../../base/configuration.nix
   ];
@@ -52,6 +54,10 @@
 
   modules.hp-pen.enable = true;
   modules.yubikey-auth.enable = true;
+
+  modules.packages = {
+    logic2 = true;
+  };
 
   networking.hostName = "krishnan-lap";  # Define your hostname.
 }
