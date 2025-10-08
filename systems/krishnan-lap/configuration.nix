@@ -57,6 +57,7 @@
 
   modules.packages = {
     logic2 = true;
+    chipwhisperer = true;
   };
 
   networking.hostName = "krishnan-lap";  # Define your hostname.
