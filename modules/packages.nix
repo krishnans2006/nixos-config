@@ -31,6 +31,7 @@ in
     })
 
     (mkIf cfg.chipwhisperer {
+      users.groups."chipwhisperer" = {};
       users.users."krishnan".extraGroups = [ "chipwhisperer" ];
 
       services.udev.extraRules = ''
