@@ -84,7 +84,7 @@
   };
 
   services.redis.servers."".enable = true;
-  programs.firejail.enable = true;
+  # programs.firejail.enable = true;
 
   # LLDB fix
   #nixpkgs.overlays = [
