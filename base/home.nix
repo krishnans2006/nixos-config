@@ -239,6 +239,14 @@ in {
     executable = true;  # make all files executable
   };
 
+  # Nanorc
+  home.file.".nanorc".text = ''
+    set autoindent
+    set tabsize 4
+    set tabstospaces
+    set linenumbers
+  '';
+
   # GDB (for ECE 391)
   home.file.".config/gdb/gdbinit" = {
     text = "set auto-load safe-path /";
