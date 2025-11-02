@@ -51,7 +51,7 @@ in {
           };
         };
         kxkbrc = {
-          Layout.Options = "compose:rctrl,caps:none";
+          Layout.Options = "compose:menu,caps:none";
         };
       };
 
