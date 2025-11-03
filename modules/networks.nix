@@ -75,6 +75,61 @@ let
     };
   };
 
+  # Using this function requires some secrets to be defined:
+  # - openvpn/ovpn{id}/ca
+  # - openvpn/ovpn{id}/cert
+  # - openvpn/ovpn{id}/key
+  # Features is a set of booleans, currently supported:
+  # - tcp: Use TCP instead of UDP
+  # - ta: Use TLS Auth, requires "openvpn/ovpn{id}/ta" secret
+  # - authSha256: Use SHA256 for auth (as opposed to SHA1)
+  # - cipher: Specify a cipher, requires "ovpn{id}_cipher" option
+  # - dataCiphers: Specify data ciphers and fallback, requires "ovpn{id}_data_ciphers" and "ovpn{id}_data_ciphers_fallback" options
+  # - randomHostname: Use a random hostname for the remote
+  # - dontReneg: Disable renegotiation
+  # More features may be added when needed by new OpenVPN configurations
+  makeOpenVPNProfileConfig = id: features: {
+    connection = {
+      id = "$ovpn${id}_name";
+      type = "vpn";
+    };
+    vpn = {
+      service-type = "org.freedesktop.NetworkManager.openvpn";
+      connection-type = "tls";
+      dev = "tun";
+      proto-tcp = mkIf (features.tcp) "yes";
+
+      remote = "$ovpn${id}_remote";
+      remote-cert-tls = "server";
+      verify-x509-name = "$ovpn${id}_verify_name";
+
+      ca = config.sops.secrets."openvpn/ovpn${id}/ca".path;
+      cert = config.sops.secrets."openvpn/ovpn${id}/cert".path;
+      key = config.sops.secrets."openvpn/ovpn${id}/key".path;
+      ta = mkIf (features.ta) config.sops.secrets."openvpn/ovpn${id}/ta".path;
+      ta-dir = mkIf (features.ta) "1";
+
+      cert-pass-flags = "0";
+      challenge-response-flags = "0";
+
+      auth = mkIf (features.authSha256) "SHA256";
+      cipher = mkIf (features.cipher) "$ovpn${id}_cipher";
+      data-ciphers = mkIf (features.dataCiphers) "$ovpn${id}_data_ciphers";
+      data-ciphers-fallback = mkIf (features.dataCiphers) "$ovpn${id}_data_ciphers_fallback";
+
+      remote-random-hostname = mkIf (features.randomHostname) "yes";
+      reneg-seconds = mkIf (features.dontReneg) "0";
+    };
+    ipv4 = {
+      method = "auto";
+      never-default = "true";
+    };
+    ipv6 = {
+      method = "disabled";
+      addr-gen-mode = "stable-privacy";
+    };
+  };
+
 in
 {
   imports = [
@@ -116,8 +171,14 @@ in
         wifi.backend = "wpa_supplicant";
 
         plugins = with pkgs; [
+          # Enabled by default:
+          networkmanager-fortisslvpn
+          networkmanager-iodine
+          networkmanager-l2tp
           networkmanager-openconnect
           networkmanager-openvpn
+          networkmanager-vpnc
+          networkmanager-sstp
         ];
 
         ensureProfiles = {
@@ -147,6 +208,34 @@ in
 
             wg0 = (makeWireguardVPNProfileConfig "0");
             wg1 = (makeWireguardVPNProfileConfig "1");
+
+            ovpn0 = (makeOpenVPNProfileConfig "0" {
+              tcp = false;
+              ta = true;
+              authSha256 = true;
+              cipher = false;
+              dataCiphers = true;
+              randomHostname = false;
+              dontReneg = false;
+            });
+            ovpn1 = (makeOpenVPNProfileConfig "1" {
+              tcp = true;
+              ta = false;
+              authSha256 = false;
+              cipher = true;
+              dataCiphers = false;
+              randomHostname = true;
+              dontReneg = true;
+            });
+            ovpn2 = (makeOpenVPNProfileConfig "2" {
+              tcp = false;
+              ta = false;
+              authSha256 = false;
+              cipher = true;
+              dataCiphers = false;
+              randomHostname = true;
+              dontReneg = true;
+            });
 
             uiucvpn = {
               connection.id = "UIUC";

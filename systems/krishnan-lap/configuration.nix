@@ -32,7 +32,10 @@
 
   modules.plasma.enable = true;
   modules.audio.enable = true;
-  modules.networks.enable = true;
+  modules.networks = {
+    enable = true;
+    ethernetOnly = false;
+  };
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
   modules.docker.enable = true;
