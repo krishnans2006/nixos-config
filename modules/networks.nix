@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -79,7 +74,10 @@ let
   # - openvpn/ovpn{id}/ca
   # - openvpn/ovpn{id}/cert
   # - openvpn/ovpn{id}/key
-  # Features is a set of booleans, currently supported:
+  # Features is an attrset of all booleans, intended to convey which options and secrets are set up
+  # for the config ID, along with some tweaks to the config itself. Supported features:
+  # - dns: Set custom DNS servers, requires "ovpn{id}_dns" option
+  # - domains: Set custom search domains, requires "ovpn{id}_domains" option
   # - tcp: Use TCP instead of UDP
   # - ta: Use TLS Auth, requires "openvpn/ovpn{id}/ta" secret
   # - authSha256: Use SHA256 for auth (as opposed to SHA1)
@@ -123,6 +121,9 @@ let
     ipv4 = {
       method = "auto";
       never-default = "true";
+      ignore-auto-dns = mkIf (features?dns) "true";
+      dns = mkIf (features?dns) "$ovpn${id}_dns_ips";
+      dns-search = mkIf (features?domains) "$ovpn${id}_dns_names";
     };
     ipv6 = {
       method = "disabled";
@@ -210,6 +211,8 @@ in
             wg1 = (makeWireguardVPNProfileConfig "1");
 
             ovpn0 = (makeOpenVPNProfileConfig "0" {
+              dns = true;
+              domains = true;
               tcp = false;
               ta = true;
               authSha256 = true;
