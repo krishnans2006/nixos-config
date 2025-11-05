@@ -131,6 +131,46 @@ let
     };
   };
 
+  makeCiscoVPNProfileConfig = id: {
+    connection = {
+      id = "$cisco${id}_name";
+      type = "vpn";
+    };
+    vpn = {
+      service-type = "org.freedesktop.NetworkManager.openconnect";
+      protocol = "anyconnect";
+
+      gateway = "$cisco${id}_gateway";
+      reported_os = "";
+      stoken_source = "";
+      
+      cookie-flags = "2";
+      gateway-flags = "2";
+      gwcert-flags = "2";
+      stoken_string-flags = "0";
+
+      enable_csd_trojan = "no";
+      pem_passphrase_fsid = "no";
+      prevent_invalid_cert = "no";
+    };
+    vpn-secrets = {
+      autoconnect = "yes";
+      save_passwords = "no";
+      save_plaintext_cookies = "no";
+      "form:main:group_list" = "$cisco${id}_group";
+      "form:main:username" = "$cisco${id}_username";
+      "form:main:password" = "$cisco${id}_password";
+      "form:main:secondary_password" = "$cisco${id}_2fa";  # "push", "sms", "otp", etc.
+    };
+    ipv4 = {
+      method = "auto";
+    };
+    ipv6 = {
+      method = "auto";
+      addr-gen-mode = "default";
+    };
+  };
+
 in
 {
   imports = [
@@ -240,33 +280,7 @@ in
               dontReneg = true;
             });
 
-            uiucvpn = {
-              connection.id = "UIUC";
-              connection.type = "vpn";
-
-              vpn.cookie-flags = "2";
-              vpn.enable_csd_trojan = "no";
-              vpn.gateway = "vpn.illinois.edu";
-              vpn.gateway-flags = "2";
-              vpn.gwcert-flags = "2";
-              vpn.pem_passphrase_fsid = "no";
-              vpn.prevent_invalid_cert = "no";
-              vpn.protocol = "anyconnect";
-              vpn.reported_os = "";
-              vpn.stoken_source = "";
-              vpn.stoken_string-flags = "0";
-              vpn.service-type = "org.freedesktop.NetworkManager.openconnect";
-
-              vpn-secrets.autoconnect = "yes";
-              vpn-secrets.save_passwords = "yes";
-              vpn-secrets.save_plaintext_cookies = "no";
-              vpn-secrets."form:main:group_list" = "DuoSplitTunnel";
-              vpn-secrets."form:main:username" = "ks128";
-
-              ipv4.method = "auto";
-              ipv6.method = "auto";
-              ipv6.addr-gen-mode = "default";
-            };
+            cisco0 = (makeCiscoVPNProfileConfig "0");
           };
         };
       };
