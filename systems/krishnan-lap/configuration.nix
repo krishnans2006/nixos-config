@@ -66,4 +66,9 @@
   networking.hostName = "krishnan-lap";  # Define your hostname.
 
   systemd.tpm2.enable = false;
+
+  nix.optimise = {
+    automatic = true;
+    persistent = true;
+  };
 }
