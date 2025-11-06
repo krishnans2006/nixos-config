@@ -64,4 +64,6 @@
   };
 
   networking.hostName = "krishnan-lap";  # Define your hostname.
+
+  systemd.tpm2.enable = false;
 }
