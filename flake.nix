@@ -7,7 +7,7 @@
     # UEFI Secure Boot
     # https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
