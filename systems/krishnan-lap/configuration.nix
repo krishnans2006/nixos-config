@@ -34,7 +34,7 @@
   modules.audio.enable = true;
   modules.networks = {
     enable = true;
-    ethernetOnly = false;
+    enableWifi = true;
   };
   modules.bluetooth.enable = true;
   modules.printing.enable = true;

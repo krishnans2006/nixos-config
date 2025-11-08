@@ -34,7 +34,7 @@
   modules.audio.enable = true;
   modules.networks = {
     enable = true;
-    ethernetOnly = true;  # To avoid bluetooth issues (and since Ethernet is always plugged in)
+    enableWifi = false;  # To avoid bluetooth issues (and since Ethernet is always plugged in)
   };
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
