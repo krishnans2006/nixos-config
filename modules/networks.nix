@@ -5,6 +5,10 @@ with lib;
 let
   cfg = config.modules.networks;
 
+  baseNetworkOptions = {
+    autoconnect = cfg.enableWifi;
+  };
+
   makeOpenNetworkProfileConfig = id: options: {
     connection = {
       id = "$net${id}_name";
@@ -242,62 +246,26 @@ in
             # 5GHz (priority=5) is preferred over 2.4GHz (priority=2)
 
             # Home
-            net0 = (makePSKNetworkProfileConfig "0" {
-              autoconnect = cfg.enableWifi;
-              priority = 5;
-            });
-            net1 = (makePSKNetworkProfileConfig "1" {
-              autoconnect = cfg.enableWifi;
-              priority = 2;
-            });
+            net0 = (makePSKNetworkProfileConfig "0" (baseNetworkOptions // { priority = 5; }));
+            net1 = (makePSKNetworkProfileConfig "1" (baseNetworkOptions // { priority = 2; }));
 
             # School
-            net2 = (makeEAPNetworkProfileConfig "2" {
-              autoconnect = cfg.enableWifi;
-              priority = 5;
-            });
-            net3 = (makeEAPNetworkProfileConfig "3" {
-              autoconnect = cfg.enableWifi;
-              priority = 0;
-            });
+            net2 = (makeEAPNetworkProfileConfig "2" (baseNetworkOptions // { priority = 5; }));
+            net3 = (makeEAPNetworkProfileConfig "3" (baseNetworkOptions // { priority = 0; }));
 
-            net4 = (makePSKNetworkProfileConfig "4" {
-              autoconnect = cfg.enableWifi;
-              priority = 5;
-            });
-            net5 = (makePSKNetworkProfileConfig "5" {
-              autoconnect = cfg.enableWifi;
-              priority = 2;
-            });
+            net4 = (makePSKNetworkProfileConfig "4" (baseNetworkOptions // { priority = 5; }));
+            net5 = (makePSKNetworkProfileConfig "5" (baseNetworkOptions // { priority = 2; }));
 
             # Hotspot
-            net6 = (makePSKNetworkProfileConfig "6" {
-              autoconnect = cfg.enableWifi;
-              priority = -1;
-            });
+            net6 = (makePSKNetworkProfileConfig "6" (baseNetworkOptions // { priority = -1; }));
 
-            net7 = (makePSKNetworkProfileConfig "7" {
-              autoconnect = cfg.enableWifi;
-              priority = 5;
-            });
+            net7 = (makePSKNetworkProfileConfig "7" (baseNetworkOptions // { priority = 5; }));
 
             # Apartment
-            net8 = (makePSKNetworkProfileConfig "8" {
-              autoconnect = cfg.enableWifi;
-              priority = 5;
-            });
-            net9 = (makePSKNetworkProfileConfig "9" {
-              autoconnect = cfg.enableWifi;
-              priority = 2;
-            });
-            net10 = (makeOpenNetworkProfileConfig "10" {
-              autoconnect = cfg.enableWifi;
-              priority = 1;
-            });
-            net11 = (makeOpenNetworkProfileConfig "11" {
-              autoconnect = cfg.enableWifi;
-              priority = 0;
-            });
+            net8 = (makePSKNetworkProfileConfig "8" (baseNetworkOptions // { priority = 5; }));
+            net9 = (makePSKNetworkProfileConfig "9" (baseNetworkOptions // { priority = 2; }));
+            net10 = (makeOpenNetworkProfileConfig "10" (baseNetworkOptions // { priority = 1; }));
+            net11 = (makeOpenNetworkProfileConfig "11" (baseNetworkOptions // { priority = 0; }));
 
             # VPNs
 
