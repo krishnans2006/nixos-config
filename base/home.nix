@@ -137,6 +137,7 @@ in {
     platformio
 
     nixfmt-rfc-style
+    nixd
 
     kicad
     gimp

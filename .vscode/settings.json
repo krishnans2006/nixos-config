@@ -1,0 +1,28 @@
+{
+    // Adapted from https://github.com/zakuciael/nixos-dotfiles/blob/main/.vscode/settings.json
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "nixd",
+    "nix.serverSettings": {
+        "nixd": {
+            "formatting": {
+                "command": [ "nixfmt" ]
+            },
+            "options": {
+                "nixos": {
+                    "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings [\"\\n\"] [\"\"] (builtins.readFile \"/etc/hostname\")}.options"
+                },
+                "home-manager": {
+                    "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings [\"\\n\"] [\"\"] (builtins.readFile \"/etc/hostname\")}.options.home-manager.users.type.getSubOptions []"
+                }
+            }
+        }
+    },
+    "[nix]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "jnoortheen.nix-ide",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": false
+    },
+}
