@@ -13,6 +13,9 @@
                 },
                 "home-manager": {
                     "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings [\"\\n\"] [\"\"] (builtins.readFile \"/etc/hostname\")}.options.home-manager.users.type.getSubOptions []"
+                },
+                "sops-nix": {
+                    "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings [\"\\n\"] [\"\"] (builtins.readFile \"/etc/hostname\")}.options.sops"
                 }
             }
         }
