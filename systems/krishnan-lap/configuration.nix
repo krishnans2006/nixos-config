@@ -16,6 +16,7 @@
     ../../modules/secure-boot.nix
     ../../modules/krishnan-user.nix
     ../../modules/fs-mounts.nix
+    ../../modules/iphone.nix
 
     ../../modules/gaming.nix
     ../../modules/waydroid.nix
@@ -50,6 +51,7 @@
     tjcsl = true;
     ews = true;
   };
+  modules.iphone.enable = true;
 
   modules.gaming.enable = false;
   modules.waydroid.enable = false;
