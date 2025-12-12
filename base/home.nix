@@ -323,6 +323,7 @@ in {
       init.defaultBranch = "main";
       core.autocrlf = "input";
       pull.rebase = false;
+      push.autoSetupRemote = true;
     };
     ignores = [
       ".idea/"
