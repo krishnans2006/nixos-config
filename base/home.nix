@@ -1,4 +1,4 @@
-{ config, pkgs, osConfig, ... }:
+{ config, pkgs, ... }:
 
 let
   # For Kdenlive and CLion
