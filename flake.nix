@@ -43,6 +43,9 @@
       krishnan-pc = import ./systems/krishnan-pc {
         inherit inputs;
       };
+      krishnan-vivo = import ./systems/krishnan-vivo {
+        inherit inputs;
+      };
     };
   };
 }
