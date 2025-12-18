@@ -56,16 +56,16 @@ in {
     kdePackages.kate
     kdePackages.bluedevil
     kdePackages.filelight
-    nixpkgs_old.kdePackages.kdenlive
-    krita
+    #nixpkgs_old.kdePackages.kdenlive
+    #krita
 
-    libreoffice-qt
-    hunspell
-    hunspellDicts.en_US
+    #libreoffice-qt
+    #hunspell
+    #hunspellDicts.en_US
 
-    nodejs
-    npm-check-updates
-    sass
+    #nodejs
+    #npm-check-updates
+    #sass
 
     wireguard-tools
 
@@ -78,17 +78,17 @@ in {
     git-lfs
     git-subrepo
     git-filter-repo
-    meld
-    kdiff3
+    #meld
+    #kdiff3
 
     # it provides the command `nom` works just like `nix`
     # with more details log output
     nix-output-monitor
 
     lm_sensors # for `sensors` command
-    memtester
+    #memtester
 
-    rclone
+    #rclone
 
     vesktop
     discord-canary
@@ -102,74 +102,74 @@ in {
 
     devenv
 
-    jetbrains.pycharm-professional
-    jetbrains.webstorm
-    jetbrains.idea-ultimate
-    nixpkgs_old.jetbrains.clion
-    jetbrains.goland
-    jetbrains.rust-rover
+    #jetbrains.pycharm-professional
+    #jetbrains.webstorm
+    #jetbrains.idea-ultimate
+    #nixpkgs_old.jetbrains.clion
+    #jetbrains.goland
+    #jetbrains.rust-rover
 
     (python312.withPackages (ps: with ps; [
-      jupyterlab
-      jupyterlab-lsp
-      jedi-language-server
+      #jupyterlab
+      #jupyterlab-lsp
+      #jedi-language-server
       tqdm
       matplotlib
       numpy
       scipy
       pandas
-      discordpy
+      #discordpy
     ]))
     poetry
     pipenv
-    octodns
+    #octodns
 
-    ansible
-    sshpass
+    #ansible
+    #sshpass
 
     sshfs
 
-    jdk
+    #jdk
 
-    nodejs_22
-    pnpm
+    #nodejs_22
+    #pnpm
 
-    platformio
+    #platformio
 
     nixfmt-rfc-style
     nixd
 
-    kicad
-    gimp
+    #kicad
+    #gimp
 
     qmk
     via
     #vial
 
-    quickemu
+    #quickemu
     #quickgui
 
-    audacity
+    #audacity
     vlc
     obs-studio
 
-    lc3tools
+    #lc3tools
 
-    mission-planner
+    #mission-planner
 
-    lutris-free
-    prismlauncher  # minecraft
+    #lutris-free
+    #prismlauncher  # minecraft
     #sauerbraten
-    superTuxKart
+    #superTuxKart
 
     # temp
-    (vivaldi.overrideAttrs (oldAttrs: {
-      dontWrapQtApps = false;
-      dontPatchELF = true;
-      nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.kdePackages.wrapQtAppsHook ];
-    }))
+    #(vivaldi.overrideAttrs (oldAttrs: {
+    #  dontWrapQtApps = false;
+    #  dontPatchELF = true;
+    #  nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.kdePackages.wrapQtAppsHook ];
+    #}))
     google-chrome
-    spotify
+    #spotify
     #duplicity
     #deja-dup
   ];
