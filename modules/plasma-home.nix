@@ -12,6 +12,7 @@ in {
   config = mkIf cfg.enable {
     programs.plasma = {
       enable = true;
+      overrideConfig = true;  # WARNING: Beware! This resets all configuration to default
 
       workspace = {
         lookAndFeel = "org.kde.breezedark.desktop";
