@@ -23,8 +23,13 @@ Despite trying to use NixOS for most of the system configuration, some steps sti
 
 Note: This list is incomplete.
 
+- `nix-shell -p git age ssh-to-age`
 - Generate a user SSH key, copy it to GitHub and all remotes that are SSHFS-mounted
+- `git clone git@github.com:krishnans2006/nixos-config.git ~/NixOS`
+- Follow instructions below to allow secrets access (using key derived from SSH key)
+- Import gpg.key from an external source
 - Remove the password for `kdewallet` (KWallet)
+- Atuin: `atuin login -u krishnans2006`, enter password and leave key blank (it's already pre-configured)
 - Tailscale: `sudo tailscale login`, `sudo tailscale set --ssh --operator=krishnan`
 - Waydroid: `sudo waydroid init -s GAPPS -f`
 - Secure Boot: (see [documentation](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md))
