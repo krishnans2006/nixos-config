@@ -23,7 +23,7 @@
   systemd.units."dev-tpmrm0.device".enable = false;
 
   # Set your time zone.
-  time.timeZone = "America/Chicago";
+  time.timeZone = "America/New_York";
   # services.automatic-timezoned.enable = true;
 
   # Select internationalisation properties.
