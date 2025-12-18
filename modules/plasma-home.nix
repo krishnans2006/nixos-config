@@ -50,9 +50,6 @@ in {
             Theme = "None";
           };
         };
-        kxkbrc = {
-          Layout.Options = "compose:menu,caps:none";
-        };
       };
 
       shortcuts = {
@@ -328,6 +325,10 @@ in {
             layout = "us";
             variant = "colemak_dh";
           }
+        ];
+        options = [
+          "compose:menu"
+          "caps:none"
         ];
       };
     };
