@@ -20,6 +20,8 @@ in
     mkMerge [
       {
         services.tailscale.enable = true;
+
+        systemd.services.tailscaled.after = [ "wpa_supplicant.service" ];
       }
 
       (mkIf cfg.enableTaildrive {
