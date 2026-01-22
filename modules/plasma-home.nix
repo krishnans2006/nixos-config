@@ -1,15 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig, ... }:
 
 with lib;
 
 let
   cfg = config.modules.plasma;
+  osCfg = osConfig.modules.plasma;
 in {
   options.modules.plasma = {
     enable = mkEnableOption "Enable a customized KDE Plasma 6 DE";
   };
 
-  config = mkIf cfg.enable {
+  # Must be enabled in system config
+  config = mkIf cfg.enable ( mkAssert osCfg.enable "modules.plasma is not enabled in system config" {
     programs.plasma = {
       enable = true;
       overrideConfig = true;  # WARNING: Beware! This resets all configuration to default
@@ -333,5 +335,5 @@ in {
         ];
       };
     };
-  };
+  });
 }
