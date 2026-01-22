@@ -109,7 +109,7 @@ in {
     jetbrains.goland
     jetbrains.rust-rover
 
-    (python312.withPackages (ps: with ps; [
+    (python314.withPackages (ps: with ps; [
       jupyterlab
       jupyterlab-lsp
       jedi-language-server
