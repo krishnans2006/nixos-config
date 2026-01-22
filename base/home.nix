@@ -64,6 +64,7 @@ in {
     hunspellDicts.en_US
 
     nodejs
+    pnpm
     npm-check-updates
     sass
 
@@ -130,9 +131,6 @@ in {
     sshfs
 
     jdk
-
-    nodejs_22
-    pnpm
 
     platformio
 
