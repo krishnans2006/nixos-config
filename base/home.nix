@@ -98,6 +98,7 @@ in {
     element-desktop
     signal-desktop
     mattermost-desktop
+    zulip
 
     zoom-us
 
