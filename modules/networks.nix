@@ -212,8 +212,6 @@ in
         "1.0.0.1"
       ];
 
-      wireless.enable = false;
-
       networkmanager = {
         enable = true;
         dns = "systemd-resolved";
