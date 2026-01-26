@@ -8,7 +8,7 @@ with inputs;
     ./hardware.nix
 
     # Base configuration
-    ../../base/configuration.nix
+    ../../base/system.nix
 
     # Custom modules
     (import-tree ../../modules/system)
@@ -18,14 +18,15 @@ with inputs;
   modules.audio.enable = true;
   modules.networks = {
     enable = true;
-    enableWifi = false;  # To avoid bluetooth issues (and since Ethernet is always plugged in)
+    enableWifi = true;
   };
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
   modules.docker.enable = true;
   modules.tailscale = {
     enable = true;
-    enableTaildrive = false;
+    enableTaildrive = true;
+    taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
   modules.secure-boot.enable = false;
   modules.krishnan-user.enable = true;
@@ -35,17 +36,17 @@ with inputs;
   };
   modules.iphone.enable = true;
 
-  modules.gaming.enable = true;
-  modules.waydroid.enable = true;
-  modules.virtualbox.enable = true;
+  modules.gaming.enable = false;
+  modules.waydroid.enable = false;
+  modules.virtualbox.enable = false;
 
   modules.hp-pen.enable = false;
-  modules.yubikey-auth.enable = false;
+  modules.yubikey-auth.enable = true;
 
   modules.packages = {
     logic2 = false;
     chipwhisperer = false;
   };
 
-  networking.hostName = "krishnan-pc";  # Define your hostname.
+  networking.hostName = "krishnan-vivo";  # Define your hostname.
 }

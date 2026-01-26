@@ -182,7 +182,7 @@ let
 in
 {
   imports = [
-    ../../config/secrets.nix
+    ../../config/system/secrets.nix
   ];
 
   options.modules.networks = {

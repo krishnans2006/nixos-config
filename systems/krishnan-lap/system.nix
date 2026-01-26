@@ -8,7 +8,7 @@ with inputs;
     ./hardware.nix
 
     # Base configuration
-    ../../base/configuration.nix
+    ../../base/system.nix
 
     # Custom modules
     (import-tree ../../modules/system)
@@ -28,7 +28,7 @@ with inputs;
     enableTaildrive = true;
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
-  modules.secure-boot.enable = false;
+  modules.secure-boot.enable = true;
   modules.krishnan-user.enable = true;
   modules.fs-mounts = {
     tjcsl = true;
@@ -40,13 +40,20 @@ with inputs;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
 
-  modules.hp-pen.enable = false;
+  modules.hp-pen.enable = true;
   modules.yubikey-auth.enable = true;
 
   modules.packages = {
-    logic2 = false;
-    chipwhisperer = false;
+    logic2 = true;
+    chipwhisperer = true;
   };
 
-  networking.hostName = "krishnan-vivo";  # Define your hostname.
+  networking.hostName = "krishnan-lap";  # Define your hostname.
+
+  systemd.tpm2.enable = false;
+
+  nix.optimise = {
+    automatic = true;
+    persistent = true;
+  };
 }

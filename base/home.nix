@@ -10,8 +10,8 @@ let
   }) { inherit (pkgs) system; config.allowUnfree = true; };
 in {
   imports = [
-    ../config/basic-home.nix
-    ../config/secrets-home.nix
+    ../config/home/basic.nix
+    ../config/home/secrets.nix
   ];
 
   # Packages that should be installed to the user profile.

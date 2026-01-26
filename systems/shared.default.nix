@@ -10,7 +10,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
 
   modules = [
-    ./configuration.nix
+    ./system.nix
 
     lanzaboote.nixosModules.lanzaboote
 
