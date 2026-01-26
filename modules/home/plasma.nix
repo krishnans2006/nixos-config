@@ -53,6 +53,31 @@ in {
             Theme = "None";
           };
         };
+        dolphinrc = {
+          General = {
+            ShowStatusBar = "FullWidth";  # Make bottom status bar full width (show remaining disk space)
+          };
+          DetailsMode = {
+            # IconSize is not necessary, since PreviewsShown = true in dataFile below
+            PreviewSize = 16;
+          };
+        };
+      };
+
+      dataFile = {
+        "dolphin/view_properties/global/.directory" = {
+          Settings.HiddenFilesShown = true;
+          Dolphin = {
+            ViewMode = 1;  # View Style: Details
+            PreviewsShown = true;
+            GroupedSorting = false;
+            SortRole = "text";
+            SortOrder = 0;  # Qt::AscendingOrder (maybe)
+            SortFoldersFirst = true;
+            SortHiddenLast = true;
+            DynamicViewPassed = false;
+          };
+        };
       };
 
       shortcuts = {
