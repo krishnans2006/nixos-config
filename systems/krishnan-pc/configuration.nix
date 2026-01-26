@@ -1,34 +1,17 @@
-{ ... }:
+{ inputs, ... }:
+
+with inputs;
 
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware.nix
 
-    # Custom modules
-    ../../modules/plasma.nix
-    ../../modules/audio.nix
-    ../../modules/networks.nix
-    ../../modules/bluetooth.nix
-    ../../modules/printing.nix
-    ../../modules/docker.nix
-    ../../modules/tailscale.nix
-    ../../modules/secure-boot.nix
-    ../../modules/krishnan-user.nix
-    ../../modules/fs-mounts.nix
-    ../../modules/iphone.nix
-
-    ../../modules/gaming.nix
-    ../../modules/waydroid.nix
-    ../../modules/virtualbox.nix
-  
-    ../../modules/hp-pen.nix
-    ../../modules/yubikey-auth.nix
-
-    ../../modules/packages.nix
-
     # Base configuration
     ../../base/configuration.nix
+
+    # Custom modules
+    (import-tree ../../modules/system)
   ];
 
   modules.plasma.enable = true;

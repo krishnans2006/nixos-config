@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    import-tree.url = "github:vic/import-tree";
+
     # UEFI Secure Boot
     # https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
     lanzaboote = {

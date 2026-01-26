@@ -1,14 +1,14 @@
-{ ... }:
+{ inputs, ... }:
+
+with inputs;
 
 {
   imports = [
-    # Custom modules
-    ../../modules/plasma-home.nix
-    ../../modules/tailscale-home.nix
-    ../../modules/thunderbird-home.nix
-
     # Base configuration
     ../../base/home.nix
+
+    # Custom modules
+    (import-tree ../../modules/home)
   ];
 
   modules.plasma.enable = true;

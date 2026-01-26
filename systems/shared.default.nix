@@ -21,6 +21,7 @@ nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeModules.plasma-manager ];
+      home-manager.extraSpecialArgs = { inherit inputs; };
       home-manager.users.krishnan.imports = [
         ./home.nix
         nix-flatpak.homeManagerModules.nix-flatpak
