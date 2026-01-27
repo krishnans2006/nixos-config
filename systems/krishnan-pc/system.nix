@@ -36,8 +36,8 @@ with inputs;
   modules.iphone.enable = true;
 
   modules.gaming.enable = true;
-  modules.waydroid.enable = true;
-  modules.virtualbox.enable = true;
+  modules.waydroid.enable = false;
+  modules.virtualbox.enable = false;
 
   modules.hp-pen.enable = false;
   modules.yubikey-auth.enable = false;
