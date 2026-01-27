@@ -104,9 +104,9 @@ in {
 
     devenv
 
-    jetbrains.pycharm-professional
+    jetbrains.pycharm
     jetbrains.webstorm
-    jetbrains.idea-ultimate
+    jetbrains.idea
     nixpkgs_old.jetbrains.clion
     jetbrains.goland
     jetbrains.rust-rover
