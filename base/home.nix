@@ -1,14 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  # For Kdenlive and CLion
-  nixpkgs_old = import (builtins.fetchTree {
-    type = "github";
-    owner = "NixOS";
-    repo = "nixpkgs";
-    rev = "5785b6bb5eaae44e627d541023034e1601455827";
-  }) { inherit (pkgs) system; config.allowUnfree = true; };
-in {
+{
   imports = [
     ../config/home/basic.nix
     ../config/home/secrets.nix
@@ -56,7 +48,7 @@ in {
     kdePackages.kate
     kdePackages.bluedevil
     kdePackages.filelight
-    nixpkgs_old.kdePackages.kdenlive
+    kdePackages.kdenlive
     krita
 
     libreoffice-qt
@@ -107,7 +99,7 @@ in {
     jetbrains.pycharm
     jetbrains.webstorm
     jetbrains.idea
-    nixpkgs_old.jetbrains.clion
+    jetbrains.clion
     jetbrains.goland
     jetbrains.rust-rover
 
