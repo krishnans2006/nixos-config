@@ -146,8 +146,6 @@
 
     lc3tools
 
-    mission-planner
-
     lutris-free
     prismlauncher  # minecraft
     #sauerbraten
