@@ -149,7 +149,6 @@
     lutris-free
     prismlauncher  # minecraft
     #sauerbraten
-    superTuxKart
 
     # temp
     (vivaldi.overrideAttrs (oldAttrs: {
