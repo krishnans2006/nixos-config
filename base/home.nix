@@ -330,6 +330,11 @@
           RemoteCommand = "/bin/zsh";
         };
       };
+      "ncsa-delta" = {
+        hostname = "login.delta.ncsa.illinois.edu";
+        user = "krishnans2006";
+        forwardX11 = true;
+      };
       "oracle-amp" = {
         hostname = "150.136.13.65";
         identityFile = "~/.ssh/id_ed25519";
