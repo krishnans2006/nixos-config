@@ -304,9 +304,9 @@
     matchBlocks = {
       "*" = {
         addKeysToAgent = "yes";
-        controlMaster = "auto";
-        controlPath = "~/.ssh/master-%r@%h:%p";
-        controlPersist = "3s";
+        # controlMaster = "auto";
+        # controlPath = "~/.ssh/master-%r@%h:%p";
+        # controlPersist = "3s";
       };
       "ews" = {
         hostname = "linux.ews.illinois.edu";

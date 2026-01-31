@@ -38,6 +38,7 @@ with inputs;
   modules.gaming.enable = true;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
+  modules.vmware.enable = false;
 
   modules.hp-pen.enable = false;
   modules.yubikey-auth.enable = false;
