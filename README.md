@@ -21,7 +21,7 @@ The configuration:
 
 Despite trying to use NixOS for most of the system configuration, some steps still need to be done manually.
 
-Note: This list is incomplete.
+Note: This list is incomplete. Also, it would be nice to automate these into a `curl`-able script at some point.
 
 - `nix-shell -p git age ssh-to-age`
 - Generate a user SSH key, copy it to GitHub and all remotes that are SSHFS-mounted
