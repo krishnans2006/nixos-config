@@ -48,8 +48,8 @@
     kdePackages.kate
     kdePackages.bluedevil
     kdePackages.filelight
-    kdePackages.kdenlive
-    krita
+    # kdePackages.kdenlive
+    # krita
 
     libreoffice-qt
     hunspell
@@ -96,12 +96,12 @@
 
     devenv
 
-    jetbrains.pycharm
-    jetbrains.webstorm
-    jetbrains.idea
-    jetbrains.clion
-    jetbrains.goland
-    jetbrains.rust-rover
+    # jetbrains.pycharm
+    # jetbrains.webstorm
+    # jetbrains.idea
+    # jetbrains.clion
+    # jetbrains.goland
+    # jetbrains.rust-rover
 
     (python314.withPackages (ps: with ps; [
       jupyterlab
@@ -130,8 +130,8 @@
     nixfmt-rfc-style
     nixd
 
-    kicad
-    gimp
+    # kicad
+    # gimp
 
     qmk
     via
@@ -149,17 +149,6 @@
     lutris-free
     prismlauncher  # minecraft
     #sauerbraten
-
-    # temp
-    (vivaldi.overrideAttrs (oldAttrs: {
-      dontWrapQtApps = false;
-      dontPatchELF = true;
-      nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.kdePackages.wrapQtAppsHook ];
-    }))
-    google-chrome
-    spotify
-    #duplicity
-    #deja-dup
   ];
 
   programs.zsh = {
