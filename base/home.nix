@@ -151,6 +151,11 @@
     #sauerbraten
   ];
 
+  home.shell = {
+    enableShellIntegration = false;
+    enableZshIntegration = true;
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -209,11 +214,6 @@
   programs.atuin = {
     enable = true;
 
-    enableBashIntegration = false;
-    enableFishIntegration = false;
-    enableNushellIntegration = false;
-    enableZshIntegration = true;
-
     #daemon.enable = true;
 
     # https://docs.atuin.sh/configuration/config/
@@ -251,6 +251,10 @@
       enter_accept = true;
       sync.records = true;
     };
+  };
+
+  programs.zoxide = {
+    enable = true;
   };
 
   # direnv for auto-activation of .envrc (and devenv)
