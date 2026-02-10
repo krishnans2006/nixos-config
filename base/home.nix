@@ -225,7 +225,7 @@
 
       auto_sync = true;
       update_check = false;
-      sync_address = "https://api.atuin.sh";
+      sync_address = "https://atuin.krishy.dev";
       sync_frequency = "5m";
 
       search_mode = "fuzzy";
