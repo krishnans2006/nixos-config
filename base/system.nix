@@ -49,6 +49,7 @@
     platformio-core
     openocd
     via
+    probe-rs-tools
   ];
 
   # Enable touchpad support (enabled default in most desktopManager).
