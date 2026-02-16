@@ -44,7 +44,7 @@ with inputs;
   modules.yubikey-auth.enable = false;
 
   modules.packages = {
-    logic2 = false;
+    logic2 = true;
     chipwhisperer = false;
   };
 
