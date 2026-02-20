@@ -11,11 +11,16 @@ in
   };
 
   config = mkIf cfg.enable {
-    # Define a user account. Don't forget to set a password with ‘passwd’.
+    users.mutableUsers = false;
+    
+    # Disable root login (sudo only)
+    users.users."root".hashedPassword = null;
+
     users.users."krishnan" = {
       uid = 1000;
       isNormalUser = true;
       description = "Krishnan Shankar";
+      hashedPasswordFile = config.sops.secrets."password".path;
       
       # networkmanager, wheel: initially set (in configuration.nix)
       # dialout: for serial/USB ports

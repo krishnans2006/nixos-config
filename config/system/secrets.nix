@@ -8,6 +8,10 @@
     defaultSopsFormat = "yaml";
 
     secrets = {
+      "password" = {
+        neededForUsers = true;
+      };
+      
       "networks" = {
         restartUnits = [ "NetworkManager.service" ];
       };
