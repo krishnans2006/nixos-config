@@ -255,6 +255,7 @@
 
   programs.zoxide = {
     enable = true;
+    options = [ "--cmd" "cd" ];
   };
 
   # direnv for auto-activation of .envrc (and devenv)
