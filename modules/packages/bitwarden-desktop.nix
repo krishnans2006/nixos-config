@@ -1,0 +1,26 @@
+{ config, lib, pkgs, ... }:
+
+with lib;
+
+let
+  cfg = config.modules.packages.bitwarden-desktop;
+in
+{
+  imports = [
+    ../../config/home/flatpak.nix
+  ];
+
+  options.modules.packages.bitwarden-desktop = {
+    enable = mkEnableOption "Install Bitwarden Desktop Flatpak";
+    autostart = mkEnableOption "Enable autostart for Bitwarden Desktop";
+  };
+
+  config = mkIf cfg.enable {
+    services.flatpak.packages = [ "com.bitwarden.desktop" ];
+
+    # Autostart
+    xdg.configFile."autostart/com.bitwarden.desktop.desktop" = mkIf cfg.autostart {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/flatpak/exports/share/applications/com.bitwarden.desktop.desktop";
+    };
+  };
+}
