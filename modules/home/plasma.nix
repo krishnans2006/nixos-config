@@ -19,6 +19,10 @@ in {
       workspace = {
         lookAndFeel = "org.kde.breezedark.desktop";
         wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images_dark/5120x2880.png";
+        splashScreen = {
+          engine = "none";
+          theme = "None";
+        };
       };
 
       configFile = {
