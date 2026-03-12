@@ -151,53 +151,6 @@
     #sauerbraten
   ];
 
-  home.shell = {
-    enableShellIntegration = false;
-    enableZshIntegration = true;
-  };
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    history = {
-      append = true;
-      extended = true;
-      ignoreSpace = true;
-      save = 1000000000;
-      share = true;
-      size = 1000000000;
-    };
-
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" "git-auto-fetch" "poetry" "sudo" ];
-      theme = "";  # powerlevel10k
-    };
-
-    localVariables = {
-      POWERLEVEL9K_CONFIG_FILE = "~/.dotfiles/.p10k.zsh";
-    };
-
-    initContent = ''
-      autoload zmv
-
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      [[ ! -f ~/.dotfiles/.p10k.zsh ]] || source ~/.dotfiles/.p10k.zsh
-
-      source ~/.dotfiles/aliases-nix.zsh
-    '';
-  };
-
-  # link all files in `./dotfiles` to `~/.dotfiles`
-  home.file.".dotfiles" = {
-    source = ../dotfiles;
-    recursive = true;   # link recursively
-    executable = true;  # make all files executable
-  };
-
   # Nanorc
   home.file.".nanorc".text = ''
     set autoindent

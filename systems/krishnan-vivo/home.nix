@@ -15,6 +15,11 @@ with inputs;
   modules.plasma.enable = true;
   modules.tailscale.enable = true;
   modules.thunderbird.enable = false;
+  modules.shell = {
+    enable = true;
+    enableDotfiles = true;
+    enableTheme = true;
+  };
 
   modules.packages = {
     zen-browser.enable = true;
