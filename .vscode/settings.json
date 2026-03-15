@@ -16,6 +16,9 @@
                 },
                 "sops-nix": {
                     "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings [\"\\n\"] [\"\"] (builtins.readFile \"/etc/hostname\")}.options.sops"
+                },
+                "impermanence": {
+                    "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.${builtins.replaceStrings [\"\\n\"] [\"\"] (builtins.readFile \"/etc/hostname\")}.options.environment.persistence"
                 }
             }
         }

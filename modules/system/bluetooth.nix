@@ -23,5 +23,8 @@ in
       };
     };
     #services.blueman.enable = true;
+
+    # Impermanence
+    environment.persistence."/persist".directories = [ "/var/lib/bluetooth" ];
   };
 }

@@ -12,6 +12,10 @@ nixpkgs.lib.nixosSystem {
   modules = [
     ./system.nix
 
+    disko.nixosModules.disko
+
+    impermanence.nixosModules.impermanence
+
     lanzaboote.nixosModules.lanzaboote
 
     sops-nix.nixosModules.sops

@@ -6,6 +6,18 @@
 
     import-tree.url = "github:vic/import-tree";
 
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      # Needed for development, not for actual usage
+      inputs.nixpkgs.follows = "";
+      inputs.home-manager.follows = "";
+    };
+
     # UEFI Secure Boot
     # https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md
     lanzaboote = {

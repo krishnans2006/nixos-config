@@ -1,0 +1,90 @@
+# Inspired by:
+# - https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/common/optional/ephemeral-btrfs.nix
+# - https://github.com/nix-community/impermanence#btrfs-subvolumes
+{ config, lib, pkgs, ... }:
+
+with lib;
+
+let
+  cfg = config.modules.impermanence;
+
+  root = config.fileSystems."/";
+in
+{
+  options.modules.impermanence = {
+    enable = mkEnableOption "Enable Impermanence";
+  };
+
+  config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = root.type == "btrfs";
+        message = "Must have a btrfs root filesystem to use Impermanence";
+      }
+      {
+        assertion = 
+      }
+    ];
+
+    fileSystems."/persist".neededForBoot = lib.mkDefault true;
+
+    environment.persistence."/persist" = {
+      enable = true;
+      hideMounts = true;
+      directories = [
+        # Already persisted:
+        # - /var/log
+        # - /var/lib
+        # - /persist
+        # - /nix
+        # - /swap
+        "/var/lib/nixos"
+        "/var/lib/systemd"
+      ];
+      files = [
+        "/etc/machine-id"
+      ];
+    };
+
+    boot.initrd = {
+      supportedFilesystems = [ "btrfs" ];
+
+      # A recursive delete isn't used, since we don't want to delete some subvolumes
+      # See systems/*/disk.nix
+      # So, some subvolumes are deleted (/var/cache)
+      # Some are deleted and restored from a blank snapshot (/ and /home)
+      # And some are persisted (/persist, /var/log, /var/lib, /swap)
+      #
+      # Note: This needs to change drastically if boot.initrd.systemd.enable
+      # is enabled (probably using systemd.services wantedBy initrd.target)
+      # See https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/common/optional/ephemeral-btrfs.nix
+      postResumeCommands = ''
+        mkdir -p /tmp
+        MOUNTPOINT=$(mktemp -d)
+        (
+          mount -t btrfs ${root.device} "$MOUNTPOINT"
+          trap 'umount $MOUNTPOINT; rm -d $MOUNTPOINT' EXIT
+
+          echo "Creating needed directories"
+          mkdir -p "$MOUNTPOINT"/persist/var/{log,lib/{nixos,systemd}}
+          if [ -e "$MOUNTPOINT/dont-wipe" ]; then
+            echo "Skipping wipe since $MOUNTPOINT/dont-wipe exists"
+          else
+            echo "Deleting root subvolume (/)"
+            btrfs subvolume delete -R "$MOUNTPOINT/root"
+            echo "Restoring root subvolume from root-blank"
+            btrfs subvolume snapshot "$MOUNTPOINT/root-blank" "$MOUNTPOINT/root"
+
+            echo "Deleting home subvolume (/home)"
+            btrfs subvolume delete -R "$MOUNTPOINT/home"
+            echo "Restoring home subvolume from home-blank"
+            btrfs subvolume snapshot "$MOUNTPOINT/home-blank" "$MOUNTPOINT/home"
+
+            echo "Deleting cache subvolume (/var/cache)"
+            btrfs subvolume delete -R "$MOUNTPOINT/cache"
+          fi
+        )
+      '';
+    };
+  };
+}

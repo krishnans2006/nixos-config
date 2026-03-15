@@ -7,6 +7,9 @@ with inputs;
     # Include the results of the hardware scan.
     ./hardware.nix
 
+    # Disk configuration (disko)
+    ./disk.nix
+
     # Base configuration
     ../../base/system.nix
 
