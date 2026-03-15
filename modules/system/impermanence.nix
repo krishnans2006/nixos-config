@@ -1,7 +1,12 @@
 # Inspired by:
 # - https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/common/optional/ephemeral-btrfs.nix
 # - https://github.com/nix-community/impermanence#btrfs-subvolumes
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -18,7 +23,7 @@ in
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = root.type == "btrfs";
+        assertion = root.fsType == "btrfs";
         message = "Must have a btrfs root filesystem to use Impermanence";
       }
       {
@@ -32,7 +37,7 @@ in
     # Info about neededForBoot:
     # > If set, this file system will be mounted in the initial ramdisk. Note
     # > that the file system will always be mounted in the initial ramdisk if
-    # > its mount point is one of the following: /, /nix, /nix/store, /var, 
+    # > its mount point is one of the following: /, /nix, /nix/store, /var,
     # > /var/log, /var/lib, /var/lib/nixos, /etc, /usr.
     # (from https://nixos.org/manual/nixos/unstable/options#opt-fileSystems._name_.neededForBoot)
     fileSystems."/persist".neededForBoot = lib.mkDefault true;
