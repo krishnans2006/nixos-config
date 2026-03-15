@@ -22,8 +22,11 @@ in
         message = "Must have a btrfs root filesystem to use Impermanence";
       }
       {
-        assertion = 
+        assertion = config.boot.initrd.systemd.enable == false;
+        message = "The impermanence module doesn't work with initrd systemd";
       }
+      # TODO: Add assertion for postCreateHook in disk.nix to make sure
+      # root-blank and home-blank snapshots are created correctly
     ];
 
     fileSystems."/persist".neededForBoot = lib.mkDefault true;
