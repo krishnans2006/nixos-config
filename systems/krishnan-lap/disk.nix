@@ -59,7 +59,7 @@ in {
                   mountOptions = [ "subvol=home" ] ++ btrfsMountOptions;
                 };
                 # Delete on boot, but don't restore from a blank snapshot since it's not worth it
-                "/cache" = {
+                "/var/cache" = {
                   mountpoint = "/var/cache";
                   mountOptions = [ "subvol=cache" ] ++ btrfsMountOptions;
                 };
