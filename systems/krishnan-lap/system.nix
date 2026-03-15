@@ -17,6 +17,8 @@ with inputs;
     (import-tree ../../modules/system)
   ];
 
+  modules.impermanence.enable = true;
+
   modules.plasma.enable = true;
   modules.audio.enable = true;
   modules.networks = {

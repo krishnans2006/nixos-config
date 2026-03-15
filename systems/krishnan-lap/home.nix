@@ -12,6 +12,8 @@ with inputs;
     (import-tree ../../modules/packages)
   ];
 
+  modules.impermanence.enable = true;
+
   modules.plasma.enable = true;
   modules.tailscale.enable = true;
   modules.thunderbird.enable = false;
