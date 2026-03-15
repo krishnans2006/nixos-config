@@ -48,7 +48,7 @@ in
     fileSystems."/home".neededForBoot = lib.mkDefault true;
     fileSystems."/var/cache".neededForBoot = lib.mkDefault true;
     # /var/log
-    # /var/lib
+    fileSystems."/var/lib".neededForBoot = lib.mkDefault true;
     # /nix
     fileSystems."/persist".neededForBoot = lib.mkDefault true;
     # /swap (not needed since it's swap)
