@@ -29,6 +29,12 @@ in
       # root-blank and home-blank snapshots are created correctly
     ];
 
+    # Info about neededForBoot:
+    # > If set, this file system will be mounted in the initial ramdisk. Note
+    # > that the file system will always be mounted in the initial ramdisk if
+    # > its mount point is one of the following: /, /nix, /nix/store, /var, 
+    # > /var/log, /var/lib, /var/lib/nixos, /etc, /usr.
+    # (from https://nixos.org/manual/nixos/unstable/options#opt-fileSystems._name_.neededForBoot)
     fileSystems."/persist".neededForBoot = lib.mkDefault true;
 
     environment.persistence."/persist" = {
