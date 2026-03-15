@@ -40,7 +40,18 @@ in
     # > its mount point is one of the following: /, /nix, /nix/store, /var,
     # > /var/log, /var/lib, /var/lib/nixos, /etc, /usr.
     # (from https://nixos.org/manual/nixos/unstable/options#opt-fileSystems._name_.neededForBoot)
+    
+    # Also, note that impermanence requires:
+    # All your persistent and ephemeral storage volumes marked with neededForBoot
+    # So basically every subvolume in disk.nix needs to be marked with neededForBoot
+    # /
+    fileSystems."/home".neededForBoot = lib.mkDefault true;
+    fileSystems."/var/cache".neededForBoot = lib.mkDefault true;
+    # /var/log
+    # /var/lib
+    # /nix
     fileSystems."/persist".neededForBoot = lib.mkDefault true;
+    # /swap (not needed since it's swap)
 
     environment.persistence."/persist" = {
       enable = true;
