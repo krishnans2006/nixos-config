@@ -62,4 +62,21 @@ with inputs;
     automatic = true;
     persistent = true;
   };
+
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    priority = 5;
+    memoryPercent = 50;
+  };
+
+  boot.tmp = {
+    useTmpfs = true;
+    tmpfsSize = "50%";
+  };
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
 }
