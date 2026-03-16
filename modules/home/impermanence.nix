@@ -27,6 +27,7 @@ in
         ".local/share/direnv"
       ];
       files = [
+        # Needed to decrypt secrets at boot
         ".config/sops/age/keys.txt"
       ];
     };
