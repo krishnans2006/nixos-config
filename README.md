@@ -30,7 +30,7 @@ Note: This list is incomplete. Also, it would be nice to automate these into a `
 - Import gpg.key from an external source
 - Remove the password for `kdewallet` (KWallet)
 - Add any autostart applications through KDE settings
-- Atuin: `atuin login -u krishnans2006`, enter password and leave key blank (it's already pre-configured)
+- Atuin: `atuin login -u krishnan`, enter password (Bitwarden) and leave key blank (it's already pre-configured)
 - Tailscale: `sudo tailscale login`, `sudo tailscale set --ssh --operator=krishnan`
 - Waydroid: `sudo waydroid init -s GAPPS -f`
 - Secure Boot: (see [documentation](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md))
