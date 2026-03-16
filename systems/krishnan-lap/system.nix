@@ -56,6 +56,8 @@ with inputs;
 
   networking.hostName = "krishnan-lap";  # Define your hostname.
 
+  time.timeZone = "America/New_York";
+
   systemd.tpm2.enable = false;
 
   nix.optimise = {

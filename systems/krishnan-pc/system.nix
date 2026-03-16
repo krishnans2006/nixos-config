@@ -49,4 +49,6 @@ with inputs;
   };
 
   networking.hostName = "krishnan-pc";  # Define your hostname.
+
+  time.timeZone = "America/Chicago";
 }

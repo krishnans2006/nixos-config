@@ -23,7 +23,8 @@
   systemd.units."dev-tpmrm0.device".enable = false;
 
   # Set your time zone.
-  time.timeZone = "America/Chicago";
+  # This is moved to individual system configurations since some systems move across timezones.
+  # time.timeZone = "America/Chicago";
   # services.automatic-timezoned.enable = true;
 
   # Select internationalisation properties.
