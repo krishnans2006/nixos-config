@@ -26,6 +26,9 @@ in
         { directory = ".gnupg"; mode = "0700"; }
         ".local/share/direnv"
       ];
+      files = [
+        ".config/sops/age/keys.txt"
+      ];
     };
   };
 }
