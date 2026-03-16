@@ -7,7 +7,7 @@ let
   # So when sops runs under impermanence, /home/krishnan/.config/sops/age/keys.txt
   # will not be available, even if persisted in environment.persistence
   # Therefore we have to pull the key from /persist directly
-  useImpermanence = config.home.persistence ? "/persist";
+  useImpermanence = config.home.persistence."/persist".enable ? "/persist";
 in
 {
   sops = {
