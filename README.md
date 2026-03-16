@@ -94,3 +94,32 @@ sops updatekeys secrets/secrets.yaml
 sops updatekeys secrets/secrets-home.yaml
 sudo nixos-rebuild switch --flake '.?submodules=1'
 ```
+
+## Configure impermanence + disks (disko) + install
+
+This assumes that the configuration has a `disk.nix` file that sets up the disk partitions, filesystems, etc.
+
+It also assumes a valid `.ssh/id_ed25519` key exists and secrets access has been set up.
+
+```bash
+eval `ssh-agent -s`
+ssh-add
+ssh -T git@github.com  # Test SSH access to GitHub
+git clone --recurse-submodules git@github.com:krishnans2006/nixos-config.git ~/NixOS
+cd NixOS
+
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake '.#krishnan-<SYSTEM>'
+lsblk  # Verify disks/partitions are correct
+sudo btrfs subvolume list /mnt  # Verify subvolumes are correct
+
+sudo nixos-generate-config --no-filesystems --root /mnt --dir ./systems/krishnan-<SYSTEM>/hardware.nix
+
+sudo nixos-install --flake '.?submodules=1#krishnan-<SYSTEM>' --no-root-password
+# If it fails by using the host ssh key, run the command again with no modifications
+
+cp ~/.config/sops/age/keys.txt /mnt/persist/home/krishnan/.config/sops/age
+cp ~/.ssh/id_ed25519 /mnt/persist/home/krishnan/.ssh
+cp ~/.ssh/id_ed25519.pub /mnt/persist/home/krishnan/.ssh
+
+sudo reboot now
+```
