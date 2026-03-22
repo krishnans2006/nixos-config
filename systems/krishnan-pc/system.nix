@@ -51,4 +51,10 @@ with inputs;
   networking.hostName = "krishnan-pc";  # Define your hostname.
 
   time.timeZone = "America/Chicago";
+
+  hardware.amdgpu.opencl.enable = true;
+  environment.variables = {
+    HSA_OVERRIDE_GFX_VERSION = "10.3.0";  # AMD RX 6600 XT (RDNA 2)
+    HSA_ENABLE_SDMA = "0";
+  };
 }
