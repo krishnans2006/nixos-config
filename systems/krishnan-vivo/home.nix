@@ -19,6 +19,7 @@ with inputs;
     enable = true;
     enableDotfiles = true;
     enableTheme = true;
+    enableAtuin = true;
   };
 
   modules.packages = {
