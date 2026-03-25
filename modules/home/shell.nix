@@ -53,6 +53,10 @@ in
 
       programs.zsh = {
         enable = true;
+
+        # ~/.config/zsh instead of ~/.zsh
+        dotDir = "${config.xdg.configHome}/zsh";
+
         enableCompletion = true;
         autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
