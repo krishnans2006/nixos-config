@@ -197,13 +197,12 @@ in
   config = mkIf cfg.enable {
     services.resolved = {
       enable = true;
-      domains = [ "~." ];
-      fallbackDns = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
-      dnssec = "allow-downgrade";
-      dnsovertls = "opportunistic"; # maybe "true" is possible?
+      settings.Resolve = {
+        Domains = [ "~." ];
+        FallbackDNS = [ "1.1.1.1" "1.0.0.1" ];
+        DNSSEC = "allow-downgrade";
+        DNSOverTLS = "opportunistic";  # maybe "true" is possible?
+      };
     };
 
     networking = {
