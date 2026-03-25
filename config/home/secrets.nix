@@ -26,4 +26,10 @@ in
       "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
     };
   };
+
+  home.packages = with pkgs; [
+    sops
+    age
+    ssh-to-age
+  ];
 }

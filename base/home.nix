@@ -10,10 +10,6 @@
   home.packages = with pkgs; [
     pkg-config
 
-    sops
-    age
-    ssh-to-age
-
     micro
 
     zsh-powerlevel10k
