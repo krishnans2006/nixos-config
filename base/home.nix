@@ -8,27 +8,7 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # neofetch
-    fastfetch
-
-    zip
-    xz
-    unzip
-    p7zip
-
-    file
-    which
-    tree
-    gnused
-    gnutar
-    htop
-    ncdu
-
     pkg-config
-
-    ffmpeg
-
-    wl-clipboard
 
     sops
     age
@@ -38,12 +18,6 @@
 
     zsh-powerlevel10k
     meslo-lgs-nf
-
-    jq
-
-    undollar
-    pay-respects
-    moreutils
 
     kdePackages.kate
     kdePackages.bluedevil
@@ -60,29 +34,6 @@
     npm-check-updates
     sass
 
-    wireguard-tools
-
-    dig
-    nmap
-
-    libxml2
-
-    gh
-    git-lfs
-    git-subrepo
-    git-filter-repo
-    meld
-    kdiff3
-
-    # it provides the command `nom` works just like `nix`
-    # with more details log output
-    nix-output-monitor
-
-    lm_sensors # for `sensors` command
-    memtester
-
-    rclone
-
     vesktop
     discord-canary
     #libunity  # required for vesktop
@@ -93,8 +44,6 @@
     zulip
 
     zoom-us
-
-    devenv
 
     # jetbrains.pycharm
     # jetbrains.webstorm
@@ -179,7 +128,6 @@
     };
   };
 
-  # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
     userName = "Krishnan Shankar";
