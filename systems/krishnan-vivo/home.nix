@@ -21,6 +21,8 @@ with inputs;
     enableTheme = true;
     enableAtuin = true;
   };
+  modules.git.enable = true;
+  modules.ssh.enable = true;
 
   modules.packages = {
     utils.enable = true;
