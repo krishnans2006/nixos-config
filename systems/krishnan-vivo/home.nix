@@ -29,6 +29,7 @@ with inputs;
     zen-browser.autostart = true;
     bitwarden-desktop.enable = true;
     bitwarden-desktop.autostart = true;
+    firefox.enable = false;
     thunderbird.enable = false;
   };
 
