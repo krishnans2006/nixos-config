@@ -37,13 +37,6 @@
 
     zoom-us
 
-    # jetbrains.pycharm
-    # jetbrains.webstorm
-    # jetbrains.idea
-    # jetbrains.clion
-    # jetbrains.goland
-    # jetbrains.rust-rover
-
     (python314.withPackages (ps: with ps; [
       jupyterlab
       jupyterlab-lsp

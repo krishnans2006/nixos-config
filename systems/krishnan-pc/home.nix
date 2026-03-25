@@ -32,6 +32,7 @@ with inputs;
     firefox.enable = false;
     thunderbird.enable = false;
     libreoffice.enable = true;
+    jetbrains.enableAll = false;
   };
   
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-pc";
