@@ -21,10 +21,6 @@
     # kdePackages.kdenlive
     # krita
 
-    libreoffice-qt
-    hunspell
-    hunspellDicts.en_US
-
     nodejs
     pnpm
     npm-check-updates

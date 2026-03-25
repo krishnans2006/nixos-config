@@ -33,6 +33,7 @@ with inputs;
     bitwarden-desktop.autostart = true;
     firefox.enable = false;
     thunderbird.enable = false;
+    libreoffice.enable = true;
   };
   
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-lap";
