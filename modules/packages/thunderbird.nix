@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.thunderbird;
+  cfg = config.modules.packages.thunderbird;
 in
 {
-  options.modules.thunderbird = {
+  options.modules.packages.thunderbird = {
     enable = mkEnableOption "Enable Thunderbird for email accounts";
   };
 
