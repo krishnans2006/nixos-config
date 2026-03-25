@@ -76,7 +76,7 @@
 
     platformio
 
-    nixfmt-rfc-style
+    nixfmt
     nixd
 
     # kicad
