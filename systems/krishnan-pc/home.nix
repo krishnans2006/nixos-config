@@ -33,6 +33,7 @@ with inputs;
     thunderbird.enable = false;
     libreoffice.enable = true;
     jetbrains.enableAll = false;
+    zed-editor.enable = true;
   };
   
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-pc";
