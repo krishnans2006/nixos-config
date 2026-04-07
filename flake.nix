@@ -47,6 +47,11 @@
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
+
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ... }@inputs: {
