@@ -57,4 +57,6 @@ with inputs;
     HSA_OVERRIDE_GFX_VERSION = "10.3.0";  # AMD RX 6600 XT (RDNA 2)
     HSA_ENABLE_SDMA = "0";
   };
+
+  hardware.rtl-sdr.enable = true;
 }
