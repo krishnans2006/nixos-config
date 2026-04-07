@@ -39,4 +39,6 @@ with inputs;
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-pc";
 
   services.vscode-server.enable = true;
+
+  services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];
 }
