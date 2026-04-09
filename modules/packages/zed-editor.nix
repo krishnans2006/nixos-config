@@ -89,7 +89,7 @@ in
         minimum_contrast_for_highlights = 45;
         ## Guides
         show_wrap_guides = true;
-        wrap_guides = [80 100 120];
+        wrap_guides = [ 80 100 120 ];
 
         # Keymap
 
@@ -151,10 +151,10 @@ in
         scrollbar.axes.horizontal = true;
         scrollbar.axes.vertical = true;
         ## Minimap
-        minimap.show = "never";  # "auto", "always"
+        minimap.show = "always";  # "auto", "never"
         minimap.display_in = "active_editor";  # "all_editors"
         minimap.thumb = "always";  # "hover", "never"
-        minimap.thumb_border = "left_open";  # "left", "none"
+        minimap.thumb_border = "left_open";  # "full", "right_open", "left_only", "none"
         minimap.current_line_highlight = null;  # Inherits from editor setting
         minimap.max_width_columns = 80;
         ## Toolbar
@@ -181,9 +181,9 @@ in
         auto_indent = true;
         auto_indent_on_paste = true;
         ## Wrapping
-        soft_wrap = "none";  # "editor_width", "preferred_line_length"
+        soft_wrap = "none";  # "editor_width", "preferred_line_length", "bounded"
         preferred_line_length = 80;
-        allow_rewrap = "in_comments";  # "anywhere", "never"
+        allow_rewrap = "in_comments";  # "anywhere", "in_selections"
         ## Indent Guides
         indent_guides.enabled = true;
         indent_guides.line_width = 1;
@@ -214,17 +214,16 @@ in
         completion_menu_scrollbar = "never";  # "auto", "always"
         completion_detail_alignment = "left";  # "right"
         ## Inlay Hints
-        inlay_hints.enabled = false;
+        inlay_hints.enabled = true;
+        inlay_hints.show_value_hints = true;
         inlay_hints.show_type_hints = true;
         inlay_hints.show_parameter_hints = true;
-        inlay_hints.show_value_hints = true;
         inlay_hints.show_other_hints = true;
         inlay_hints.show_background = false;
         inlay_hints.edit_debounce_ms = 700;
         inlay_hints.scroll_debounce_ms = 50;
         #inlay_hints.toggle_on_modifiers_press
-        ## LSP Document Colors
-        lsp_document_colors = "inlay";  # "background", "off"
+        lsp_document_colors = "inlay";  # "background", "border", "none"
         ## Tasks
         tasks.enabled = true;
         #tasks.variables = {};
@@ -245,14 +244,14 @@ in
         enable_language_server = true;
         #language_servers = ["..."];
         linked_edits = true;
-        go_to_definition_fallback = "find_all_references";
-        semantic_tokens = "off";  # "on"
+        go_to_definition_fallback = "find_all_references";  # "none"
+        semantic_tokens = "off";  # "combined", "full"
         document_folding_ranges = "off";  # "on"
         document_symbols = "off";  # "on"
         ## LSP Completions
         completions.lsp = true;
         completions.lsp_fetch_timeout_ms = 0;
-        completions.lsp_insert_mode = "replace_suffix";  # "insert"
+        completions.lsp_insert_mode = "replace_suffix";  # "insert", "replace", "replace_subsequence"
         ## Debuggers (per-language)
         #debuggers
         ## Prettier
@@ -263,7 +262,7 @@ in
         ## File Types
         #file_type_associations
         ## Diagnostics
-        diagnostics_max_severity = "all";  # "error", "warning", "information", "hint"
+        diagnostics_max_severity = "all";  # "error", "warning", "info", "hint"
         diagnostics.include_warnings = true;
         ## Inline Diagnostics
         diagnostics.inline.enabled = false;
@@ -288,10 +287,11 @@ in
         search.center_on_match = false;
         seed_search_query_from_cursor = "always";  # "selection", "never"
         ## File Finder
-        file_finder.include_ignored = "smart";
+        file_finder.include_ignored = "smart";  # "all", "indexed"
         file_finder.file_icons = true;
-        file_finder.modal_max_width = "small";  # "medium", "large"
+        file_finder.modal_max_width = "small";  # "medium", "large", "xlarge", "full"
         file_finder.skip_focus_for_active_in_search = true;
+        file_finder.git_status = true;
         ## File Scan
         #file_scan_exclusions = ["**/.git" "**/.svn" "**/.hg" "**/.jj" "**/.sl" "**/.repo" "**/CVS" "**/.DS_Store" "**/Thumbs.db" "**/.classpath" "**/.settings"];
         #file_scan_inclusions = [".env*"];
@@ -309,7 +309,6 @@ in
         diagnostics.button = true;
         search.button = true;
         debugger.button = true;
-        #status_bar.show_active_file = false;
         ## Title Bar
         title_bar.show_branch_icon = false;
         title_bar.show_branch_name = true;
@@ -319,20 +318,19 @@ in
         title_bar.show_user_menu = true;
         title_bar.show_user_picture = true;
         title_bar.show_menus = false;
-        #title_bar.button_layout = "platform_default";  # "standard", or custom string
         ## Tab Bar
         tab_bar.show = true;
-        tabs.git_status = false;
-        tabs.file_icons = false;
+        tabs.git_status = true;
+        tabs.file_icons = true;
         tabs.close_position = "right";  # "left"
         #max_tabs = null;
         tab_bar.show_nav_history_buttons = true;
         tab_bar.show_tab_bar_buttons = true;
         tab_bar.show_pinned_tabs_in_separate_row = false;
         ## Tab Settings
-        tabs.activate_on_close = "history";  # "neighbour"
+        tabs.activate_on_close = "history";  # "neighbour", "left_neighbour"
         tabs.show_diagnostics = "off";  # "errors", "all"
-        tabs.show_close_button = "hover";  # "always", "never"
+        tabs.show_close_button = "hover";  # "always", "hidden"
         ## Preview Tabs
         preview_tabs.enabled = true;
         preview_tabs.enable_preview_from_project_panel = true;
@@ -342,7 +340,7 @@ in
         preview_tabs.enable_preview_file_from_code_navigation = true;
         preview_tabs.enable_keep_preview_on_code_navigation = false;
         ## Layout
-        bottom_dock_layout = "contained";  # "full_width"
+        bottom_dock_layout = "contained";  # "full", "left_aligned", "right_aligned"
         centered_layout.left_padding = 0.2;
         centered_layout.right_padding = 0.2;
         ## Window
@@ -361,7 +359,7 @@ in
         # Panels
 
         ## Project Panel
-        project_panel.dock = "left";  # "right", "bottom"
+        project_panel.dock = "left";  # "right"
         project_panel.default_width = 240;
         project_panel.hide_gitignore = false;
         project_panel.entry_spacing = "comfortable";  # "standard"
@@ -373,11 +371,9 @@ in
         project_panel.starts_open = true;
         project_panel.auto_fold_dirs = true;
         project_panel.bold_folder_labels = false;
-        project_panel.scrollbar.show = null;  # Inherits; "auto", "always", "never"
-        #project_panel.scrollbar.horizontal_scroll = true;
+        project_panel.scrollbar.show = null;  # Inherits; "auto", "system", "always", "never"
         project_panel.show_diagnostics = "all";  # "errors", "off"
-        project_panel.diagnostic_badges = false;
-        #project_panel.git_status_indicator = false;
+        project_panel.diagnostic_badges = true;
         project_panel.sticky_scroll = true;
         project_panel.indent_guides.show = "always";  # "active", "never"
         project_panel.drag_and_drop = true;
@@ -388,10 +384,9 @@ in
         project_panel.auto_open.on_create = true;
         project_panel.auto_open.on_paste = true;
         project_panel.auto_open.on_drop = true;
-        project_panel.sort_mode = "directories_first";  # "alphabetical"
+        project_panel.sort_mode = "directories_first";  # "mixed", "files_first"
         ## Terminal Panel
         terminal.dock = "bottom";  # "left", "right"
-        #terminal.show_count_badge = false;
         ## Outline Panel
         outline_panel.button = true;
         outline_panel.dock = "left";  # "right", "bottom"
@@ -402,10 +397,10 @@ in
         outline_panel.indent_size = 20;
         outline_panel.auto_reveal_entries = true;
         outline_panel.auto_fold_dirs = true;
-        outline_panel.indent_guides.show = "always";  # "active", "never"
+        outline_panel.indent_guides.show = "always";  # "never"
         ## Git Panel
         git_panel.button = true;
-        git_panel.dock = "left";  # "right"
+        git_panel.dock = "left";  # "bottom", "right"
         git_panel.default_width = 360;
         git_panel.status_style = "icon";  # "letter"
         git_panel.fallback_branch_name = "main";
@@ -445,7 +440,10 @@ in
         terminal.shell = "system";  # "program", or { program = "..."; args = [...]; }
         terminal.working_directory = "current_project_directory";  # "current_file_directory", "first_project_directory", "always_home", { always = "..."; }
         #terminal.env = {};
-        #terminal.detect_venv
+        terminal.detect_venv.on = {
+          directories = [ ".venv" "venv" ];  # Default also includes "env" and ".env"
+          activate_script = "default";  # "csh", "fish", "nushell"
+        };
         ## Font
         terminal.font_size = null;  # Inherits buffer_font_size
         terminal.font_family = null;  # Inherits buffer_font_family
@@ -453,7 +451,7 @@ in
         terminal.font_weight = 400;
         #terminal.font_features
         ## Display Settings
-        #terminal.line_height = "standard";
+        terminal.line_height = "standard";  # "comfortable" or line_height.custom = int
         terminal.cursor_shape = "block";  # "bar", "underline", "hollow"
         terminal.blinking = "terminal_controlled";  # "off", "on"
         terminal.alternate_scroll = "on";  # "off"
@@ -466,7 +464,7 @@ in
         terminal.default_width = 640;
         terminal.default_height = 320;
         ## Advanced Settings
-        terminal.max_scroll_history_lines = 10000;
+        terminal.max_scroll_history_lines = 100000;  # Default 10000, 0 disables scrolling entirely
         terminal.scroll_multiplier = 1.0;
         ## Toolbar
         terminal.toolbar.breadcrumbs = false;
@@ -493,8 +491,8 @@ in
         ## Branch Picker
         git.branch_picker.show_author_name = true;
         ## Git Hunks
-        git.hunk_style = "staged_hollow";  # "hollow", "highlighted"
-        git.path_style = "file_name_first";  # "full_path"
+        git.hunk_style = "staged_hollow";  # "unstaged_hollow"
+        git.path_style = "file_name_first";  # "file_path_first"
 
         # Collaboration
 
@@ -502,8 +500,13 @@ in
         calls.mute_on_join = false;
         calls.share_on_join = false;
         ## Audio
-        #audio.experimental.output_audio_device = null;
-        #audio.experimental.input_audio_device = null;
+        audio.experimental.rodio_audio  = true;
+        audio.experimental.auto_microphone_volume = true;
+        audio.experimental.auto_speaker_volume = true;
+        audio.experimental.denoise = true;
+        audio.experimental.legacy_audio_compatible = false;
+        audio.experimental.output_audio_device = null;  # System default if null
+        audio.experimental.input_audio_device = null;  # System default if null
 
         # AI
 
@@ -513,19 +516,19 @@ in
         #agent.tool_permissions  # Configured via sub-page
         agent.single_file_review = false;
         agent.enable_feedback = true;
-        agent.notify_when_agent_waiting = "primary_screen";  # "never", "always"
-        agent.play_sound_when_agent_done = false;
+        agent.notify_when_agent_waiting = "primary_screen";  # "never", "all_screens"
+        agent.play_sound_when_agent_done = true;
         agent.expand_edit_card = true;
         agent.expand_terminal_card = true;
         agent.cancel_generation_on_terminal_stop = true;
         agent.use_modifier_to_send = false;
         agent.message_editor_min_lines = 4;
-        agent.show_turn_stats = false;
+        agent.show_turn_stats = true;
         ## Context Servers
         context_server_timeout = 60;
         ## Edit Predictions
-        #edit_predictions.providers  # Configured via sub-page
-        show_edit_predictions = true;  # "never"
+        edit_predictions.provider = "copilot";  # "zed"
+        show_edit_predictions = true;
         #edit_predictions_disabled_in = [];
         edit_predictions.mode = "eager";  # "subtle"
         edit_predictions.enabled_in_text_threads = true;
@@ -535,6 +538,14 @@ in
         ## Network
         proxy = "";
         server_url = "https://zed.dev";
+
+        # Other stuff that isn't categorized
+        #language_models = {};
+        agent.default_model = {
+          provider = "openrouter";
+          model = "anthropic/claude-opus-4.6";
+          enable_thinking = true;
+        };
       };
     };
   };
