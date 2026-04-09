@@ -62,6 +62,7 @@
     platformio
 
     nixfmt
+    nil
     nixd
 
     # kicad
