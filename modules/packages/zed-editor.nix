@@ -50,6 +50,15 @@ in
       ];
 
       userSettings = {
+        # Extension/LSP/Language Settings
+
+        # lsp.nil.initialization_options.formatting.command = [ "nixfmt" ];
+        # lsp.nixd.initialization_options.formatting.command = [ "nixfmt" ];
+
+        languages = {
+          "Nix".formatter.external.command = "nixfmt";
+        };
+
         # General
 
         ## General Settings
