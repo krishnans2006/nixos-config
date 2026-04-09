@@ -25,6 +25,30 @@ in
       mutableUserTasks = false;
       mutableUserDebug = false;
 
+      # Note: Ideally, all LSPs are bundled in with extensions, so we shouldn't need to configure
+      # them manually in userSettings.language_servers.
+      extensions = [
+        "ansible"
+        "dockerfile"
+        "docker-compose"
+        "html"
+        "make"
+        "sql"
+        "svelte"
+
+        "caddyfile"
+        "django"
+        #jupyter??
+        "latex"
+        "linkerscript"
+        "nix"
+        "typst"
+        "verilog"
+
+        "discord-presence"
+        "wakatime"
+      ];
+
       userSettings = {
         # General
 
