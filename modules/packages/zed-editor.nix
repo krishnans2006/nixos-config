@@ -9,6 +9,8 @@ with lib;
 
 let
   cfg = config.modules.packages.zed-editor;
+
+  wakatime-ls = import ../../custom/wakatime-ls.nix { inherit pkgs; };
 in
 {
   options.modules.packages.zed-editor = {
@@ -24,6 +26,7 @@ in
         nil
         nixd
         zed-discord-presence
+        wakatime-ls
       ];
 
       mutableUserSettings = false;
