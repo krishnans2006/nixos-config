@@ -20,6 +20,12 @@ in
       enable = true;
       installRemoteServer = true;
 
+      extraPackages = with pkgs; [
+        nil
+        nixd
+        zed-discord-presence
+      ];
+
       mutableUserSettings = false;
       mutableUserKeymaps = false;
       mutableUserTasks = false;

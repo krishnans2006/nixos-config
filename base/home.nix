@@ -62,8 +62,6 @@
     platformio
 
     nixfmt
-    nil
-    nixd
 
     # kicad
     # gimp
