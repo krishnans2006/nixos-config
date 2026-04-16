@@ -1,9 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, root, ... }:
 
 {
   imports = [
-    ../config/home/basic.nix
-    ../config/home/secrets.nix
+    "${root}/config/home/basic.nix"
+    "${root}/config/home/secrets.nix"
   ];
 
   # Packages that should be installed to the user profile.
@@ -82,6 +82,8 @@
     lutris-free
     prismlauncher  # minecraft
     #sauerbraten
+
+    claude-code
   ];
 
   # Nanorc

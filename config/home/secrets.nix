@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, root, ... }:
 
 with lib;
 
@@ -12,7 +12,7 @@ in
 {
   sops = {
     age.keyFile = "${optionalString useImpermanence "/persist"}/home/krishnan/.config/sops/age/keys.txt";
-    defaultSopsFile = ../../secrets/home.yaml;
+    defaultSopsFile = "${root}/secrets/home.yaml";
     defaultSopsFormat = "yaml";
 
     secrets = {

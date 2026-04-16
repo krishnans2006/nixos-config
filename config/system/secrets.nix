@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, root, ... }:
 
 with lib;
 
@@ -13,7 +13,7 @@ in
   sops = {
     age.keyFile = "${optionalString useImpermanence "/persist"}/home/krishnan/.config/sops/age/keys.txt";
     age.generateKey = false;  # Do it manually from an SSH key (see README.md)
-    defaultSopsFile = ../../secrets/system.yaml;
+    defaultSopsFile = "${root}/secrets/system.yaml";
     defaultSopsFormat = "yaml";
 
     secrets = {

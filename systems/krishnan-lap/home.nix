@@ -1,15 +1,15 @@
-{ inputs, ... }:
+{ inputs, root, ... }:
 
 with inputs;
 
 {
   imports = [
     # Base configuration
-    ../../base/home.nix
+    "${root}/base/home.nix"
 
     # Custom modules
-    (import-tree ../../modules/home)
-    (import-tree ../../modules/packages)
+    (import-tree "${root}/modules/home")
+    (import-tree "${root}/modules/packages")
   ];
 
   modules.impermanence.enable = true;

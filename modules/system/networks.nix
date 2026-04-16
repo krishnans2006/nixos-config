@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -182,7 +182,7 @@ let
 in
 {
   imports = [
-    ../../config/system/secrets.nix
+    "${root}/config/system/secrets.nix"
   ];
 
   options.modules.networks = {

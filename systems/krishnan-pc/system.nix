@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, root, ... }:
 
 with inputs;
 
@@ -8,10 +8,10 @@ with inputs;
     ./hardware.nix
 
     # Base configuration
-    ../../base/system.nix
+    "${root}/base/system.nix"
 
     # Custom modules
-    (import-tree ../../modules/system)
+    (import-tree "${root}/modules/system")
   ];
 
   modules.plasma.enable = true;

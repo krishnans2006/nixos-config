@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -7,7 +7,7 @@ let
 in
 {
   imports = [
-    ../../config/home/flatpak.nix
+    "${root}/config/home/flatpak.nix"
   ];
 
   options.modules.packages.zen-browser = {

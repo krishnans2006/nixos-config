@@ -7,7 +7,7 @@
 with inputs;
 
 nixpkgs.lib.nixosSystem {
-  specialArgs = { inherit inputs; };
+  specialArgs = { inherit inputs; root = inputs.self; };
 
   modules = [
     ./system.nix
@@ -25,7 +25,7 @@ nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeModules.plasma-manager vscode-server.homeModules.default ];
-      home-manager.extraSpecialArgs = { inherit inputs; };
+      home-manager.extraSpecialArgs = { inherit inputs; root = inputs.self; };
       home-manager.users.krishnan.imports = [
         ./home.nix
         nix-flatpak.homeManagerModules.nix-flatpak

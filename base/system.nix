@@ -1,8 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, root, ... }:
 
 {
   imports = [
-    ../config/system/secrets.nix
+    "${root}/config/system/secrets.nix"
   ];
 
   # Bootloader.
