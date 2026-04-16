@@ -67,6 +67,8 @@ in
 
         languages = {
           "Nix".formatter.external.command = "nixfmt";
+          "Nix".format_on_save = "off";
+          "Nix".tab_size = 2;
         };
 
         # General
@@ -105,7 +107,7 @@ in
         buffer_font_family = ".ZedMono";  # Alias to Lilex
         buffer_font_size = 15;
         buffer_font_weight = 400;
-        buffer_line_height = "comfortable";
+        buffer_line_height = "standard"; # "comfortable" or buffer_line_height.custom = 1 (compact), 2 (loose)
         #buffer_font_features
         #buffer_font_fallbacks
         ## UI Font
@@ -403,9 +405,9 @@ in
 
         ## Project Panel
         project_panel.dock = "left";  # "right"
-        project_panel.default_width = 240;
+        project_panel.default_width = 300;
         project_panel.hide_gitignore = false;
-        project_panel.entry_spacing = "comfortable";  # "standard"
+        project_panel.entry_spacing = "standard";  # "standard"
         project_panel.file_icons = true;
         project_panel.folder_icons = true;
         project_panel.git_status = true;
