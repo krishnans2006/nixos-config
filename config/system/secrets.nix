@@ -1,4 +1,4 @@
-{ config, pkgs, lib, root, ... }:
+{ config, lib, root, ... }:
 
 with lib;
 
@@ -20,7 +20,7 @@ in
       "password" = {
         neededForUsers = true;
       };
-      
+
       "networks" = {
         restartUnits = [ "NetworkManager.service" ];
       };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
 
@@ -37,7 +37,7 @@ in
             what = "http://100.100.100.100:8080";
             where = "${cfg.taildrivePath}";
             type = "davfs";
-            
+
             wants = [ "tailscaled.service" ];
             after = [ "tailscaled.service" ];
 

@@ -1,12 +1,7 @@
 # Inspired by:
 # - https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/common/optional/ephemeral-btrfs.nix
 # - https://github.com/nix-community/impermanence#btrfs-subvolumes
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 with lib;
 
@@ -48,7 +43,7 @@ in
       # > its mount point is one of the following: /, /nix, /nix/store, /var,
       # > /var/log, /var/lib, /var/lib/nixos, /etc, /usr.
       # (from https://nixos.org/manual/nixos/unstable/options#opt-fileSystems._name_.neededForBoot)
-      
+
       # Also, note that impermanence requires:
       # All your persistent and ephemeral storage volumes marked with neededForBoot
       # So basically every subvolume in disk.nix needs to be marked with neededForBoot
