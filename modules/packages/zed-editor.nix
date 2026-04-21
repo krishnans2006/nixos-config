@@ -52,6 +52,8 @@ in
 
         "discord-presence"
         "wakatime"
+
+        "material-icon-theme"
       ];
 
       userSettings = {
@@ -96,8 +98,8 @@ in
         theme.dark = "One Dark";
         theme.light = "One Light";
         icon_theme.mode = "dark";
-        icon_theme.dark = "Zed (Default)";
-        icon_theme.light = "Zed (Default)";
+        icon_theme.dark = "Material Icon Theme";
+        icon_theme.light = "Material Icon Theme";
         ## Buffer Font
         buffer_font_family = ".ZedMono";  # Alias to Lilex
         buffer_font_size = 15;
