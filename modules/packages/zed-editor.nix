@@ -53,6 +53,7 @@ in
         "discord-presence"
         "wakatime"
 
+        # Maybe "one-dark-darkened", "vscode-dark-polished", ..?
         "material-icon-theme"
       ];
 
