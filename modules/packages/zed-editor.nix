@@ -420,7 +420,7 @@ in
         project_panel.sticky_scroll = true;
         project_panel.indent_guides.show = "always";  # "active", "never"
         project_panel.drag_and_drop = true;
-        project_panel.hide_root = false;
+        project_panel.hide_root = true;
         project_panel.hide_hidden = false;
         #worktree.hidden_files = ["**/.*"];
         ### Auto Open Files
