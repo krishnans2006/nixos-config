@@ -263,6 +263,7 @@ in {
                   "applications:app.zen_browser.zen.desktop"
                   "applications:vesktop.desktop"
                   "applications:code.desktop"
+                  "applications:dev.zed.Zed.desktop"
                 ];
                 appearance = {
                   showTooltips = true;  # Show small window previews when hovering over tasks
