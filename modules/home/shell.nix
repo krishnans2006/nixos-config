@@ -23,6 +23,11 @@ in
       default = true;
       description = "Enable Atuin shell history manager";
     };
+    enableZoxide = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enable Zoxide to replace the cd command";
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -152,6 +157,14 @@ in
           enter_accept = true;
           sync.records = true;
         };
+      };
+    })
+
+    # Zoxide
+    (mkIf cfg.enableZoxide {
+      programs.zoxide = {
+        enable = true;
+        options = [ "--cmd" "cd" ];
       };
     })
   ]);

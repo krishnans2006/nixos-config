@@ -99,10 +99,5 @@
     text = "set auto-load safe-path /";
   };
 
-  programs.zoxide = {
-    enable = true;
-    options = [ "--cmd" "cd" ];
-  };
-
   programs.vscode.enable = true;
 }

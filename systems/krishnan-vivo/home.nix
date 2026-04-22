@@ -19,6 +19,7 @@ with inputs;
     enableDotfiles = true;
     enableTheme = true;
     enableAtuin = true;
+    enableZoxide = true;
   };
   modules.direnv.enable = true;
   modules.git.enable = true;
