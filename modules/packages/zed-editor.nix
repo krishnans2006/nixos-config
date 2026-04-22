@@ -444,7 +444,7 @@ in
         ## Git Panel
         git_panel.button = true;
         git_panel.dock = "left";  # "bottom", "right"
-        git_panel.default_width = 360;
+        git_panel.default_width = 300;
         git_panel.status_style = "icon";  # "letter"
         git_panel.fallback_branch_name = "main";
         git_panel.sort_by_path = false;
