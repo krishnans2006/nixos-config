@@ -20,6 +20,7 @@ with inputs;
     enableTheme = true;
     enableAtuin = true;
   };
+  modules.direnv.enable = true;
   modules.git.enable = true;
   modules.ssh.enable = true;
 
@@ -35,7 +36,7 @@ with inputs;
     jetbrains.enableAll = false;
     zed-editor.enable = true;
   };
-  
+
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-pc";
 
   services.vscode-server.enable = true;

@@ -104,15 +104,5 @@
     options = [ "--cmd" "cd" ];
   };
 
-  # direnv for auto-activation of .envrc (and devenv)
-  programs.direnv = {
-    enable = true;
-    #enableBashIntegration = true;
-    nix-direnv.enable = true;
-    config = {
-      global."warn_timeout" = 0;
-    };
-  };
-
   programs.vscode.enable = true;
 }
