@@ -22,5 +22,10 @@ in
       mattermost-desktop
       zulip
     ];
+
+    xdg.configFile = mkIf cfg.autostart {
+      "autostart/vesktop.desktop".source = "${pkgs.vesktop}/share/applications/vesktop.desktop";
+      "autostart/slack.desktop".source = "${pkgs.slack}/share/applications/slack.desktop";
+    };
   };
 }
