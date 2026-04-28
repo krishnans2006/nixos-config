@@ -22,6 +22,7 @@ in
         nixd
         ruff
         texlab
+        package-version-server
 
         zed-discord-presence
         wakatime-ls
