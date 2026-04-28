@@ -71,6 +71,8 @@ in
           "Nix".formatter.external.command = "nixfmt";
           "Nix".format_on_save = "off";
           "Nix".tab_size = 2;
+
+          "YAML".tab_size = 2;
         };
 
         # General
