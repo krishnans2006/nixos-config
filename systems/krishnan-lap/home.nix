@@ -29,6 +29,8 @@ with inputs;
 
   modules.packages = {
     utils.enable = true;
+    chat-apps.enable = true;
+    chat-apps.autostart = true;
     zen-browser.enable = true;
     zen-browser.autostart = true;
     bitwarden-desktop.enable = true;

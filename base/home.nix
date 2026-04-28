@@ -26,15 +26,6 @@
     npm-check-updates
     sass
 
-    vesktop
-    discord-canary
-    #libunity  # required for vesktop
-    slack
-    element-desktop
-    signal-desktop
-    mattermost-desktop
-    zulip
-
     zoom-us
 
     (python314.withPackages (ps: with ps; [
