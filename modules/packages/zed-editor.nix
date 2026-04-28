@@ -21,6 +21,8 @@ in
         nil
         nixd
         ruff
+        texlab
+
         zed-discord-presence
         wakatime-ls
       ];
