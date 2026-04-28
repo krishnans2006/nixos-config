@@ -19,7 +19,7 @@ in
     services.flatpak.packages = [ "com.bitwarden.desktop" ];
 
     # Autostart
-    xdg.configFile."autostart/com.bitwarden.desktop.desktop" = mkIf cfg.autostart {
+    xdg.configFile."autostart/bitwarden.desktop" = mkIf cfg.autostart {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/flatpak/exports/share/applications/com.bitwarden.desktop.desktop";
     };
   };

@@ -19,7 +19,7 @@ in
     services.flatpak.packages = [ "app.zen_browser.zen" ];
 
     # Autostart
-    xdg.configFile."autostart/app.zen_browser.zen.desktop" = mkIf cfg.autostart {
+    xdg.configFile."autostart/zen-browser.desktop" = mkIf cfg.autostart {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/flatpak/exports/share/applications/app.zen_browser.zen.desktop";
     };
   };
