@@ -23,9 +23,19 @@ in
       zulip
     ];
 
-    xdg.configFile = mkIf cfg.autostart {
-      "autostart/vesktop.desktop".source = "${pkgs.vesktop}/share/applications/vesktop.desktop";
-      "autostart/slack.desktop".source = "${pkgs.slack}/share/applications/slack.desktop";
-    };
+    xdg.configFile = mkIf cfg.autostart (
+      let
+        # These variables read an app's desktop file from /nix/store
+        # then modify the Exec= value to start the app minimized
+        vesktopOld = builtins.readFile "${pkgs.vesktop}/share/applications/vesktop.desktop";
+        vesktopNew = builtins.replaceStrings [ "vesktop %U" ] [ "vesktop -m %U" ] vesktopOld;
+
+        slackOld = builtins.readFile "${pkgs.slack}/share/applications/slack.desktop";
+        slackNew = builtins.replaceStrings [ "slack -s %U" ] [ "slack -s -u %U" ] slackOld;
+      in {
+        "autostart/vesktop.desktop".text = vesktopNew;
+        "autostart/slack.desktop".text = slackNew;
+      }
+    );
   };
 }
