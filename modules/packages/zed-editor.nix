@@ -20,6 +20,7 @@ in
       extraPackages = with pkgs; [
         nil
         nixd
+        ruff
         zed-discord-presence
         wakatime-ls
       ];
