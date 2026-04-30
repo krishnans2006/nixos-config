@@ -231,7 +231,7 @@ in
         auto_indent_on_paste = true;
         ## Wrapping
         soft_wrap = "none";  # "editor_width", "preferred_line_length", "bounded"
-        preferred_line_length = 80;
+        preferred_line_length = 120;
         allow_rewrap = "in_comments";  # "anywhere", "in_selections"
         ## Indent Guides
         indent_guides.enabled = true;
