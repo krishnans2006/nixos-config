@@ -73,6 +73,9 @@ in
           "Nix".tab_size = 2;
 
           "YAML".tab_size = 2;
+          
+          "Typst".soft_wrap = "editor_width";
+          "Typst".tab_size = 2;
         };
 
         # General
