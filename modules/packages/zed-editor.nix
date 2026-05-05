@@ -20,6 +20,7 @@ in
       extraPackages = with pkgs; [
         nil
         nixd
+        nixfmt
         ruff
         texlab
         package-version-server

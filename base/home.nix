@@ -13,12 +13,6 @@
     zsh-powerlevel10k
     meslo-lgs-nf
 
-    kdePackages.kate
-    kdePackages.bluedevil
-    kdePackages.filelight
-    # kdePackages.kdenlive
-    # krita
-
     zoom-us
 
     (python314.withPackages (ps: with ps; [
@@ -40,8 +34,6 @@
     jdk
 
     platformio
-
-    nixfmt
 
     # kicad
     # gimp

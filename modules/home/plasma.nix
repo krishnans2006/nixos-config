@@ -12,6 +12,15 @@ in {
 
   # Must be enabled in system config
   config = mkIf cfg.enable ( mkAssert osCfg.enable "modules.plasma is not enabled in system config" {
+    # KDE Packages
+    home.packages = with pkgs; [
+      kdePackages.kate
+      kdePackages.bluedevil
+      kdePackages.filelight
+      # kdePackages.kdenlive
+      # krita
+    ];
+
     programs.plasma = {
       enable = true;
       overrideConfig = true;  # WARNING: Beware! This resets all configuration to default
