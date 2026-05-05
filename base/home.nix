@@ -10,8 +10,6 @@
   home.packages = with pkgs; [
     pkg-config
 
-    micro
-
     zsh-powerlevel10k
     meslo-lgs-nf
 
@@ -20,11 +18,6 @@
     kdePackages.filelight
     # kdePackages.kdenlive
     # krita
-
-    nodejs
-    pnpm
-    npm-check-updates
-    sass
 
     zoom-us
 
@@ -39,11 +32,7 @@
       pandas
       discordpy
     ]))
-    poetry
-    pipenv
-    octodns
 
-    ansible
     sshpass
 
     sshfs
@@ -67,8 +56,6 @@
     audacity
     vlc
     obs-studio
-
-    lc3tools
 
     (pkgs.lutris-free.override {
       # Override the underlying lutris package
