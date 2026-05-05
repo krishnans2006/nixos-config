@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 
 with lib;
 
@@ -12,6 +12,13 @@ in
   };
 
   config = {
+    environment.systemPackages = with pkgs; [
+      sshfs
+    ];
+
+    users.groups.fuse = { };
+    users.users."krishnan".extraGroups = [ "fuse" ];
+
     systemd.mounts = lib.optionals cfg.tjcsl [
       {
         what = "2024kshankar@ras2.tjhsst.edu:/csl/users/2024kshankar";

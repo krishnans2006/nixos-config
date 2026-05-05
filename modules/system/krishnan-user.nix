@@ -12,7 +12,7 @@ in
 
   config = mkIf cfg.enable {
     users.mutableUsers = false;
-    
+
     # Disable root login (sudo only)
     users.users."root".hashedPassword = null;
 
@@ -21,12 +21,11 @@ in
       isNormalUser = true;
       description = "Krishnan Shankar";
       hashedPasswordFile = config.sops.secrets."password".path;
-      
+
       # networkmanager, wheel: initially set (in configuration.nix)
       # dialout: for serial/USB ports
-      # fuse: for sshfs (TODO: modularize)
-      extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" ];
-      packages = with pkgs; [ ];  # Managed by home-manager
+      extraGroups = [ "networkmanager" "wheel" "dialout" ];
+      packages = [ ];  # Managed by home-manager
       shell = pkgs.zsh;
     };
     security.sudo.wheelNeedsPassword = false;
