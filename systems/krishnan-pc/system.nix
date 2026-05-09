@@ -59,4 +59,10 @@ with inputs;
   };
 
   hardware.rtl-sdr.enable = true;
+
+  # Wake on LAN
+  networking = {
+    interfaces."enp13s0".wakeOnLan.enable = true;
+    firewall.allowedUDPPorts = [ 9 ];  # WOL uses UDP port 9
+  };
 }
