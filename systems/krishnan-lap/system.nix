@@ -30,8 +30,7 @@ with inputs;
   modules.docker.enable = true;
   modules.tailscale = {
     enable = true;
-    # Broken, see https://github.com/NixOS/nixpkgs/pull/513877
-    enableTaildrive = false;
+    enableTaildrive = true;
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
   modules.secure-boot.enable = false;
