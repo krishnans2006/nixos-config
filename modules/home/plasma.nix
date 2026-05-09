@@ -394,6 +394,7 @@ in {
           extraConfig = {
             General.Parent = "FALLBACK/";
             Scrolling.HistoryMode = "2";
+            "Terminal Features".BellMode = "0";
           };
         };
       };
