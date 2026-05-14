@@ -17,6 +17,7 @@ in {
       kdePackages.kate
       kdePackages.bluedevil
       kdePackages.filelight
+      kdePackages.plasma-browser-integration
       # kdePackages.kdenlive
       # krita
     ];
