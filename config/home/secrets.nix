@@ -15,6 +15,9 @@ in
     defaultSopsFile = "${root}/secrets/home.yaml";
     defaultSopsFormat = "yaml";
 
+    age.sshKeyPaths = [];
+    gnupg.sshKeyPaths = [];
+
     secrets = {
       "wakatime/wakatime" = {};  # Unused
       "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";

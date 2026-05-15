@@ -16,6 +16,9 @@ in
     defaultSopsFile = "${root}/secrets/system.yaml";
     defaultSopsFormat = "yaml";
 
+    age.sshKeyPaths = [];
+    gnupg.sshKeyPaths = [];
+
     secrets = {
       "password" = {
         neededForUsers = true;
