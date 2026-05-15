@@ -36,6 +36,8 @@ in
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ37RZ3TIIuDNS3wcaQ4t0z5NkT1H4GukVcke3GNOn40 krishnans2006@gmail.com"
         # krishnan-vivo
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjk4Ah+IsWbXjwpA89sL1s01UdJoobtFlpeBxcHJkTj krishnans2006@gmail.com"
+        # krishnan-pi
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZgsLeuVcdgehuhwpO8ZZuzPzTQhPGjYcrnzLSBCCP2 krishnans2006@gmail.com"
       ];
     };
     security.sudo.wheelNeedsPassword = false;
