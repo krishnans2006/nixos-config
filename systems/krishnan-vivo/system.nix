@@ -28,6 +28,7 @@ with inputs;
     enableTaildrive = true;
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
+  modules.ssh-server.enable = false;
   modules.secure-boot.enable = false;
   modules.krishnan-user.enable = true;
   modules.fs-mounts = {

@@ -27,6 +27,7 @@ with inputs;
     enable = true;
     enableTaildrive = false;
   };
+  modules.ssh-server.enable = true;
   modules.secure-boot.enable = false;
   modules.krishnan-user.enable = true;
   modules.fs-mounts = {
