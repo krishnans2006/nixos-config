@@ -120,6 +120,8 @@ in
 
                 echo "Deleting cache subvolume (/var/cache)"
                 btrfs subvolume delete -R "$MOUNTPOINT/cache"
+                echo "Recreating empty cache subvolume"
+                btrfs subvolume create "$MOUNTPOINT/cache"
               fi
             )
           '';
