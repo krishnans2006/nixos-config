@@ -9,6 +9,9 @@ let
   cfg = config.modules.impermanence;
 
   root = config.fileSystems."/";
+
+  # Convert a device path to a systemd .device
+  toSystemdDevice = device: lib.concatStringsSep "-" (lib.tail (map (lib.replaceString "-" "\\x2d" ) (lib.splitString "/" device))) + ".device";
 in
 {
   options.modules.impermanence = {
@@ -30,8 +33,8 @@ in
           message = "Must have a btrfs root filesystem to use Impermanence";
         }
         {
-          assertion = config.boot.initrd.systemd.enable == false;
-          message = "The impermanence module doesn't work with initrd systemd";
+          assertion = config.boot.initrd.systemd.enable == true;
+          message = "The impermanence module doesn't work with non-systemd initrd";
         }
         # TODO: Add assertion for postCreateHook in disk.nix to make sure
         # root-blank and home-blank snapshots are created correctly
@@ -83,36 +86,44 @@ in
         # Some are deleted and restored from a blank snapshot (/ and /home)
         # And some are persisted (/persist, /var/log, /var/lib, /swap)
         #
-        # Note: This needs to change drastically if boot.initrd.systemd.enable
-        # is enabled (probably using systemd.services wantedBy initrd.target)
+        # Note: This is specific to boot.initrd.systemd.enable
         # See https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/common/optional/ephemeral-btrfs.nix
-        postResumeCommands = ''
-          mkdir -p /tmp
-          MOUNTPOINT=$(mktemp -d)
-          (
-            mount -t btrfs ${root.device} "$MOUNTPOINT"
-            trap 'umount $MOUNTPOINT; rm -d $MOUNTPOINT' EXIT
+        systemd.services.impermanence-setup = {
+          description = "Set up impermanence and rollback root and home subvolumes";
+          wantedBy = [ "initrd.target" ];
+          requires = [(toSystemdDevice root.device)];
+          after = [(toSystemdDevice root.device)];
+          before = ["sysroot.mount"];
+          unitConfig.DefaultDependencies = "no";
+          serviceConfig.Type = "oneshot";
+          script = ''
+            mkdir -p /tmp
+            MOUNTPOINT=$(mktemp -d)
+            (
+              mount -t btrfs ${root.device} "$MOUNTPOINT"
+              trap 'umount $MOUNTPOINT; rm -d $MOUNTPOINT' EXIT
 
-            echo "Creating needed directories"
-            mkdir -p "$MOUNTPOINT"/persist/var/{log,lib/{nixos,systemd}}
-            if [ -e "$MOUNTPOINT/dont-wipe" ]; then
-              echo "Skipping wipe since $MOUNTPOINT/dont-wipe exists"
-            else
-              echo "Deleting root subvolume (/)"
-              btrfs subvolume delete -R "$MOUNTPOINT/root"
-              echo "Restoring root subvolume from root-blank"
-              btrfs subvolume snapshot "$MOUNTPOINT/root-blank" "$MOUNTPOINT/root"
+              echo "Creating needed directories"
+              mkdir -p "$MOUNTPOINT"/persist/var/{log,lib/{nixos,systemd}}
+              if [ -e "$MOUNTPOINT/dont-wipe" ]; then
+                echo "Skipping wipe since $MOUNTPOINT/dont-wipe exists"
+              else
+                echo "Deleting root subvolume (/)"
+                btrfs subvolume delete -R "$MOUNTPOINT/root"
+                echo "Restoring root subvolume from root-blank"
+                btrfs subvolume snapshot "$MOUNTPOINT/root-blank" "$MOUNTPOINT/root"
 
-              echo "Deleting home subvolume (/home)"
-              btrfs subvolume delete -R "$MOUNTPOINT/home"
-              echo "Restoring home subvolume from home-blank"
-              btrfs subvolume snapshot "$MOUNTPOINT/home-blank" "$MOUNTPOINT/home"
+                echo "Deleting home subvolume (/home)"
+                btrfs subvolume delete -R "$MOUNTPOINT/home"
+                echo "Restoring home subvolume from home-blank"
+                btrfs subvolume snapshot "$MOUNTPOINT/home-blank" "$MOUNTPOINT/home"
 
-              echo "Deleting cache subvolume (/var/cache)"
-              btrfs subvolume delete -R "$MOUNTPOINT/cache"
-            fi
-          )
-        '';
+                echo "Deleting cache subvolume (/var/cache)"
+                btrfs subvolume delete -R "$MOUNTPOINT/cache"
+              fi
+            )
+          '';
+        };
       };
     })
   ];
