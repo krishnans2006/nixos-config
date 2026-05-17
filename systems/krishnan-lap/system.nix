@@ -59,7 +59,9 @@ with inputs;
 
   time.timeZone = "America/New_York";
 
+  # TODO: Maybe the first is unnecessary
   systemd.tpm2.enable = false;
+  boot.initrd.systemd.tpm2.enable = false;
 
   nix.optimise = {
     automatic = true;
