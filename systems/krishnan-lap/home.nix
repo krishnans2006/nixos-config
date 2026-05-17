@@ -45,4 +45,14 @@ with inputs;
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-lap";
 
   programs.plasma.configFile.kwinrc.Xwayland.Scale = "1.25";
+
+  programs.plasma.input.touchpads = [
+    {
+      enable = false;
+      vendorId = "0002";
+      productId = "0007";
+      name = "SynPS/2 Synaptics TouchPad";
+      naturalScroll = true;
+    }
+  ];
 }
