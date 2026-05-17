@@ -35,6 +35,7 @@ in
           { directory = ".ssh"; mode = "0700"; }
           { directory = ".gnupg"; mode = "0700"; }
           ".local/share/direnv"
+          ".local/share/atuin"
         ];
         files = [
           # Needed to decrypt secrets at boot
