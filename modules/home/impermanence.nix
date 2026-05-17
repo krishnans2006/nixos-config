@@ -21,6 +21,8 @@ in
     (mkIf cfg.enable {
       home.persistence."/persist" = {
         directories = [
+          "NixOS"
+
           "Documents"
           "Downloads"
           "Music"
