@@ -30,11 +30,11 @@ with inputs;
   modules.packages = {
     utils.enable = true;
     chat-apps.enable = true;
-    chat-apps.autostart = true;
+    chat-apps.autostart = false;
     zen-browser.enable = true;
-    zen-browser.autostart = true;
+    zen-browser.autostart = false;
     bitwarden-desktop.enable = true;
-    bitwarden-desktop.autostart = true;
+    bitwarden-desktop.autostart = false;
     firefox.enable = false;
     thunderbird.enable = false;
     libreoffice.enable = true;
