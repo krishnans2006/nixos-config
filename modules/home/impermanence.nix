@@ -41,6 +41,7 @@ in
           ".local/share/zed"
           ".local/share/flatpak"
           ".local/share/baloo"  # File Indexing
+          ".local/share/kwalletd"  # Wallet
         ];
         files = [
           # Needed to decrypt secrets at boot
