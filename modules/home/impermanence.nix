@@ -45,12 +45,17 @@ in
 
           ".config/vesktop/sessionData"
           ".config/vesktop/settings"  # Synced settings for plugins, etc.
+
+          ".config/Element/IndexedDB"  # E2E Keys, auth
+          ".config/Element/EventStore"  # Seshat database for search
         ];
         files = [
           # Needed to decrypt secrets at boot
           ".config/sops/age/keys.txt"
 
           ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
+
+          ".config/Element/electron-config.json"
         ];
       };
     })
