@@ -52,5 +52,5 @@ with inputs;
 
   networking.hostName = "krishnan-vivo";  # Define your hostname.
 
-  time.timeZone = "America/Chicago";
+  time.timeZone = "America/New_York";
 }
