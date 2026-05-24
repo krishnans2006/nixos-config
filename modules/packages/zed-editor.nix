@@ -74,9 +74,18 @@ in
           "Nix".tab_size = 2;
 
           "YAML".tab_size = 2;
-          
+
           "Typst".soft_wrap = "editor_width";
           "Typst".tab_size = 2;
+        };
+
+        lsp = {
+          "tinymist" = {
+            # 127.0.0.1:23635
+            initialization_options.preview.background.enabled = true;
+
+            settings.formatterMode = "typstyle";  # "typstfmt"
+          };
         };
 
         # General
