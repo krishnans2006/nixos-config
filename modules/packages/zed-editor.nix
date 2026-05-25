@@ -88,6 +88,12 @@ in
           };
         };
 
+        agent_servers = {
+          "cursor" = {
+            type = "registry";
+          };
+        };
+
         # General
 
         ## General Settings
