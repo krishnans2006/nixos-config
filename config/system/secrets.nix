@@ -66,14 +66,6 @@ in
         key = "openvpn/ovpn1-2/key";
         restartUnits = [ "NetworkManager.service" ];
       };
-
-      # SSH key for fs mounts
-      "fs-key/public" = {
-        restartUnits = [ "mount-tjcsl.service" "mount-ews.service" ];
-      };
-      "fs-key/private" = {
-        restartUnits = [ "mount-tjcsl.service" "mount-ews.service" ];
-      };
     };
   };
 }

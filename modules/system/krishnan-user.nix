@@ -16,6 +16,8 @@ in
     # Disable root login (sudo only)
     users.users."root".hashedPassword = null;
 
+    users.groups.fuse = { };
+
     users.users."krishnan" = {
       uid = 1000;
       isNormalUser = true;
@@ -24,7 +26,8 @@ in
 
       # networkmanager, wheel: initially set (in configuration.nix)
       # dialout: for serial/USB ports
-      extraGroups = [ "networkmanager" "wheel" "dialout" ];
+      # fuse: for sshfs mounts
+      extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" ];
       packages = [ ];  # Managed by home-manager
       shell = pkgs.zsh;
 
@@ -45,5 +48,8 @@ in
     # Shell
     programs.zsh.enable = true;
     environment.pathsToLink = [ "/share/zsh" ];
+
+    # Mounts (fuse)
+    programs.fuse.userAllowOther = true;
   };
 }

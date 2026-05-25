@@ -30,10 +30,6 @@ with inputs;
   modules.ssh-server.enable = true;
   modules.secure-boot.enable = false;
   modules.krishnan-user.enable = true;
-  modules.fs-mounts = {
-    tjcsl = true;
-    ews = true;
-  };
   modules.iphone.enable = true;
 
   modules.gaming.enable = true;

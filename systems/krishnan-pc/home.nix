@@ -24,6 +24,10 @@ with inputs;
   modules.direnv.enable = true;
   modules.git.enable = true;
   modules.ssh.enable = true;
+  modules.fs-mounts = {
+    tjcsl = true;
+    # ews = true;
+  };
 
   modules.packages = {
     utils.enable = true;

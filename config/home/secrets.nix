@@ -27,6 +27,10 @@ in
       "atuin/key_b64" = {};
 
       "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
+
+      # SSH key for fs mounts
+      "fs-key/public" = { };
+      "fs-key/private" = { };
     };
   };
 
