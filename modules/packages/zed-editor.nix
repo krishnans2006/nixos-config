@@ -25,6 +25,8 @@ in
         texlab
         package-version-server
 
+        cursor-cli
+
         zed-discord-presence
         wakatime-ls
       ];
@@ -90,7 +92,10 @@ in
 
         agent_servers = {
           "cursor" = {
-            type = "registry";
+            type = "custom";
+            command = "cursor-agent";
+            args = [ "acp" ];
+            env."CURSOR_AGENT_EXECUTABLE" = "${pkgs.cursor-cli}/bin/cursor-agent";
           };
         };
 
