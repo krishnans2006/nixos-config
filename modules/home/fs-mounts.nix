@@ -1,4 +1,4 @@
-{ pkgs, config, lib, root, ... }:
+{ pkgs, config, lib, ... }:
 
 with lib;
 
@@ -22,7 +22,6 @@ let
           "-o" "reconnect"
           "-o" "ServerAliveInterval=15"
           "-o" "ServerAliveCountMax=3"
-          "-o" "IdentityFile=${config.sops.secrets."fs-key/private".path}"
           "-o" "StrictHostKeyChecking=no"
           "-o" "UserKnownHostsFile=/dev/null"
           "-o" "BatchMode=yes"
@@ -38,16 +37,12 @@ let
     };
 in
 {
-  imports = [
-    "${root}/config/home/secrets.nix"
-  ];
-
   options.modules.fs-mounts = {
     tjcsl = mkEnableOption "Enable systemd user mounts for TJ CSL filesystem";
     ews = mkEnableOption "Enable systemd user mounts for UIUC EWS filesystem";
   };
 
-  config = {
+  config = mkIf (cfg.tjcsl || cfg.ews) {
     home.packages = [ pkgs.sshfs ];
 
     systemd.user.services = mkMerge [
