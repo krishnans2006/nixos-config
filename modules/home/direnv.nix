@@ -19,5 +19,9 @@ in
         global."warn_timeout" = 0;
       };
     };
+
+    # Impermanence
+    # This is needed to save "direnv allow" state
+    modules.impermanence.persistDirs = [ ".local/share/direnv" ];
   };
 }

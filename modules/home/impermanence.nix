@@ -51,7 +51,6 @@ in
 
           { directory = ".ssh"; mode = "0700"; }
           { directory = ".gnupg"; mode = "0700"; }
-          ".local/share/direnv"
           ".local/share/atuin"
           ".local/share/zoxide"
           ".local/share/klipper"  # Clipboard
