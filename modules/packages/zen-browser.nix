@@ -22,5 +22,8 @@ in
     xdg.configFile."autostart/zen-browser.desktop" = mkIf cfg.autostart {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/flatpak/exports/share/applications/app.zen_browser.zen.desktop";
     };
+
+    # Persistence
+    modules.impermanence.persistDirs = [ ".var/app/app.zen_browser.zen" ];
   };
 }

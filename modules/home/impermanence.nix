@@ -17,11 +17,13 @@ in
       type = with types; listOf (either str attrs);
       default = [ ];
       description = "List of directories to persist in home.";
+      # apply = unique;
     };
     persistFiles = mkOption {
       type = with types; listOf (either str attrs);
       default = [ ];
       description = "List of files to persist in home.";
+      # apply = unique;
     };
   };
 
@@ -54,7 +56,6 @@ in
           ".local/share/zoxide"
           ".local/share/klipper"  # Clipboard
           ".local/share/zed"
-          ".local/share/flatpak"
           ".local/share/baloo"  # File Indexing
           ".local/share/kwalletd"  # Wallet
 

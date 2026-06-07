@@ -11,4 +11,7 @@
     # Populated by other modules (see modules/packages/*.nix)
     packages = [];
   };
+
+  # Impermanence
+  modules.impermanence.persistDirs = [ ".local/share/flatpak" ];
 }
