@@ -621,5 +621,9 @@ in
         };
       };
     };
+
+    # Impermanence
+    # ~/.config/zed doesn't need persistence since it's declaratively configured
+    modules.impermanence.persistDirs = [ ".local/share/zed" ];
   };
 }

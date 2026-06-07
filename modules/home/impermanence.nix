@@ -55,7 +55,6 @@ in
           ".local/share/atuin"
           ".local/share/zoxide"
           ".local/share/klipper"  # Clipboard
-          ".local/share/zed"
           ".local/share/baloo"  # File Indexing
           ".local/share/kwalletd"  # Wallet
 
