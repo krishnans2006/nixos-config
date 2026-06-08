@@ -32,11 +32,9 @@ in
 
       ".config/Mattermost/IndexedDB"
       ".config/Mattermost/Local Storage"
-      ".config/Mattermost/Session Storage"
 
       ".config/Zulip/config"  # domain.json, settings.json
       ".config/Zulip/Partitions/webviewsession/Local Storage"
-      ".config/Zulip/Partitions/webviewsession/Session Storage"
     ];
 
     modules.impermanence.persistFiles = [
