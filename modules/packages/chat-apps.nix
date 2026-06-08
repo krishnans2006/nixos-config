@@ -32,6 +32,9 @@ in
 
       ".config/Element/IndexedDB"  # E2E Keys, auth
       ".config/Element/EventStore"  # Seshat database for search
+      ".config/Element/Local Storage"  # UI preferences
+      ".config/Element/Session Storage"  # Session state
+      ".config/Element/WebStorage"
 
       ".config/Mattermost/IndexedDB"
       ".config/Mattermost/Local Storage"
@@ -46,7 +49,12 @@ in
 
       ".config/Slack/Cookies"
 
+      { file = ".config/Element/electron-config.json"; method = "symlink"; }
       ".config/Element/window-state.json"
+      ".config/Element/Cookies"
+      ".config/Element/Local State"  # Cookie encryption key (safeStorage)
+      ".config/Element/Preferences"  # User settings
+      ".config/Element/sso-sessions.json"  # SSO sessions
 
       ".config/Mattermost/Cookies"
       ".config/Mattermost/config.json"  # Settings, servers (TODO: declarative?)
