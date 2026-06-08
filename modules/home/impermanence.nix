@@ -53,9 +53,6 @@ in
           { directory = ".gnupg"; mode = "0700"; }
           ".local/share/atuin"
           ".local/share/zoxide"
-          ".local/share/klipper"  # Clipboard
-          ".local/share/baloo"  # File Indexing
-          ".local/share/kwalletd"  # Wallet
 
           ".config/vesktop/sessionData"
           ".config/vesktop/settings"  # Synced settings for plugins, etc.

@@ -12,6 +12,13 @@ in {
 
   # Must be enabled in system config
   config = mkIf cfg.enable ( mkAssert osCfg.enable "modules.plasma is not enabled in system config" {
+    # Impermanence
+    modules.impermanence.persistDirs = [
+      ".local/share/klipper"  # Clipboard
+      ".local/share/baloo"  # File Indexing
+      ".local/share/kwalletd"  # Wallet
+    ];
+
     # KDE Packages
     home.packages = with pkgs; [
       kdePackages.kate
