@@ -46,6 +46,8 @@ in
 
       ".config/Slack/Cookies"
 
+      ".config/Element/window-state.json"
+
       ".config/Mattermost/Cookies"
       ".config/Mattermost/config.json"  # Settings, servers (TODO: declarative?)
       ".config/Mattermost/bounds-info.json"  # Window size/maximized
