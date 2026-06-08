@@ -29,10 +29,16 @@ in
 
       ".config/Element/IndexedDB"  # E2E Keys, auth
       ".config/Element/EventStore"  # Seshat database for search
+
+      ".config/Zulip/config"  # domain.json, settings.json
+      ".config/Zulip/Partitions/webviewsession/Local Storage"
+      ".config/Zulip/Partitions/webviewsession/Session Storage"
     ];
 
     modules.impermanence.persistFiles = [
       ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
+
+      ".config/Zulip/Partitions/webviewsession/Cookies"
     ];
 
     # Autostart
