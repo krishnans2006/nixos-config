@@ -22,6 +22,20 @@ in
       zulip
     ];
 
+    # Impermanence
+    modules.impermanence.persistDirs = [
+      ".config/vesktop/sessionData"
+      ".config/vesktop/settings"  # Synced settings for plugins, etc.
+
+      ".config/Element/IndexedDB"  # E2E Keys, auth
+      ".config/Element/EventStore"  # Seshat database for search
+    ];
+
+    modules.impermanence.persistFiles = [
+      ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
+    ];
+
+    # Autostart
     xdg.configFile = mkIf cfg.autostart (
       let
         # These variables read an app's desktop file from /nix/store

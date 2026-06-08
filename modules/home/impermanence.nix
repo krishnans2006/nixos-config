@@ -51,18 +51,10 @@ in
 
           { directory = ".ssh"; mode = "0700"; }
           { directory = ".gnupg"; mode = "0700"; }
-
-          ".config/vesktop/sessionData"
-          ".config/vesktop/settings"  # Synced settings for plugins, etc.
-
-          ".config/Element/IndexedDB"  # E2E Keys, auth
-          ".config/Element/EventStore"  # Seshat database for search
         ];
         files = cfg.persistFiles ++ [
           # Needed to decrypt secrets at boot
           ".config/sops/age/keys.txt"
-
-          ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
         ];
       };
     })
