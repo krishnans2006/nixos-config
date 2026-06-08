@@ -20,6 +20,10 @@ in {
       ".local/state/wireplumber"  # Audio (volume, devices, etc.) state
     ];
 
+    modules.impermanence.persistFiles = [
+      ".local/state/konsolestaterc"
+    ];
+
     # KDE Packages
     home.packages = with pkgs; [
       kdePackages.kate
