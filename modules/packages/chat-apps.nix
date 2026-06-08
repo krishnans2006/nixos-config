@@ -27,6 +27,9 @@ in
       ".config/vesktop/sessionData"
       ".config/vesktop/settings"  # Synced settings for plugins, etc.
 
+      ".config/Slack/storage"  # root-state.
+      ".config/Slack/Local Storage"  # UI Preferences
+
       ".config/Element/IndexedDB"  # E2E Keys, auth
       ".config/Element/EventStore"  # Seshat database for search
 
@@ -39,6 +42,8 @@ in
 
     modules.impermanence.persistFiles = [
       ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
+
+      ".config/Slack/Cookies"
 
       ".config/Mattermost/Cookies"
       ".config/Mattermost/config.json"  # Settings, servers (TODO: declarative?)
