@@ -30,6 +30,10 @@ in
       ".config/Element/IndexedDB"  # E2E Keys, auth
       ".config/Element/EventStore"  # Seshat database for search
 
+      ".config/Mattermost/IndexedDB"
+      ".config/Mattermost/Local Storage"
+      ".config/Mattermost/Session Storage"
+
       ".config/Zulip/config"  # domain.json, settings.json
       ".config/Zulip/Partitions/webviewsession/Local Storage"
       ".config/Zulip/Partitions/webviewsession/Session Storage"
@@ -37,6 +41,10 @@ in
 
     modules.impermanence.persistFiles = [
       ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
+
+      ".config/Mattermost/Cookies"
+      ".config/Mattermost/config.json"  # Settings, servers (TODO: declarative?)
+      ".config/Mattermost/bounds-info.json"  # Window size/maximized
 
       ".config/Zulip/Partitions/webviewsession/Cookies"
     ];
