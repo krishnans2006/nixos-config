@@ -51,8 +51,6 @@ in
 
           { directory = ".ssh"; mode = "0700"; }
           { directory = ".gnupg"; mode = "0700"; }
-          ".local/share/atuin"
-          ".local/share/zoxide"
 
           ".config/vesktop/sessionData"
           ".config/vesktop/settings"  # Synced settings for plugins, etc.

@@ -158,6 +158,9 @@ in
           sync.records = true;
         };
       };
+
+      # Impermanence
+      modules.impermanence.persistDirs = [ ".local/share/atuin" ];
     })
 
     # Zoxide
@@ -166,6 +169,9 @@ in
         enable = true;
         options = [ "--cmd" "cd" ];
       };
+
+      # Impermanence
+      # modules.impermanence.persistFiles = [ ".local/share/zoxide/db.zo" ];
     })
   ]);
 }
