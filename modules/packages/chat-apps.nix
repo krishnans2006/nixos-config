@@ -24,7 +24,7 @@ in
 
     # Impermanence
     modules.impermanence.persistDirs = [
-      ".config/vesktop/sessionData"
+      ".config/vesktop/sessionData/Local Storage"  # Discord is sandboxed into sessionData
       ".config/vesktop/settings"  # Synced settings for plugins, etc.
 
       ".config/Slack/storage"  # root-state.
@@ -42,6 +42,7 @@ in
 
     modules.impermanence.persistFiles = [
       ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
+      ".config/vesktop/state.json"  # Window params, first launch menu
 
       ".config/Slack/Cookies"
 
