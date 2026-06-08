@@ -17,6 +17,7 @@ in {
       ".local/share/klipper"  # Clipboard
       ".local/share/baloo"  # File Indexing
       ".local/share/kwalletd"  # Wallet
+      ".local/state/wireplumber"  # Audio (volume, devices, etc.) state
     ];
 
     # KDE Packages
