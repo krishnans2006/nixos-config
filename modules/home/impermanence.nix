@@ -63,8 +63,6 @@ in
           ".config/sops/age/keys.txt"
 
           ".config/vesktop/settings.json"   # Vesktop settings (titlebar, tray, etc.)
-
-          ".config/Element/electron-config.json"
         ];
       };
     })
