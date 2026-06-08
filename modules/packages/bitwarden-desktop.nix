@@ -22,5 +22,8 @@ in
     xdg.configFile."autostart/bitwarden.desktop" = mkIf cfg.autostart {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/flatpak/exports/share/applications/com.bitwarden.desktop.desktop";
     };
+
+    # Persistence
+    modules.impermanence.persistDirs = [ ".var/app/com.bitwarden.desktop" ];
   };
 }
