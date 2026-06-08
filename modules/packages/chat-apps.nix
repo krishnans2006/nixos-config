@@ -32,7 +32,7 @@ in
 
       ".config/Element/IndexedDB"  # E2E Keys, auth
       ".config/Element/EventStore"  # Seshat database for search
-      ".config/Element/Local Storage"  # Session ids
+      ".config/Element/Local Storage"  # Session ids, theme
 
       ".config/Mattermost/IndexedDB"
       ".config/Mattermost/Local Storage"
@@ -47,6 +47,7 @@ in
 
       ".config/Slack/Cookies"
 
+      # This needs to be symlinked due to atomic write (copying temp file) shenanigans
       { file = ".config/Element/electron-config.json"; method = "symlink"; }
       ".config/Element/window-state.json"
 
