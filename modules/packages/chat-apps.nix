@@ -32,7 +32,7 @@ in
 
       ".config/Element/IndexedDB"  # E2E Keys, auth
       ".config/Element/EventStore"  # Seshat database for search
-      ".config/Element/Local Storage"  # Session ids (mx_user_id/device_id/hs_url/oidc) + UI prefs/theme
+      ".config/Element/Local Storage"  # Session ids
 
       ".config/Mattermost/IndexedDB"
       ".config/Mattermost/Local Storage"
@@ -49,7 +49,6 @@ in
 
       { file = ".config/Element/electron-config.json"; method = "symlink"; }
       ".config/Element/window-state.json"
-      ".config/Element/Cookies"
 
       ".config/Mattermost/Cookies"
       ".config/Mattermost/config.json"  # Settings, servers (TODO: declarative?)
