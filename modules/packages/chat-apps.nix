@@ -49,6 +49,7 @@ in
       ".config/Mattermost/Cookies"
       ".config/Mattermost/config.json"  # Settings, servers (TODO: declarative?)
       ".config/Mattermost/bounds-info.json"  # Window size/maximized
+      ".config/Mattermost/permissions.json"  # Notifications allow/deny
 
       ".config/Zulip/Partitions/webviewsession/Cookies"
     ];
