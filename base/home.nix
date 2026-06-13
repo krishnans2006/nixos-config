@@ -8,10 +8,6 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    pkg-config
-
-    zoom-us
-
     (python314.withPackages (ps: with ps; [
       jupyterlab
       jupyterlab-lsp
@@ -27,16 +23,13 @@
     # kicad
     # gimp
 
-    qmk
     via
-    #vial
-
-    quickemu
-    #quickgui
 
     audacity
     vlc
     obs-studio
+
+    zoom-us
 
     claude-code
   ];
