@@ -10,8 +10,6 @@
   home.packages = with pkgs; [
     pkg-config
 
-    meslo-lgs-nf
-
     zoom-us
 
     (python314.withPackages (ps: with ps; [

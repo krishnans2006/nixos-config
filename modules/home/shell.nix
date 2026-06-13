@@ -102,6 +102,8 @@ in
 
     # Theme
     (mkIf cfg.enableTheme {
+      home.packages = [ pkgs.meslo-lgs-nf ];
+
       programs.zsh = {
         oh-my-zsh.theme = ""; # powerlevel10k
 
