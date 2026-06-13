@@ -24,14 +24,6 @@
       discordpy
     ]))
 
-    sshpass
-
-    sshfs
-
-    jdk
-
-    platformio
-
     # kicad
     # gimp
 
@@ -63,4 +55,5 @@
   };
 
   programs.vscode.enable = true;
+  programs.java.enable = true;
 }
