@@ -6,6 +6,10 @@ let
   cfg = config.modules.shell;
 in
 {
+  imports = [
+    "${root}/config/home/secrets.nix"
+  ];
+
   options.modules.shell = {
     enable = mkEnableOption "Enable custom shell configuration";
     enableDotfiles = mkOption {
