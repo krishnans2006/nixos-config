@@ -28,6 +28,7 @@ with inputs;
     tjcsl = true;
     # ews = true;
   };
+  modules.gaming.enable = true;
 
   modules.packages = {
     utils.enable = true;
