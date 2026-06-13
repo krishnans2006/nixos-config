@@ -49,4 +49,6 @@ with inputs;
   networking.hostName = "krishnan-vivo";  # Define your hostname.
 
   time.timeZone = "America/New_York";
+
+  boot.kernel.sysfs.class.power_supply.BAT1.charge_control_end_threshold = 80;
 }
