@@ -62,6 +62,12 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Temporary fix until Zulip upgrades to Electron 40+
+  # Must be set at the system level since home-manager.useGlobalPkgs = true
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+  ];
+
   # Enable the Flakes feature and the accompanying new nix command-line tool
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
