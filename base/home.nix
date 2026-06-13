@@ -10,7 +10,6 @@
   home.packages = with pkgs; [
     pkg-config
 
-    zsh-powerlevel10k
     meslo-lgs-nf
 
     zoom-us
