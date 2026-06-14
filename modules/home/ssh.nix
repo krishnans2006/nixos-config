@@ -15,66 +15,62 @@ in
       enable = true;
       enableDefaultConfig = false;
 
-      matchBlocks = {
+      settings = {
         "*" = {
-          addKeysToAgent = "yes";
-          # controlMaster = "auto";
-          # controlPath = "~/.ssh/master-%r@%h:%p";
-          # controlPersist = "3s";
+          AddKeysToAgent = "yes";
+          # ControlMaster = "auto";
+          # ControlPath = "~/.ssh/master-%r@%h:%p";
+          # ControlPersist = "3s";
         };
         "ews" = {
-          hostname = "linux.ews.illinois.edu";
-          identityFile = "~/.ssh/id_ed25519";
-          user = "ks128";
-          forwardX11 = true;
-          forwardX11Trusted = true;
-          extraOptions = {
-            RequestTTY = "yes";
-            RemoteCommand = "/bin/zsh";
-          };
+          HostName = "linux.ews.illinois.edu";
+          IdentityFile = "~/.ssh/id_ed25519";
+          User = "ks128";
+          ForwardX11 = true;
+          ForwardX11Trusted = true;
+          RequestTTY = "yes";
+          RemoteCommand = "/bin/zsh";
         };
         "ews-391" = {
-          hostname = "eceb-3026.ews.illinois.edu";
-          identityFile = "~/.ssh/id_ed25519";
-          user = "ks128";
-          forwardX11 = true;
-          forwardX11Trusted = true;
-          extraOptions = {
-            RequestTTY = "yes";
-            RemoteCommand = "/bin/zsh";
-          };
+          HostName = "eceb-3026.ews.illinois.edu";
+          IdentityFile = "~/.ssh/id_ed25519";
+          User = "ks128";
+          ForwardX11 = true;
+          ForwardX11Trusted = true;
+          RequestTTY = "yes";
+          RemoteCommand = "/bin/zsh";
         };
         "ncsa-delta" = {
-          hostname = "login.delta.ncsa.illinois.edu";
-          user = "krishnans2006";
-          forwardX11 = true;
+          HostName = "login.delta.ncsa.illinois.edu";
+          User = "krishnans2006";
+          ForwardX11 = true;
         };
         "oracle-amp" = {
-          hostname = "150.136.13.65";
-          identityFile = "~/.ssh/id_ed25519";
-          user = "ubuntu";
+          HostName = "150.136.13.65";
+          IdentityFile = "~/.ssh/id_ed25519";
+          User = "ubuntu";
         };
         "oracle-vm1" = {
-          hostname = "150.136.122.56";
-          identityFile = "~/.ssh/id_ed25519";
-          user = "ubuntu";
+          HostName = "150.136.122.56";
+          IdentityFile = "~/.ssh/id_ed25519";
+          User = "ubuntu";
         };
         "oracle-vm2" = {
-          hostname = "129.153.27.23";
-          identityFile = "~/.ssh/id_ed25519";
-          user = "ubuntu";
+          HostName = "129.153.27.23";
+          IdentityFile = "~/.ssh/id_ed25519";
+          User = "ubuntu";
         };
         "piserver.local" = {
-          hostname = "piserver.local";
-          user = "krishnan";
+          HostName = "piserver.local";
+          User = "krishnan";
         };
         "tjfridge" = {
-          hostname = "fridge.tjhsst.edu";  # 198.38.23.53
-          user = "kshankar";
+          HostName = "fridge.tjhsst.edu";  # 198.38.23.53
+          User = "kshankar";
         };
         "tjras" = {
-          hostname = "ras2.tjhsst.edu";  # 198.38.18.201
-          user = "2024kshankar";
+          HostName = "ras2.tjhsst.edu";  # 198.38.18.201
+          User = "2024kshankar";
         };
       };
     };

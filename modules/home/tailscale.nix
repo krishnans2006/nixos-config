@@ -13,14 +13,14 @@ in
 
   # Must be enabled in system config
   config = mkIf cfg.enable ( mkAssert osCfg.enable "modules.tailscale is not enabled in system config" {
-    programs.ssh.matchBlocks = {
+    programs.ssh.settings = {
       "pc" = {
-        hostname = "krishnan-pc.emperor-snares.ts.net";
-        user = "krishnan";
+        HostName = "krishnan-pc.emperor-snares.ts.net";
+        User = "krishnan";
       };
       "laptop" = {
-        hostname = "krishnan-lap.emperor-snares.ts.net";
-        user = "krishnan";
+        HostName = "krishnan-lap.emperor-snares.ts.net";
+        User = "krishnan";
       };
     };
   });
