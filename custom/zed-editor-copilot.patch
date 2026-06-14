@@ -1,0 +1,97 @@
+--- a/crates/copilot/Cargo.toml
++++ b/crates/copilot/Cargo.toml
+@@ -46,6 +46,7 @@
+ sum_tree.workspace = true
+ util.workspace = true
+ workspace.workspace = true
++which.workspace = true
+ 
+ [target.'cfg(windows)'.dependencies]
+ async-std = { version = "1.12.0", features = ["unstable"] }
+--- a/crates/copilot/src/copilot.rs
++++ b/crates/copilot/src/copilot.rs
+@@ -22,7 +22,7 @@
+     point_from_lsp, point_to_lsp,
+ };
+ use lsp::{LanguageServer, LanguageServerBinary, LanguageServerId, LanguageServerName};
+-use node_runtime::{NodeRuntime, VersionStrategy};
++use node_runtime::NodeRuntime;
+ use parking_lot::Mutex;
+ use project::project_settings::ProjectSettings;
+ use project::{DisableAiSettings, Project};
+@@ -1406,68 +1406,13 @@
+     remove_matching(copilot_chat::copilot_chat_config_dir(), |_| true).await
+ }
+ 
+-async fn get_copilot_lsp(fs: Arc<dyn Fs>, node_runtime: NodeRuntime) -> anyhow::Result<PathBuf> {
+-    const PACKAGE_NAME: &str = "@github/copilot-language-server";
+-    const SERVER_PATH: &str =
+-        "node_modules/@github/copilot-language-server/dist/language-server.js";
+-
+-    let latest_version = node_runtime
+-        .npm_package_latest_version(PACKAGE_NAME)
+-        .await?;
+-    let server_path = paths::copilot_dir().join(SERVER_PATH);
+-    let binary_path = copilot_lsp_native_binary_path()?;
+-
+-    fs.create_dir(paths::copilot_dir()).await?;
+-
+-    let should_install = !fs.is_file(&binary_path).await
+-        || node_runtime
+-            .should_install_npm_package(
+-                PACKAGE_NAME,
+-                &server_path,
+-                paths::copilot_dir(),
+-                VersionStrategy::Latest(&latest_version),
+-            )
+-            .await;
+-    if should_install {
+-        node_runtime
+-            .npm_install_latest_packages(paths::copilot_dir(), &[PACKAGE_NAME])
+-            .await?;
+-    }
+-
+-    if fs.is_file(&binary_path).await {
+-        return Ok(binary_path);
+-    }
+-
+-    anyhow::bail!("GitHub Copilot native language server binary was not installed")
+-}
+-
+-fn copilot_lsp_native_binary_path() -> anyhow::Result<PathBuf> {
+-    let platform = match env::consts::OS {
+-        "linux" => "linux",
+-        "macos" => "darwin",
+-        "windows" => "win32",
+-        platform => anyhow::bail!("unsupported Copilot language server platform: {platform}"),
+-    };
+-    let architecture = match env::consts::ARCH {
+-        "aarch64" => "arm64",
+-        "x86_64" => "x64",
+-        architecture => {
+-            anyhow::bail!("unsupported Copilot language server architecture: {architecture}")
+-        }
+-    };
+-
+-    let package_name = format!("copilot-language-server-{platform}-{architecture}");
+-
+-    let executable_name = if cfg!(target_os = "windows") {
+-        "copilot-language-server.exe"
+-    } else {
+-        "copilot-language-server"
+-    };
+-    Ok(paths::copilot_dir()
+-        .join("node_modules")
+-        .join("@github")
+-        .join(package_name)
+-        .join(executable_name))
++async fn get_copilot_lsp(_fs: Arc<dyn Fs>, _node_runtime: NodeRuntime) -> anyhow::Result<PathBuf> {
++    which::which("copilot-language-server").map_err(|_| {
++        anyhow::anyhow!(
++            "GitHub Copilot language server not found on PATH. \
++             Install copilot-language-server and ensure it is available to Zed."
++        )
++    })
+ }
+ 
+ #[cfg(test)]

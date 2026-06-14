@@ -6,6 +6,12 @@ let
   cfg = config.modules.packages.zed-editor;
 
   wakatime-ls = import "${root}/custom/wakatime-ls.nix" { inherit pkgs; };
+
+  # Use copilot-language-server from PATH instead of npm-installing into
+  # ~/.local/share/zed/copilot on first launch
+  zed-editor-patched = pkgs.zed-editor.overrideAttrs (prev: {
+    patches = prev.patches ++ [ "${root}/custom/zed-editor-copilot.patch" ];
+  });
 in
 {
   options.modules.packages.zed-editor = {
@@ -15,6 +21,7 @@ in
   config = mkIf cfg.enable {
     programs.zed-editor = {
       enable = true;
+      package = zed-editor-patched;
       installRemoteServer = true;
 
       extraPackages = with pkgs; [
@@ -29,6 +36,7 @@ in
 
         zed-discord-presence
         wakatime-ls
+        copilot-language-server
       ];
 
       mutableUserSettings = false;
