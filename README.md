@@ -5,17 +5,37 @@ My NixOS configuration.
 The system:
 - KDE Plasma 6
 - Zsh (oh-my-zsh) + Atuin
-- Firefox
 - Git, SSH, GnuPG, etc.
 - Other apps as needed
 
 The configuration:
-- Multi-device (PC, laptop)
+- Multi-device (PC, two laptops)
 - Nixpkgs `unstable`
 - Flakes
 - Secrets management with `sops` and `sops-nix` (as a submodule)
 - Home Manager (heavily used)
+- Modules for some things
 - Organized, readable, tons of comments
+
+## Organization
+
+- `flake.nix` - Top-level flake that defines inputs and systems
+- `systems/` - Contains system-specific configuration
+  - `default.nix` - Defines a shared common boilerplate for systems that imports system-specific configurations
+  - `system.nix` - System-specific `configuration.nix` that enables modules and sets some other options
+  - `home.nix` - System-specific home-manager configuration that enables modules/packages and sets some other options
+  - `hardware.nix` - Auto-generated hardware configuration from `nixos-generate-config`
+  - `disk.nix` - Disk configuration to be used with disko
+- `base/` - A barebones system.nix and home.nix to set up system configs
+- `modules/` - The bulk of the configuration, defining custom options that systems can enable if wanted
+  - `system/` - Modules configuring system-related features
+  - `home/` - Modules configuring home-related features
+  - `packages/` - Modules that install/configure packages (also through home-manager)
+- `config/` - Boilerplate that can be used by modules to avoid repetition (e.g., flatpak base config, secrets setup)
+- `custom/` - Custom derivations, patches, etc.
+- `dotfiles/` - Dotfiles used in `modules/home/shell.nix` to set up the shell
+- `secrets/` - Encrypted secrets managed by `sops` and `sops-nix` (`config/{system,home}/secrets.nix`)
+- `.sops.yaml` - Configuration file for access control to secrets
 
 ## Manual Configuration Steps
 
@@ -73,7 +93,7 @@ ssh-to-age -private-key -i /tmp/id_ed25519 > ~/.config/sops/age/keys.txt
 age-keygen -y ~/.config/sops/age/keys.txt
 ```
 
-Then, allow it to access secrets in `.sops.yaml`: 
+Then, allow it to access secrets in `.sops.yaml`:
 
 ```yaml
 keys:
