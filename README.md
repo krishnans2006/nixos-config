@@ -22,8 +22,8 @@ The configuration:
 - `flake.nix` - Top-level flake that defines inputs and systems
 - `systems/` - Contains system-specific configuration
   - `default.nix` - Defines a shared common boilerplate for systems that imports system-specific configurations
-  - `system.nix` - System-specific `configuration.nix` that enables modules and sets some other options
-  - `home.nix` - System-specific home-manager configuration that enables modules/packages and sets some other options
+  - `system.nix` - System-specific NixOS configuration that enables modules and sets other options
+  - `home.nix` - System-specific home configuration that enables modules/packages and sets other options
   - `hardware.nix` - Auto-generated hardware configuration from `nixos-generate-config`
   - `disk.nix` - Disk configuration to be used with disko
 - `base/` - A barebones system.nix and home.nix to set up system configs
@@ -34,7 +34,7 @@ The configuration:
 - `config/` - Boilerplate that can be used by modules to avoid repetition (e.g., flatpak base config, secrets setup)
 - `custom/` - Custom derivations, patches, etc.
 - `dotfiles/` - Dotfiles used in `modules/home/shell.nix` to set up the shell
-- `secrets/` - Encrypted secrets managed by `sops` and `sops-nix` (`config/{system,home}/secrets.nix`)
+- `secrets/` - Encrypted secrets managed by sops and sops-nix (`config/{system,home}/secrets.nix`)
 - `.sops.yaml` - Configuration file for access control to secrets
 
 ## Manual Configuration Steps
