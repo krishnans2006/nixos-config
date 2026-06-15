@@ -7,10 +7,15 @@ let
 
   wakatime-ls = import "${root}/custom/wakatime-ls.nix" { inherit pkgs; };
 
-  # Use copilot-language-server from PATH instead of npm-installing into
-  # ~/.local/share/zed/copilot on first launch
+  # This patch modifies zed-editor to use copilot-language-server from PATH
+  # instead of npm-installing it into ~/.local/share/zed/copilot
+  # This was a "regression" introduced by:
+  # - https://github.com/zed-industries/zed/pull/56635
+  # The ${root} interpolation won't work here, since it uses the derivation
+  # of the root flake as a dependency (which technically works, but forces a
+  # full rebuild of zed whenever anything in this config changes)
   zed-editor-patched = pkgs.zed-editor.overrideAttrs (prev: {
-    patches = prev.patches ++ [ "${root}/custom/zed-editor-copilot.patch" ];
+    patches = prev.patches ++ [ ../../custom/zed-editor-copilot.patch ];
   });
 in
 {
