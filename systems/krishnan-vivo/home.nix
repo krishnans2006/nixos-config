@@ -59,4 +59,6 @@ with inputs;
       naturalScroll = true;
     }
   ];
+
+  services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];
 }
