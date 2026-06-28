@@ -77,10 +77,7 @@ in
       ];
 
       userSettings = {
-        # Extension/LSP/Language Settings
-
-        # lsp.nil.initialization_options.formatting.command = [ "nixfmt" ];
-        # lsp.nixd.initialization_options.formatting.command = [ "nixfmt" ];
+        # Language-specific/LSP
 
         languages = {
           "Nix".formatter.external.command = "nixfmt";
@@ -100,6 +97,37 @@ in
 
             settings.formatterMode = "typstyle";  # "typstfmt"
           };
+
+          # nil.initialization_options.formatting.command = [ "nixfmt" ];
+          # nixd.initialization_options.formatting.command = [ "nixfmt" ];
+        };
+
+        # AI/Agents
+
+        agent.play_sound_when_agent_done = "always";  # "never", "on_failure"
+        agent.show_turn_stats = true;
+
+        edit_predictions.provider = "copilot";  # "zed"
+
+        # ACPs
+        agent_servers = {
+          "cursor" = {
+            type = "custom";
+            command = "cursor-agent";
+            # --force auto-approves tool calls from cursor
+            # --approve-mcps approves MCP calls from cursor
+            # See agent.always_allow_external_agent_tools which will come in the future
+            args = [ "--force" "--approve-mcps" "acp" ];
+            env."CURSOR_AGENT_EXECUTABLE" = "${pkgs.cursor-cli}/bin/cursor-agent";
+            default_config_options.model = "claude-opus-4-8[thinking=true,context=300k,effort=high,fast=false]";
+          };
+        };
+
+        # Zed Agent
+        agent.default_model = {
+          provider = "openrouter";
+          model = "anthropic/claude-opus-4.8";
+          enable_thinking = true;
         };
 
         # General
@@ -133,13 +161,9 @@ in
         # Editor
 
         autosave = "on_focus_change";  # "off", "on_window_change", "after_delay"
-
         which_key.enabled = true;
-
         minimap.show = "always";  # "auto", "never"
-
         preferred_line_length = 120;
-
         inlay_hints.enabled = true;
 
         # Window & Layout
@@ -166,37 +190,8 @@ in
 
         # Terminal
 
-        terminal.detect_venv.on = {
-          directories = [ ".venv" "venv" ];  # Default also includes "env" and ".env"
-        };
-
+        terminal.detect_venv.on.directories = [ ".venv" "venv" ];  # Default also includes "env" and ".env"
         terminal.max_scroll_history_lines = 100000;  # Default 10000, 0 disables scrolling entirely
-
-        # AI
-
-        agent.play_sound_when_agent_done = "always";  # "never", "on_failure"
-        agent.show_turn_stats = true;
-
-        edit_predictions.provider = "copilot";  # "zed"
-
-        agent.default_model = {
-          provider = "openrouter";
-          model = "anthropic/claude-opus-4.6";
-          enable_thinking = true;
-        };
-
-        agent_servers = {
-          "cursor" = {
-            type = "custom";
-            command = "cursor-agent";
-            # --force auto-approves tool calls from cursor
-            # --approve-mcps approves MCP calls from cursor
-            # See agent.always_allow_external_agent_tools which will come in the future
-            args = [ "--force" "--approve-mcps" "acp" ];
-            env."CURSOR_AGENT_EXECUTABLE" = "${pkgs.cursor-cli}/bin/cursor-agent";
-            default_config_options.model = "claude-opus-4-8[thinking=true,context=300k,effort=high,fast=false]";
-          };
-        };
       };
     };
 
