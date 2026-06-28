@@ -62,6 +62,7 @@ in
         "caddyfile"
         "django"
         "git-firefly"
+        "html"
         #jupyter??
         "latex"
         "linkerscript"
