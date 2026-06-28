@@ -77,62 +77,6 @@ in
       ];
 
       userSettings = {
-        # Language-specific/LSP
-
-        languages = {
-          "Nix".formatter.external.command = "nixfmt";
-          "Nix".format_on_save = "off";
-          "Nix".tab_size = 2;
-
-          "YAML".tab_size = 2;
-
-          "Typst".soft_wrap = "editor_width";
-          "Typst".tab_size = 2;
-        };
-
-        lsp = {
-          "tinymist" = {
-            # 127.0.0.1:23635
-            initialization_options.preview.background.enabled = true;
-
-            settings.formatterMode = "typstyle";  # "typstfmt"
-          };
-
-          # nil.initialization_options.formatting.command = [ "nixfmt" ];
-          # nixd.initialization_options.formatting.command = [ "nixfmt" ];
-        };
-
-        # AI/Agents
-
-        edit_predictions.provider = "copilot";  # "zed"
-
-        agent = {
-          play_sound_when_agent_done = "always";  # "never", "on_failure"
-          show_turn_stats = true;
-          dock = "right";  # "left", "bottom"
-
-          # Zed Agent
-          default_model = {
-            provider = "openrouter";
-            model = "anthropic/claude-opus-4.8";
-            enable_thinking = true;
-          };
-        };
-
-        # ACPs
-        agent_servers = {
-          "cursor" = {
-            type = "custom";
-            command = "cursor-agent";
-            # --force auto-approves tool calls from cursor
-            # --approve-mcps approves MCP calls from cursor
-            # See agent.always_allow_external_agent_tools which will come in the future
-            args = [ "--force" "--approve-mcps" "acp" ];
-            env."CURSOR_AGENT_EXECUTABLE" = "${pkgs.cursor-cli}/bin/cursor-agent";
-            default_config_options.model = "claude-opus-4-8[thinking=true,context=300k,effort=high,fast=false]";
-          };
-        };
-
         # General
 
         when_closing_with_no_tabs = "keep_window_open";
@@ -175,6 +119,31 @@ in
         preferred_line_length = 120;
         inlay_hints.enabled = true;
 
+        # Languages & Tools
+
+        languages = {
+          "Nix".formatter.external.command = "nixfmt";
+          "Nix".format_on_save = "off";
+          "Nix".tab_size = 2;
+
+          "YAML".tab_size = 2;
+
+          "Typst".soft_wrap = "editor_width";
+          "Typst".tab_size = 2;
+        };
+
+        lsp = {
+          "tinymist" = {
+            # 127.0.0.1:23635
+            initialization_options.preview.background.enabled = true;
+
+            settings.formatterMode = "typstyle";  # "typstfmt"
+          };
+
+          # nil.initialization_options.formatting.command = [ "nixfmt" ];
+          # nixd.initialization_options.formatting.command = [ "nixfmt" ];
+        };
+
         # Window & Layout
 
         tabs = {
@@ -206,6 +175,37 @@ in
         terminal = {
           detect_venv.on.directories = [ ".venv" "venv" ];  # Default also includes "env" and ".env"
           max_scroll_history_lines = 100000;  # Default 10000, 0 disables scrolling entirely
+        };
+
+        # AI
+
+        edit_predictions.provider = "copilot";  # "zed"
+
+        agent = {
+          play_sound_when_agent_done = "always";  # "never", "on_failure"
+          show_turn_stats = true;
+          dock = "right";  # "left", "bottom"
+
+          # Zed Agent
+          default_model = {
+            provider = "openrouter";
+            model = "anthropic/claude-opus-4.8";
+            enable_thinking = true;
+          };
+        };
+
+        # ACPs
+        agent_servers = {
+          "cursor" = {
+            type = "custom";
+            command = "cursor-agent";
+            # --force auto-approves tool calls from cursor
+            # --approve-mcps approves MCP calls from cursor
+            # See agent.always_allow_external_agent_tools which will come in the future
+            args = [ "--force" "--approve-mcps" "acp" ];
+            env."CURSOR_AGENT_EXECUTABLE" = "${pkgs.cursor-cli}/bin/cursor-agent";
+            default_config_options.model = "claude-opus-4-8[thinking=true,context=300k,effort=high,fast=false]";
+          };
         };
       };
     };
