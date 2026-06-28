@@ -104,10 +104,20 @@ in
 
         # AI/Agents
 
-        agent.play_sound_when_agent_done = "always";  # "never", "on_failure"
-        agent.show_turn_stats = true;
-
         edit_predictions.provider = "copilot";  # "zed"
+
+        agent = {
+          play_sound_when_agent_done = "always";  # "never", "on_failure"
+          show_turn_stats = true;
+          dock = "right";  # "left", "bottom"
+
+          # Zed Agent
+          default_model = {
+            provider = "openrouter";
+            model = "anthropic/claude-opus-4.8";
+            enable_thinking = true;
+          };
+        };
 
         # ACPs
         agent_servers = {
@@ -123,13 +133,6 @@ in
           };
         };
 
-        # Zed Agent
-        agent.default_model = {
-          provider = "openrouter";
-          model = "anthropic/claude-opus-4.8";
-          enable_thinking = true;
-        };
-
         # General
 
         when_closing_with_no_tabs = "keep_window_open";
@@ -140,19 +143,25 @@ in
         session.restore_unsaved_buffers = false; # If true, won't be prompted to save on quit
         restore_on_startup = "last_workspace";
 
-        telemetry.metrics = false;
-        telemetry.diagnostics = false;
+        telemetry = {
+          metrics = false;
+          diagnostics = false;
+        };
 
         auto_update = false;  # Nix handles updates
 
         # Appearance
 
-        theme.mode = "dark";
-        theme.dark = "One Dark";
-        theme.light = "One Light";
-        icon_theme.mode = "dark";
-        icon_theme.dark = "Material Icon Theme";
-        icon_theme.light = "Material Icon Theme";
+        theme = {
+          mode = "dark";
+          dark = "One Dark";
+          light = "One Light";
+        };
+        icon_theme = {
+          mode = "dark";
+          dark = "Material Icon Theme";
+          light = "Material Icon Theme";
+        };
 
         buffer_line_height = "standard"; # "comfortable" or buffer_line_height.custom = 1 (compact), 2 (loose)
 
@@ -168,30 +177,36 @@ in
 
         # Window & Layout
 
-        tabs.git_status = true;
-        tabs.file_icons = true;
+        tabs = {
+          git_status = true;
+          file_icons = true;
+        };
 
         # Panels
 
-        project_panel.dock = "left";  # "right"
-        project_panel.default_width = 300;
-        project_panel.entry_spacing = "standard";  # "standard"
-        project_panel.diagnostic_badges = true;
-        project_panel.hide_root = true;
+        project_panel = {
+          dock = "left";  # "right"
+          default_width = 300;
+          entry_spacing = "standard";  # "standard"
+          diagnostic_badges = true;
+          hide_root = true;
+        };
 
         outline_panel.dock = "left";  # "right", "bottom"
 
-        git_panel.dock = "left";  # "bottom", "right"
-        git_panel.default_width = 300;
+        git_panel = {
+          dock = "left";  # "bottom", "right"
+          default_width = 300;
+        };
 
         collaboration_panel.dock = "left";  # "right", "bottom"
 
-        agent.dock = "right";  # "left", "bottom"
-
         # Terminal
 
-        terminal.detect_venv.on.directories = [ ".venv" "venv" ];  # Default also includes "env" and ".env"
-        terminal.max_scroll_history_lines = 100000;  # Default 10000, 0 disables scrolling entirely
+        terminal = {
+          detect_venv.on.directories = [ ".venv" "venv" ];  # Default also includes "env" and ".env"
+          max_scroll_history_lines = 100000;  # Default 10000, 0 disables scrolling entirely
+        };
       };
     };
 
