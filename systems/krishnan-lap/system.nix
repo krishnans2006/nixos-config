@@ -33,6 +33,7 @@ with inputs;
     enableTaildrive = true;
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
+  modules.localsend.enable = false;
   modules.ssh-server.enable = false;
   modules.secure-boot.enable = false;
   modules.krishnan-user.enable = true;
