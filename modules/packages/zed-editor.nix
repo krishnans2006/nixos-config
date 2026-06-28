@@ -107,7 +107,10 @@ in
           "cursor" = {
             type = "custom";
             command = "cursor-agent";
-            args = [ "acp" ];
+            # --force auto-approves tool calls from cursor
+            # --approve-mcps approves MCP calls from cursor
+            # See agent.always_allow_external_agent_tools which will come in the future
+            args = [ "--force" "--approve-mcps" "acp" ];
             env."CURSOR_AGENT_EXECUTABLE" = "${pkgs.cursor-cli}/bin/cursor-agent";
           };
         };
