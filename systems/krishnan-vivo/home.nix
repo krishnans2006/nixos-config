@@ -32,8 +32,16 @@ with inputs;
 
   modules.packages = {
     utils.enable = true;
-    chat-apps.enable = true;
-    chat-apps.autostart = true;
+    vesktop.enable = true;
+    vesktop.autostart = true;
+    slack.enable = true;
+    slack.autostart = true;
+    element.enable = true;
+    element.autostart = true;
+    mattermost.enable = true;
+    mattermost.autostart = true;
+    zulip.enable = true;
+    zulip.autostart = true;
     zen-browser.enable = true;
     zen-browser.autostart = true;
     bitwarden-desktop.enable = true;
