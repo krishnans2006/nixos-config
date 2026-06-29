@@ -4,8 +4,6 @@ with lib;
 
 let
   cfg = config.modules.packages.zulip;
-
-  formatter = pkgs.formats.json { };
 in
 {
   options.modules.packages.zulip = {
@@ -16,9 +14,10 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ zulip ];
 
-    # Declarative config
-    xdg.configFile."Zulip/config/settings.json".source = (
-      formatter.generate "settings.json" {
+    # Zulip rewrites settings.json on startup
+    # xdg.configFile would make it a read-only store symlink and hang on load
+    home.activation.seedZulipSettings = let
+      settings = (pkgs.formats.json { }).generate "settings.json" {
         appLanguage = "en";
         enableSpellchecker = true;
         spellcheckerLanguages = null;
@@ -48,8 +47,16 @@ in
         proxyPAC = "";
         proxyRules = "";
         proxyBypass = "";
-      }
-    );
+      };
+    in
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      config_dir="${config.xdg.configHome}/Zulip/config"
+      settings="$config_dir/settings.json"
+      mkdir -p "$config_dir"
+      if [ ! -e "$settings" ] || [ -L "$settings" ]; then
+        install -Dm644 ${settings} "$settings"
+      fi
+    '';
 
     # Impermanence
     modules.impermanence.persistDirs = [
