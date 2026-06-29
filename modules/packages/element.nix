@@ -14,6 +14,7 @@ in
   config = mkIf cfg.enable {
     programs.element-desktop = {
       enable = true;
+
       settings = {
         brand = "Element";
         default_theme = "dark";

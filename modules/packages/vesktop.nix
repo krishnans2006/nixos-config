@@ -12,10 +12,28 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      vesktop
-      #libunity  # required for vesktop
-    ];
+    programs.vesktop = {
+      enable = true;
+
+      settings = {
+        discordBranch = "stable";
+        arRPC = true;
+
+        customTitleBar = true;
+        hardwareVideoAcceleration = true;
+
+        minimizeToTray = true;
+        autoStartMinimized = false;
+        clickTrayToShowHide = true;
+        enableTaskbarFlashing = true;
+
+        # splashColor = "rgb(239, 239, 241)";
+        # splashBackground = "rgb(18, 18, 20)";
+      };
+
+      # This is handled by settings sync
+      # vencord.settings = { ... }
+    };
 
     # Impermanence
     modules.impermanence.persistDirs = [
@@ -23,7 +41,6 @@ in
       ".config/vesktop/settings"  # Synced settings for plugins, etc.
     ];
     modules.impermanence.persistFiles = [
-      ".config/vesktop/settings.json"  # Vesktop settings (titlebar, tray, etc.)
       ".config/vesktop/state.json"  # Window params, first launch menu
     ];
 
