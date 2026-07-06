@@ -34,6 +34,7 @@ in
         ruff
         texlab
         package-version-server
+        tinymist
 
         cursor-cli
 
