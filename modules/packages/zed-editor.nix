@@ -1,11 +1,9 @@
-{ config, lib, pkgs, root, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
 let
   cfg = config.modules.packages.zed-editor;
-
-  wakatime-ls = import "${root}/custom/wakatime-ls.nix" { inherit pkgs; };
 
   # This patch modifies zed-editor to use copilot-language-server from PATH
   # instead of npm-installing it into ~/.local/share/zed/copilot
@@ -40,7 +38,7 @@ in
         cursor-cli
 
         zed-discord-presence
-        wakatime-ls
+        zed-wakatime-ls
         copilot-language-server
       ];
 
