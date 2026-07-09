@@ -49,7 +49,6 @@ Note: This list is incomplete. Also, it would be nice to automate these into a `
 - Follow instructions below to allow secrets access (using key derived from SSH key)
 - Import gpg.key from an external source
 - Remove the password for `kdewallet` (KWallet)
-- Add any autostart applications through KDE settings
 - Atuin: `atuin login -u krishnan`, enter password (Bitwarden) and leave key blank (it's already pre-configured)
 - Tailscale: `sudo tailscale login`, `sudo tailscale set --ssh --operator=krishnan`
 - Waydroid: `sudo waydroid init -s GAPPS -f`
