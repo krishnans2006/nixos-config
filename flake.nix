@@ -52,6 +52,8 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ronix.url = "git+https://codeberg.org/caniko/ronix";
   };
 
   outputs = { self, ... }@inputs: {

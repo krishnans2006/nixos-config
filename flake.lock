@@ -15,6 +15,21 @@
         "type": "github"
       }
     },
+    "crane_2": {
+      "locked": {
+        "lastModified": 1772560058,
+        "narHash": "sha256-NuVKdMBJldwUXgghYpzIWJdfeB7ccsu1CC7B+NfSoZ8=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "db590d9286ed5ce22017541e36132eab4e8b3045",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -245,6 +260,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1772433332,
+        "narHash": "sha256-izhTDFKsg6KeVBxJS9EblGeQ8y+O8eCa6RcW874vxEc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "cf59864ef8aa2e178cccedbe2c178185b0365705",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -294,6 +325,25 @@
         "type": "github"
       }
     },
+    "ronix": {
+      "inputs": {
+        "crane": "crane_2",
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1772570999,
+        "narHash": "sha256-LUVCD/NOIqV4r507sRbjpmBBnR+aqT1iyoyxdvAlcEU=",
+        "ref": "refs/heads/trunk",
+        "rev": "c49042d46f44d0089ed0d80d7ada416a692201b8",
+        "revCount": 1,
+        "type": "git",
+        "url": "https://codeberg.org/caniko/ronix"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/caniko/ronix"
+      }
+    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -305,6 +355,7 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "plasma-manager": "plasma-manager",
+        "ronix": "ronix",
         "sops-nix": "sops-nix",
         "vscode-server": "vscode-server"
       }
