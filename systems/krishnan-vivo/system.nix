@@ -39,7 +39,10 @@ with inputs;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
 
-  modules.asusd.enable = true;
+  modules.asusd = {
+    enable = true;
+    chargeLimit = 80;
+  };
   modules.hp-pen.enable = false;
   modules.yubikey-auth.enable = true;
 
