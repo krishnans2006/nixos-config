@@ -13,19 +13,22 @@ nixpkgs.lib.nixosSystem {
     ./system.nix
 
     disko.nixosModules.disko
-
     impermanence.nixosModules.impermanence
-
     lanzaboote.nixosModules.lanzaboote
-
     sops-nix.nixosModules.sops
 
     home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.sharedModules = [ sops-nix.homeManagerModules.sops plasma-manager.homeModules.plasma-manager vscode-server.homeModules.default ];
       home-manager.extraSpecialArgs = { inherit inputs; root = inputs.self; };
+
+      home-manager.sharedModules = [
+        sops-nix.homeManagerModules.sops
+        plasma-manager.homeModules.plasma-manager
+        vscode-server.homeModules.default
+      ];
+
       home-manager.users.krishnan.imports = [
         ./home.nix
         nix-flatpak.homeManagerModules.nix-flatpak
