@@ -44,6 +44,7 @@ with inputs;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
 
+  modules.asusd.enable = false;
   modules.hp-pen.enable = true;
   modules.yubikey-auth.enable = true;
 

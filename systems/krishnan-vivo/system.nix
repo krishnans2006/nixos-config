@@ -39,6 +39,7 @@ with inputs;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
 
+  modules.asusd.enable = true;
   modules.hp-pen.enable = false;
   modules.yubikey-auth.enable = true;
 
@@ -50,6 +51,4 @@ with inputs;
   networking.hostName = "krishnan-vivo";  # Define your hostname.
 
   time.timeZone = "America/New_York";
-
-  boot.kernel.sysfs.class.power_supply.BAT1.charge_control_end_threshold = 80;
 }
