@@ -1,5 +1,7 @@
 # NixOS Config
 
+[![WakaTime](https://wakatime.com/badge/user/0f5a93aa-05d2-4a06-ba1a-47ec5a9dd872/project/225a7485-0385-411c-82a1-a036c894bb33.svg)](https://wakatime.com/badge/user/0f5a93aa-05d2-4a06-ba1a-47ec5a9dd872/project/225a7485-0385-411c-82a1-a036c894bb33)
+
 My NixOS configuration.
 
 The system:
