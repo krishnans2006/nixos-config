@@ -7,7 +7,7 @@ let
 in
 {
   imports = [
-    "${root}/config/home/flatpak.nix"
+    "${root}/utils/flatpak.nix"
   ];
 
   options.modules.packages.bitwarden-desktop = {
