@@ -20,10 +20,6 @@ in
     gnupg.sshKeyPaths = [];
 
     secrets = {
-      "password" = {
-        neededForUsers = true;
-      };
-
       "networks" = {
         restartUnits = [ "NetworkManager.service" ];
       };

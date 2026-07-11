@@ -20,6 +20,9 @@ in
     # Disable root login (sudo only)
     users.users."root".hashedPassword = null;
 
+    # Hashed password from secrets
+    sops.secrets."password".neededForUsers = true;
+
     users.groups.fuse = { };
 
     users.users."krishnan" = {
