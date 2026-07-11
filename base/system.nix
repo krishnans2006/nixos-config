@@ -2,7 +2,7 @@
 
 {
   imports = [
-    "${root}/config/system/secrets.nix"
+    "${root}/utils/secrets-system.nix"
   ];
 
   # Bootloader.

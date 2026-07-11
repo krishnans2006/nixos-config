@@ -7,7 +7,7 @@ let
 in
 {
   imports = [
-    "${root}/config/home/secrets.nix"
+    "${root}/utils/secrets-home.nix"
   ];
 
   options.modules.shell = {
