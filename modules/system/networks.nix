@@ -308,5 +308,31 @@ in
         };
       };
     };
+
+    # Set up all needed network secrets
+    sops.secrets = let
+      base = {
+        restartUnits = [ "NetworkManager.service" ];
+      };
+      sharedOpenVPN = key: name: (base // {
+        key = "openvpn/${key}/${name}";
+      });
+    in
+    {
+      "networks" = base;
+
+      "openvpn/ovpn0/ca" = base;
+      "openvpn/ovpn0/cert" = base;
+      "openvpn/ovpn0/key" = base;
+      "openvpn/ovpn0/ta" = base;
+
+      # ovpn1 and ovpn2 share CA, cert, and key (under ovpn1-2)
+      "openvpn/ovpn1/ca" = sharedOpenVPN "ovpn1-2" "ca";
+      "openvpn/ovpn1/cert" = sharedOpenVPN "ovpn1-2" "cert";
+      "openvpn/ovpn1/key" = sharedOpenVPN "ovpn1-2" "key";
+      "openvpn/ovpn2/ca" = sharedOpenVPN "ovpn1-2" "ca";
+      "openvpn/ovpn2/cert" = sharedOpenVPN "ovpn1-2" "cert";
+      "openvpn/ovpn2/key" = sharedOpenVPN "ovpn1-2" "key";
+    };
   };
 }
