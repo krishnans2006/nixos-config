@@ -9,7 +9,7 @@ let
     autoconnect = cfg.enableWifi;
   };
 
-  makeOpenNetworkProfileConfig = id: options: {
+  mkOpenNetworkProfileConfig = id: options: {
     connection = {
       id = "$net${id}_name";
       type = "wifi";
@@ -27,8 +27,8 @@ let
     };
   };
 
-  makePSKNetworkProfileConfig = id: options:
-    (makeOpenNetworkProfileConfig id options) //
+  mkPSKNetworkProfileConfig = id: options:
+    (mkOpenNetworkProfileConfig id options) //
       {
         wifi-security = {
           key-mgmt = "wpa-psk";
@@ -36,8 +36,8 @@ let
         };
       };
 
-  makeEAPNetworkProfileConfig = id: options:
-    (makeOpenNetworkProfileConfig id options) //
+  mkEAPNetworkProfileConfig = id: options:
+    (mkOpenNetworkProfileConfig id options) //
       {
         wifi-security = {
           key-mgmt = "wpa-eap";
@@ -52,7 +52,7 @@ let
 
   # Options:
   # - autoconnect: boolean, whether to autoconnect on startup
-  makeWireguardVPNProfileConfig = id: options: {
+  mkWireguardVPNProfileConfig = id: options: {
     connection = {
       id = "$wg${id}_name";
       interface-name = "$wg${id}_interface";
@@ -94,7 +94,7 @@ let
   # - randomHostname: Use a random hostname for the remote
   # - dontReneg: Disable renegotiation
   # More options may be added when needed by new OpenVPN configurations
-  makeOpenVPNProfileConfig = id: options: {
+  mkOpenVPNProfileConfig = id: options: {
     connection = {
       id = "$ovpn${id}_name";
       type = "vpn";
@@ -139,7 +139,7 @@ let
     };
   };
 
-  makeCiscoVPNProfileConfig = id: {
+  mkCiscoVPNProfileConfig = id: {
     connection = {
       id = "$cisco${id}_name";
       type = "vpn";
@@ -243,37 +243,37 @@ in
             # 5GHz (priority=5) is preferred over 2.4GHz (priority=2)
 
             # Home
-            net0 = (makePSKNetworkProfileConfig "0" (baseNetworkOptions // { priority = 5; }));
-            net1 = (makePSKNetworkProfileConfig "1" (baseNetworkOptions // { priority = 2; }));
+            net0 = (mkPSKNetworkProfileConfig "0" (baseNetworkOptions // { priority = 5; }));
+            net1 = (mkPSKNetworkProfileConfig "1" (baseNetworkOptions // { priority = 2; }));
 
             # School
-            net2 = (makeEAPNetworkProfileConfig "2" (baseNetworkOptions // { priority = 5; }));
-            net3 = (makeEAPNetworkProfileConfig "3" (baseNetworkOptions // { priority = 0; }));
+            net2 = (mkEAPNetworkProfileConfig "2" (baseNetworkOptions // { priority = 5; }));
+            net3 = (mkEAPNetworkProfileConfig "3" (baseNetworkOptions // { priority = 0; }));
 
-            net4 = (makePSKNetworkProfileConfig "4" (baseNetworkOptions // { priority = 5; }));
-            net5 = (makePSKNetworkProfileConfig "5" (baseNetworkOptions // { priority = 2; }));
+            net4 = (mkPSKNetworkProfileConfig "4" (baseNetworkOptions // { priority = 5; }));
+            net5 = (mkPSKNetworkProfileConfig "5" (baseNetworkOptions // { priority = 2; }));
 
             # Hotspot
-            net6 = (makePSKNetworkProfileConfig "6" (baseNetworkOptions // { priority = -1; }));
+            net6 = (mkPSKNetworkProfileConfig "6" (baseNetworkOptions // { priority = -1; }));
 
-            net7 = (makePSKNetworkProfileConfig "7" (baseNetworkOptions // { priority = 5; }));
+            net7 = (mkPSKNetworkProfileConfig "7" (baseNetworkOptions // { priority = 5; }));
 
             # Apartment
-            net8 = (makePSKNetworkProfileConfig "8" (baseNetworkOptions // { priority = 5; }));
-            net9 = (makePSKNetworkProfileConfig "9" (baseNetworkOptions // { priority = 2; }));
-            net10 = (makeOpenNetworkProfileConfig "10" (baseNetworkOptions // { priority = 1; }));
-            net11 = (makeOpenNetworkProfileConfig "11" (baseNetworkOptions // { priority = 0; }));
+            net8 = (mkPSKNetworkProfileConfig "8" (baseNetworkOptions // { priority = 5; }));
+            net9 = (mkPSKNetworkProfileConfig "9" (baseNetworkOptions // { priority = 2; }));
+            net10 = (mkOpenNetworkProfileConfig "10" (baseNetworkOptions // { priority = 1; }));
+            net11 = (mkOpenNetworkProfileConfig "11" (baseNetworkOptions // { priority = 0; }));
 
             # VPNs
 
-            wg0 = (makeWireguardVPNProfileConfig "0" {
+            wg0 = (mkWireguardVPNProfileConfig "0" {
               autoconnect = true;
             });
-            wg1 = (makeWireguardVPNProfileConfig "1" {
+            wg1 = (mkWireguardVPNProfileConfig "1" {
               autoconnect = false;
             });
 
-            ovpn0 = (makeOpenVPNProfileConfig "0" {
+            ovpn0 = (mkOpenVPNProfileConfig "0" {
               dns = true;
               domains = true;
               tcp = false;
@@ -284,7 +284,7 @@ in
               randomHostname = false;
               dontReneg = false;
             });
-            ovpn1 = (makeOpenVPNProfileConfig "1" {
+            ovpn1 = (mkOpenVPNProfileConfig "1" {
               tcp = true;
               ta = false;
               authSha256 = false;
@@ -293,7 +293,7 @@ in
               randomHostname = true;
               dontReneg = true;
             });
-            ovpn2 = (makeOpenVPNProfileConfig "2" {
+            ovpn2 = (mkOpenVPNProfileConfig "2" {
               tcp = false;
               ta = false;
               authSha256 = false;
@@ -303,7 +303,7 @@ in
               dontReneg = true;
             });
 
-            cisco0 = (makeCiscoVPNProfileConfig "0");
+            cisco0 = (mkCiscoVPNProfileConfig "0");
           };
         };
       };
