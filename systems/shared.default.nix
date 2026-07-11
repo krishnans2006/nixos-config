@@ -27,11 +27,11 @@ nixpkgs.lib.nixosSystem {
         sops-nix.homeManagerModules.sops
         plasma-manager.homeModules.plasma-manager
         vscode-server.homeModules.default
+        nix-flatpak.homeManagerModules.nix-flatpak
       ];
 
       home-manager.users.krishnan.imports = [
         ./home.nix
-        nix-flatpak.homeManagerModules.nix-flatpak
       ];
     }
 
