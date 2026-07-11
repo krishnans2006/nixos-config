@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -6,6 +6,10 @@ let
   cfg = config.modules.krishnan-user;
 in
 {
+  imports = [
+    "${root}/utils/secrets-system.nix"
+  ];
+
   options.modules.krishnan-user = {
     enable = mkEnableOption "Enable the krishnan user (with zsh)";
   };
