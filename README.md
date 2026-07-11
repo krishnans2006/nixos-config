@@ -21,19 +21,19 @@ The configuration:
 
 ## Organization
 
-- `flake.nix` - Top-level flake that defines inputs and systems
-- `systems/` - Contains system-specific configuration
-  - `default.nix` - Defines a shared common boilerplate for systems that imports system-specific configurations
-  - `system.nix` - System-specific NixOS configuration that enables modules and sets other options
-  - `home.nix` - System-specific home configuration that enables modules/packages and sets other options
+- `flake.nix` - Top-level flake
+- `systems/` - System-specific configuration
+  - `default.nix` - Shared common boilerplate for systems (nixosSystem)
+  - `system.nix` - System-specific NixOS configuration; enables modules and sets other options
+  - `home.nix` - System-specific home configuration; enables modules/packages and sets other options
   - `hardware.nix` - Auto-generated hardware configuration from `nixos-generate-config`
   - `disk.nix` - Disk configuration to be used with disko
-- `base/` - A barebones system.nix and home.nix to set up system configs
-- `modules/` - The bulk of the configuration, defining custom options that systems can enable if wanted
+- `base/` - A barebones system.nix and home.nix
+- `modules/` - The bulk of the configuration; custom options that systems can enable if wanted
   - `system/` - Modules configuring system-related features
   - `home/` - Modules configuring home-related features
   - `packages/` - Modules that install/configure packages (also through home-manager)
-- `config/` - Boilerplate that can be used by modules to avoid repetition (e.g., flatpak base config, secrets setup)
+- `utils/` - Boilerplate that can be used by modules to avoid repetition
 - `custom/` - Custom derivations, patches, etc.
 - `dotfiles/` - Dotfiles used in `modules/home/shell.nix` to set up the shell
 - `secrets/` - Encrypted secrets managed by sops and sops-nix (`config/{system,home}/secrets.nix`)
