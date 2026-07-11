@@ -122,6 +122,12 @@ in
 
     # Atuin
     (mkIf cfg.enableAtuin {
+      # Pull in secrets
+      sops.secrets = {
+        "atuin/key" = {};  # Unused
+        "atuin/key_b64" = {};
+      };
+
       programs.atuin = {
         enable = true;
         forceOverwriteSettings = true;

@@ -23,9 +23,6 @@ in
       "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
       "wakatime/hackatime" = {};  # Unused
 
-      "atuin/key" = {};  # Unused
-      "atuin/key_b64" = {};
-
       "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
     };
   };
