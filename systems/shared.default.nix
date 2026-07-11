@@ -26,7 +26,6 @@ nixpkgs.lib.nixosSystem {
       home-manager.sharedModules = [
         sops-nix.homeManagerModules.sops
         plasma-manager.homeModules.plasma-manager
-        vscode-server.homeModules.default
         nix-flatpak.homeManagerModules.nix-flatpak
       ];
 
