@@ -217,7 +217,7 @@ in
         wifi.backend = "wpa_supplicant";
 
         plugins = with pkgs; [
-          # Enabled by default:
+          # Enabled by default, just here to be explicit
           networkmanager-fortisslvpn
           networkmanager-iodine
           networkmanager-l2tp
