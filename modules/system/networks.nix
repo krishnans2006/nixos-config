@@ -151,7 +151,7 @@ let
       gateway = "$cisco${id}_gateway";
       reported_os = "";
       stoken_source = "";
-      
+
       cookie-flags = "2";
       gateway-flags = "2";
       gwcert-flags = "2";
@@ -239,7 +239,7 @@ in
               ipv4.ignore-auto-dns = "true";
             };
 
-            # WiFi 
+            # WiFi
             # 5GHz (priority=5) is preferred over 2.4GHz (priority=2)
 
             # Home
@@ -267,10 +267,10 @@ in
             # VPNs
 
             wg0 = (makeWireguardVPNProfileConfig "0" {
-                autoconnect = true;
+              autoconnect = true;
             });
             wg1 = (makeWireguardVPNProfileConfig "1" {
-                autoconnect = false;
+              autoconnect = false;
             });
 
             ovpn0 = (makeOpenVPNProfileConfig "0" {
