@@ -65,8 +65,12 @@
   programs.vscode.enable = true;
   programs.java.enable = true;
 
-  # WakaTime (through secrets)
+  # Pull in some files through secrets
   sops.secrets = {
+    # Yubikey auth (see modules/system/yubikey-auth.nix)
+    "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
+
+    # WakaTime config (pick one to use)
     "wakatime/wakatime" = {};  # Unused
     "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
     "wakatime/hackatime" = {};  # Unused

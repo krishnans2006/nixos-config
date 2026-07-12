@@ -17,10 +17,6 @@ in
 
     age.sshKeyPaths = [];
     gnupg.sshKeyPaths = [];
-
-    secrets = {
-      "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
-    };
   };
 
   home.packages = with pkgs; [
