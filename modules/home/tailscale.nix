@@ -22,6 +22,10 @@ in
         HostName = "krishnan-lap.emperor-snares.ts.net";
         User = "krishnan";
       };
+      "vivo" = {
+        HostName = "krishnan-vivo.emperor-snares.ts.net";
+        User = "krishnan";
+      };
     };
   });
 }
