@@ -19,10 +19,6 @@ in
     gnupg.sshKeyPaths = [];
 
     secrets = {
-      "wakatime/wakatime" = {};  # Unused
-      "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
-      "wakatime/hackatime" = {};  # Unused
-
       "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
     };
   };

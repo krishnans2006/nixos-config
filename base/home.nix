@@ -64,4 +64,11 @@
 
   programs.vscode.enable = true;
   programs.java.enable = true;
+
+  # WakaTime (through secrets)
+  sops.secrets = {
+    "wakatime/wakatime" = {};  # Unused
+    "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
+    "wakatime/hackatime" = {};  # Unused
+  };
 }
