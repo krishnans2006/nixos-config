@@ -53,6 +53,8 @@ with inputs;
     zed-editor.enable = true;
   };
 
+  # Custom config
+
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-pc";
 
   services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];

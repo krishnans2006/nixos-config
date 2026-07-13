@@ -53,6 +53,8 @@ with inputs;
     chipwhisperer = true;
   };
 
+  # Custom config
+
   networking.hostName = "krishnan-lap";  # Define your hostname.
 
   time.timeZone = "America/New_York";

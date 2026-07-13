@@ -51,6 +51,8 @@ with inputs;
     chipwhisperer = false;
   };
 
+  # Custom config
+
   networking.hostName = "krishnan-vivo";  # Define your hostname.
 
   time.timeZone = "America/New_York";

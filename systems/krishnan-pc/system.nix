@@ -47,6 +47,8 @@ with inputs;
     chipwhisperer = false;
   };
 
+  # Custom config
+
   networking.hostName = "krishnan-pc";  # Define your hostname.
 
   time.timeZone = "America/Chicago";

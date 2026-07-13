@@ -55,6 +55,8 @@ with inputs;
     zed-editor.enable = true;
   };
 
+  # Custom config
+
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-lap";
 
   programs.plasma.configFile.kwinrc.Xwayland.Scale = "1.25";
