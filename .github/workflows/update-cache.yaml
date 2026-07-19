@@ -1,0 +1,20 @@
+name: "Build and Update Cache"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - run: nix build
+      - run: nix flake check
+      - uses: cachix/cachix-action@v17
+        with:
+          name: krishnans2006
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
