@@ -59,6 +59,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Allow custom caches
+  nix.settings.trusted-users = [ "krishnan" ];  # root is already trusted (see /etc/nix/nix.conf)
+
   # Temporary fix until Zulip upgrades to Electron 40+
   # Must be set at the system level since home-manager.useGlobalPkgs = true
   nixpkgs.config.permittedInsecurePackages = [
