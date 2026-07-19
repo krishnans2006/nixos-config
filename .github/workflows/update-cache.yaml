@@ -16,14 +16,13 @@ jobs:
         with:
           name: krishnans2006
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build
-        run: nix build -L
-      - name: Check
-        run: nix flake check
-      - name: Deploy
-        if: github.ref == 'refs/heads/main'
-        env:
-          CACHIX_ACTIVATE_TOKEN: "${{ secrets.CACHIX_ACTIVATE_TOKEN }}"
+      - name: Build All Systems
         run: |
-          cachix push krishnans2006 ./result
-          cachix deploy activate --agent github-actions ./result
+          nix build -L \
+            '.?submodules=1#nixosConfigurations.krishnan-pc.config.system.build.toplevel' \
+            '.?submodules=1#nixosConfigurations.krishnan-lap.config.system.build.toplevel' \
+            '.?submodules=1#nixosConfigurations.krishnan-vivo.config.system.build.toplevel'
+      - name: Check Flake
+        run: nix flake check
+      - name: Push to Cachix
+        run: cachix push krishnans2006 ./result
