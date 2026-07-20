@@ -1,8 +1,7 @@
 name: "Build and Update Cache"
 
 on:
-  pull_request:
-  push:
+  workflow_dispatch:
 
 jobs:
   tests:
