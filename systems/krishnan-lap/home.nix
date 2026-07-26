@@ -30,7 +30,10 @@ with inputs;
     tjcsl = true;
     # ews = true;
   };
-  modules.gaming.enable = false;
+  modules.gaming = {
+    enableLutris = false;
+    enableMinecraft = false;
+  };
 
   modules.packages = {
     utils.enable = true;

@@ -28,7 +28,10 @@ with inputs;
     tjcsl = true;
     # ews = true;
   };
-  modules.gaming.enable = true;
+  modules.gaming = {
+    enableLutris = true;
+    enableMinecraft = true;
+  };
 
   modules.packages = {
     utils.enable = true;
