@@ -130,6 +130,12 @@ in
 
           "Typst".soft_wrap = "editor_width";
           "Typst".tab_size = 2;
+
+          "Caddyfile" = {
+            # Caddyfile requires tabs for indentation
+            hard_tabs = true;
+            tab_size = 4;
+          };
         };
 
         lsp = {
