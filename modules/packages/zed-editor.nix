@@ -122,14 +122,23 @@ in
         # Languages & Tools
 
         languages = {
-          "Nix".formatter.external.command = "nixfmt";
-          "Nix".format_on_save = "off";
-          "Nix".tab_size = 2;
+          "Nix" = {
+            # I prefer a Nix style that slightly deviates from nixfmt's
+            # It's a bit more compact and keeps things more on one line
+            # So, auto-format is turned off, but manual format still works
+            formatter.external.command = "nixfmt";
+            format_on_save = "off";
+            tab_size = 2;
+          };
 
-          "YAML".tab_size = 2;
+          "YAML" = {
+            tab_size = 2;
+          };
 
-          "Typst".soft_wrap = "editor_width";
-          "Typst".tab_size = 2;
+          "Typst" = {
+            soft_wrap = "editor_width";
+            tab_size = 2;
+          };
 
           "Caddyfile" = {
             # Caddyfile requires tabs for indentation
