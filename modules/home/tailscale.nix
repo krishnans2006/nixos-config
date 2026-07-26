@@ -26,6 +26,14 @@ in
         HostName = "krishnan-vivo.emperor-snares.ts.net";
         User = "krishnan";
       };
+      "pi" = {
+        HostName = "krishnan-pi.emperor-snares.ts.net";
+        User = "krishnan";
+      };
+      "phi" = {
+        HostName = "krishnan-phi.emperor-snares.ts.net";
+        User = "krishnan";
+      };
     };
   });
 }
