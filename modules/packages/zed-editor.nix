@@ -82,7 +82,7 @@ in
         when_closing_with_no_tabs = "keep_window_open";
         on_last_window_closed = "quit_app";
         use_system_prompts = false; # Cannot be true on Linux
-        redact_private_values = true;
+        redact_private_values = false;
 
         session.restore_unsaved_buffers = false; # If true, won't be prompted to save on quit
         restore_on_startup = "last_workspace";
