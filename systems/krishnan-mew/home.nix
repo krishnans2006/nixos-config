@@ -1,4 +1,4 @@
-{ inputs, root, ... }:
+{ inputs, root, lib, ... }:
 
 with inputs;
 
@@ -13,7 +13,7 @@ with inputs;
   ];
 
   modules.impermanence.enable = false;
-  modules.secrets.enable = mkForce false;
+  modules.secrets.enable = lib.mkForce false;
 
   modules.plasma.enable = false;
   modules.tailscale.enable = true;
