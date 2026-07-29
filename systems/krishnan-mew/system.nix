@@ -60,4 +60,7 @@ with inputs;
   networking.hostName = "krishnan-mew";  # Define your hostname.
 
   time.timeZone = "America/Chicago";
+
+  # Force flatpak off since it requires a desktop environment
+  services.flatpak.enable = lib.mkForce false;
 }
