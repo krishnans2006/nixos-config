@@ -33,7 +33,7 @@ with inputs;
     enableTaildrive = false;
   };
   modules.localsend.enable = false;
-  modules.ssh-server.enable = false;
+  modules.ssh-server.enable = true;
   modules.secure-boot.enable = false;
   modules.krishnan-user = {
     enable = true;
