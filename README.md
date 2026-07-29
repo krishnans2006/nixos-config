@@ -116,7 +116,23 @@ sops updatekeys secrets/secrets-home.yaml
 sudo nixos-rebuild switch --flake '.?submodules=1'
 ```
 
-## Configure impermanence + disks (disko) + install
+### Configure disks + install without secrets
+
+This assumes that the configuration has a `disk.nix` file that sets up the disk partitions, filesystems, etc.
+
+It does NOT assume an SSH key for secrets, so no other configuration is necessary.
+
+```bash
+git clone https://github.com/krishnans2006/nixos-config
+cd nixos-config/
+git submodule update --init --remote --recursive dotfiles
+
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake '.#krishnan-<SYSTEM>'
+sudo nixos-install --flake 'path:.#krishnan-<SYSTEM>' --no-root-password
+sudo nixos-enter --root /mnt -c 'passwd krishnan'
+```
+
+### Configure impermanence + disks (disko) + install
 
 This assumes that the configuration has a `disk.nix` file that sets up the disk partitions, filesystems, etc.
 
