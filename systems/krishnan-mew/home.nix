@@ -21,7 +21,7 @@ with inputs;
     enable = true;
     enableDotfiles = true;
     enableTheme = true;
-    enableAtuin = true;
+    enableAtuin = false;
     enableZoxide = true;
   };
   modules.direnv.enable = true;
