@@ -67,6 +67,9 @@
       krishnan-vivo = import ./systems/krishnan-vivo {
         inherit inputs;
       };
+      krishnan-mew = import ./systems/krishnan-mew {
+        inherit inputs;
+      };
     };
   };
 
