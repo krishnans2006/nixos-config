@@ -12,6 +12,9 @@ with inputs;
     (import-tree "${root}/modules/packages")
   ];
 
+  modules.impermanence.enable = false;
+  modules.secrets.enable = true;
+
   modules.plasma.enable = true;
   modules.tailscale.enable = true;
   modules.shell = {

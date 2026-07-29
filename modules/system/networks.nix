@@ -1,4 +1,4 @@
-{ config, lib, pkgs, root, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -181,10 +181,6 @@ let
 
 in
 {
-  imports = [
-    "${root}/utils/secrets-system.nix"
-  ];
-
   options.modules.networks = {
     enable = mkEnableOption "Enable a customized NetworkManager with known networks and VPNs";
     enableWifi = mkOption {
@@ -195,6 +191,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    modules.secrets.enable = mkForce true;
+
     services.resolved = {
       enable = true;
       settings.Resolve = {

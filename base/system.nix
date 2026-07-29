@@ -1,10 +1,6 @@
-{ pkgs, root, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [
-    "${root}/utils/secrets-system.nix"
-  ];
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

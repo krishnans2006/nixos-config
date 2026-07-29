@@ -1,4 +1,4 @@
-{ inputs, root, ... }:
+{ inputs, lib, root, ... }:
 
 with inputs;
 
@@ -18,6 +18,7 @@ with inputs;
   ];
 
   modules.impermanence.enable = false;
+  modules.secrets.enable = lib.mkForce false;
 
   modules.plasma.enable = false;
   modules.audio.enable = false;

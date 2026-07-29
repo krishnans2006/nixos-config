@@ -1,4 +1,4 @@
-{ config, lib, pkgs, root, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -6,10 +6,6 @@ let
   cfg = config.modules.krishnan-user;
 in
 {
-  imports = [
-    "${root}/utils/secrets-system.nix"
-  ];
-
   options.modules.krishnan-user = {
     enable = mkEnableOption "Enable the krishnan user (with zsh)";
     enablePresetPassword = mkOption {
@@ -64,6 +60,8 @@ in
     }
 
     (mkIf cfg.enablePresetPassword {
+      modules.secrets.enable = mkForce true;
+
       # Hashed password from secrets
       sops.secrets."password".neededForUsers = true;
       users.users."krishnan".hashedPasswordFile = config.sops.secrets."password".path;

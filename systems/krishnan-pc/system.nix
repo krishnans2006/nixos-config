@@ -14,6 +14,9 @@ with inputs;
     (import-tree "${root}/modules/system")
   ];
 
+  modules.impermanence.enable = false;
+  modules.secrets.enable = true;
+
   modules.plasma.enable = true;
   modules.audio.enable = true;
   modules.networks = {

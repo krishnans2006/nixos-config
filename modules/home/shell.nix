@@ -6,10 +6,6 @@ let
   cfg = config.modules.shell;
 in
 {
-  imports = [
-    "${root}/utils/secrets-home.nix"
-  ];
-
   options.modules.shell = {
     enable = mkEnableOption "Enable custom shell configuration";
     enableDotfiles = mkOption {
@@ -122,6 +118,8 @@ in
 
     # Atuin
     (mkIf cfg.enableAtuin {
+      modules.secrets.enable = mkForce true;
+
       # Pull in secrets
       sops.secrets = {
         "atuin/key" = {};  # Unused

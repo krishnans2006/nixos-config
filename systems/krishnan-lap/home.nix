@@ -13,6 +13,7 @@ with inputs;
   ];
 
   modules.impermanence.enable = true;
+  modules.secrets.enable = true;
 
   modules.plasma.enable = true;
   modules.tailscale.enable = true;
