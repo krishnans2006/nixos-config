@@ -34,7 +34,10 @@ with inputs;
   modules.localsend.enable = false;
   modules.ssh-server.enable = false;
   modules.secure-boot.enable = false;
-  modules.krishnan-user.enable = false;  # TODO without secrets
+  modules.krishnan-user = {
+    enable = true;
+    enablePresetPassword = false;
+  };
   modules.iphone.enable = false;
 
   modules.gaming.enable = false;

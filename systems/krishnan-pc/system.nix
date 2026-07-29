@@ -30,7 +30,10 @@ with inputs;
   modules.localsend.enable = false;
   modules.ssh-server.enable = true;
   modules.secure-boot.enable = false;
-  modules.krishnan-user.enable = true;
+  modules.krishnan-user = {
+    enable = true;
+    enablePresetPassword = true;
+  };
   modules.iphone.enable = true;
 
   modules.gaming.enable = true;
