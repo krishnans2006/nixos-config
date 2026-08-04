@@ -9,7 +9,6 @@ with inputs;
 
     # Custom modules
     (import-tree "${root}/modules/home")
-    (import-tree "${root}/modules/packages")
   ];
 
   modules.impermanence.enable = true;
