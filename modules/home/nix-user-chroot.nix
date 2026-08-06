@@ -41,6 +41,9 @@ in
     programs.zsh.profileExtra = ''
       . "${nixProfileDirectory}/etc/profile.d/nix.sh"
     '';
+    programs.zsh.oh-my-zsh.extraConfig = ''
+      ZSH_DISABLE_COMPFIX=true
+    '';
 
     home.activation.installNixUserChrootHostIntegration =
       lib.hm.dag.entryAfter [ "writeBoundary" ] ''
