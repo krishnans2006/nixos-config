@@ -160,3 +160,11 @@ cp ~/.ssh/id_ed25519.pub /mnt/persist/home/krishnan/.ssh
 
 sudo reboot now
 ```
+
+### Install a Home Manager-only system
+
+From the repository root:
+
+```bash
+./scripts/install-home-only.sh krishnan-ews
+```
