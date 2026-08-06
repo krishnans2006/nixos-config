@@ -12,8 +12,8 @@ let
   launcherContent = ''
     #!/bin/sh
 
-    set -x
     export HOME_ONLY_CHROOT=1
+    set -x
     exec "${homeDirectory}/.local/bin/nix-user-chroot" \
       "${homeDirectory}/.nix" \
       "${nixProfileDirectory}/bin/zsh" -l
