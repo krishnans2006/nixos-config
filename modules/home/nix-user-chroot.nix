@@ -12,6 +12,7 @@ let
   launcherContent = ''
     #!/bin/sh
 
+    unset FPATH
     export HOME_ONLY_CHROOT=1
     set -x
     exec "${homeDirectory}/.local/bin/nix-user-chroot" \
