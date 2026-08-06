@@ -29,6 +29,7 @@ let
   patchShellFiles = [
     "${homeDirectory}/.bash_profile"
     "${homeDirectory}/.zprofile"
+    "${homeDirectory}/.zshrc"
   ];
 in
 {
