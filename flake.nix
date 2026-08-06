@@ -71,6 +71,12 @@
         inherit inputs;
       };
     };
+
+    homeConfigurations = {
+      krishnan-ews = import ./systems/krishnan-ews {
+        inherit inputs;
+      };
+    };
   };
 
   nixConfig = {
