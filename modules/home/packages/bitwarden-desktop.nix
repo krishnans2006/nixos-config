@@ -1,4 +1,4 @@
-{ config, lib, root, ... }:
+{ config, lib, ... }:
 
 with lib;
 
@@ -6,16 +6,14 @@ let
   cfg = config.modules.packages.bitwarden-desktop;
 in
 {
-  imports = [
-    "${root}/utils/flatpak.nix"
-  ];
-
   options.modules.packages.bitwarden-desktop = {
     enable = mkEnableOption "Install Bitwarden Desktop Flatpak";
     autostart = mkEnableOption "Enable autostart for Bitwarden Desktop";
   };
 
   config = mkIf cfg.enable {
+    modules.flatpak.enable = mkForce true;
+
     services.flatpak.packages = [ "com.bitwarden.desktop" ];
 
     # Autostart

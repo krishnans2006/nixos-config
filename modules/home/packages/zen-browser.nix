@@ -1,4 +1,4 @@
-{ config, lib, root, ... }:
+{ config, lib, ... }:
 
 with lib;
 
@@ -6,16 +6,14 @@ let
   cfg = config.modules.packages.zen-browser;
 in
 {
-  imports = [
-    "${root}/utils/flatpak.nix"
-  ];
-
   options.modules.packages.zen-browser = {
     enable = mkEnableOption "Install Zen Browser Flatpak";
     autostart = mkEnableOption "Enable autostart for Zen Browser";
   };
 
   config = mkIf cfg.enable {
+    modules.flatpak.enable = mkForce true;
+
     services.flatpak.packages = [ "app.zen_browser.zen" ];
 
     # Autostart
