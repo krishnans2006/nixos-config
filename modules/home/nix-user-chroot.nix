@@ -37,7 +37,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.sessionPath = [ "${nixProfileDirectory}/bin" ];
+    programs.zsh.profileExtra = ''
+      . "${nixProfileDirectory}/etc/profile.d/nix.sh"
+    '';
 
     home.activation.installNixUserChrootHostIntegration =
       lib.hm.dag.entryAfter [ "writeBoundary" ] ''
