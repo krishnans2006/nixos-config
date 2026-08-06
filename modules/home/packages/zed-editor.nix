@@ -13,7 +13,7 @@ let
   # of the root flake as a dependency (which technically works, but forces a
   # full rebuild of zed whenever anything in this config changes)
   zed-editor-patched = pkgs.zed-editor.overrideAttrs (prev: {
-    patches = prev.patches ++ [ ../../custom/zed-editor-copilot.patch ];
+    patches = prev.patches ++ [ ../../../custom/zed-editor-copilot.patch ];
   });
 in
 {
