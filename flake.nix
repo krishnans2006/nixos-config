@@ -1,5 +1,28 @@
 {
-  description = "Uses configuration.nix";
+  description = "Krishnan's NixOS configurations";
+
+  outputs = { ... }@inputs: {
+    nixosConfigurations = {
+      krishnan-lap = import ./systems/krishnan-lap {
+        inherit inputs;
+      };
+      krishnan-pc = import ./systems/krishnan-pc {
+        inherit inputs;
+      };
+      krishnan-vivo = import ./systems/krishnan-vivo {
+        inherit inputs;
+      };
+      krishnan-mew = import ./systems/krishnan-mew {
+        inherit inputs;
+      };
+    };
+
+    homeConfigurations = {
+      krishnan-ews = import ./systems/krishnan-ews {
+        inherit inputs;
+      };
+    };
+  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -54,29 +77,6 @@
     };
 
     ronix.url = "git+https://codeberg.org/caniko/ronix";
-  };
-
-  outputs = { self, ... }@inputs: {
-    nixosConfigurations = {
-      krishnan-lap = import ./systems/krishnan-lap {
-        inherit inputs;
-      };
-      krishnan-pc = import ./systems/krishnan-pc {
-        inherit inputs;
-      };
-      krishnan-vivo = import ./systems/krishnan-vivo {
-        inherit inputs;
-      };
-      krishnan-mew = import ./systems/krishnan-mew {
-        inherit inputs;
-      };
-    };
-
-    homeConfigurations = {
-      krishnan-ews = import ./systems/krishnan-ews {
-        inherit inputs;
-      };
-    };
   };
 
   # nixConfig = {
