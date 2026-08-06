@@ -79,12 +79,12 @@
     };
   };
 
-  nixConfig = {
-    extra-substituters = [
-      "https://krishnans2006.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "krishnans2006.cachix.org-1:5b8KqUYksvFF2jmMFJuC7k/xxm5q/ZpoQlC95IgUe84="
-    ];
-  };
+  # nixConfig = {
+  #   extra-substituters = [
+  #     "https://krishnans2006.cachix.org"
+  #   ];
+  #   extra-trusted-public-keys = [
+  #     "krishnans2006.cachix.org-1:5b8KqUYksvFF2jmMFJuC7k/xxm5q/ZpoQlC95IgUe84="
+  #   ];
+  # };
 }
