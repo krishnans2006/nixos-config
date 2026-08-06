@@ -65,26 +65,6 @@ backup_extension="hm-backup-$(date +%Y%m%d%H%M%S)"
   HOME_MANAGER_BACKUP_EXT="${3}" "${generation}/activate"
 ' bash "${FLAKE}" "${SYSTEM}" "${backup_extension}"
 
-cat > "${BIN_DIR}/home-only-shell" <<'EOF'
-#!/bin/sh
-set -x
-export HOME_ONLY_CHROOT=1
-exec "${HOME}/.local/bin/nix-user-chroot" "${HOME}/.nix" "${HOME}/.nix-profile/bin/zsh" -l
-EOF
-chmod 0755 "${BIN_DIR}/home-only-shell"
-
-LOGIN_MARKER="# Enter the Home Manager nix-user-chroot."
-touch "${HOME}/.bash_profile"
-if ! grep -Fq "${LOGIN_MARKER}" "${HOME}/.bash_profile"; then
-  cat >> "${HOME}/.bash_profile" <<'EOF'
-
-# Enter the Home Manager nix-user-chroot.
-if [ -z "${HOME_ONLY_CHROOT:-}" ] && [ -t 0 ] && [ -x "${HOME}/.local/bin/home-only-shell" ]; then
-  exec "${HOME}/.local/bin/home-only-shell"
-fi
-EOF
-fi
-
 echo
 echo "${SYSTEM} installed successfully."
 echo "Reconnect, or run ${BIN_DIR}/home-only-shell now."

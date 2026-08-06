@@ -13,6 +13,7 @@ with inputs;
 
   modules.impermanence.enable = false;
   modules.secrets.enable = true;
+  modules.nix-user-chroot.enable = false;
 
   modules.plasma.enable = true;
   modules.tailscale.enable = true;

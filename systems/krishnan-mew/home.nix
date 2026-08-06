@@ -13,6 +13,7 @@ with inputs;
 
   modules.impermanence.enable = false;
   modules.secrets.enable = lib.mkForce false;
+  modules.nix-user-chroot.enable = false;
 
   modules.plasma.enable = false;
   modules.tailscale.enable = true;

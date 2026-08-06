@@ -15,6 +15,7 @@
 
   modules.impermanence.enable = false;
   modules.secrets.enable = false;
+  modules.nix-user-chroot.enable = true;
 
   modules.plasma.enable = false;
   modules.tailscale.enable = false;
