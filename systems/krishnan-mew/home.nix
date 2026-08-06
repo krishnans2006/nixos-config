@@ -24,7 +24,10 @@ with inputs;
     enableZoxide = true;
   };
   modules.direnv.enable = true;
-  modules.git.enable = true;
+  modules.git = {
+    enable = true;
+    enablePdfDiff = false;
+  };
   modules.ssh.enable = true;
   modules.fs-mounts = {
     tjcsl = false;
