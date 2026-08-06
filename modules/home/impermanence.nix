@@ -1,9 +1,10 @@
-{ config, lib, ... }:
+{ config, lib, options, ... }:
 
 with lib;
 
 let
   cfg = config.modules.impermanence;
+  hasHomePersistence = hasAttrByPath [ "home" "persistence" ] options;
 in
 {
   options.modules.impermanence = {
@@ -27,7 +28,7 @@ in
     };
   };
 
-  config = mkMerge [
+  config = optionalAttrs hasHomePersistence (mkMerge [
     # Since many modules define paths to be persisted (using home.persistence."/persist")
     # We need to explicitly disable "/persist" if impermanence isn't enabled
     # So that this doesn't cause issues when impermanence is disabled
@@ -58,5 +59,5 @@ in
         ];
       };
     })
-  ];
+  ]);
 }
