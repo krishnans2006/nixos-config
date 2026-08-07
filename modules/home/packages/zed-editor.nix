@@ -66,6 +66,7 @@ in
         "latex"
         "linkerscript"
         "nix"
+        "toml"
         "typst"
         "verilog"
 
