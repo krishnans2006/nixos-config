@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -23,26 +23,46 @@ in
 
         systemd.services.tailscaled.after = [ "wpa_supplicant.service" ];
 
-        # Plasma hides TUN connections, so expose a harmless dummy connection
-        # whose lifetime follows tailscaled without letting NetworkManager
-        # manage the real tailscale0 interface.
+        # Plasma hides TUN connections, so mirror Tailscale's backend state
+        # with an inert WireGuard connection that Plasma displays as a VPN.
         systemd.services.tailscale-networkmanager-status = mkIf config.networking.networkmanager.enable {
           description = "Expose Tailscale status to NetworkManager";
           wantedBy = [ "tailscaled.service" "NetworkManager.service" ];
           bindsTo = [ "tailscaled.service" "NetworkManager.service" ];
           after = [ "tailscaled.service" "NetworkManager.service" ];
-          path = [ config.networking.networkmanager.package ];
+          path = [
+            config.networking.networkmanager.package
+            config.services.tailscale.package
+            pkgs.jq
+            pkgs.wireguard-tools
+          ];
 
           script = ''
-            nmcli connection delete id Tailscale 2>/dev/null || true
-            nmcli connection add save no \
-              type dummy \
-              con-name Tailscale \
-              ifname tailscale-nm \
-              connection.autoconnect no \
-              ipv4.method disabled \
-              ipv6.method disabled
-            nmcli connection up id Tailscale
+            while true; do
+              if tailscale status --json --peers=false --self=false 2>/dev/null \
+                | jq --exit-status '.BackendState == "Running"' >/dev/null
+              then
+                if ! nmcli --terse --fields NAME,TYPE connection show --active \
+                  | grep --fixed-strings --line-regexp --quiet Tailscale:wireguard
+                then
+                  nmcli connection delete id Tailscale 2>/dev/null || true
+                  nmcli connection add \
+                    save no \
+                    type wireguard \
+                    con-name Tailscale \
+                    ifname tailscale-nm \
+                    connection.autoconnect no \
+                    wireguard.private-key "$(wg genkey)" \
+                    ipv4.method disabled \
+                    ipv6.method disabled
+                  nmcli connection up id Tailscale
+                fi
+              else
+                nmcli connection delete id Tailscale 2>/dev/null || true
+              fi
+
+              sleep 2
+            done
           '';
 
           preStop = ''
@@ -50,9 +70,7 @@ in
           '';
 
           serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            Restart = "on-failure";
+            Restart = "always";
             RestartSec = 2;
           };
         };
