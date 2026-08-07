@@ -28,6 +28,7 @@ with inputs;
   modules.docker.enable = true;
   modules.tailscale = {
     enable = true;
+    enableNMIntegration = true;
     enableTaildrive = false;
   };
   modules.localsend.enable = false;

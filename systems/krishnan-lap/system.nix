@@ -31,6 +31,7 @@ with inputs;
   modules.docker.enable = true;
   modules.tailscale = {
     enable = true;
+    enableNMIntegration = true;
     enableTaildrive = true;
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
