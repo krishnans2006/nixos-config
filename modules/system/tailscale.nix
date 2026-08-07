@@ -25,98 +25,99 @@ in
         systemd.services.tailscaled.after = [ "wpa_supplicant.service" ];
       }
 
-      (mkIf cfg.enableNMIntegration {
-        # Plasma hides TUN connections, so represent Tailscale with an inert
-        # WireGuard profile that it displays as a VPN. The key is intentionally
-        # public: this profile has no peers, addresses, routes, or traffic.
-        networking.networkmanager.ensureProfiles.profiles.tailscale-status = {
-          connection = {
-            id = "Tailscale";
-            type = "wireguard";
-            interface-name = "tailscale-nm";
-            autoconnect = "true";
+      (mkIf cfg.enableNMIntegration (
+        let
+          nmConnectionName = "Tailscale";
+          nmInterfaceName = "tailscale-nm";
+          tailscale = "${config.services.tailscale.package}/bin/tailscale";
+          nmConnectionIsActive = concatStringsSep " " [
+            "nmcli --terse --fields NAME,TYPE connection show --active"
+            "| grep --fixed-strings --line-regexp --quiet '${nmConnectionName}:wireguard'"
+          ];
+          tailscaleIsActive = concatStringsSep " " [
+            "tailscale status --json --peers=false --self=false 2>/dev/null"
+            "| jq --exit-status '.BackendState == \"Running\" or .BackendState == \"Starting\"'"
+            ">/dev/null"
+          ];
+        in
+        {
+          # Plasma hides TUN connections, so represent Tailscale with an inert
+          # WireGuard profile that it displays as a VPN. The key is intentionally
+          # public: this profile has no peers, addresses, routes, or traffic.
+          networking.networkmanager.ensureProfiles.profiles.tailscale-status = {
+            connection = {
+              id = nmConnectionName;
+              type = "wireguard";
+              interface-name = nmInterfaceName;
+              autoconnect = "true";
+            };
+            wireguard.private-key = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+            ipv4.method = "disabled";
+            ipv6.method = "disabled";
           };
-          wireguard.private-key = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-          ipv4.method = "disabled";
-          ipv6.method = "disabled";
-        };
 
-        # When the "Connect" or "Disconnect" buttons are pressed in the GUI
-        # Use the tailscale CLI to bring the Tailscale interface up or down
-        networking.networkmanager.dispatcherScripts = [
-          {
-            source = pkgs.writeShellScript "tailscale-networkmanager-dispatcher" ''
-              [[ "$1" == tailscale-nm ]] || exit 0
-
-              case "$2" in
-                up)
-                  ${config.services.tailscale.package}/bin/tailscale up
-                  ;;
-                down)
-                  ${config.services.tailscale.package}/bin/tailscale down
-                  ;;
-              esac
-            '';
-            type = "basic";
-          }
-        ];
-
-        # Use a systemd service to detect changes in Tailscale status and bring
-        # the NetworkManager profile up or down accordingly
-        systemd.services.tailscale-networkmanager-status = {
-          description = "Synchronize Tailscale status with NetworkManager";
-          wantedBy = [ "multi-user.target" "NetworkManager.service" ];
-          bindsTo = [ "NetworkManager.service" ];
-          wants = [ "tailscaled.service" "NetworkManager-ensure-profiles.service" ];
-          after = [
-            "tailscaled.service"
-            "NetworkManager.service"
-            "NetworkManager-ensure-profiles.service"
-          ];
-          path = [
-            config.networking.networkmanager.package
-            config.services.tailscale.package
-            pkgs.jq
+          # When the "Connect" or "Disconnect" buttons are pressed in the GUI
+          # Use the tailscale CLI to bring the Tailscale interface up or down
+          networking.networkmanager.dispatcherScripts = [
+            {
+              source = pkgs.writeShellScript "tailscale-networkmanager-dispatcher" ''
+                if [[ "$1" == '${nmInterfaceName}' && ("$2" == up || "$2" == down) ]]; then
+                  ${tailscale} "$2"
+                fi
+              '';
+              type = "basic";
+            }
           ];
 
-          script = ''
-            previous=
+          # Use a systemd service to detect changes in Tailscale status and bring
+          # the NetworkManager profile up or down accordingly
+          systemd.services.tailscale-networkmanager-status = {
+            description = "Synchronize Tailscale status with NetworkManager";
+            wantedBy = [ "multi-user.target" "NetworkManager.service" ];
+            bindsTo = [ "NetworkManager.service" ];
+            wants = [ "tailscaled.service" "NetworkManager-ensure-profiles.service" ];
+            after = [
+              "tailscaled.service"
+              "NetworkManager.service"
+              "NetworkManager-ensure-profiles.service"
+            ];
+            path = [
+              config.networking.networkmanager.package
+              config.services.tailscale.package
+              pkgs.jq
+            ];
 
-            while true; do
-              if tailscale status --json --peers=false --self=false 2>/dev/null \
-                | jq --exit-status '.BackendState == "Running" or .BackendState == "Starting"' >/dev/null
-              then
-                current=up
-              else
-                current=down
-              fi
+            script = ''
+              previous=
 
-              if [[ "$current" != "$previous" ]]; then
-                if [[ "$current" == up ]]; then
-                  if ! nmcli --terse --fields NAME,TYPE connection show --active \
-                    | grep --fixed-strings --line-regexp --quiet Tailscale:wireguard
-                  then
-                    nmcli connection up id Tailscale
-                  fi
-                elif nmcli --terse --fields NAME,TYPE connection show --active \
-                  | grep --fixed-strings --line-regexp --quiet Tailscale:wireguard
-                then
-                  nmcli connection down id Tailscale
+              while true; do
+                if ${tailscaleIsActive}; then
+                  current=up
+                else
+                  current=down
                 fi
 
-                previous="$current"
-              fi
+                if [[ "$current" != "$previous" ]]; then
+                  if [[ "$current" == up ]] && ! ${nmConnectionIsActive}; then
+                    nmcli connection up id '${nmConnectionName}'
+                  elif [[ "$current" == down ]] && ${nmConnectionIsActive}; then
+                    nmcli connection down id '${nmConnectionName}'
+                  fi
 
-              sleep 1
-            done
-          '';
+                  previous="$current"
+                fi
 
-          serviceConfig = {
-            Restart = "always";
-            RestartSec = 2;
+                sleep 1
+              done
+            '';
+
+            serviceConfig = {
+              Restart = "always";
+              RestartSec = 2;
+            };
           };
-        };
-      })
+        }
+      ))
 
       (mkIf cfg.enableTaildrive {
         services.davfs2 = {
