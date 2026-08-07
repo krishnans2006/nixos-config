@@ -26,6 +26,23 @@ in
       }
 
       (mkIf cfg.enableNMIntegration {
+        # Plasma hides TUN connections, so represent Tailscale with an inert
+        # WireGuard profile that it displays as a VPN. The key is intentionally
+        # public: this profile has no peers, addresses, routes, or traffic.
+        networking.networkmanager.ensureProfiles.profiles.tailscale-status = {
+          connection = {
+            id = "Tailscale";
+            type = "wireguard";
+            interface-name = "tailscale-nm";
+            autoconnect = "true";
+          };
+          wireguard.private-key = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          ipv4.method = "disabled";
+          ipv6.method = "disabled";
+        };
+
+        # When the "Connect" or "Disconnect" buttons are pressed in the GUI
+        # Use the tailscale CLI to bring the Tailscale interface up or down
         networking.networkmanager.dispatcherScripts = [
           {
             source = pkgs.writeShellScript "tailscale-networkmanager-dispatcher" ''
@@ -44,21 +61,8 @@ in
           }
         ];
 
-        # Plasma hides TUN connections, so represent Tailscale with an inert
-        # WireGuard profile that it displays as a VPN. The key is intentionally
-        # public: this profile has no peers, addresses, routes, or traffic.
-        networking.networkmanager.ensureProfiles.profiles.tailscale-status = {
-          connection = {
-            id = "Tailscale";
-            type = "wireguard";
-            interface-name = "tailscale-nm";
-            autoconnect = "true";
-          };
-          wireguard.private-key = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-          ipv4.method = "disabled";
-          ipv6.method = "disabled";
-        };
-
+        # Use a systemd service to detect changes in Tailscale status and bring
+        # the NetworkManager profile up or down accordingly
         systemd.services.tailscale-networkmanager-status = {
           description = "Synchronize Tailscale status with NetworkManager";
           wantedBy = [ "multi-user.target" "NetworkManager.service" ];
