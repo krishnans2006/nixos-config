@@ -80,6 +80,10 @@ in
               config.services.tailscale.package
               pkgs.jq
             ];
+            serviceConfig = {
+              Restart = "always";
+              RestartSec = 2;
+            };
 
             script = ''
               previous=
@@ -104,11 +108,6 @@ in
                 sleep 1
               done
             '';
-
-            serviceConfig = {
-              Restart = "always";
-              RestartSec = 2;
-            };
           };
         }
       ))
