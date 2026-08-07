@@ -27,18 +27,12 @@ in
 
       (mkIf cfg.enableNMIntegration (
         let
+          tailscale = "${config.services.tailscale.package}/bin/tailscale";
+
           nmConnectionName = "Tailscale";
           nmInterfaceName = "tailscale-nm";
-          tailscale = "${config.services.tailscale.package}/bin/tailscale";
-          nmConnectionIsActive = concatStringsSep " " [
-            "nmcli --terse --fields NAME,TYPE connection show --active"
-            "| grep --fixed-strings --line-regexp --quiet '${nmConnectionName}:wireguard'"
-          ];
-          tailscaleIsActive = concatStringsSep " " [
-            "tailscale status --json --peers=false --self=false 2>/dev/null"
-            "| jq --exit-status '.BackendState == \"Running\" or .BackendState == \"Starting\"'"
-            ">/dev/null"
-          ];
+          nmActive = "nmcli -t -f NAME,TYPE connection show --active | grep -Fxq '${nmConnectionName}:wireguard'";
+          tailscaleActive = "tailscale status --json --peers=false --self=false 2>/dev/null | jq -e '.BackendState == \"Running\" or .BackendState == \"Starting\"' >/dev/null";
         in
         {
           # Plasma hides TUN connections, so represent Tailscale with an inert
@@ -91,16 +85,16 @@ in
               previous=
 
               while true; do
-                if ${tailscaleIsActive}; then
+                if ${tailscaleActive}; then
                   current=up
                 else
                   current=down
                 fi
 
                 if [[ "$current" != "$previous" ]]; then
-                  if [[ "$current" == up ]] && ! ${nmConnectionIsActive}; then
+                  if [[ "$current" == up ]] && ! ${nmActive}; then
                     nmcli connection up id '${nmConnectionName}'
-                  elif [[ "$current" == down ]] && ${nmConnectionIsActive}; then
+                  elif [[ "$current" == down ]] && ${nmActive}; then
                     nmcli connection down id '${nmConnectionName}'
                   fi
 
