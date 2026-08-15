@@ -32,12 +32,11 @@ The configuration:
 - `modules/` - The bulk of the configuration; custom options that systems can enable if wanted
   - `system/` - Modules configuring system-related features
   - `home/` - Modules configuring home-related features
-  - `packages/` - Modules that install/configure packages (also through home-manager)
-- `utils/` - Boilerplate that can be used by modules to avoid repetition
 - `custom/` - Custom derivations, patches, etc.
 - `dotfiles/` - Dotfiles used in `modules/home/shell.nix` to set up the shell
 - `secrets/` - Encrypted secrets managed by sops and sops-nix (`config/{system,home}/secrets.nix`)
 - `.sops.yaml` - Configuration file for access control to secrets
+- `scripts/` - Shell scripts to automate some tasks
 
 ## Manual Configuration Steps
 
