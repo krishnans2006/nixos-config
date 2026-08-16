@@ -71,10 +71,7 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
 
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     ronix.url = "git+https://codeberg.org/caniko/ronix";
   };
