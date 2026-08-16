@@ -158,6 +158,8 @@ in
 
           # nil.initialization_options.formatting.command = [ "nixfmt" ];
           # nixd.initialization_options.formatting.command = [ "nixfmt" ];
+
+          nil.settings.nix.flake.autoArchive = true;
         };
 
         # Window & Layout
