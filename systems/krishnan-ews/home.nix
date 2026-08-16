@@ -32,7 +32,10 @@
     enable = true;
     enablePdfDiff = false;
   };
-  modules.ssh.enable = true;
+  modules.ssh = {
+    enable = true;
+    enableAuthorizedKeys = true;
+  };
   modules.fs-mounts = {
     tjcsl = false;
     ews = false;
