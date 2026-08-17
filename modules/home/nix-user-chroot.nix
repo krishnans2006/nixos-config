@@ -52,5 +52,9 @@ in
           fi
         done
       '';
+
+    programs.zsh.oh-my-zsh.extraConfig = ''
+      ZSH_DISABLE_COMPFIX=true
+    '';
   };
 }
