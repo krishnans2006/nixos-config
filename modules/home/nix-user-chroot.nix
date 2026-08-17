@@ -53,8 +53,8 @@ in
         done
       '';
 
-    programs.zsh.oh-my-zsh.extraConfig = ''
-      ZSH_DISABLE_COMPFIX=true
-    '';
+    # Instead of "compinit" use "compinit -u" to avoid errors
+    # from zsh completion system when in a chroot environment
+    programs.zsh.completionInit = "autoload -U compinit && compinit -u";
   };
 }
