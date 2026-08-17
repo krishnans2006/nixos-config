@@ -39,13 +39,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.zsh.profileExtra = ''
-      . "${nixProfileDirectory}/etc/profile.d/nix.sh"
-    '';
-    programs.zsh.oh-my-zsh.extraConfig = ''
-      ZSH_DISABLE_COMPFIX=true
-    '';
-
     home.activation.installNixUserChrootHostIntegration =
       lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${escapeShellArg (dirOf launcherPath)}

@@ -13,6 +13,12 @@
     stateVersion = "25.05";
   };
 
+  # Non-NixOS
+  targets.genericLinux = {
+    enable = true;
+    gpu.enable = false;
+  };
+
   modules.impermanence.enable = false;
   modules.secrets.enable = false;
   modules.nix-user-chroot.enable = true;
