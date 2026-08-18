@@ -1,4 +1,4 @@
-{ config, lib, osConfig ? null, ... }:
+{ config, lib, pkgs, osConfig ? null, ... }:
 
 with lib;
 
@@ -78,26 +78,41 @@ in
       };
     }
 
-    (mkIf cfg.enableAuthorizedKeys {
-      assertions = [
-        {
-          assertion = (
-            osConfig == null || !(osConfig.modules.krishnan-user.enable && osConfig.modules.ssh-server.enable)
-          );
-          message = "modules.ssh.enableAuthorizedKeys must be disabled when openssh server is enabled in system config";
-        }
-      ];
+    (mkIf config.modules.ssh.enableAuthorizedKeys (
+      let
+        authorizedKeys = [
+          # krishnan-pc
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzvD6itrqgr9qqNVao8XnuRX3dLH9rUTf9xMydB9VG3 krishnans2006@gmail.com"
+          # krishnan-lap
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ37RZ3TIIuDNS3wcaQ4t0z5NkT1H4GukVcke3GNOn40 krishnans2006@gmail.com"
+          # krishnan-vivo
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjk4Ah+IsWbXjwpA89sL1s01UdJoobtFlpeBxcHJkTj krishnans2006@gmail.com"
+          # krishnan-pi
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZgsLeuVcdgehuhwpO8ZZuzPzTQhPGjYcrnzLSBCCP2 krishnans2006@gmail.com"
+        ];
+      in
+      {
+        assertions = [
+          {
+            assertion = (
+              osConfig == null || !(osConfig.modules.krishnan-user.enable && osConfig.modules.ssh-server.enable)
+            );
+            message = "modules.ssh.enableAuthorizedKeys must be disabled when openssh server is enabled in system config";
+          }
+        ];
 
-      home.file.".ssh/authorized_keys".text = (concatStringsSep "\n" [
-        # krishnan-pc
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzvD6itrqgr9qqNVao8XnuRX3dLH9rUTf9xMydB9VG3 krishnans2006@gmail.com"
-        # krishnan-lap
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ37RZ3TIIuDNS3wcaQ4t0z5NkT1H4GukVcke3GNOn40 krishnans2006@gmail.com"
-        # krishnan-vivo
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjk4Ah+IsWbXjwpA89sL1s01UdJoobtFlpeBxcHJkTj krishnans2006@gmail.com"
-        # krishnan-pi
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZgsLeuVcdgehuhwpO8ZZuzPzTQhPGjYcrnzLSBCCP2 krishnans2006@gmail.com"
-      ]) + "\n";
-    })
+        # SELinux-confined sshd cannot follow ~/.ssh/authorized_keys into /nix/store
+        home.activation.installAuthorizedKeys = let
+          dir = escapeShellArg "${config.home.homeDirectory}/.ssh";
+          file = escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys";
+          text = pkgs.writeText "authorized_keys" ((concatStringsSep "\n" authorizedKeys) + "\n");
+        in
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          install -d -m 0700 ${dir}
+          rm -f ${file}
+          install -m 0600 ${text} ${file}
+        '';
+      }
+    ))
   ]);
 }
