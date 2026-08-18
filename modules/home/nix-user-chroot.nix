@@ -53,8 +53,6 @@ in
         done
       '';
 
-    # Instead of "compinit" use "compinit -u" to avoid errors
-    # from zsh completion system when in a chroot environment
-    programs.zsh.completionInit = "autoload -U compinit && compinit -i";
+    programs.zsh.localVariables.ZSH_DISABLE_COMPFIX = true;
   };
 }
