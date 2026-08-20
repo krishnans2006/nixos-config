@@ -19,7 +19,7 @@
  
  instance Pretty Trivium where
    pretty EmptyLine = emptyline
-@@ -169,6 +170,31 @@
+@@ -169,6 +170,40 @@
      isComment (Comments _) = True
      isComment _ = False
  
@@ -48,10 +48,19 @@
 +compactBrackets :: Ann a -> Ann b -> (Ann a, Ann b)
 +compactBrackets open close = (ignoreSourceLayout open, ignoreSourceLayout close)
 +
++-- Build-time project setting: lists and attrsets may stay on one line only if
++-- their flattened content is narrower than this width. This counts only the
++-- literal's own text, not surrounding indentation.
++wrapWidth :: Int
++wrapWidth = __WRAPWIDTH__
++
++fitsWrapWidth :: Doc -> Bool
++fitsWrapWidth doc = isJust (unexpandSpacing' (Just wrapWidth) doc)
++
  -- Render a list given the separator between items
  renderList :: Doc -> Ann Token -> Items Term -> Ann Token -> Doc
  renderList itemSep paropen@Ann{trailComment = post} items parclose =
-@@ -181,7 +207,10 @@
+@@ -181,7 +216,10 @@
        | hasOnlyComments items = hardline -- If the list has only comments, use hardline to ensure idempotency. https://github.com/NixOS/nixfmt/issues/362
        | hasTrivia paropen && null items = hardline -- even if the comment got associated with the opening bracket, keep the hardline
        | null items = hardspace -- making sure we're not potentially adding extra newlines for empty lists
@@ -62,14 +71,20 @@
  
  instance Pretty Trivia where
    pretty [] = mempty
-@@ -256,18 +285,22 @@
+@@ -256,18 +294,28 @@
  -- Singleton sets are allowed to fit onto one line,
  -- but apart from that always expand.
  prettySet wide (krec, paropen@Ann{trailComment = post}, binders, parclose) =
 -  let !surrounded = surroundWith sep (nest $ pretty post <> renderItems hardline binders)
-+  let compact = canCompactSet binders
++  let (compactOpen, compactClose) = compactBrackets paropen parclose
++      compactDoc =
++        pretty (fmap (,hardspace) krec)
++          <> pretty (compactOpen{trailComment = Nothing})
++          <> surroundWith line (nest $ pretty post <> renderItems line binders)
++          <> pretty compactClose
++      compact = canCompactSet binders && fitsWrapWidth compactDoc
 +      (paropen', parclose') =
-+        if compact then compactBrackets paropen parclose else (paropen, parclose)
++        if compact then (compactOpen, compactClose) else (paropen, parclose)
 +      itemSep
 +        | compact = line
 +        | otherwise = hardline
@@ -95,7 +110,7 @@
  
  prettyTermWide :: Term -> Doc
  prettyTermWide (Set krec paropen items parclose) = prettySet True (krec, paropen, items, parclose)
-@@ -305,8 +338,12 @@
+@@ -305,8 +353,13 @@
      sep = if sourceLine paropen /= sourceLine parclose then hardline else hardspace
  -- General list
  -- Always expand if len > 1
@@ -104,13 +119,14 @@
 +prettyTerm (List paropen items parclose)
 +  | canCompactList items =
 +      let (paropen', parclose') = compactBrackets paropen parclose
-+      in renderList line paropen' items parclose'
++          compactDoc = renderList line paropen' items parclose'
++      in if fitsWrapWidth compactDoc then compactDoc else renderList hardline paropen items parclose
 +  | otherwise =
 +      renderList hardline paropen items parclose
  prettyTerm (Set krec paropen items parclose) = prettySet False (krec, paropen, items, parclose)
  -- Parentheses
  prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
-@@ -329,6 +366,7 @@
+@@ -329,6 +382,7 @@
  
  instance Pretty Term where
    pretty l@List{} = group $ prettyTerm l
@@ -118,7 +134,7 @@
    pretty x = prettyTerm x
  
  -- Does not move around comments, nor does it inject a trailing comma
-@@ -487,8 +525,9 @@
+@@ -487,8 +541,10 @@
        -- If lists have only simple items, try to render them single-line instead of expanding
        -- Uses renderList with `line` separator instead of `hardline`
        absorbInner (Term (List paropen items parclose))
@@ -126,11 +142,12 @@
 -            renderList line paropen items parclose
 +        | canCompactList items =
 +            let (paropen', parclose') = compactBrackets paropen parclose
-+            in renderList line paropen' items parclose'
++                compactDoc = renderList line paropen' items parclose'
++            in if fitsWrapWidth compactDoc then compactDoc else renderList hardline paropen items parclose
        absorbInner expr = pretty expr
  
        -- Render the last argument of a function call
-@@ -641,14 +680,25 @@
+@@ -641,14 +697,25 @@
  -- braces must be on the same source line, and up to 2 attrs without defaults,
  -- with an optional ellipsis.
  canFlattenAttrs :: Ann a -> [ParamAttr] -> Ann b -> Bool
@@ -159,7 +176,7 @@
        [ParamAttr _ Nothing _] -> True
        [ParamAttr _ Nothing _, ParamEllipsis _] -> True
        [ParamAttr _ Nothing _, ParamAttr _ Nothing _] -> True
-@@ -667,7 +717,7 @@
+@@ -667,7 +734,7 @@
    (Abstraction (IDParameter _) _ body@(Abstraction{})) -> isAbsorbableExpr body
    -- Absorb function declarations with attribute set parameters if the attribute set is simple enough, and the body is absorbable.
    (Abstraction (SetParameter bopen attrs bclose) colon body)
@@ -168,7 +185,7 @@
        not (hasPreTrivia bopen), -- Comments on the opening brace force a line break, preventing absorption
        isNothing (trailComment bopen),
        sourceLine colon == firstTokenLine body -> -- If the colon and body are on different lines, keep them like that
-@@ -854,7 +904,7 @@
+@@ -854,7 +921,7 @@
  
    -- Set parameter: absorb if flattenable and on the same line, force multiline otherwise
    pretty (Abstraction param@(SetParameter bopen attrs bclose) colon body)
