@@ -31,12 +31,7 @@ in
           signByDefault = true;
         };
 
-        ignores = [
-          ".idea/"
-          ".vscode/"
-          ".direnv/"
-          ".envrc"
-        ];
+        ignores = [ ".idea/" ".vscode/" ".direnv/" ".envrc" ];
       };
     }
 

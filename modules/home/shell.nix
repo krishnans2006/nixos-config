@@ -72,12 +72,7 @@ in
 
         oh-my-zsh = {
           enable = true;
-          plugins = [
-            "git"
-            "git-auto-fetch"
-            "poetry"
-            "sudo"
-          ];
+          plugins = [ "git" "git-auto-fetch" "poetry" "sudo" ];
         };
 
         initContent = ''

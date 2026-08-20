@@ -31,7 +31,7 @@
 +-- contraction even when the item-count predicate succeeds.
 +canCompactList :: Items Term -> Bool
 +canCompactList items =
-+  length (unItems items) <= 3 && all (isSimple . Term) items
++  length (unItems items) <= 6 && all (isSimple . Term) items
 +
 +canCompactSet :: Items Binder -> Bool
 +canCompactSet (Items items) =
@@ -51,7 +51,18 @@
  -- Render a list given the separator between items
  renderList :: Doc -> Ann Token -> Items Term -> Ann Token -> Doc
  renderList itemSep paropen@Ann{trailComment = post} items parclose =
-@@ -256,18 +282,22 @@
+@@ -181,7 +207,10 @@
+       | hasOnlyComments items = hardline -- If the list has only comments, use hardline to ensure idempotency. https://github.com/NixOS/nixfmt/issues/362
+       | hasTrivia paropen && null items = hardline -- even if the comment got associated with the opening bracket, keep the hardline
+       | null items = hardspace -- making sure we're not potentially adding extra newlines for empty lists
++      | all isAttrsetItem (unItems items) = hardline -- force break for lists of attrsets
+       | otherwise = line
++    isAttrsetItem (Item (Set _ _ _ _)) = True
++    isAttrsetItem _ = False
+ 
+ instance Pretty Trivia where
+   pretty [] = mempty
+@@ -256,18 +285,22 @@
  -- Singleton sets are allowed to fit onto one line,
  -- but apart from that always expand.
  prettySet wide (krec, paropen@Ann{trailComment = post}, binders, parclose) =
@@ -84,7 +95,7 @@
  
  prettyTermWide :: Term -> Doc
  prettyTermWide (Set krec paropen items parclose) = prettySet True (krec, paropen, items, parclose)
-@@ -305,8 +335,12 @@
+@@ -305,8 +338,12 @@
      sep = if sourceLine paropen /= sourceLine parclose then hardline else hardspace
  -- General list
  -- Always expand if len > 1
@@ -99,7 +110,7 @@
  prettyTerm (Set krec paropen items parclose) = prettySet False (krec, paropen, items, parclose)
  -- Parentheses
  prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
-@@ -329,6 +363,7 @@
+@@ -329,6 +366,7 @@
  
  instance Pretty Term where
    pretty l@List{} = group $ prettyTerm l
@@ -107,7 +118,7 @@
    pretty x = prettyTerm x
  
  -- Does not move around comments, nor does it inject a trailing comma
-@@ -487,8 +522,9 @@
+@@ -487,8 +525,9 @@
        -- If lists have only simple items, try to render them single-line instead of expanding
        -- Uses renderList with `line` separator instead of `hardline`
        absorbInner (Term (List paropen items parclose))
@@ -119,7 +130,7 @@
        absorbInner expr = pretty expr
  
        -- Render the last argument of a function call
-@@ -641,14 +677,25 @@
+@@ -641,14 +680,25 @@
  -- braces must be on the same source line, and up to 2 attrs without defaults,
  -- with an optional ellipsis.
  canFlattenAttrs :: Ann a -> [ParamAttr] -> Ann b -> Bool
@@ -148,7 +159,7 @@
        [ParamAttr _ Nothing _] -> True
        [ParamAttr _ Nothing _, ParamEllipsis _] -> True
        [ParamAttr _ Nothing _, ParamAttr _ Nothing _] -> True
-@@ -667,7 +714,7 @@
+@@ -667,7 +717,7 @@
    (Abstraction (IDParameter _) _ body@(Abstraction{})) -> isAbsorbableExpr body
    -- Absorb function declarations with attribute set parameters if the attribute set is simple enough, and the body is absorbable.
    (Abstraction (SetParameter bopen attrs bclose) colon body)
@@ -157,7 +168,7 @@
        not (hasPreTrivia bopen), -- Comments on the opening brace force a line break, preventing absorption
        isNothing (trailComment bopen),
        sourceLine colon == firstTokenLine body -> -- If the colon and body are on different lines, keep them like that
-@@ -854,7 +901,7 @@
+@@ -854,7 +904,7 @@
  
    -- Set parameter: absorb if flattenable and on the same line, force multiline otherwise
    pretty (Abstraction param@(SetParameter bopen attrs bclose) colon body)

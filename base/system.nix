@@ -42,12 +42,7 @@
   hardware.enableAllFirmware = true;
 
   # udev rules
-  services.udev.packages = with pkgs; [
-    platformio-core
-    openocd
-    via
-    probe-rs-tools
-  ];
+  services.udev.packages = with pkgs; [ platformio-core openocd via probe-rs-tools ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -67,12 +62,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    git
-    wget
-    curl
-    gnupg
-  ];
+  environment.systemPackages = with pkgs; [ git wget curl gnupg ];
 
   home-manager.backupFileExtension = "bak";
 
