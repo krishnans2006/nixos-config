@@ -15,6 +15,8 @@ let
   zed-editor-patched = pkgs.zed-editor.overrideAttrs (prev: {
     patches = prev.patches ++ [ ../../../custom/zed-editor-copilot.patch ];
   });
+
+  nixfmt = pkgs.callPackage ../../../formatter/package.nix { };
 in
 {
   options.modules.packages.zed-editor = {
@@ -124,11 +126,9 @@ in
 
         languages = {
           "Nix" = {
-            # I prefer a Nix style that slightly deviates from nixfmt's
-            # It's a bit more compact and keeps things more on one line
-            # So, auto-format is turned off, but manual format still works
             formatter.external.command = "nixfmt";
-            format_on_save = "off";
+            formatter.external.arguments = [ "-" ];
+            format_on_save = "on";
             tab_size = 2;
           };
 
