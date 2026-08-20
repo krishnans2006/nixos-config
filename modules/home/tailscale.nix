@@ -9,31 +9,34 @@ in
 {
   options.modules.tailscale = {
     enable = mkEnableOption "Enable Tailscale";
+    #
   };
 
   # Must be enabled in system config
-  config = mkIf cfg.enable ( mkAssert osCfg.enable "modules.tailscale is not enabled in system config" {
-    programs.ssh.settings = {
-      "pc" = {
-        HostName = "krishnan-pc.emperor-snares.ts.net";
-        User = "krishnan";
+  config = mkIf cfg.enable (
+    mkAssert osCfg.enable "modules.tailscale is not enabled in system config" {
+      programs.ssh.settings = {
+        "pc" = {
+          HostName = "krishnan-pc.emperor-snares.ts.net";
+          User = "krishnan";
+        };
+        "laptop" = {
+          HostName = "krishnan-lap.emperor-snares.ts.net";
+          User = "krishnan";
+        };
+        "vivo" = {
+          HostName = "krishnan-vivo.emperor-snares.ts.net";
+          User = "krishnan";
+        };
+        "pi" = {
+          HostName = "krishnan-pi.emperor-snares.ts.net";
+          User = "krishnan";
+        };
+        "phi" = {
+          HostName = "krishnan-phi.emperor-snares.ts.net";
+          User = "krishnan";
+        };
       };
-      "laptop" = {
-        HostName = "krishnan-lap.emperor-snares.ts.net";
-        User = "krishnan";
-      };
-      "vivo" = {
-        HostName = "krishnan-vivo.emperor-snares.ts.net";
-        User = "krishnan";
-      };
-      "pi" = {
-        HostName = "krishnan-pi.emperor-snares.ts.net";
-        User = "krishnan";
-      };
-      "phi" = {
-        HostName = "krishnan-phi.emperor-snares.ts.net";
-        User = "krishnan";
-      };
-    };
-  });
+    }
+  );
 }

@@ -8,6 +8,7 @@ in
 {
   options.modules.packages.libreoffice = {
     enable = mkEnableOption "Enable the LibreOffice suite";
+    #
   };
 
   config = mkIf cfg.enable {
@@ -15,6 +16,7 @@ in
       libreoffice-qt
       hunspell
       hunspellDicts.en_US
+      #
     ];
   };
 }

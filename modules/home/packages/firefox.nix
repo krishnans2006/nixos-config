@@ -8,6 +8,7 @@ in
 {
   options.modules.packages.firefox = {
     enable = mkEnableOption "Enable Firefox web browser";
+    #
   };
 
   config = mkIf cfg.enable {

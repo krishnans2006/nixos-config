@@ -34,6 +34,7 @@ in
     # So that this doesn't cause issues when impermanence is disabled
     (mkIf (!cfg.enable) {
       home.persistence."/persist".enable = mkForce false;
+      #
     })
 
     (mkIf cfg.enable {
@@ -50,8 +51,14 @@ in
           "School"
           "Tech"
 
-          { directory = ".ssh"; mode = "0700"; }
-          { directory = ".gnupg"; mode = "0700"; }
+          {
+            directory = ".ssh";
+            mode = "0700";
+          }
+          {
+            directory = ".gnupg";
+            mode = "0700";
+          }
         ];
         files = cfg.persistFiles ++ [
           # Needed to decrypt secrets at boot

@@ -31,27 +31,28 @@ let
     "${homeDirectory}/.bash_profile"
     "${homeDirectory}/.zprofile"
     "${homeDirectory}/.zshrc"
+    #
   ];
 in
 {
   options.modules.nix-user-chroot = {
     enable = mkEnableOption "rootless Nix shell integration using nix-user-chroot";
+    #
   };
 
   config = mkIf cfg.enable {
-    home.activation.installNixUserChrootHostIntegration =
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${escapeShellArg (dirOf launcherPath)}
-        printf %s ${escapeShellArg launcherContent} > ${escapeShellArg launcherPath}
-        chmod 0755 ${escapeShellArg launcherPath}
+    home.activation.installNixUserChrootHostIntegration = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p ${escapeShellArg (dirOf launcherPath)}
+      printf %s ${escapeShellArg launcherContent} > ${escapeShellArg launcherPath}
+      chmod 0755 ${escapeShellArg launcherPath}
 
-        for loginProfile in ${escapeShellArgs patchShellFiles}; do
-          touch "$loginProfile"
-          if ! grep -Fq "# Enter the Home Manager nix-user-chroot." "$loginProfile"; then
-            printf %s ${escapeShellArg loginHookContent} >> "$loginProfile"
-          fi
-        done
-      '';
+      for loginProfile in ${escapeShellArgs patchShellFiles}; do
+        touch "$loginProfile"
+        if ! grep -Fq "# Enter the Home Manager nix-user-chroot." "$loginProfile"; then
+          printf %s ${escapeShellArg loginHookContent} >> "$loginProfile"
+        fi
+      done
+    '';
 
     programs.zsh.localVariables.ZSH_DISABLE_COMPFIX = true;
   };

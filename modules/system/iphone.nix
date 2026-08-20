@@ -8,6 +8,7 @@ in
 {
   options.modules.iphone = {
     enable = mkEnableOption "Enable support for connecting to iPhone via USB";
+    #
   };
 
   config = mkIf cfg.enable {
@@ -16,6 +17,7 @@ in
     environment.systemPackages = with pkgs; [
       libimobiledevice
       ifuse
+      #
     ];
   };
 }

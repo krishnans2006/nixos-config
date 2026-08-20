@@ -18,6 +18,7 @@ in
     modules.impermanence.persistDirs = [
       ".config/Mattermost/IndexedDB"
       ".config/Mattermost/Local Storage"
+      #
     ];
     modules.impermanence.persistFiles = [
       ".config/Mattermost/Cookies"

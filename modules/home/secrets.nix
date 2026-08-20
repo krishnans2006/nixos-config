@@ -14,6 +14,7 @@ in
 {
   options.modules.secrets = {
     enable = mkEnableOption "Enable home secrets";
+    #
   };
 
   config = mkIf cfg.enable {
@@ -40,6 +41,7 @@ in
       sops
       age
       ssh-to-age
+      #
     ];
   };
 }

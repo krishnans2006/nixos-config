@@ -3,6 +3,7 @@
 {
   imports = [
     (import-tree "${root}/modules/home")
+    #
   ];
 
   programs.home-manager.enable = true;

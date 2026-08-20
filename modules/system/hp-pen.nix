@@ -8,6 +8,7 @@ in
 {
   options.modules.hp-pen = {
     enable = mkEnableOption "Enable OpenTabletDriver for HP Pen support";
+    #
   };
 
   config = mkIf cfg.enable {

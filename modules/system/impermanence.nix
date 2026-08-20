@@ -11,11 +11,14 @@ let
   root = config.fileSystems."/";
 
   # Convert a device path to a systemd .device
-  toSystemdDevice = device: lib.concatStringsSep "-" (lib.tail (map (lib.replaceString "-" "\\x2d" ) (lib.splitString "/" device))) + ".device";
+  toSystemdDevice = device: lib.concatStringsSep "-" (
+    lib.tail (map (lib.replaceString "-" "\\x2d") (lib.splitString "/" device))
+  ) + ".device";
 in
 {
   options.modules.impermanence = {
     enable = mkEnableOption "Enable Impermanence";
+    #
   };
 
   config = mkMerge [
@@ -24,6 +27,7 @@ in
     # So that this doesn't cause issues when impermanence is disabled
     (mkIf (!cfg.enable) {
       environment.persistence."/persist".enable = mkForce false;
+      #
     })
 
     (mkIf cfg.enable {
@@ -89,9 +93,9 @@ in
         systemd.services.impermanence-setup = {
           description = "Set up impermanence and rollback root and home subvolumes";
           wantedBy = [ "initrd.target" ];
-          requires = [(toSystemdDevice root.device)];
-          after = [(toSystemdDevice root.device)];
-          before = ["sysroot.mount"];
+          requires = [ (toSystemdDevice root.device) ];
+          after = [ (toSystemdDevice root.device) ];
+          before = [ "sysroot.mount" ];
           unitConfig.DefaultDependencies = "no";
           serviceConfig.Type = "oneshot";
           script = ''

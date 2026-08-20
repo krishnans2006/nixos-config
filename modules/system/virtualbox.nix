@@ -8,6 +8,7 @@ in
 {
   options.modules.virtualbox = {
     enable = mkEnableOption "Enable VirtualBox for running VMs";
+    #
   };
 
   config = mkIf cfg.enable {

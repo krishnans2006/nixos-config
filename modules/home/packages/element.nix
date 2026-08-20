@@ -53,7 +53,10 @@ in
     ];
     modules.impermanence.persistFiles = [
       # This needs to be symlinked due to atomic write (copying temp file) shenanigans
-      { file = ".config/Element/electron-config.json"; method = "symlink"; }
+      {
+        file = ".config/Element/electron-config.json";
+        method = "symlink";
+      }
       ".config/Element/window-state.json"
     ];
 

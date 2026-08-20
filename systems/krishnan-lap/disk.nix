@@ -4,8 +4,14 @@
 # - https://github.com/Mewski/nixos-config/blob/26295640a68094692613a7b11def78b950ad00e3/modules/hosts/zephyrus/disko.nix
 # - https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/atlas/hardware-configuration.nix
 let
-  btrfsMountOptions = [ "compress=zstd" "noatime" "space_cache=v2" "discard=async" ];
-in {
+  btrfsMountOptions = [
+    "compress=zstd"
+    "noatime"
+    "space_cache=v2"
+    "discard=async"
+  ];
+in
+{
   disko.devices.disk.main = {
     type = "disk";
     device = "/dev/disk/by-id/nvme-KBG30ZMV256G_TOSHIBA_78IPC0XWP12P";

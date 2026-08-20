@@ -8,6 +8,7 @@ in
 {
   options.modules.printing = {
     enable = mkEnableOption "Enable printing and printer autodiscovery";
+    #
   };
 
   config = mkIf cfg.enable {

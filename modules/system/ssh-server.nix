@@ -8,6 +8,7 @@ in
 {
   options.modules.ssh-server = {
     enable = mkEnableOption "Enable OpenSSH server";
+    #
   };
 
   config = mkIf cfg.enable {

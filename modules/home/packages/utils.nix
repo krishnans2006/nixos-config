@@ -8,6 +8,7 @@ in
 {
   options.modules.packages.utils = {
     enable = mkEnableOption "Enable common shell utilities";
+    #
   };
 
   # This module just bundles a lot of shell utils that have been used at some point

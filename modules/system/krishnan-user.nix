@@ -33,7 +33,12 @@ in
         # networkmanager, wheel: initially set (in configuration.nix)
         # dialout: for serial/USB ports
         # fuse: for sshfs mounts
-        extraGroups = [ "networkmanager" "wheel" "dialout" "fuse" ];
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "dialout"
+          "fuse"
+        ];
         packages = [ ];  # Managed by home-manager
         shell = pkgs.zsh;
 

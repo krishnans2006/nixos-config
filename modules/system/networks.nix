@@ -25,28 +25,22 @@ let
     };
   };
 
-  mkPSKNetworkProfileConfig = id: options:
-    (mkOpenNetworkProfileConfig id options) //
-      {
-        wifi-security = {
-          key-mgmt = "wpa-psk";
-          psk = "$net${id}_psk";
-        };
-      };
+  mkPSKNetworkProfileConfig = id: options: (mkOpenNetworkProfileConfig id options) // {
+    wifi-security = {
+      key-mgmt = "wpa-psk";
+      psk = "$net${id}_psk";
+    };
+  };
 
-  mkEAPNetworkProfileConfig = id: options:
-    (mkOpenNetworkProfileConfig id options) //
-      {
-        wifi-security = {
-          key-mgmt = "wpa-eap";
-        };
-        "802-1x" = {
-          eap = "$net${id}_eap";
-          phase2-auth = "$net${id}_phase2_auth";
-          identity = "$net${id}_identity";
-          password = "$net${id}_password";
-        };
-      };
+  mkEAPNetworkProfileConfig = id: options: (mkOpenNetworkProfileConfig id options) // {
+    wifi-security.key-mgmt = "wpa-eap";
+    "802-1x" = {
+      eap = "$net${id}_eap";
+      phase2-auth = "$net${id}_phase2_auth";
+      identity = "$net${id}_identity";
+      password = "$net${id}_password";
+    };
+  };
 
   # Options:
   # - autoconnect: boolean, whether to autoconnect on startup
@@ -258,35 +252,41 @@ in
             wg0 = (mkWireguardVPNProfileConfig "0" { autoconnect = true; });
             wg1 = (mkWireguardVPNProfileConfig "1" { autoconnect = false; });
 
-            ovpn0 = (mkOpenVPNProfileConfig "0" {
-              dns = true;
-              domains = true;
-              tcp = false;
-              ta = true;
-              authSha256 = true;
-              cipher = false;
-              dataCiphers = true;
-              randomHostname = false;
-              dontReneg = false;
-            });
-            ovpn1 = (mkOpenVPNProfileConfig "1" {
-              tcp = true;
-              ta = false;
-              authSha256 = false;
-              cipher = true;
-              dataCiphers = false;
-              randomHostname = true;
-              dontReneg = true;
-            });
-            ovpn2 = (mkOpenVPNProfileConfig "2" {
-              tcp = false;
-              ta = false;
-              authSha256 = false;
-              cipher = true;
-              dataCiphers = false;
-              randomHostname = true;
-              dontReneg = true;
-            });
+            ovpn0 = (
+              mkOpenVPNProfileConfig "0" {
+                dns = true;
+                domains = true;
+                tcp = false;
+                ta = true;
+                authSha256 = true;
+                cipher = false;
+                dataCiphers = true;
+                randomHostname = false;
+                dontReneg = false;
+              }
+            );
+            ovpn1 = (
+              mkOpenVPNProfileConfig "1" {
+                tcp = true;
+                ta = false;
+                authSha256 = false;
+                cipher = true;
+                dataCiphers = false;
+                randomHostname = true;
+                dontReneg = true;
+              }
+            );
+            ovpn2 = (
+              mkOpenVPNProfileConfig "2" {
+                tcp = false;
+                ta = false;
+                authSha256 = false;
+                cipher = true;
+                dataCiphers = false;
+                randomHostname = true;
+                dontReneg = true;
+              }
+            );
 
             cisco0 = (mkCiscoVPNProfileConfig "0");
           };

@@ -5,7 +5,8 @@ with lib;
 let
   cfg = config.modules.fs-mounts;
 
-  mkSSHFSService = { description, what, where }:
+  mkSSHFSService =
+    { description, what, where }:
     {
       Unit = {
         Description = description;
@@ -17,14 +18,22 @@ let
         Type = "simple";
         ExecStartPre = escapeShellArgs [ "${pkgs.coreutils}/bin/mkdir" "-p" where ];
         ExecStart = escapeShellArgs [
-          "${pkgs.sshfs}/bin/sshfs" what where
+          "${pkgs.sshfs}/bin/sshfs"
+          what
+          where
           "-f"
-          "-o" "reconnect"
-          "-o" "ServerAliveInterval=15"
-          "-o" "ServerAliveCountMax=3"
-          "-o" "StrictHostKeyChecking=no"
-          "-o" "UserKnownHostsFile=/dev/null"
-          "-o" "BatchMode=yes"
+          "-o"
+          "reconnect"
+          "-o"
+          "ServerAliveInterval=15"
+          "-o"
+          "ServerAliveCountMax=3"
+          "-o"
+          "StrictHostKeyChecking=no"
+          "-o"
+          "UserKnownHostsFile=/dev/null"
+          "-o"
+          "BatchMode=yes"
         ];
         ExecStop = escapeShellArgs [ "/run/wrappers/bin/fusermount" "-u" where ];
         Restart = "on-failure";

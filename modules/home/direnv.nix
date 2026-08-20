@@ -8,6 +8,7 @@ in
 {
   options.modules.direnv = {
     enable = mkEnableOption "Enable nix-direnv for project-specific environments";
+    #
   };
 
   config = mkIf cfg.enable {

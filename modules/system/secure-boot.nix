@@ -8,6 +8,7 @@ in
 {
   options.modules.secure-boot = {
     enable = mkEnableOption "Enable UEFI Secure Boot using lanzaboote";
+    #
   };
 
   config = mkIf cfg.enable {

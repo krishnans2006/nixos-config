@@ -8,6 +8,7 @@ in
 {
   options.modules.vmware = {
     enable = mkEnableOption "Enable VMWare Workstation for running VMs";
+    #
   };
 
   config = mkIf cfg.enable {

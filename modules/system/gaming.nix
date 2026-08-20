@@ -8,6 +8,7 @@ in
 {
   options.modules.gaming = {
     enable = mkEnableOption "Enable gaming-related packages and configuration";
+    #
   };
 
   config = mkIf cfg.enable {

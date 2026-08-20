@@ -14,6 +14,7 @@ in
 {
   options.modules.secrets = {
     enable = mkEnableOption "Enable system secrets";
+    #
   };
 
   config = mkIf cfg.enable {

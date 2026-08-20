@@ -8,6 +8,7 @@ in
 {
   options.modules.bluetooth = {
     enable = mkEnableOption "Enable Bluetooth";
+    #
   };
 
   config = mkIf cfg.enable {

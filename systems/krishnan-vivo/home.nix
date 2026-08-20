@@ -64,8 +64,7 @@ with inputs;
 
   # Custom config
 
-  programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" =
-    "krishnan-vivo";
+  programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-vivo";
 
   programs.plasma.configFile.kwinrc.Xwayland.Scale = "1.25";
   programs.plasma.input.keyboard.model = "asus_laptop";

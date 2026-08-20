@@ -4,9 +4,11 @@ with lib;
 
 let
   cfg = config.modules.plasma;
-in {
+in
+{
   options.modules.plasma = {
     enable = mkEnableOption "Enable a customized KDE Plasma 6 DE";
+    #
   };
 
   config = mkIf cfg.enable {

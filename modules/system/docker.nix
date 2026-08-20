@@ -8,6 +8,7 @@ in
 {
   options.modules.docker = {
     enable = mkEnableOption "Enable Docker";
+    #
   };
 
   config = mkIf cfg.enable {

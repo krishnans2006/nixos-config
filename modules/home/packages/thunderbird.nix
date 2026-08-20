@@ -8,6 +8,7 @@ in
 {
   options.modules.packages.thunderbird = {
     enable = mkEnableOption "Enable Thunderbird for email accounts";
+    #
   };
 
   config = mkIf cfg.enable {

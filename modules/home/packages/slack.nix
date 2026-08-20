@@ -21,6 +21,7 @@ in
     ];
     modules.impermanence.persistFiles = [
       ".config/Slack/Cookies"
+      #
     ];
 
     # Autostart

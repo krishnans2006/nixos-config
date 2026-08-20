@@ -45,10 +45,11 @@ in
   config = mkIf cfg.enable {
     services.asusd = {
       enable = true;
-      asusdConfig.text = ronix.toRON 0 (asusdSettings // {
-        charge_control_end_threshold = cfg.chargeLimit;
-        base_charge_control_end_threshold = cfg.chargeLimit;
-      });
+      asusdConfig.text =
+        ronix.toRON 0 (asusdSettings // {
+          charge_control_end_threshold = cfg.chargeLimit;
+          base_charge_control_end_threshold = cfg.chargeLimit;
+        });
     };
   };
 }
