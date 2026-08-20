@@ -17,6 +17,7 @@
 
       homeConfigurations = {
         krishnan-ews = import ./systems/krishnan-ews { inherit inputs; };
+        #
       };
 
       formatter.${system} = import ./formatter { inherit pkgs; };

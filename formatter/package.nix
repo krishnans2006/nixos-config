@@ -2,14 +2,14 @@
 
 let
   patchedNixfmt = nixfmt.overrideAttrs (old: {
-    patches = (old.patches or [ ]) ++ [ ./nixfmt-compact.patch ./nixfmt-line-width.patch ];
+    patches = (old.patches or [ ]) ++ [ ./nixfmt-compact.patch ./nixfmt-line-width.patch ./nixfmt-lambda.patch ];
   });
 in
 writeShellApplication {
   name = "nixfmt";
   runtimeInputs = [ patchedNixfmt ];
   text = ''
-    exec ${lib.getExe patchedNixfmt} --strict --width=95 "$@"
+    exec ${lib.getExe patchedNixfmt} --strict --width=120 "$@"
   '';
 
   meta = patchedNixfmt.meta // {

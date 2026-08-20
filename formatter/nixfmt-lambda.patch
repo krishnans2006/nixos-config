@@ -1,0 +1,145 @@
+--- a/src/Nixfmt/Pretty.hs
++++ b/src/Nixfmt/Pretty.hs
+@@ -355,6 +355,11 @@
+         _ | isAbsorbableExpr expr -> group $ absorbExpr False expr
+         -- Parenthesized application
+         (Application f a) -> prettyApp True mempty True f a
++        -- Project style: keep `(args // {` on one line when it fits.
++        (Operation (Term t) (Ann{value = op}) _)
++          | isCompactOpLHS t
++          , op == TUpdate || op == TConcat || op == TPlus ->
++            group' Priority (pretty expr)
+         -- Same thing for selections
+         (Term (Selection t _ _)) | isAbsorbable t -> line' <> group expr <> line'
+         (Term (Selection{})) -> group expr <> line'
+@@ -527,6 +532,10 @@
+             in renderList line paropen' items parclose'
+       absorbInner expr = pretty expr
+ 
++      isCompactParenUpdateOp (Term (Parenthesized _ (Operation (Term t) (Ann{value = op'}) _) _)) =
++        isCompactOpLHS t && (op' == TUpdate || op' == TConcat || op' == TPlus)
++      isCompactParenUpdateOp _ = False
++
+       -- Render the last argument of a function call
+       absorbLast :: Expression -> Doc
+       absorbLast (Term t)
+@@ -610,7 +619,11 @@
+            renderSimple
+              (absorbApp fWithoutComment)
+              (\fRendered -> group' RegularG $ fRendered <> hardspace <> absorbLast a)
+-             (\fRendered -> group' RegularG $ fRendered <> line <> absorbLast a <> post)
++             ( \fRendered ->
++                 if isCompactParenUpdateOp a
++                   then group' Priority $ fRendered <> hardspace <> absorbLast a <> post
++                   else group' RegularG $ fRendered <> line <> absorbLast a <> post
++             )
+        <> (if hasPost && not (null comment') then hardline else mempty)
+ 
+ prettyOp :: Bool -> Expression -> Leaf -> Doc
+@@ -624,6 +637,7 @@
+ 
+       sep
+         | isPipe op, _ : _ <- drop 3 (flatten Nothing operation) = hardline
++        | isUpdateConcatPlus (value op) = hardspace
+         | otherwise = line
+ 
+       -- Called on every operand except the first one (a.k.a. RHS)
+@@ -645,6 +659,10 @@
+   in group' RegularG $
+        (concatMap prettyOperation . flatten Nothing) operation
+   where
++    isUpdateConcatPlus TUpdate = True
++    isUpdateConcatPlus TConcat = True
++    isUpdateConcatPlus TPlus = True
++    isUpdateConcatPlus _ = False
+     isPipe (Ann{value = TPipeForward}) = True
+     isPipe (Ann{value = TPipeBackward}) = True
+     isPipe _ = False
+@@ -748,25 +766,38 @@
+ isAbsorbableTerm :: Term -> Bool
+ isAbsorbableTerm = isAbsorbable
+ 
++-- Simple LHS terms like `args` in `args // {` should stay compact when possible.
++isCompactOpLHS :: Term -> Bool
++isCompactOpLHS t = isSimple (Term t) || isAbsorbableTerm t
++
+ absorbParen :: Ann Token -> Expression -> Ann Token -> Doc
+ absorbParen open@Ann{trailComment = post'} expr close@Ann{preTrivia = pre''} =
+-  group' Priority $
+-    nest $
+-      pretty (open{trailComment = Nothing})
+-        -- Move any trailing comments on the opening parenthesis down into the body
+-        <> surroundWith
+-          line'
+-          ( group' RegularG $
+-              nest $
+-                pretty
+-                  ( mapFirstToken
+-                      (prependTrivia (maybe Seq.empty (Seq.singleton . toLineComment) post'))
+-                      expr
+-                  )
+-                  -- Move any leading comments on the closing parenthesis up into the nest
+-                  <> pretty pre''
+-          )
+-        <> pretty (close{preTrivia = []})
++  case expr of
++    (Operation (Term t) (Ann{value = op'}) _)
++      | isCompactOpLHS t
++      , op' == TUpdate || op' == TConcat || op' == TPlus ->
++        group' Priority $
++          pretty (open{trailComment = Nothing})
++            <> group' Priority (pretty expr)
++            <> pretty pre''
++            <> pretty (close{preTrivia = []})
++    _ ->
++      group' Priority $
++        nest $
++          pretty (open{trailComment = Nothing})
++            -- Move any trailing comments on the opening parenthesis down into the body
++            <> surroundWith
++              line'
++              ( group' RegularG $
++                  nest $
++                    pretty
++                      ( mapFirstToken
++                          (prependTrivia (maybe Seq.empty (Seq.singleton . toLineComment) post'))
++                          expr
++                      )
++                      <> pretty pre''
++              )
++            <> pretty (close{preTrivia = []})
+ 
+ -- Note that unlike for absorbable terms which can be force-absorbed, some expressions
+ -- may turn out to not be absorbable. In that case, they should start with a line' so that
+@@ -816,6 +847,9 @@
+   (Operation l (LoneAnn op) (Term t))
+     | isAbsorbable t && isUpdateConcatPlus op ->
+         nest $ group' RegularG $ line <> pretty l <> line <> group' Transparent (pretty op <> hardspace <> group' Priority (prettyTermWide t))
++  -- Project style: prefer `name = arg:` on one line when the body must break.
++  (Abstraction (IDParameter _) _ _) ->
++    nest $ hardspace <> group' Priority (pretty expr)
+   -- Everything else:
+   -- If it fits on one line, it fits
+   -- If it fits on one line but with a newline after the `=`, it fits (including semicolon)
+@@ -888,16 +922,18 @@
+ 
+   -- Simple parameter
+   pretty (Abstraction (IDParameter param) colon body) =
+-    group' RegularG $ line' <> pretty param <> pretty colon <> absorbAbs 1 body
++    group' Priority $ pretty param <> pretty colon <> absorbAbs 1 body
+     where
+       absorbAbs :: Int -> Expression -> Doc
+       -- If there are multiple ID parameters to that function, treat them all at once
+       absorbAbs depth (Abstraction (IDParameter param0) colon0 body0) =
+         hardspace <> pretty param0 <> pretty colon0 <> absorbAbs (depth + 1) body0
+       absorbAbs _ expr | isAbsorbableExpr expr = hardspace <> group' Priority (absorbExpr False expr)
++      absorbAbs _ l@(Let _ _ _ _) = line <> pretty l
+       -- Force the content onto a new line when it is not absorbable and there are more than two arguments
+-      absorbAbs depth x =
+-        (if depth <= 2 then line else hardline) <> pretty x
++      absorbAbs depth x
++        | depth <= 2 = hardspace <> group' Priority (pretty x)
++        | otherwise = hardline <> pretty x
+ 
+   -- Set parameter: absorb if flattenable and on the same line, force multiline otherwise
+   pretty (Abstraction param@(SetParameter bopen attrs bclose) colon body)
