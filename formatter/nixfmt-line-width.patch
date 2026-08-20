@@ -1,0 +1,46 @@
+--- a/src/Nixfmt/Predoc.hs
++++ b/src/Nixfmt/Predoc.hs
+@@ -648,6 +648,8 @@
+       get >>= \(cc, indents, suppress) ->
+         let -- The last printed character was a line break
+             needsIndent = (cc == 0)
++            -- Total line length includes indentation; `cc` excludes it.
++            lineUsed = fst (NonEmpty.head indents) + cc
+ 
+             putNL :: Int -> State St [Text]
+             putNL n = put (0, indents, suppress) *> emit [newlines n]
+@@ -696,11 +698,11 @@
+                    Emptyline -> putNL 2
+                    (Newlines n) -> putNL n
+                    Softbreak
+-                     | firstLineFits (tw - cc) tw xs ->
++                     | firstLineFits (tw - lineUsed) tw xs ->
+                          pure []
+                      | otherwise -> putNL 1
+                    Softspace
+-                     | firstLineFits (tw - cc - 1) tw xs ->
++                     | firstLineFits (tw - lineUsed - 1) tw xs ->
+                          putText' [" "]
+                      | otherwise -> putNL 1
+              Group ann ys ->
+@@ -755,15 +757,18 @@
+                 _ -> grp
+               (nl, off) = nextIndent grp'
+ 
++              lineStart = fst (NonEmpty.head ci) + off
++
+               indentWillIncrease = if fst (nextIndent rest) > lineNL then iw else 0
+                 where
+                   lastLineNL = snd $ NonEmpty.head ci
+                   lineNL = lastLineNL + (if nl > lastLineNL then iw else 0)
+-          in fits indentWillIncrease (tw - firstLineWidth rest) grp'
++          in fits indentWillIncrease (tw - lineStart - firstLineWidth rest) grp'
+                <&> \t -> runState (putText nl off t) (cc, ci, suppress)
+         else
+           let indentWillIncrease = if fst (nextIndent rest) > lineNL then iw else 0
+                 where
+                   lineNL = snd $ NonEmpty.head ci
+-          in fits (indentWillIncrease - cc) (tw - cc - firstLineWidth rest) grp
++              lineUsed = fst (NonEmpty.head ci) + cc
++          in fits (indentWillIncrease - cc) (tw - lineUsed - firstLineWidth rest) grp
+                <&> \t -> ([t | not suppress], (cc + textWidth t, ci, suppress))

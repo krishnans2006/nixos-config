@@ -1,0 +1,168 @@
+--- a/src/Nixfmt/Pretty.hs
++++ b/src/Nixfmt/Pretty.hs
+@@ -76,7 +76,7 @@
+   tokenText,
+  )
+ import Nixfmt.Util (isSpaces)
+-import Text.Megaparsec (Pos)
++import Text.Megaparsec (Pos, pos1)
+ import Prelude hiding (String)
+ 
+ toLineComment :: TrailingComment -> Trivium
+@@ -105,7 +105,8 @@
+ 
+ instance Pretty TrailingComment where
+   pretty (TrailingComment c) =
+-    hardspace <> trailingComment ("# " <> c) <> hardline
++    -- Project style: put exactly two spaces before same-line comments.
++    text "  " <> trailingComment ("# " <> c) <> hardline
+ 
+ instance Pretty Trivium where
+   pretty EmptyLine = emptyline
+@@ -169,6 +170,31 @@
+     isComment (Comments _) = True
+     isComment _ = False
+ 
++-- Project style: short, simple collections may stay on one line.
++--
++-- Keep a modest item limit in addition to the global width limit so mutable
++-- collections do not become excessively dense. Comments and other trivia
++-- introduce hard line breaks in their own pretty-printers, preventing
++-- contraction even when the item-count predicate succeeds.
++canCompactList :: Items Term -> Bool
++canCompactList items =
++  length (unItems items) <= 3 && all (isSimple . Term) items
++
++canCompactSet :: Items Binder -> Bool
++canCompactSet (Items items) =
++  length items == 1 && all isBinding items
++  where
++    isBinding (Item _) = True
++    isBinding (Comments _) = False
++
++-- Width-based compaction should not depend on how the collection was
++-- previously broken across lines in the input.
++ignoreSourceLayout :: Ann a -> Ann a
++ignoreSourceLayout a = a {sourceLine = pos1}
++
++compactBrackets :: Ann a -> Ann b -> (Ann a, Ann b)
++compactBrackets open close = (ignoreSourceLayout open, ignoreSourceLayout close)
++
+ -- Render a list given the separator between items
+ renderList :: Doc -> Ann Token -> Items Term -> Ann Token -> Doc
+ renderList itemSep paropen@Ann{trailComment = post} items parclose =
+@@ -256,18 +282,22 @@
+ -- Singleton sets are allowed to fit onto one line,
+ -- but apart from that always expand.
+ prettySet wide (krec, paropen@Ann{trailComment = post}, binders, parclose) =
+-  let !surrounded = surroundWith sep (nest $ pretty post <> renderItems hardline binders)
++  let compact = canCompactSet binders
++      (paropen', parclose') =
++        if compact then compactBrackets paropen parclose else (paropen, parclose)
++      itemSep
++        | compact = line
++        | otherwise = hardline
++      sep
++        | compact = line
++        | sourceLine paropen' /= sourceLine parclose' = hardline
++        | wide && not (null (unItems binders)) = hardline
++        | otherwise = line
++      !surrounded = surroundWith sep (nest $ pretty post <> renderItems itemSep binders)
+   in pretty (fmap (,hardspace) krec)
+-       <> pretty (paropen{trailComment = Nothing})
++       <> pretty (paropen'{trailComment = Nothing})
+        <> surrounded
+-       <> pretty parclose
+-  where
+-    sep =
+-      if wide && not (null (unItems binders))
+-        -- If the braces are on different lines, keep them like that
+-        || sourceLine paropen /= sourceLine parclose
+-        then hardline
+-        else line
++       <> pretty parclose'
+ 
+ prettyTermWide :: Term -> Doc
+ prettyTermWide (Set krec paropen items parclose) = prettySet True (krec, paropen, items, parclose)
+@@ -305,8 +335,12 @@
+     sep = if sourceLine paropen /= sourceLine parclose then hardline else hardspace
+ -- General list
+ -- Always expand if len > 1
+-prettyTerm (List paropen items parclose) =
+-  renderList hardline paropen items parclose
++prettyTerm (List paropen items parclose)
++  | canCompactList items =
++      let (paropen', parclose') = compactBrackets paropen parclose
++      in renderList line paropen' items parclose'
++  | otherwise =
++      renderList hardline paropen items parclose
+ prettyTerm (Set krec paropen items parclose) = prettySet False (krec, paropen, items, parclose)
+ -- Parentheses
+ prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
+@@ -329,6 +363,7 @@
+ 
+ instance Pretty Term where
+   pretty l@List{} = group $ prettyTerm l
++  pretty s@Set{} = group $ prettyTerm s
+   pretty x = prettyTerm x
+ 
+ -- Does not move around comments, nor does it inject a trailing comma
+@@ -487,8 +522,9 @@
+       -- If lists have only simple items, try to render them single-line instead of expanding
+       -- Uses renderList with `line` separator instead of `hardline`
+       absorbInner (Term (List paropen items parclose))
+-        | length (unItems items) <= 6 && all (isSimple . Term) items =
+-            renderList line paropen items parclose
++        | canCompactList items =
++            let (paropen', parclose') = compactBrackets paropen parclose
++            in renderList line paropen' items parclose'
+       absorbInner expr = pretty expr
+ 
+       -- Render the last argument of a function call
+@@ -641,14 +677,25 @@
+ -- braces must be on the same source line, and up to 2 attrs without defaults,
+ -- with an optional ellipsis.
+ canFlattenAttrs :: Ann a -> [ParamAttr] -> Ann b -> Bool
+-canFlattenAttrs bopen attrs bclose
+-  | sourceLine bopen /= sourceLine bclose = False -- If the braces are on different lines, keep them like that
++canFlattenAttrs _ attrs bclose
++  | hasTrivia bclose = False
++  | any paramHasTrivia attrs = False
++  | otherwise = True
++  where
++    paramHasTrivia (ParamAttr name _ comma) = hasTrivia name || maybe False hasTrivia comma
++    paramHasTrivia (ParamEllipsis dots) = hasTrivia dots
++
++-- Keep upstream's conservative rule for deciding whether a parameterized
++-- function's body may be absorbed onto the same line as its parameters.
++canAbsorbAttrs :: Ann a -> [ParamAttr] -> Ann b -> Bool
++canAbsorbAttrs bopen attrs bclose
++  | sourceLine bopen /= sourceLine bclose = False
+   | hasTrivia bclose = False
+   | any paramHasTrivia attrs = False
+   | otherwise = case attrs of
+       [] -> True
+       [ParamEllipsis _] -> True
+-      -- Attributes must be without default
++      -- Attributes must be without defaults
+       [ParamAttr _ Nothing _] -> True
+       [ParamAttr _ Nothing _, ParamEllipsis _] -> True
+       [ParamAttr _ Nothing _, ParamAttr _ Nothing _] -> True
+@@ -667,7 +714,7 @@
+   (Abstraction (IDParameter _) _ body@(Abstraction{})) -> isAbsorbableExpr body
+   -- Absorb function declarations with attribute set parameters if the attribute set is simple enough, and the body is absorbable.
+   (Abstraction (SetParameter bopen attrs bclose) colon body)
+-    | canFlattenAttrs bopen attrs bclose,
++    | canAbsorbAttrs bopen attrs bclose,
+       not (hasPreTrivia bopen), -- Comments on the opening brace force a line break, preventing absorption
+       isNothing (trailComment bopen),
+       sourceLine colon == firstTokenLine body -> -- If the colon and body are on different lines, keep them like that
+@@ -854,7 +901,7 @@
+ 
+   -- Set parameter: absorb if flattenable and on the same line, force multiline otherwise
+   pretty (Abstraction param@(SetParameter bopen attrs bclose) colon body)
+-    | canFlattenAttrs bopen attrs bclose,
++    | canAbsorbAttrs bopen attrs bclose,
+       sourceLine colon == firstTokenLine body,
+       isAbsorbableExpr body =
+         pretty param <> pretty colon <> hardspace <> group' Priority (pretty body)
