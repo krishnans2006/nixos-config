@@ -1,9 +1,11 @@
 { pkgs }:
+
 let
-  lib = pkgs.lib;
+  inherit (pkgs) lib treefmt writeShellApplication;
+
   nixfmt = pkgs.callPackage ./package.nix { };
 
-  treefmtWithConfig = pkgs.treefmt.withConfig {
+  treefmtWithConfig = treefmt.withConfig {
     runtimeInputs = [ nixfmt ];
     settings = {
       on-unmatched = "info";
@@ -13,16 +15,19 @@ let
       };
     };
   };
-
-  # treefmt's eval cache keys on file content, not the formatter binary, so
-  # changing --width in package.nix is ignored unless we bypass cache.
-  formatter = pkgs.writeShellApplication {
-    name = "treefmt";
-    runtimeInputs = [ treefmtWithConfig ];
-    text = ''
-      exec ${lib.getExe treefmtWithConfig} --no-cache "$@"
-    '';
-    meta = treefmtWithConfig.meta // { mainProgram = "treefmt"; };
-  };
 in
-formatter
+writeShellApplication {
+  name = "treefmt";
+  runtimeInputs = [ treefmtWithConfig ];
+
+  # treefmt caches by file content, not by the formatter binary. Bypass the
+  # cache so changes to package.nix or its patches take effect immediately.
+  text = ''
+    exec ${lib.getExe treefmtWithConfig} --no-cache "$@"
+  '';
+
+  meta = treefmtWithConfig.meta // {
+    description = "Repository Nix formatter via treefmt";
+    mainProgram = "treefmt";
+  };
+}
