@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  custom-nixfmt = pkgs.callPackage ../formatter/package.nix { };
+in
 {
   home.username = "krishnan";
   home.homeDirectory = "/home/krishnan";
@@ -19,6 +22,8 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
+    custom-nixfmt
+
     (python314.withPackages (
       ps: with ps; [
         jupyterlab
