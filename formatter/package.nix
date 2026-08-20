@@ -9,10 +9,8 @@ writeShellApplication {
   name = "nixfmt";
   runtimeInputs = [ patchedNixfmt ];
   text = ''
-    exec ${lib.getExe patchedNixfmt} --strict --width=120 "$@"
+    exec ${lib.getExe patchedNixfmt} --strict --width=95 "$@"
   '';
-
-  passthru.unwrapped = patchedNixfmt;
 
   meta = patchedNixfmt.meta // {
     description = "Repository-specific compact Nix formatter";

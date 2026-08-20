@@ -1,28 +1,26 @@
 {
   description = "Krishnan's NixOS configurations";
 
-  outputs = { ... }@inputs: {
-    nixosConfigurations = {
-      krishnan-lap = import ./systems/krishnan-lap {
-        inherit inputs;
+  outputs =
+    { ... }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = inputs.nixpkgs.legacyPackages.${system};
+    in
+    {
+      nixosConfigurations = {
+        krishnan-lap = import ./systems/krishnan-lap { inherit inputs; };
+        krishnan-pc = import ./systems/krishnan-pc { inherit inputs; };
+        krishnan-vivo = import ./systems/krishnan-vivo { inherit inputs; };
+        krishnan-mew = import ./systems/krishnan-mew { inherit inputs; };
       };
-      krishnan-pc = import ./systems/krishnan-pc {
-        inherit inputs;
-      };
-      krishnan-vivo = import ./systems/krishnan-vivo {
-        inherit inputs;
-      };
-      krishnan-mew = import ./systems/krishnan-mew {
-        inherit inputs;
-      };
-    };
 
-    homeConfigurations = {
-      krishnan-ews = import ./systems/krishnan-ews {
-        inherit inputs;
+      homeConfigurations = {
+        krishnan-ews = import ./systems/krishnan-ews { inherit inputs; };
       };
+
+      formatter.${system} = import ./formatter { inherit pkgs; };
     };
-  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
