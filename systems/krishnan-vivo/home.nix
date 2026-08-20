@@ -81,7 +81,5 @@ with inputs;
 
   services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];
 
-  home.packages = with pkgs; [
-    kdePackages.kdenlive
-  ];
+  home.packages = with pkgs; [ kdePackages.kdenlive ];
 }

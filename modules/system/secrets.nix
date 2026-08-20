@@ -23,8 +23,8 @@ in
       defaultSopsFile = "${root}/secrets/system.yaml";
       defaultSopsFormat = "yaml";
 
-      age.sshKeyPaths = [];
-      gnupg.sshKeyPaths = [];
+      age.sshKeyPaths = [ ];
+      gnupg.sshKeyPaths = [ ];
     };
   };
 }

@@ -5,16 +5,14 @@ with lib;
 let
   cfg = config.modules.networks;
 
-  baseNetworkOptions = {
-    autoconnect = cfg.enableWifi;
-  };
+  baseNetworkOptions.autoconnect = cfg.enableWifi;
 
   mkOpenNetworkProfileConfig = id: options: {
     connection = {
       id = "$net${id}_name";
       type = "wifi";
-      autoconnect = mkIf (options?autoconnect) (boolToString options.autoconnect);
-      autoconnect-priority = mkIf (options?priority) (toString options.priority);
+      autoconnect = mkIf (options ? autoconnect) (boolToString options.autoconnect);
+      autoconnect-priority = mkIf (options ? priority) (toString options.priority);
     };
     wifi = {
       mode = "infrastructure";
@@ -57,11 +55,9 @@ let
       id = "$wg${id}_name";
       interface-name = "$wg${id}_interface";
       type = "wireguard";
-      autoconnect = mkIf (options?autoconnect) (boolToString options.autoconnect);
+      autoconnect = mkIf (options ? autoconnect) (boolToString options.autoconnect);
     };
-    wireguard = {
-      private-key = "$wg${id}_key";
-    };
+    wireguard.private-key = "$wg${id}_key";
     "wireguard-peer\.$wg${id}_peer" = {
       endpoint = "$wg${id}_endpoint";
       allowed-ips = "$wg${id}_allowed_ips";
@@ -129,9 +125,9 @@ let
     ipv4 = {
       method = "auto";
       never-default = "true";
-      ignore-auto-dns = mkIf (options?dns) "true";
-      dns = mkIf (options?dns) "$ovpn${id}_dns_ips";
-      dns-search = mkIf (options?domains) "$ovpn${id}_dns_names";
+      ignore-auto-dns = mkIf (options ? dns) "true";
+      dns = mkIf (options ? dns) "$ovpn${id}_dns_ips";
+      dns-search = mkIf (options ? domains) "$ovpn${id}_dns_names";
     };
     ipv6 = {
       method = "disabled";
@@ -170,9 +166,7 @@ let
       "form:main:password" = "$cisco${id}_password";
       "form:main:secondary_password" = "$cisco${id}_2fa";  # "push", "sms", "otp", etc.
     };
-    ipv4 = {
-      method = "auto";
-    };
+    ipv4.method = "auto";
     ipv6 = {
       method = "auto";
       addr-gen-mode = "default";
@@ -204,10 +198,7 @@ in
     };
 
     networking = {
-      nameservers = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
+      nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
       networkmanager = {
         enable = true;
@@ -264,12 +255,8 @@ in
 
             # VPNs
 
-            wg0 = (mkWireguardVPNProfileConfig "0" {
-              autoconnect = true;
-            });
-            wg1 = (mkWireguardVPNProfileConfig "1" {
-              autoconnect = false;
-            });
+            wg0 = (mkWireguardVPNProfileConfig "0" { autoconnect = true; });
+            wg1 = (mkWireguardVPNProfileConfig "1" { autoconnect = false; });
 
             ovpn0 = (mkOpenVPNProfileConfig "0" {
               dns = true;
@@ -308,29 +295,26 @@ in
     };
 
     # Set up all needed network secrets
-    sops.secrets = let
-      base = {
-        restartUnits = [ "NetworkManager.service" ];
+    sops.secrets =
+      let
+        base = { restartUnits = [ "NetworkManager.service" ]; };
+        sharedOpenVPN = key: name: (base // { key = "openvpn/${key}/${name}"; });
+      in
+      {
+        "networks" = base;
+
+        "openvpn/ovpn0/ca" = base;
+        "openvpn/ovpn0/cert" = base;
+        "openvpn/ovpn0/key" = base;
+        "openvpn/ovpn0/ta" = base;
+
+        # ovpn1 and ovpn2 share CA, cert, and key (under ovpn1-2)
+        "openvpn/ovpn1/ca" = sharedOpenVPN "ovpn1-2" "ca";
+        "openvpn/ovpn1/cert" = sharedOpenVPN "ovpn1-2" "cert";
+        "openvpn/ovpn1/key" = sharedOpenVPN "ovpn1-2" "key";
+        "openvpn/ovpn2/ca" = sharedOpenVPN "ovpn1-2" "ca";
+        "openvpn/ovpn2/cert" = sharedOpenVPN "ovpn1-2" "cert";
+        "openvpn/ovpn2/key" = sharedOpenVPN "ovpn1-2" "key";
       };
-      sharedOpenVPN = key: name: (base // {
-        key = "openvpn/${key}/${name}";
-      });
-    in
-    {
-      "networks" = base;
-
-      "openvpn/ovpn0/ca" = base;
-      "openvpn/ovpn0/cert" = base;
-      "openvpn/ovpn0/key" = base;
-      "openvpn/ovpn0/ta" = base;
-
-      # ovpn1 and ovpn2 share CA, cert, and key (under ovpn1-2)
-      "openvpn/ovpn1/ca" = sharedOpenVPN "ovpn1-2" "ca";
-      "openvpn/ovpn1/cert" = sharedOpenVPN "ovpn1-2" "cert";
-      "openvpn/ovpn1/key" = sharedOpenVPN "ovpn1-2" "key";
-      "openvpn/ovpn2/ca" = sharedOpenVPN "ovpn1-2" "ca";
-      "openvpn/ovpn2/cert" = sharedOpenVPN "ovpn1-2" "cert";
-      "openvpn/ovpn2/key" = sharedOpenVPN "ovpn1-2" "key";
-    };
   };
 }

@@ -22,9 +22,7 @@ with inputs;
 
   modules.plasma.enable = false;
   modules.audio.enable = false;
-  modules.networks = {
-    enable = false;
-  };
+  modules.networks.enable = false;
   modules.bluetooth.enable = false;
   modules.printing.enable = false;
   modules.docker.enable = false;

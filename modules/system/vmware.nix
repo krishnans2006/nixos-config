@@ -12,9 +12,7 @@ in
 
   config = mkIf cfg.enable {
     virtualisation.vmware.host.enable = true;
-    environment.systemPackages = with pkgs; [
-      vmware-workstation
-    ];
+    environment.systemPackages = with pkgs; [ vmware-workstation ];
     boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
   };
 }

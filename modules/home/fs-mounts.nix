@@ -31,9 +31,7 @@ let
         RestartSec = "5";
       };
 
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
+      Install.WantedBy = [ "default.target" ];
     };
 in
 {

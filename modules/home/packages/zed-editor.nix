@@ -82,10 +82,10 @@ in
 
         when_closing_with_no_tabs = "keep_window_open";
         on_last_window_closed = "quit_app";
-        use_system_prompts = false; # Cannot be true on Linux
+        use_system_prompts = false;  # Cannot be true on Linux
         redact_private_values = false;
 
-        session.restore_unsaved_buffers = false; # If true, won't be prompted to save on quit
+        session.restore_unsaved_buffers = false;  # If true, won't be prompted to save on quit
         restore_on_startup = "last_workspace";
 
         telemetry = {
@@ -108,7 +108,7 @@ in
           light = "Material Icon Theme";
         };
 
-        buffer_line_height = "standard"; # "comfortable" or buffer_line_height.custom = 1 (compact), 2 (loose)
+        buffer_line_height = "standard";  # "comfortable" or buffer_line_height.custom = 1 (compact), 2 (loose)
 
         wrap_guides = [ 80 100 120 ];
 
@@ -132,9 +132,7 @@ in
             tab_size = 2;
           };
 
-          "YAML" = {
-            tab_size = 2;
-          };
+          "YAML" = { tab_size = 2; };
 
           "Typst" = {
             soft_wrap = "editor_width";

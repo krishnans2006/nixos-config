@@ -15,9 +15,7 @@ in
       enable = true;
       #enableBashIntegration = true;
       nix-direnv.enable = true;
-      config = {
-        global."warn_timeout" = 0;
-      };
+      config.global."warn_timeout" = 0;
     };
 
     # Impermanence

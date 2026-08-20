@@ -22,17 +22,17 @@ in
       defaultSopsFile = "${root}/secrets/home.yaml";
       defaultSopsFormat = "yaml";
 
-      age.sshKeyPaths = [];
-      gnupg.sshKeyPaths = [];
+      age.sshKeyPaths = [ ];
+      gnupg.sshKeyPaths = [ ];
 
       secrets = {
         # Yubikey auth (see modules/system/yubikey-auth.nix)
         "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
 
         # WakaTime config (pick one to use)
-        "wakatime/wakatime" = {};  # Unused
+        "wakatime/wakatime" = { };  # Unused
         "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
-        "wakatime/hackatime" = {};  # Unused
+        "wakatime/hackatime" = { };  # Unused
       };
     };
 

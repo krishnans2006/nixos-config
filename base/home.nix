@@ -19,17 +19,19 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    (python314.withPackages (ps: with ps; [
-      jupyterlab
-      jupyterlab-lsp
-      jedi-language-server
-      tqdm
-      matplotlib
-      numpy
-      scipy
-      pandas
-      discordpy
-    ]))
+    (python314.withPackages (
+      ps: with ps; [
+        jupyterlab
+        jupyterlab-lsp
+        jedi-language-server
+        tqdm
+        matplotlib
+        numpy
+        scipy
+        pandas
+        discordpy
+      ]
+    ))
 
     # kicad
     # gimp
@@ -54,9 +56,7 @@
   '';
 
   # GDB (for ECE 391)
-  home.file.".config/gdb/gdbinit" = {
-    text = "set auto-load safe-path /";
-  };
+  home.file.".config/gdb/gdbinit".text = "set auto-load safe-path /";
 
   programs.vscode.enable = true;
   programs.java.enable = true;

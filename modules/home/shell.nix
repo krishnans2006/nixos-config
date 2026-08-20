@@ -91,8 +91,8 @@ in
       # link all files in `./dotfiles` to `~/.dotfiles`
       home.file.".dotfiles" = {
         source = "${root}/dotfiles";
-        recursive = true; # link recursively
-        executable = true; # make all files executable
+        recursive = true;  # link recursively
+        executable = true;  # make all files executable
       };
 
       programs.zsh.initContent = ''
@@ -105,7 +105,7 @@ in
       home.packages = [ pkgs.meslo-lgs-nf ];
 
       programs.zsh = {
-        oh-my-zsh.theme = ""; # powerlevel10k
+        oh-my-zsh.theme = "";  # powerlevel10k
 
         localVariables.POWERLEVEL9K_CONFIG_FILE = "~/.dotfiles/.p10k.zsh";
 
@@ -122,8 +122,8 @@ in
 
       # Pull in secrets
       sops.secrets = {
-        "atuin/key" = {};  # Unused
-        "atuin/key_b64" = {};
+        "atuin/key" = { };  # Unused
+        "atuin/key_b64" = { };
       };
 
       programs.atuin = {

@@ -42,9 +42,7 @@ in
     };
     programs.thunderbird = {
       enable = true;
-      profiles.default = {
-        isDefault = true;
-      };
+      profiles.default.isDefault = true;
       settings = {
         "general.useragent.override" = "";
         "privacy.donottrackheader.enabled" = true;

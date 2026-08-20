@@ -72,9 +72,7 @@ in
           "/var/lib/nixos"
           "/var/lib/systemd"
         ];
-        files = [
-          "/etc/machine-id"
-        ];
+        files = [ "/etc/machine-id" ];
       };
 
       boot.initrd = {

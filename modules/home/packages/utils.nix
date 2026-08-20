@@ -60,7 +60,7 @@ in
 
       rclone
 
-      lm_sensors # for `sensors` command
+      lm_sensors  # for `sensors` command
       memtester
 
       devenv

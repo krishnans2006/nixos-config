@@ -37,7 +37,7 @@ in {
             settings.allowDiscards = true;
             content = {
               type = "btrfs";
-              extraArgs = ["-L" "nixos" "-f"];
+              extraArgs = [ "-L" "nixos" "-f" ];
               # Snapshot /root to /root-blank on creation
               # This is what gets restored on each boot
               postCreateHook = ''

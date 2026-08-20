@@ -24,9 +24,7 @@ in
             base_url = "https://matrix-client.matrix.org";
             server_name = "matrix.org";
           };
-          "m.identity_server" = {
-            base_url = "https://vector.im";
-          };
+          "m.identity_server".base_url = "https://vector.im";
         };
         disable_custom_urls = true;  # Force matrix.org for now
 

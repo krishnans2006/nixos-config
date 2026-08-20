@@ -7,7 +7,10 @@
 with inputs;
 
 nixpkgs.lib.nixosSystem {
-  specialArgs = { inherit inputs; root = inputs.self; };
+  specialArgs = {
+    inherit inputs;
+    root = inputs.self;
+  };
 
   modules = [
     ./system.nix
@@ -21,7 +24,10 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = { inherit inputs; root = inputs.self; };
+      home-manager.extraSpecialArgs = {
+        inherit inputs;
+        root = inputs.self;
+      };
 
       home-manager.sharedModules = [
         sops-nix.homeManagerModules.sops
@@ -29,14 +35,10 @@ nixpkgs.lib.nixosSystem {
         nix-flatpak.homeManagerModules.nix-flatpak
       ];
 
-      home-manager.users.krishnan.imports = [
-        ./home.nix
-      ];
+      home-manager.users.krishnan.imports = [ ./home.nix ];
     }
 
     nix-index-database.nixosModules.nix-index
-    {
-      programs.nix-index-database.comma.enable = true;
-    }
+    { programs.nix-index-database.comma.enable = true; }
   ];
 }
