@@ -42,7 +42,12 @@
   hardware.enableAllFirmware = true;
 
   # udev rules
-  services.udev.packages = with pkgs; [ platformio-core openocd via probe-rs-tools ];
+  services.udev.packages = with pkgs; [
+    platformio-core
+    openocd
+    via
+    probe-rs-tools
+  ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

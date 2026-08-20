@@ -1,4 +1,4 @@
-{ lib, nixfmt, writeShellApplication, wrapWidth ? 40 }:
+{ lib, nixfmt, writeShellApplication, wrapWidth ? 45 }:
 
 let
   patchedNixfmt = nixfmt.overrideAttrs (old: {

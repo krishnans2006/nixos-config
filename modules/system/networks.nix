@@ -297,7 +297,9 @@ in
     # Set up all needed network secrets
     sops.secrets =
       let
-        base = { restartUnits = [ "NetworkManager.service" ]; };
+        base = {
+          restartUnits = [ "NetworkManager.service" ];
+        };
         sharedOpenVPN = key: name: (base // { key = "openvpn/${key}/${name}"; });
       in
       {

@@ -66,11 +66,25 @@ in
         # the NetworkManager profile up or down accordingly
         systemd.services.tailscale-networkmanager-status = {
           description = "Synchronize Tailscale status with NetworkManager";
-          wantedBy = [ "multi-user.target" "NetworkManager.service" ];
+          wantedBy = [
+            "multi-user.target"
+            "NetworkManager.service"
+          ];
           bindsTo = [ "NetworkManager.service" ];
-          wants = [ "tailscaled.service" "NetworkManager-ensure-profiles.service" ];
-          after = [ "tailscaled.service" "NetworkManager.service" "NetworkManager-ensure-profiles.service" ];
-          path = [ config.networking.networkmanager.package config.services.tailscale.package pkgs.jq ];
+          wants = [
+            "tailscaled.service"
+            "NetworkManager-ensure-profiles.service"
+          ];
+          after = [
+            "tailscaled.service"
+            "NetworkManager.service"
+            "NetworkManager-ensure-profiles.service"
+          ];
+          path = [
+            config.networking.networkmanager.package
+            config.services.tailscale.package
+            pkgs.jq
+          ];
           serviceConfig = {
             Restart = "always";
             RestartSec = 2;
