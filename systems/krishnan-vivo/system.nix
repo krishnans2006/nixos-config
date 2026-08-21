@@ -42,7 +42,7 @@ with inputs;
   modules.iphone.enable = true;
 
   modules.gaming.enable = false;
-  modules.waydroid.enable = false;
+  modules.waydroid.enable = true;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
 

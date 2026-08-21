@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -11,5 +11,10 @@ in
     #
   };
 
-  config = mkIf cfg.enable { virtualisation.waydroid.enable = true; };
+  config = mkIf cfg.enable {
+    virtualisation.waydroid = {
+      enable = true;
+      package = pkgs.waydroid-nftables;
+    };
+  };
 }
