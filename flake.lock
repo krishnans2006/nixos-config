@@ -618,17 +618,17 @@
         "rs-harbor": "rs-harbor"
       },
       "locked": {
-        "lastModified": 1785509154,
-        "narHash": "sha256-J8bwkpzzh9Vorezpwk8+7GVCREUf23qZhv3yBUBtSEI=",
-        "ref": "refs/heads/trunk",
-        "rev": "7b2701886eadb730d3572217498d24a448533fbd",
-        "revCount": 18,
-        "type": "git",
-        "url": "https://codeberg.org/caniko/ronix"
+        "lastModified": 1786801878,
+        "narHash": "sha256-V3qKTv+AidfDm5Ms79y6r5RelW8qmd0xR/GjDqi5ofw=",
+        "owner": "caniko",
+        "repo": "ronix",
+        "rev": "9bc5404e3b554cdff9233f62dd9576c4384075b9",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/caniko/ronix"
+        "owner": "caniko",
+        "repo": "ronix",
+        "type": "github"
       }
     },
     "root": {
@@ -665,13 +665,13 @@
         "rev": "c26b735eede8078f795651c4a9cbf0be8733b221",
         "revCount": 159,
         "type": "git",
-        "url": "https://codeberg.org/caniko/rs-harbor.git"
+        "url": "https://github.com/caniko/rs-harbor.git"
       },
       "original": {
         "ref": "trunk",
         "rev": "c26b735eede8078f795651c4a9cbf0be8733b221",
         "type": "git",
-        "url": "https://codeberg.org/caniko/rs-harbor.git"
+        "url": "https://github.com/caniko/rs-harbor.git"
       }
     },
     "rust-overlay": {
