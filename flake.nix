@@ -72,7 +72,10 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
-    ronix.url = "github:caniko/ronix";
+    ronix = {
+      url = "github:caniko/ronix";
+      inputs.rs-harbor.url = "github:caniko/harbor-rs/trunk";
+    };
   };
 
   # nixConfig = {
