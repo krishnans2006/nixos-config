@@ -78,12 +78,12 @@ in
               MaxClipItems = 2048;
             };
           };
-          ksplashrc = {
-            KSplash = {
-              Engine = "none";
-              Theme = "None";
-            };
-          };
+          # ksplashrc = {
+          #   KSplash = {
+          #     Engine = "none";
+          #     Theme = "None";
+          #   };
+          # };
           dolphinrc = {
             General = {
               ShowStatusBar = "FullWidth";  # Make bottom status bar full width (show remaining disk space)
