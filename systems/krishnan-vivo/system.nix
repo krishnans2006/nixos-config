@@ -23,6 +23,7 @@ with inputs;
     enable = true;
     enableWifi = true;
   };
+  modules.wake-on-lan.enable = false;
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
   modules.docker.enable = true;

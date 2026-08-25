@@ -23,6 +23,10 @@ with inputs;
     enable = true;
     enableWifi = false;  # To avoid bluetooth issues (and since Ethernet is always plugged in)
   };
+  modules.wake-on-lan = {
+    enable = true;
+    interfaces = [ "enp13s0" ];
+  };
   modules.bluetooth.enable = true;
   modules.printing.enable = true;
   modules.docker.enable = true;
@@ -62,10 +66,4 @@ with inputs;
   time.timeZone = "America/Chicago";
 
   hardware.rtl-sdr.enable = true;
-
-  # Wake on LAN
-  networking = {
-    interfaces."enp13s0".wakeOnLan.enable = true;
-    firewall.allowedUDPPorts = [ 9 ];  # WOL uses UDP port 9
-  };
 }
