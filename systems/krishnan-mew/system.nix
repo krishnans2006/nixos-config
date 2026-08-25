@@ -44,10 +44,11 @@ with inputs;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
+  modules.yubikey-auth.enable = false;
 
   modules.asusd.enable = false;
   modules.hp-pen.enable = false;
-  modules.yubikey-auth.enable = false;
+  modules.amd-rx6600xt.enable = false;
 
   modules.packages = {
     logic2 = false;

@@ -45,13 +45,14 @@ with inputs;
   modules.waydroid.enable = true;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
+  modules.yubikey-auth.enable = true;
 
   modules.asusd = {
     enable = true;
     chargeLimit = 80;
   };
   modules.hp-pen.enable = false;
-  modules.yubikey-auth.enable = true;
+  modules.amd-rx6600xt.enable = false;
 
   modules.packages = {
     logic2 = false;

@@ -44,10 +44,11 @@ with inputs;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
+  modules.yubikey-auth.enable = false;
 
   modules.asusd.enable = false;
   modules.hp-pen.enable = false;
-  modules.yubikey-auth.enable = false;
+  modules.amd-rx6600xt.enable = true;
 
   modules.packages = {
     logic2 = true;
@@ -59,12 +60,6 @@ with inputs;
   networking.hostName = "krishnan-pc";  # Define your hostname.
 
   time.timeZone = "America/Chicago";
-
-  hardware.amdgpu.opencl.enable = true;
-  environment.variables = {
-    HSA_OVERRIDE_GFX_VERSION = "10.3.0";  # AMD RX 6600 XT (RDNA 2)
-    HSA_ENABLE_SDMA = "0";
-  };
 
   hardware.rtl-sdr.enable = true;
 

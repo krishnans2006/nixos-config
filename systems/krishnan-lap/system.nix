@@ -48,10 +48,11 @@ with inputs;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
+  modules.yubikey-auth.enable = true;
 
   modules.asusd.enable = false;
   modules.hp-pen.enable = true;
-  modules.yubikey-auth.enable = true;
+  modules.amd-rx6600xt.enable = false;
 
   modules.packages = {
     logic2 = true;
