@@ -22,6 +22,7 @@ with inputs;
 
   modules.plasma.enable = false;
   modules.audio.enable = false;
+  modules.networking.enable = true;
   modules.networks.enable = false;
   modules.wake-on-lan.enable = false;
   modules.bluetooth.enable = false;

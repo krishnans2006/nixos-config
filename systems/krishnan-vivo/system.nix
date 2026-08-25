@@ -19,6 +19,7 @@ with inputs;
 
   modules.plasma.enable = true;
   modules.audio.enable = true;
+  modules.networking.enable = true;
   modules.networks = {
     enable = true;
     enableWifi = true;
