@@ -66,4 +66,9 @@ with inputs;
   networking.hostName = "krishnan-vivo";  # Define your hostname.
 
   time.timeZone = "America/Chicago";
+
+  # Force multimedia keys to be the default at boot (Fn lock OFF)
+  boot.extraModprobeConfig = ''
+    options asus_wmi fnlock_default=0
+  '';
 }
