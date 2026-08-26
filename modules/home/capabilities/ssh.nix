@@ -81,7 +81,9 @@ in
     (mkIf config.modules.ssh.enableAuthorizedKeys {
       assertions = [
         {
-          assertion = osConfig == null || !(osConfig.modules.krishnan-user.enable && osConfig.modules.ssh-server.enable);
+          assertion =
+            osConfig == null
+            || !(osConfig.modules.krishnan-user.enable && osConfig.modules.ssh-server.enable);
           message = "modules.ssh.enableAuthorizedKeys must be disabled when openssh server is enabled in system config";
         }
       ];

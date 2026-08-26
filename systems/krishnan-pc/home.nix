@@ -64,7 +64,8 @@ with inputs;
 
   # Custom config
 
-  programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" = "krishnan-pc";
+  programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" =
+    "krishnan-pc";
 
   services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];
 }

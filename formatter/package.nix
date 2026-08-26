@@ -17,7 +17,7 @@ writeShellApplication {
   name = "nixfmt";
   runtimeInputs = [ patchedNixfmt ];
   text = ''
-    exec ${lib.getExe patchedNixfmt} --strict --width=120 "$@"
+    exec ${lib.getExe patchedNixfmt} --strict --width=100 "$@"
   '';
 
   meta = patchedNixfmt.meta // {
