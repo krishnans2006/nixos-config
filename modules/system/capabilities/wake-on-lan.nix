@@ -19,7 +19,7 @@ in
     networking = {
       firewall.allowedUDPPorts = [ 9 ];  # WOL uses UDP port 9
 
-      interfaces = genAttrs (cfg.interfaces) (i: { "${i}".wakeOnLan.enable = true; });
+      interfaces = genAttrs (cfg.interfaces) (i: { wakeOnLan.enable = true; });
     };
   };
 }
