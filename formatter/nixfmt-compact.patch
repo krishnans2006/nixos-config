@@ -71,7 +71,7 @@
  
  instance Pretty Trivia where
    pretty [] = mempty
-@@ -256,18 +294,28 @@
+@@ -256,18 +294,30 @@
  -- Singleton sets are allowed to fit onto one line,
  -- but apart from that always expand.
  prettySet wide (krec, paropen@Ann{trailComment = post}, binders, parclose) =
@@ -90,6 +90,8 @@
 +        | otherwise = hardline
 +      sep
 +        | compact = line
++        -- Singleton sets that fail wrapWidth must not re-collapse under --width.
++        | canCompactSet binders = hardline
 +        | sourceLine paropen' /= sourceLine parclose' = hardline
 +        | wide && not (null (unItems binders)) = hardline
 +        | otherwise = line
@@ -110,7 +112,7 @@
  
  prettyTermWide :: Term -> Doc
  prettyTermWide (Set krec paropen items parclose) = prettySet True (krec, paropen, items, parclose)
-@@ -305,8 +353,13 @@
+@@ -305,8 +355,13 @@
      sep = if sourceLine paropen /= sourceLine parclose then hardline else hardspace
  -- General list
  -- Always expand if len > 1
@@ -126,7 +128,7 @@
  prettyTerm (Set krec paropen items parclose) = prettySet False (krec, paropen, items, parclose)
  -- Parentheses
  prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
-@@ -329,6 +382,7 @@
+@@ -329,6 +384,7 @@
  
  instance Pretty Term where
    pretty l@List{} = group $ prettyTerm l
@@ -134,7 +136,7 @@
    pretty x = prettyTerm x
  
  -- Does not move around comments, nor does it inject a trailing comma
-@@ -487,8 +541,10 @@
+@@ -487,8 +543,10 @@
        -- If lists have only simple items, try to render them single-line instead of expanding
        -- Uses renderList with `line` separator instead of `hardline`
        absorbInner (Term (List paropen items parclose))
@@ -147,7 +149,7 @@
        absorbInner expr = pretty expr
  
        -- Render the last argument of a function call
-@@ -641,14 +697,25 @@
+@@ -641,14 +699,25 @@
  -- braces must be on the same source line, and up to 2 attrs without defaults,
  -- with an optional ellipsis.
  canFlattenAttrs :: Ann a -> [ParamAttr] -> Ann b -> Bool
@@ -176,7 +178,7 @@
        [ParamAttr _ Nothing _] -> True
        [ParamAttr _ Nothing _, ParamEllipsis _] -> True
        [ParamAttr _ Nothing _, ParamAttr _ Nothing _] -> True
-@@ -667,7 +734,7 @@
+@@ -667,7 +736,7 @@
    (Abstraction (IDParameter _) _ body@(Abstraction{})) -> isAbsorbableExpr body
    -- Absorb function declarations with attribute set parameters if the attribute set is simple enough, and the body is absorbable.
    (Abstraction (SetParameter bopen attrs bclose) colon body)
@@ -185,7 +187,7 @@
        not (hasPreTrivia bopen), -- Comments on the opening brace force a line break, preventing absorption
        isNothing (trailComment bopen),
        sourceLine colon == firstTokenLine body -> -- If the colon and body are on different lines, keep them like that
-@@ -854,7 +921,7 @@
+@@ -854,7 +923,7 @@
  
    -- Set parameter: absorb if flattenable and on the same line, force multiline otherwise
    pretty (Abstraction param@(SetParameter bopen attrs bclose) colon body)
