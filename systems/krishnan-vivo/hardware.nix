@@ -32,7 +32,9 @@
   };
 
   swapDevices = [
-    { device = "/dev/mapper/luks-3a234895-6078-46cb-84d9-1209a33e4cfa"; }
+    {
+      device = "/dev/mapper/luks-3a234895-6078-46cb-84d9-1209a33e4cfa";
+    }
   ];
 
   boot.initrd.luks.devices."luks-3a234895-6078-46cb-84d9-1209a33e4cfa".device =

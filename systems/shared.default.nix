@@ -39,6 +39,8 @@ nixpkgs.lib.nixosSystem {
     }
 
     nix-index-database.nixosModules.nix-index
-    { programs.nix-index-database.comma.enable = true; }
+    {
+      programs.nix-index-database.comma.enable = true;
+    }
   ];
 }
