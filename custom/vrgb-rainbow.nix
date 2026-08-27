@@ -17,7 +17,8 @@ stdenvNoCC.mkDerivation {
     runHook preInstall
 
     install -Dm755 $src $out/bin/vrgb-rainbow
-    wrapProgram $out/bin/vrgb-rainbow --prefix PATH : ${lib.makeBinPath [ vrgb ]}
+    wrapProgram $out/bin/vrgb-rainbow \
+      --prefix PYTHONPATH : ${vrgb}/lib/vrgb
 
     runHook postInstall
   '';

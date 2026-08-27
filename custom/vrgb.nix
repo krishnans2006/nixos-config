@@ -35,6 +35,7 @@ stdenvNoCC.mkDerivation {
     runHook preInstall
 
     install -Dm755 vrgb.py $out/bin/vrgb
+    install -Dm644 vrgb.py $out/lib/vrgb/vrgb.py
     install -Dm644 ${udevRules} $out/lib/udev/rules.d/70-vrgb.rules
 
     runHook postInstall
