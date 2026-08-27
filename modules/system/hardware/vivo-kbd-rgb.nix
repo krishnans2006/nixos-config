@@ -26,7 +26,7 @@ in
 
     color = mkOption {
       type = types.strMatching "[0-9a-fA-F]{6}";
-      default = "00d3b8";
+      default = "0b6623";
       example = "00d3b8";
       description = "RGB color as RRGGBB (used in static mode)";
     };
