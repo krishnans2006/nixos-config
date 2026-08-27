@@ -53,6 +53,7 @@ with inputs;
   modules.yubikey-auth.enable = true;
 
   modules.asusd.enable = false;
+  modules.vivo-kbd-rgb.enable = false;
   modules.hp-pen.enable = true;
   modules.amd-rx6600xt.enable = false;
 
