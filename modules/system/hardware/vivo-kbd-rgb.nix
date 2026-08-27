@@ -6,6 +6,7 @@ let
   cfg = config.modules.vivo-kbd-rgb;
 
   vrgb = pkgs.callPackage "${root}/custom/vrgb.nix" { };
+  vrgb-rainbow = pkgs.callPackage "${root}/custom/vrgb-rainbow.nix" { inherit vrgb; };
 in
 {
   options.modules.vivo-kbd-rgb = {
@@ -17,10 +18,10 @@ in
       description = ''
         Lighting mode applied at boot and after resume.
 
-        - `off` — lights off
-        - `auto` — firmware autonomous mode
-        - `static` — solid `color` at `brightness`
-        - `rainbow` — OEM rainbow (not available on all boards, e.g. M5406WA)
+        - `off` --- lights off
+        - `auto` --- firmware autonomous mode
+        - `static` --- solid `color` at `brightness`
+        - `rainbow` --- software hue cycle over `rainbowPeriod`
       '';
     };
 
@@ -34,7 +35,14 @@ in
     brightness = mkOption {
       type = types.ints.between 0 100;
       default = 100;
-      description = "Brightness percent 0–100 (used in static mode)";
+      description = "Brightness percent 0–100 (used in static and rainbow modes)";
+    };
+
+    rainbowPeriod = mkOption {
+      type = types.numbers.positive;
+      default = 12;
+      example = 8;
+      description = "Seconds for one full rainbow cycle (rainbow mode only)";
     };
   };
 
@@ -46,38 +54,54 @@ in
         else if cfg.mode == "auto" then
           "${getExe vrgb} auto on"
         else if cfg.mode == "rainbow" then
-          "${getExe vrgb} rainbow on"
+          "${getExe vrgb-rainbow} --period ${toString cfg.rainbowPeriod} --brightness ${toString cfg.brightness}"
         else
           "${getExe vrgb} set ${cfg.color} ${toString cfg.brightness}";
+
+      sleep = "${getExe' pkgs.coreutils "sleep"}";
+      systemctl = "${getExe' config.systemd.package "systemctl"}";
     in
     {
-      environment.systemPackages = [ vrgb ];
+      environment.systemPackages = [ vrgb vrgb-rainbow ];
       services.udev.packages = [ vrgb ];
 
-      systemd.services = {
-        vivo-kbd-rgb = {
-          description = "ASUS Vivobook keyboard RGB (vrgb)";
-          wantedBy = [ "multi-user.target" ];
-          after = [ "systemd-udev-settle.service" ];
-          serviceConfig = {
+      systemd.services = mkMerge [
+        {
+          vivo-kbd-rgb = {
+            description = "ASUS Vivobook keyboard RGB (vrgb)";
+            wantedBy = [ "multi-user.target" ];
+            after = [ "systemd-udev-settle.service" ];
+            serviceConfig.ExecStart = vrgbCommand;
+          };
+        }
+
+        (mkIf (cfg.mode != "rainbow") {
+          vivo-kbd-rgb.serviceConfig = {
             Type = "oneshot";
             RemainAfterExit = true;
-            ExecStartPre = "${getExe' pkgs.coreutils "sleep"} 1";
-            ExecStart = vrgbCommand;
+            ExecStartPre = "${sleep} 1";
           };
-        };
 
-        # Re-run vivo-kbd-rgb after wake
-        vivo-kbd-rgb-wakeup = {
-          description = "Restore ASUS Vivobook keyboard RGB after sleep";
-          wantedBy = [ "sleep.target" ];
-          after = [ "sleep.target" ];
-          serviceConfig = {
-            Type = "oneshot";
-            ExecStart = "${getExe' config.systemd.package "systemctl"} try-restart ${config.systemd.services.vivo-kbd-rgb.name}";
+          # Re-run vivo-kbd-rgb after wake
+          vivo-kbd-rgb-wakeup = {
+            description = "Restore ASUS Vivobook keyboard RGB after sleep";
+            wantedBy = [ "sleep.target" ];
+            after = [ "sleep.target" ];
+            serviceConfig = {
+              Type = "oneshot";
+              ExecStart = "${systemctl} try-restart ${config.systemd.services.vivo-kbd-rgb.name}";
+            };
           };
-        };
-      };
+        })
+
+        (mkIf (cfg.mode == "rainbow") {
+          vivo-kbd-rgb.serviceConfig = {
+            Type = "simple";
+            Restart = "on-failure";
+            RestartSec = "2s";
+          };
+        })
+      ];
     }
   );
 }

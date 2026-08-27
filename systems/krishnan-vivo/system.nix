@@ -56,7 +56,7 @@ with inputs;
   modules.vivo-kbd-rgb = {
     # M5406WA uses ITE5570 HID LampArray
     enable = true;
-    mode = "static";
+    mode = "rainbow";
   };
   modules.hp-pen.enable = false;
   modules.amd-rx6600xt.enable = false;
