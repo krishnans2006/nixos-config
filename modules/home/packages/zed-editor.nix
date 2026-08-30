@@ -11,7 +11,7 @@ let
   # - https://github.com/zed-industries/zed/pull/56635
   # The ${root} interpolation won't work here, since it uses the derivation
   # of the root flake as a dependency (which technically works, but forces a
-  # full rebuild of zed whenever anything in this config changes)
+  # full rebuild of zed whenever anything in this repo changes)
   zed-editor-patched = pkgs.zed-editor.overrideAttrs (prev: {
     patches = prev.patches ++ [ ../../../custom/zed-editor-copilot.patch ];
   });
@@ -38,6 +38,7 @@ in
         texlab
         package-version-server
         tinymist
+        rust-analyzer
 
         cursor-cli
 
