@@ -112,6 +112,7 @@ in
           light = "Material Icon Theme";
         };
 
+        buffer_font_size = 14;
         buffer_line_height = "standard";  # "comfortable" or buffer_line_height.custom = 1 (compact), 2 (loose)
 
         wrap_guides = [ 80 100 120 ];
