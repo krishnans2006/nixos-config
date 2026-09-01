@@ -138,6 +138,7 @@ in
           "YAML" = { tab_size = 2; };
 
           "Typst" = {
+            format_on_save = "on";
             soft_wrap = "editor_width";
             tab_size = 2;
           };
