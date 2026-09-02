@@ -6,12 +6,14 @@
 
   outputs = inputs:
   let
+    inherit (inputs.nixpkgs) lib;
+
     supportedSystems = [
       "x86_64-linux"
       "aarch64-linux"
       "aarch64-darwin"
     ];
-    forEachSupportedSystem = f: inputs.nixpkgs.lib.genAttrs supportedSystems (
+    forEachSupportedSystem = f: lib.genAttrs supportedSystems (
       system: f {
         pkgs = import inputs.nixpkgs { inherit system; };
       }
