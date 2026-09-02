@@ -1,6 +1,6 @@
 # flake.nix
 {
-  description = "A Nix flake for Distributed Systems";
+  description = "A Nix-flake-based Rust development environment";
 
   inputs = {
     fenix = {
