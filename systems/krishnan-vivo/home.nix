@@ -60,6 +60,7 @@ with inputs;
     libreoffice.enable = true;
     jetbrains.enableAll = false;
     zed-editor.enable = true;
+    zed-editor.fontSize = 14;
   };
 
   # Custom config

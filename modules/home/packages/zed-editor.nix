@@ -21,7 +21,11 @@ in
 {
   options.modules.packages.zed-editor = {
     enable = mkEnableOption "Install Zed code editor";
-    #
+    fontSize = mkOption {
+      type = types.int;
+      default = 15;
+      description = "Font size for Zed editor";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -112,7 +116,7 @@ in
           light = "Material Icon Theme";
         };
 
-        buffer_font_size = 14;
+        buffer_font_size = cfg.fontSize;
         buffer_line_height = "standard";  # "comfortable" or buffer_line_height.custom = 1 (compact), 2 (loose)
 
         wrap_guides = [ 80 100 120 ];
