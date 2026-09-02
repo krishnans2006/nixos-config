@@ -21,6 +21,8 @@ The configuration:
 
 ## Organization
 
+Main config:
+
 - `flake.nix` - Top-level flake
 - `systems/` - System-specific configuration
   - `default.nix` - Shared common boilerplate for systems (nixosSystem)
@@ -36,7 +38,12 @@ The configuration:
 - `dotfiles/` - Dotfiles used in `modules/home/shell.nix` to set up the shell
 - `secrets/` - Encrypted secrets managed by sops and sops-nix (`config/{system,home}/secrets.nix`)
 - `.sops.yaml` - Configuration file for access control to secrets
-- `scripts/` - Shell scripts to automate some tasks
+
+Supplements:
+
+- `scripts/` - Shell scripts to automate some tasks like installing
+- `devshells/` - Pre-written devshells for some common project types
+- `formatter/` - A customized `nixfmt` for this repo and for use system-wide
 
 ## Manual Configuration Steps
 
