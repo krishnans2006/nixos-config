@@ -60,15 +60,14 @@
               pip
 
               jupyterlab
+              # jupyterlab-lsp
+              # jedi-language-server
+
               tqdm
               matplotlib
               numpy
               scipy
-
-              # jupyterlab-lsp
-              # jedi-language-server
               # pandas
-              # networkx
             ]
           );
         };
