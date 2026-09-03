@@ -3,11 +3,11 @@
   description = "A Nix-flake-based Rust development environment";
 
   inputs = {
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "nixpkgs/nixos-unstable";
   };
 
   outputs = inputs:
