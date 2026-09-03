@@ -15,7 +15,10 @@ with inputs;
   modules.secrets.enable = true;
   modules.nix-user-chroot.enable = false;
 
-  modules.plasma.enable = true;
+  modules.plasma = {
+    enable = true;
+    hasBattery = true;
+  };
   modules.fonts.enable = true;
   modules.tailscale.enable = true;
   modules.shell = {

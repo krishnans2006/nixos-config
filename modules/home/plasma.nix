@@ -9,7 +9,11 @@ in
 {
   options.modules.plasma = {
     enable = mkEnableOption "Enable a customized KDE Plasma 6 DE";
-    #
+    hasBattery = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether the system has a battery";
+    };
   };
 
   # Must be enabled in system config
@@ -338,14 +342,9 @@ in
                   items = {
                     showAll = false;
                     shown = [
-                      "org.kde.plasma.battery"
                       "org.kde.plasma.bluetooth"
-                    ];
-                    hidden = [
-                      "org.kde.plasma.addons.katesessions"
-                      #"org.kde.plasma.diskquota"
-                      #"org.kde.plasma.weatherreport"
-                    ];
+                    ] ++ optional (cfg.hasBattery) [ "org.kde.plasma.battery" ];
+                    hidden = [ "org.kde.plasma.addons.katesessions" ];
                   };
                 };
               }
