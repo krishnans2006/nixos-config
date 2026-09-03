@@ -343,7 +343,7 @@ in
                     showAll = false;
                     shown = [
                       "org.kde.plasma.bluetooth"
-                    ] ++ optional (cfg.hasBattery) [ "org.kde.plasma.battery" ];
+                    ] ++ optional (cfg.hasBattery) "org.kde.plasma.battery";
                     hidden = [ "org.kde.plasma.addons.katesessions" ];
                   };
                 };
