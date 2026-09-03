@@ -14,7 +14,7 @@ with inputs;
     (import-tree "${root}/modules/system")
   ];
 
-  modules.impermanence.enable = false;
+  modules.impermanence.enable = true;
   modules.secrets.enable = true;
 
   modules.plasma.enable = true;
