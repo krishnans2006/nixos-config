@@ -337,6 +337,10 @@ in
                   };
                   items = {
                     showAll = false;
+                    shown = [
+                      "org.kde.plasma.battery"
+                      "org.kde.plasma.bluetooth"
+                    ];
                     hidden = [
                       "org.kde.plasma.addons.katesessions"
                       #"org.kde.plasma.diskquota"
