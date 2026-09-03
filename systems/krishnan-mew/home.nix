@@ -16,6 +16,7 @@ with inputs;
   modules.nix-user-chroot.enable = false;
 
   modules.plasma.enable = false;
+  modules.fonts.enable = false;
   modules.tailscale.enable = true;
   modules.shell = {
     enable = true;

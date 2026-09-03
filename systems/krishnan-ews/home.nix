@@ -25,6 +25,7 @@
   modules.nix-user-chroot.enable = true;
 
   modules.plasma.enable = false;
+  modules.fonts.enable = false;
   modules.tailscale.enable = false;
   modules.shell = {
     enable = true;
