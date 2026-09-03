@@ -22,7 +22,13 @@
   {
     devShells = forEachSupportedSystem (
       { pkgs }: {
-        default = pkgs.mkShellNoCC { packages = with pkgs; [ typst tinymist ]; };
+        default = pkgs.mkShellNoCC {
+          packages = with pkgs; [ typst tinymist ];
+
+          shellHook = ''
+            unset SOURCE_DATE_EPOCH
+          '';
+        };
       }
     );
   };
