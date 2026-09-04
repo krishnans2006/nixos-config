@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -45,11 +45,10 @@ in
     ];
 
     # Vesktop rewrites state.json at runtime; seed defaults only if missing/symlink
-    modules.seed-file.seedFiles = [
+    home.activation = import "${root}/utils/seed-file.nix" { inherit lib config; } [
       {
         name = "seedVesktopState";
         file = ".config/vesktop/state.json";
-        force = false;
         source = (pkgs.formats.json { }).generate "state.json" {
           firstLaunch = false;
           maximized = true;

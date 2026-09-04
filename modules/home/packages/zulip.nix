@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -16,11 +16,10 @@ in
 
     # Zulip rewrites settings.json on startup
     # xdg.configFile would make it a read-only store symlink and hang on load
-    modules.seed-file.seedFiles = [
+    home.activation = import "${root}/utils/seed-file.nix" { inherit lib config; } [
       {
         name = "seedZulipSettings";
         file = ".config/Zulip/config/settings.json";
-        force = false;
         source = (pkgs.formats.json { }).generate "settings.json" {
           appLanguage = "en";
           enableSpellchecker = true;

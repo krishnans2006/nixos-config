@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -45,7 +45,7 @@ in
 
     # Mattermost rewrites these JSON files at runtime (writeFileSync)
     # xdg.configFile would make them read-only store symlinks and break the app
-    modules.seed-file.seedFiles = [
+    home.activation = import "${root}/utils/seed-file.nix" { inherit lib config; } [
       {
         name = "seedMattermostConfig";
         file = ".config/Mattermost/config.json";
@@ -106,7 +106,6 @@ in
       {
         name = "seedMattermostBounds";
         file = ".config/Mattermost/bounds-info.json";
-        force = false;
         source = (pkgs.formats.json { }).generate "bounds-info.json" {
           maximized = true;
           fullscreen = false;

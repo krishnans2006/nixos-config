@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -56,7 +56,7 @@ in
     # electron-store atomically renames over electron-config.json, which replaces
     # impermanence file symlinks and loses safeStorage pickle keys on reboot
     # So, use systemd-persist
-    modules.systemd-persist.persistFiles = [
+    systemd.user.services = import "${root}/utils/systemd-persist.nix" { inherit lib pkgs config; } [
       {
         name = "element-electron-config";
         file = ".config/Element/electron-config.json";
