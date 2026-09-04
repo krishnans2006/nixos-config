@@ -34,7 +34,7 @@ in
     };
   };
 
-  config = mkIf (cfg.persistFiles != [ ]) {
+  config = mkIf (config.modules.impermanence.enable && cfg.persistFiles != [ ]) {
     systemd.user.services = listToAttrs (
       concatMap (
         { name, file }:
