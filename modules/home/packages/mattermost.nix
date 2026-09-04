@@ -103,6 +103,15 @@ in
           )
         );
       }
+      {
+        name = "seedMattermostBounds";
+        file = ".config/Mattermost/bounds-info.json";
+        force = false;
+        source = (pkgs.formats.json { }).generate "bounds-info.json" {
+          maximized = true;
+          fullscreen = false;
+        };
+      }
     ];
 
     # Impermanence
@@ -113,7 +122,7 @@ in
     ];
     modules.impermanence.persistFiles = [
       ".config/Mattermost/Cookies"
-      ".config/Mattermost/bounds-info.json"  # Window size/maximized
+      ".config/Mattermost/bounds-info.json"  # Window size/maximized (seeded once, then mutable)
     ];
 
     # Autostart
