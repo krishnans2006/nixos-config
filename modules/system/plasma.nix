@@ -37,5 +37,9 @@ in
 
     # Enable Partition Manager
     programs.partition-manager.enable = true;
+
+    # Enable flatpak
+    # This is here instead of base/ since it requires a desktop environment
+    services.flatpak.enable = true;
   };
 }

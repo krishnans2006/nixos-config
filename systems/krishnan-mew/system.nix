@@ -64,9 +64,6 @@ with inputs;
 
   time.timeZone = "America/Chicago";
 
-  # Force flatpak off since it requires a desktop environment
-  services.flatpak.enable = lib.mkForce false;
-
   # Static IP
   networking.useDHCP = false;
   networking.interfaces.lo = {
