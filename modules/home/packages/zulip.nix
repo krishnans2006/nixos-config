@@ -16,9 +16,11 @@ in
 
     # Zulip rewrites settings.json on startup
     # xdg.configFile would make it a read-only store symlink and hang on load
-    home.activation.seedZulipSettings =
-      let
-        settings = (pkgs.formats.json { }).generate "settings.json" {
+    modules.seed-file.seedFiles = [
+      {
+        name = "seedZulipSettings";
+        file = ".config/Zulip/config/settings.json";
+        source = (pkgs.formats.json { }).generate "settings.json" {
           appLanguage = "en";
           enableSpellchecker = true;
           spellcheckerLanguages = null;
@@ -31,7 +33,7 @@ in
           autoUpdate = true;
           showSidebar = true;
           badgeOption = true;
-          startAtLogin = true;  # Maybe false?
+          startAtLogin = true; # Maybe false?
           showNotification = true;
           betaUpdate = false;
           errorReporting = false;
@@ -49,19 +51,12 @@ in
           proxyRules = "";
           proxyBypass = "";
         };
-      in
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        config_dir="${config.xdg.configHome}/Zulip/config"
-        settings="$config_dir/settings.json"
-        mkdir -p "$config_dir"
-        if [ ! -e "$settings" ] || [ -L "$settings" ]; then
-          install -Dm644 ${settings} "$settings"
-        fi
-      '';
+      }
+    ];
 
     # Impermanence
     modules.impermanence.persistDirs = [
-      ".config/Zulip/config"  # domain.json, settings.json
+      ".config/Zulip/config" # domain.json, settings.json
       ".config/Zulip/Partitions/webviewsession/Local Storage"
     ];
     modules.impermanence.persistFiles = [
