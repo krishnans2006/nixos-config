@@ -47,17 +47,20 @@ in
 
     # Impermanence
     modules.impermanence.persistDirs = [
-      ".config/Element/IndexedDB"  # E2E Keys, auth
+      ".config/Element/IndexedDB"  # E2E keys, encrypted access token
       ".config/Element/EventStore"  # Seshat database for search
       ".config/Element/Local Storage"  # Session ids, theme
     ];
-    modules.impermanence.persistFiles = [
-      # This needs to be symlinked due to atomic write (copying temp file) shenanigans
+    modules.impermanence.persistFiles = [ ".config/Element/window-state.json" ];
+
+    # electron-store atomically renames over electron-config.json, which replaces
+    # impermanence file symlinks and loses safeStorage pickle keys on reboot
+    # So, use systemd-persist
+    modules.systemd-persist.persistFiles = [
       {
+        name = "element-electron-config";
         file = ".config/Element/electron-config.json";
-        method = "symlink";
       }
-      ".config/Element/window-state.json"
     ];
 
     # Autostart
