@@ -43,8 +43,8 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ mattermost-desktop ];
 
-    # Mattermost rewrites config.json on startup/settings changes (writeFileSync).
-    # xdg.configFile would make it a read-only store symlink and break the app.
+    # Mattermost rewrites these JSON files at runtime (writeFileSync)
+    # xdg.configFile would make them read-only store symlinks and break the app
     modules.seed-file.seedFiles = [
       {
         name = "seedMattermostConfig";
@@ -55,7 +55,10 @@ in
           servers = imap0 (order: s: {
             inherit (s) name url;
             inherit order;
-            isPredefined = true;
+            # isPredefined in config.json is only honored when the same URL also
+            # exists in buildConfig/GPO; otherwise Mattermost drops the server and
+            # rewrites servers to []
+            isPredefined = false;
           }) cfg.servers;
           showTrayIcon = true;
           trayIconTheme = "light";
@@ -86,6 +89,20 @@ in
           useNativeTitleBar = false;
         };
       }
+      {
+        name = "seedMattermostPermissions";
+        file = ".config/Mattermost/permissions.json";
+        force = true;
+        # Keys are URL origins (no trailing slash), matching Mattermost's lookup
+        source = (pkgs.formats.json { }).generate "permissions.json" (
+          listToAttrs (
+            map (s: {
+              name = removeSuffix "/" s.url;
+              value.notifications.allowed = true;
+            }) cfg.servers
+          )
+        );
+      }
     ];
 
     # Impermanence
@@ -97,7 +114,6 @@ in
     modules.impermanence.persistFiles = [
       ".config/Mattermost/Cookies"
       ".config/Mattermost/bounds-info.json"  # Window size/maximized
-      ".config/Mattermost/permissions.json"  # Notifications allow/deny
     ];
 
     # Autostart
