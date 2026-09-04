@@ -24,6 +24,11 @@ in
               type = types.path;
               description = "Store path to copy when the destination is missing or a symlink.";
             };
+            force = mkOption {
+              type = types.bool;
+              default = false;
+              description = "Overwrite the destination even if a regular file already exists.";
+            };
           };
         }
       );
@@ -40,21 +45,28 @@ in
   };
 
   config = mkIf (cfg.seedFiles != [ ]) {
-    home.activation = listToAttrs (
+    home.activation = mkMerge (
       map (
-        { name, file, source }:
+        { name, file, source, force }:
         let
           liveFile = if hasPrefix "/" file then file else "${config.home.homeDirectory}/${file}";
         in
-        {
-          inherit name;
-          value = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            mkdir -p "$(dirname ${escapeShellArg liveFile})"
-            if [ ! -e ${escapeShellArg liveFile} ] || [ -L ${escapeShellArg liveFile} ]; then
+        mkMerge [
+          (mkIf force {
+            ${name} = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              mkdir -p "$(dirname ${escapeShellArg liveFile})"
               install -Dm644 ${source} ${escapeShellArg liveFile}
-            fi
-          '';
-        }
+            '';
+          })
+          (mkIf (!force) {
+            ${name} = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              mkdir -p "$(dirname ${escapeShellArg liveFile})"
+              if [ ! -e ${escapeShellArg liveFile} ] || [ -L ${escapeShellArg liveFile} ]; then
+                install -Dm644 ${source} ${escapeShellArg liveFile}
+              fi
+            '';
+          })
+        ]
       ) cfg.seedFiles
     );
   };
