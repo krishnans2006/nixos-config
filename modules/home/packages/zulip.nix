@@ -20,6 +20,7 @@ in
       {
         name = "seedZulipSettings";
         file = ".config/Zulip/config/settings.json";
+        force = false;
         source = (pkgs.formats.json { }).generate "settings.json" {
           appLanguage = "en";
           enableSpellchecker = true;
@@ -33,7 +34,7 @@ in
           autoUpdate = true;
           showSidebar = true;
           badgeOption = true;
-          startAtLogin = true; # Maybe false?
+          startAtLogin = true;  # Maybe false?
           showNotification = true;
           betaUpdate = false;
           errorReporting = false;
@@ -56,7 +57,7 @@ in
 
     # Impermanence
     modules.impermanence.persistDirs = [
-      ".config/Zulip/config" # domain.json, settings.json
+      ".config/Zulip/config"  # domain.json, settings.json
       ".config/Zulip/Partitions/webviewsession/Local Storage"
     ];
     modules.impermanence.persistFiles = [
