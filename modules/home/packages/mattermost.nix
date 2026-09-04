@@ -110,6 +110,7 @@ in
         source = (pkgs.formats.json { }).generate "bounds-info.json" {
           maximized = true;
           fullscreen = false;
+          # Just don't set x, y, width, height (they get auto-set by Mattermost)
         };
       }
     ];
