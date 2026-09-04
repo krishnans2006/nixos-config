@@ -66,4 +66,17 @@ with inputs;
 
   # Force flatpak off since it requires a desktop environment
   services.flatpak.enable = lib.mkForce false;
+
+  # Static IP
+  networking.useDHCP = false;
+  networking.interfaces.lo = {
+    useDHCP = false;
+    ipv4.addresses = [
+      {
+        address = "23.152.236.67";
+        prefixLength = 25;
+      }
+    ];
+  };
+  networking.defaultGateway = "23.152.236.64";
 }
