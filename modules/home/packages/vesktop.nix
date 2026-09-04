@@ -41,7 +41,21 @@ in
       ".config/vesktop/settings"  # Synced settings for plugins, etc.
     ];
     modules.impermanence.persistFiles = [
-      ".config/vesktop/state.json"  # Window params, first launch menu
+      ".config/vesktop/state.json"  # Window params, first launch menu (seeded once, then mutable)
+    ];
+
+    # Vesktop rewrites state.json at runtime; seed defaults only if missing/symlink
+    modules.seed-file.seedFiles = [
+      {
+        name = "seedVesktopState";
+        file = ".config/vesktop/state.json";
+        force = false;
+        source = (pkgs.formats.json { }).generate "state.json" {
+          firstLaunch = false;
+          maximized = true;
+          minimized = false;
+        };
+      }
     ];
 
     # Autostart
