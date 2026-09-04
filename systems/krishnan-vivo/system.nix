@@ -7,6 +7,9 @@ with inputs;
     # Include the results of the hardware scan.
     ./hardware.nix
 
+    # Disk configuration (disko)
+    ./disk.nix
+
     # Base configuration
     "${root}/base/system.nix"
 
@@ -14,7 +17,7 @@ with inputs;
     (import-tree "${root}/modules/system")
   ];
 
-  modules.impermanence.enable = false;
+  modules.impermanence.enable = true;
   modules.secrets.enable = true;
 
   modules.plasma.enable = true;

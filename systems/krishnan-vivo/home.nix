@@ -11,7 +11,7 @@ with inputs;
     (import-tree "${root}/modules/home")
   ];
 
-  modules.impermanence.enable = false;
+  modules.impermanence.enable = true;
   modules.secrets.enable = true;
   modules.nix-user-chroot.enable = false;
 
