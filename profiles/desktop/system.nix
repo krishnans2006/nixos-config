@@ -22,7 +22,6 @@
   modules.tailscale = {
     enable = true;
     enableNMIntegration = true;
-    enableTaildrive = false;
   };
 
   modules.printing.enable = true;

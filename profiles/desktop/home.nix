@@ -62,6 +62,5 @@
     libreoffice.enable = true;
     jetbrains.enableAll = false;
     zed-editor.enable = true;
-    zed-editor.fontSize = 15;
   };
 }
