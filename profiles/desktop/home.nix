@@ -57,8 +57,6 @@
     zen-browser.autostart = true;
     bitwarden-desktop.enable = true;
     bitwarden-desktop.autostart = true;
-    firefox.enable = true;
-    thunderbird.enable = false;
     libreoffice.enable = true;
     jetbrains.enableAll = false;
     zed-editor.enable = true;
