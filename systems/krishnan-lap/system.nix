@@ -13,38 +13,25 @@ with inputs;
     # Base configuration
     "${root}/base/system.nix"
 
+    # Profiles
+    "${root}/profiles/desktop/system.nix"
+
     # Custom modules
     (import-tree "${root}/modules/system")
   ];
 
-  modules.impermanence.enable = true;
-  modules.secrets.enable = true;
+  # Custom config
 
-  modules.plasma.enable = true;
-  modules.audio.enable = true;
-  modules.networking.enable = true;
-  modules.networks = {
-    enable = true;
-    enableWifi = true;
-  };
-  modules.wake-on-lan.enable = false;
-  modules.bluetooth.enable = true;
-  modules.printing.enable = true;
-  modules.docker.enable = true;
+  networking.hostName = "krishnan-lap";  # Define your hostname.
+
+  time.timeZone = "America/New_York";
+
+  modules.impermanence.enable = true;
+
   modules.tailscale = {
-    enable = true;
-    enableNMIntegration = true;
     enableTaildrive = true;
     taildrivePath = "/home/krishnan/Filesystems/Tailscale";
   };
-  modules.localsend.enable = false;
-  modules.ssh-server.enable = false;
-  modules.secure-boot.enable = false;
-  modules.krishnan-user = {
-    enable = true;
-    enablePresetPassword = true;
-  };
-  modules.iphone.enable = true;
 
   modules.gaming.enable = false;
   modules.waydroid.enable = false;
@@ -52,21 +39,12 @@ with inputs;
   modules.vmware.enable = false;
   modules.yubikey-auth.enable = true;
 
-  modules.asusd.enable = false;
-  modules.vivo-kbd-rgb.enable = false;
   modules.hp-pen.enable = true;
-  modules.amd-rx6600xt.enable = false;
 
   modules.packages = {
     logic2 = true;
     chipwhisperer = true;
   };
-
-  # Custom config
-
-  networking.hostName = "krishnan-lap";  # Define your hostname.
-
-  time.timeZone = "America/New_York";
 
   # TODO: Maybe the first is unnecessary
   systemd.tpm2.enable = false;
