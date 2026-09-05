@@ -6,6 +6,8 @@
     (import-tree "${root}/modules/home")
   ];
 
+  modules.secrets.enable = true;
+
   modules.shell = {
     enable = true;
     enableDotfiles = true;

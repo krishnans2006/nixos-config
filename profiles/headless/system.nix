@@ -6,6 +6,8 @@
     (import-tree "${root}/modules/system")
   ];
 
+  modules.secrets.enable = true;
+
   modules.krishnan-user = {
     enable = true;
     enablePresetPassword = true;
