@@ -121,9 +121,9 @@ in
                 btrfs subvolume snapshot "$MOUNTPOINT/home-blank" "$MOUNTPOINT/home"
 
                 echo "Deleting cache subvolume (/var/cache)"
-                btrfs subvolume delete -R "$MOUNTPOINT/cache"
+                btrfs subvolume delete -R "$MOUNTPOINT/var/cache"
                 echo "Recreating empty cache subvolume"
-                btrfs subvolume create "$MOUNTPOINT/cache"
+                btrfs subvolume create "$MOUNTPOINT/var/cache"
               fi
             )
           '';
