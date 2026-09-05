@@ -26,16 +26,7 @@ in
           };
         }
       );
-      default = [
-        {
-          name = "TJ CSL";
-          url = "https://mattermost.tjhsst.edu/";
-        }
-        {
-          name = "Matterless";
-          url = "https://matterless.tjhsst.edu/";
-        }
-      ];
+      default = [ ];
       description = "Mattermost servers shown in the desktop app (written to config.json)";
     };
   };

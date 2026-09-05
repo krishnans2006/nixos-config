@@ -9,6 +9,9 @@ with inputs;
 
     # Custom modules
     (import-tree "${root}/modules/home")
+
+    # Common host config
+    "${root}/systems/common/mattermost.nix"
   ];
 
   modules.impermanence.enable = false;
