@@ -9,26 +9,6 @@ in
   options.modules.packages.zulip = {
     enable = mkEnableOption "Install Zulip";
     autostart = mkEnableOption "Enable autostart for Zulip";
-
-    domains = mkOption {
-      type = types.listOf (
-        types.submodule {
-          options = {
-            url = mkOption {
-              type = types.str;
-              description = "Zulip organization URL";
-              example = "https://example.zulipchat.com";
-            };
-            alias = mkOption {
-              type = types.str;
-              description = "Display name for the organization";
-            };
-          };
-        }
-      );
-      default = [ ];
-      description = "Zulip organizations shown in the desktop app (written to domain.json)";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -70,13 +50,6 @@ in
           proxyPAC = "";
           proxyRules = "";
           proxyBypass = "";
-        };
-      }
-      {
-        name = "seedZulipDomain";
-        file = ".config/Zulip/config/domain.json";
-        source = (pkgs.formats.json { }).generate "domain.json" {
-          domains = map (d: { inherit (d) url alias; }) cfg.domains;
         };
       }
     ];
