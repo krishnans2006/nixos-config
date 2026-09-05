@@ -7,70 +7,21 @@ with inputs;
     # Base configuration
     "${root}/base/home.nix"
 
+    # Profiles
+    "${root}/profiles/desktop/home.nix"
+
     # Custom modules
     (import-tree "${root}/modules/home")
-
-    # Common host config
-    "${root}/systems/common/mattermost.nix"
   ];
 
-  modules.impermanence.enable = false;
-  modules.secrets.enable = true;
-  modules.nix-user-chroot.enable = false;
+  # Custom config
 
-  modules.plasma = {
-    enable = true;
-    hasBattery = false;
-  };
-  modules.fonts.enable = true;
-  modules.tailscale.enable = true;
-  modules.shell = {
-    enable = true;
-    enableDotfiles = true;
-    enableTheme = true;
-    enableAtuin = true;
-    enableZoxide = true;
-  };
-  modules.direnv.enable = true;
-  modules.git = {
-    enable = true;
-    enablePdfDiff = true;
-  };
-  modules.ssh.enable = true;
-  modules.fs-mounts = {
-    tjcsl = true;
-    # ews = true;
-  };
+  modules.plasma.hasBattery = false;
+
   modules.gaming = {
     enableLutris = true;
     enableMinecraft = true;
   };
-
-  modules.packages = {
-    utils.enable = true;
-    vesktop.enable = true;
-    vesktop.autostart = true;
-    slack.enable = true;
-    slack.autostart = true;
-    element.enable = true;
-    element.autostart = true;
-    mattermost.enable = true;
-    mattermost.autostart = true;
-    zulip.enable = true;
-    zulip.autostart = true;
-    zen-browser.enable = true;
-    zen-browser.autostart = true;
-    bitwarden-desktop.enable = true;
-    bitwarden-desktop.autostart = true;
-    firefox.enable = true;
-    thunderbird.enable = false;
-    libreoffice.enable = true;
-    jetbrains.enableAll = false;
-    zed-editor.enable = true;
-    zed-editor.fontSize = 15;
-  };
-
-  # Custom config
 
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" =
     "krishnan-pc";
