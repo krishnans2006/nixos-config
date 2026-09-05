@@ -58,42 +58,42 @@ in
                 # So everything that we want to restore independently should be in its own subvolume
                 "/root" = {
                   mountpoint = "/";
-                  mountOptions = [ "subvol=root" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                 };
                 "/home" = {
                   mountpoint = "/home";
-                  mountOptions = [ "subvol=home" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                 };
                 # Delete on boot, but don't restore from a blank snapshot since it's not worth it
                 "/var/cache" = {
                   mountpoint = "/var/cache";
-                  mountOptions = [ "subvol=cache" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                 };
                 # Do not delete or restore /var/log, /var/lib
                 # Since logs should be preserved and lib is persistent data
                 "/var/log" = {
                   mountpoint = "/var/log";
-                  mountOptions = [ "subvol=log" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                 };
                 "/var/lib" = {
                   mountpoint = "/var/lib";
-                  mountOptions = [ "subvol=lib" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                 };
                 # These special directories also shouldn't get deleted/restored
                 "/nix" = {
                   mountpoint = "/nix";
-                  mountOptions = [ "subvol=nix" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                 };
                 "/persist" = {
                   mountpoint = "/persist";
-                  mountOptions = [ "subvol=persist" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                 };
                 # Swap
                 # See https://github.com/nix-community/disko/blob/878ec37d6a8f52c6c801d0e2a2ad554c75b9353c/lib/types/btrfs.nix
                 # Which does some fancy magic to create a swapfile on a btrfs subvolume
                 "/swap" = {
                   mountpoint = "/swap";
-                  mountOptions = [ "subvol=swap" ] ++ btrfsMountOptions;
+                  mountOptions = btrfsMountOptions;
                   swap.swapfile.size = "34G";
                 };
               };
