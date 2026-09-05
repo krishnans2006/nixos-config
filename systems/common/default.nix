@@ -9,6 +9,7 @@ with inputs;
 nixpkgs.lib.nixosSystem {
   specialArgs = {
     inherit inputs;
+    inherit (inputs) import-tree;
     root = inputs.self;
   };
 
@@ -26,6 +27,7 @@ nixpkgs.lib.nixosSystem {
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = {
         inherit inputs;
+        inherit (inputs) import-tree;
         root = inputs.self;
       };
 

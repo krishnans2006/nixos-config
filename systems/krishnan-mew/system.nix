@@ -13,55 +13,18 @@ with inputs;
     # Base configuration
     "${root}/base/system.nix"
 
+    # Profiles
+    "${root}/profiles/headless/system.nix"
+
     # Custom modules
     (import-tree "${root}/modules/system")
   ];
 
-  modules.impermanence.enable = false;
-  modules.secrets.enable = lib.mkForce false;
-
-  modules.plasma.enable = false;
-  modules.audio.enable = false;
-  modules.networking.enable = true;
-  modules.networks.enable = false;
-  modules.wake-on-lan.enable = false;
-  modules.bluetooth.enable = false;
-  modules.printing.enable = false;
-  modules.docker.enable = false;
-  modules.tailscale = {
-    enable = true;
-    enableNMIntegration = false;
-    enableTaildrive = false;
-  };
-  modules.localsend.enable = false;
-  modules.ssh-server.enable = true;
-  modules.secure-boot.enable = false;
-  modules.krishnan-user = {
-    enable = true;
-    enablePresetPassword = false;
-  };
-  modules.iphone.enable = false;
-
-  modules.gaming.enable = false;
-  modules.waydroid.enable = false;
-  modules.virtualbox.enable = false;
-  modules.vmware.enable = false;
-  modules.yubikey-auth.enable = false;
-
-  modules.asusd.enable = false;
-  modules.vivo-kbd-rgb.enable = false;
-  modules.hp-pen.enable = false;
-  modules.amd-rx6600xt.enable = false;
-
-  modules.packages = {
-    logic2 = false;
-    chipwhisperer = false;
-  };
-
   # Custom config
 
-  networking.hostName = "krishnan-mew";  # Define your hostname.
+  modules.secrets.enable = lib.mkForce false;  # Secrets-free config
 
+  networking.hostName = "krishnan-mew";  # Define your hostname.
   time.timeZone = "America/Chicago";
 
   # Static IP
