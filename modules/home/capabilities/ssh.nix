@@ -92,7 +92,7 @@ in
       home.activation.installAuthorizedKeys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         install -d -m 0700 ${escapeShellArg "${config.home.homeDirectory}/.ssh"}
         rm -f ${escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys"}
-        install -m 0600 ${../../dotfiles/authorized_keys} ${escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys"}
+        install -m 0600 ${../../../dotfiles/authorized_keys} ${escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys"}
       '';
     })
   ]);
