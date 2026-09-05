@@ -24,6 +24,8 @@ with inputs;
 
   modules.secrets.enable = lib.mkForce false;  # Secrets-free config
 
+  modules.krishnan-user.enablePresetPassword = lib.mkForce false;  # (needs secrets)
+
   networking.hostName = "krishnan-mew";  # Define your hostname.
   time.timeZone = "America/Chicago";
 

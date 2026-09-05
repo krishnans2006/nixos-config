@@ -8,7 +8,7 @@
 
   modules.krishnan-user = {
     enable = true;
-    enablePresetPassword = false;
+    enablePresetPassword = true;
   };
 
   modules.networking.enable = true;
