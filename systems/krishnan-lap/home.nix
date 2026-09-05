@@ -12,6 +12,7 @@ with inputs;
 
     # Common host config
     "${root}/systems/common/mattermost.nix"
+    "${root}/systems/common/zulip.nix"
   ];
 
   modules.impermanence.enable = true;
