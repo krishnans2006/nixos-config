@@ -111,10 +111,18 @@ in
       ".config/Mattermost/Local Storage"
       #
     ];
-    modules.impermanence.persistFiles = [
-      ".config/Mattermost/Cookies"
-      ".config/Mattermost/bounds-info.json"  # Window size/maximized (seeded once, then mutable)
-    ];
+    modules.impermanence.persistFiles = [ ".config/Mattermost/Cookies" ];
+
+    # Mattermost rewrites bounds-info.json at runtime, replacing impermanence
+    # file symlinks — same failure mode as Element's electron-config.json
+    systemd.user.services =
+      import "${root}/utils/systemd-persist.nix" { inherit lib pkgs config; }
+        [
+          {
+            name = "mattermost-bounds-info";
+            file = ".config/Mattermost/bounds-info.json";
+          }
+        ];
 
     # Autostart
     xdg.configFile."autostart/mattermost.desktop" = mkIf cfg.autostart {

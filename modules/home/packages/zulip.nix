@@ -16,12 +16,12 @@ in
           options = {
             url = mkOption {
               type = types.str;
-              description = "Zulip organization URL.";
+              description = "Zulip organization URL";
               example = "https://example.zulipchat.com";
             };
             alias = mkOption {
               type = types.str;
-              description = "Display name for the organization.";
+              description = "Display name for the organization";
             };
           };
         }
@@ -76,9 +76,7 @@ in
         name = "seedZulipDomain";
         file = ".config/Zulip/config/domain.json";
         source = (pkgs.formats.json { }).generate "domain.json" {
-          domains = map (d: {
-            inherit (d) url alias;
-          }) cfg.domains;
+          domains = map (d: { inherit (d) url alias; }) cfg.domains;
         };
       }
     ];
