@@ -38,6 +38,7 @@ in
     # Impermanence
     modules.impermanence.persistDirs = [
       ".config/vesktop/sessionData/Local Storage"  # Discord is sandboxed into sessionData
+      ".config/vesktop/sessionData/IndexedDB"  # Vencord DataStore (Vencord_cloudSecret, etc.)
       ".config/vesktop/settings"  # Synced settings for plugins, etc.
     ];
     modules.impermanence.persistFiles = [
