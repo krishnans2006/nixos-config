@@ -1,4 +1,4 @@
-# Note: This file is common (symlinked) into multiple system directories (e.g. krishnan-lap, krishnan-pc).
+# Note: This file is shared (symlinked) into multiple system directories (e.g. krishnan-lap, krishnan-pc).
 # Any changes made here will affect all systems that use this common configuration.
 # Be very careful!
 

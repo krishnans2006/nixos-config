@@ -1,1 +1,1 @@
-../common/default.nix
+../shared.default.nix
