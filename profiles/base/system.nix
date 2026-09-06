@@ -8,16 +8,6 @@
   # Memtest86+
   boot.loader.systemd-boot.memtest86.enable = true;
 
-  # Swappiness
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 15;
-    "fs.inotify.max_user_watches" = 1048576;
-  };
-
-  # Disable dev-tpmrm0.device
-  # See https://github.com/systemd/systemd/issues/33412
-  systemd.units."dev-tpmrm0.device".enable = false;
-
   # Set your time zone.
   # This is moved to individual system configurations since some systems move across timezones.
   # time.timeZone = "America/Chicago";
@@ -38,17 +28,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # TODO: check if necessary
-  hardware.enableAllFirmware = true;
-
-  # udev rules
-  services.udev.packages = with pkgs; [
-    platformio-core
-    openocd
-    via
-    probe-rs-tools
-  ];
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -57,10 +36,6 @@
 
   # Allow custom caches
   nix.settings.trusted-users = [ "krishnan" ];  # root is already trusted (see /etc/nix/nix.conf)
-
-  # Temporary fix until Zulip upgrades to Electron 40+
-  # Must be set at the system level since home-manager.useGlobalPkgs = true
-  nixpkgs.config.permittedInsecurePackages = [ "electron-39.8.10" ];
 
   # Enable the Flakes feature and the accompanying new nix command-line tool
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -79,23 +54,6 @@
     enable = true;
     enableSSHSupport = true;
   };
-
-  services.redis.servers."".enable = true;
-  programs.firejail.enable = true;
-
-  # LLDB fix
-  #nixpkgs.overlays = [
-  #  (final: prev: {
-  #    lldb = prev.lldb.overrideAttrs {
-  #      dontCheckForBrokenSymlinks = true;
-  #    };
-  #  })
-  #];
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

@@ -6,9 +6,6 @@
     #
   ];
 
-  programs.home-manager.enable = true;
-  home.stateVersion = "25.05";
-
   modules.nix-user-chroot.enable = true;
 
   modules.plasma.enable = false;

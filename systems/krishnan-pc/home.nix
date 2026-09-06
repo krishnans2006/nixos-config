@@ -6,6 +6,7 @@ with inputs;
   imports = [
     # Profiles
     "${root}/profiles/base/home.nix"
+    "${root}/profiles/default/home.nix"
     "${root}/profiles/desktop/home.nix"
 
     # Custom modules

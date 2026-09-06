@@ -1,7 +1,10 @@
 { root, ... }:
 
 {
-  imports = [ "${root}/profiles/home-only/home.nix" ];
+  imports = [
+    "${root}/profiles/base/home.nix"
+    "${root}/profiles/home-only/home.nix"
+  ];
 
   home = {
     username = "ks128";

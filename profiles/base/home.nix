@@ -1,11 +1,8 @@
-{ pkgs, ... }:
+{ lib, ... }:
 
-let
-  custom-nixfmt = pkgs.callPackage ../formatter/package.nix { };
-in
 {
-  home.username = "krishnan";
-  home.homeDirectory = "/home/krishnan";
+  home.username = lib.mkDefault "krishnan";
+  home.homeDirectory = lib.mkDefault "/home/krishnan";
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -20,38 +17,6 @@ in
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Packages that should be installed to the user profile.
-  home.packages = with pkgs; [
-    custom-nixfmt
-
-    (python314.withPackages (
-      ps: with ps; [
-        jupyterlab
-        jupyterlab-lsp
-        jedi-language-server
-        tqdm
-        matplotlib
-        numpy
-        scipy
-        pandas
-        discordpy
-      ]
-    ))
-
-    # kicad
-    # gimp
-
-    via
-
-    audacity
-    vlc
-    obs-studio
-
-    zoom-us
-
-    claude-code
-  ];
-
   # Nanorc
   home.file.".nanorc".text = ''
     set autoindent
@@ -62,7 +27,4 @@ in
 
   # GDB (for ECE 391)
   home.file.".config/gdb/gdbinit".text = "set auto-load safe-path /";
-
-  programs.vscode.enable = true;
-  programs.java.enable = true;
 }

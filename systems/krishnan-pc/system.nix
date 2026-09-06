@@ -9,6 +9,7 @@ with inputs;
 
     # Profiles
     "${root}/profiles/base/system.nix"
+    "${root}/profiles/default/system.nix"
     "${root}/profiles/desktop/system.nix"
 
     # Custom modules
