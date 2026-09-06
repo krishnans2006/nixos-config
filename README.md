@@ -30,13 +30,14 @@ Main config:
   - `home.nix` - System-specific home configuration; enables modules/packages and sets other options
   - `hardware.nix` - Auto-generated hardware configuration from `nixos-generate-config`
   - `disk.nix` - Disk configuration to be used with disko
-- `base/` - A barebones system.nix and home.nix
-- `modules/` - The bulk of the configuration; custom options that systems can enable if wanted
+- `profiles/` - Shared configs between systems, like "desktop", "headless", etc.
+- `modules/` - The bulk of the configuration; custom options that systems/profiles can enable if wanted
   - `system/` - Modules configuring system-related features
   - `home/` - Modules configuring home-related features
 - `custom/` - Custom derivations, patches, etc.
+- `utils/` - Utility functions
 - `dotfiles/` - Dotfiles used in `modules/home/shell.nix` to set up the shell
-- `secrets/` - Encrypted secrets managed by sops and sops-nix (`config/{system,home}/secrets.nix`)
+- `secrets/` - Encrypted secrets managed by sops and sops-nix (`modules/{system,home}/secrets.nix`)
 - `.sops.yaml` - Configuration file for access control to secrets
 
 Supplements:
