@@ -10,10 +10,8 @@ with inputs;
     # Disk configuration (disko)
     ./disk.nix
 
-    # Base configuration
-    "${root}/base/system.nix"
-
     # Profiles
+    "${root}/profiles/base/system.nix"
     "${root}/profiles/desktop/system.nix"
 
     # Custom modules

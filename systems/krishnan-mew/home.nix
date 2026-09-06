@@ -4,10 +4,8 @@ with inputs;
 
 {
   imports = [
-    # Base configuration
-    "${root}/base/home.nix"
-
     # Profiles
+    "${root}/profiles/base/home.nix"
     "${root}/profiles/headless/home.nix"
 
     # Custom modules

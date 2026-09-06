@@ -7,10 +7,8 @@ with inputs;
     # Include the results of the hardware scan.
     ./hardware.nix
 
-    # Base configuration
-    "${root}/base/system.nix"
-
     # Profiles
+    "${root}/profiles/base/system.nix"
     "${root}/profiles/desktop/system.nix"
 
     # Custom modules
