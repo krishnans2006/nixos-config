@@ -56,12 +56,14 @@ in
     # electron-store atomically renames over electron-config.json, which replaces
     # impermanence file symlinks and loses safeStorage pickle keys on reboot
     # So, use systemd-persist
-    systemd.user.services = import "${root}/utils/systemd-persist.nix" { inherit lib pkgs config; } [
-      {
-        name = "element-electron-config";
-        file = ".config/Element/electron-config.json";
-      }
-    ];
+    systemd.user.services =
+      import "${root}/utils/systemd-persist.nix" { inherit lib pkgs config; }
+        [
+          {
+            name = "element-electron-config";
+            file = ".config/Element/electron-config.json";
+          }
+        ];
 
     # Autostart
     xdg.configFile."autostart/element.desktop" = mkIf cfg.autostart {
