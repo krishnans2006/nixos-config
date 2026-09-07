@@ -51,69 +51,63 @@ in
           # 5GHz (priority=5) is preferred over 2.4GHz (priority=2)
 
           # Home
-          net0 = (mkPSKNetworkProfileConfig "0" (baseNetworkOptions // { priority = 5; }));
-          net1 = (mkPSKNetworkProfileConfig "1" (baseNetworkOptions // { priority = 2; }));
+          net0 = mkPSKNetworkProfileConfig "0" (baseNetworkOptions // { priority = 5; });
+          net1 = mkPSKNetworkProfileConfig "1" (baseNetworkOptions // { priority = 2; });
 
           # School
-          net2 = (mkEAPNetworkProfileConfig "2" (baseNetworkOptions // { priority = 5; }));
-          net3 = (mkEAPNetworkProfileConfig "3" (baseNetworkOptions // { priority = 0; }));
+          net2 = mkEAPNetworkProfileConfig "2" (baseNetworkOptions // { priority = 5; });
+          net3 = mkEAPNetworkProfileConfig "3" (baseNetworkOptions // { priority = 0; });
 
-          net4 = (mkPSKNetworkProfileConfig "4" (baseNetworkOptions // { priority = 5; }));
-          net5 = (mkPSKNetworkProfileConfig "5" (baseNetworkOptions // { priority = 2; }));
+          net4 = mkPSKNetworkProfileConfig "4" (baseNetworkOptions // { priority = 5; });
+          net5 = mkPSKNetworkProfileConfig "5" (baseNetworkOptions // { priority = 2; });
 
           # Hotspot
-          net6 = (mkPSKNetworkProfileConfig "6" (baseNetworkOptions // { priority = -1; }));
+          net6 = mkPSKNetworkProfileConfig "6" (baseNetworkOptions // { priority = -1; });
 
-          net7 = (mkPSKNetworkProfileConfig "7" (baseNetworkOptions // { priority = 5; }));
+          net7 = mkPSKNetworkProfileConfig "7" (baseNetworkOptions // { priority = 5; });
 
           # Apartment
-          net8 = (mkPSKNetworkProfileConfig "8" (baseNetworkOptions // { priority = 5; }));
-          net9 = (mkPSKNetworkProfileConfig "9" (baseNetworkOptions // { priority = 2; }));
-          net10 = (mkOpenNetworkProfileConfig "10" (baseNetworkOptions // { priority = 1; }));
-          net11 = (mkOpenNetworkProfileConfig "11" (baseNetworkOptions // { priority = 0; }));
+          net8 = mkPSKNetworkProfileConfig "8" (baseNetworkOptions // { priority = 5; });
+          net9 = mkPSKNetworkProfileConfig "9" (baseNetworkOptions // { priority = 2; });
+          net10 = mkOpenNetworkProfileConfig "10" (baseNetworkOptions // { priority = 1; });
+          net11 = mkOpenNetworkProfileConfig "11" (baseNetworkOptions // { priority = 0; });
 
           # VPNs
 
-          wg0 = (mkWireguardVPNProfileConfig "0" { autoconnect = true; });
-          wg1 = (mkWireguardVPNProfileConfig "1" { autoconnect = false; });
+          wg0 = mkWireguardVPNProfileConfig "0" { autoconnect = true; };
+          wg1 = mkWireguardVPNProfileConfig "1" { autoconnect = false; };
 
-          ovpn0 = (
-            mkOpenVPNProfileConfig "0" {
-              dns = true;
-              domains = true;
-              tcp = false;
-              ta = true;
-              authSha256 = true;
-              cipher = false;
-              dataCiphers = true;
-              randomHostname = false;
-              dontReneg = false;
-            }
-          );
-          ovpn1 = (
-            mkOpenVPNProfileConfig "1" {
-              tcp = true;
-              ta = false;
-              authSha256 = false;
-              cipher = true;
-              dataCiphers = false;
-              randomHostname = true;
-              dontReneg = true;
-            }
-          );
-          ovpn2 = (
-            mkOpenVPNProfileConfig "2" {
-              tcp = false;
-              ta = false;
-              authSha256 = false;
-              cipher = true;
-              dataCiphers = false;
-              randomHostname = true;
-              dontReneg = true;
-            }
-          );
+          ovpn0 = mkOpenVPNProfileConfig "0" {
+            dns = true;
+            domains = true;
+            tcp = false;
+            ta = true;
+            authSha256 = true;
+            cipher = false;
+            dataCiphers = true;
+            randomHostname = false;
+            dontReneg = false;
+          };
+          ovpn1 = mkOpenVPNProfileConfig "1" {
+            tcp = true;
+            ta = false;
+            authSha256 = false;
+            cipher = true;
+            dataCiphers = false;
+            randomHostname = true;
+            dontReneg = true;
+          };
+          ovpn2 = mkOpenVPNProfileConfig "2" {
+            tcp = false;
+            ta = false;
+            authSha256 = false;
+            cipher = true;
+            dataCiphers = false;
+            randomHostname = true;
+            dontReneg = true;
+          };
 
-          cisco0 = (mkCiscoVPNProfileConfig "0");
+          cisco0 = mkCiscoVPNProfileConfig "0";
         };
     };
 

@@ -62,7 +62,7 @@ in
           showUnreadBadge = true;
           useSpellChecker = true;
           enableHardwareAcceleration = true;
-          autostart = cfg.autostart;
+          inherit (cfg) autostart;
           hideOnStart = cfg.autostart;
           spellCheckerLocales = [ ];
           darkMode = true;

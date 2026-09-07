@@ -53,15 +53,12 @@
             venvVersionWarn
           '';
 
-          packages = (
-            with python.pkgs;
-            [
-              venvShellHook
-              pip
+          packages = with python.pkgs; [
+            venvShellHook
+            pip
 
-              # ...
-            ]
-          );
+            # ...
+          ];
         };
       }
     );

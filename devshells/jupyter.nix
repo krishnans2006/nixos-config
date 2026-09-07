@@ -53,23 +53,20 @@
             venvVersionWarn
           '';
 
-          packages = (
-            with python.pkgs;
-            [
-              venvShellHook
-              pip
+          packages = with python.pkgs; [
+            venvShellHook
+            pip
 
-              jupyterlab
-              # jupyterlab-lsp
-              # jedi-language-server
+            jupyterlab
+            # jupyterlab-lsp
+            # jedi-language-server
 
-              tqdm
-              matplotlib
-              numpy
-              scipy
-              # pandas
-            ]
-          );
+            tqdm
+            matplotlib
+            numpy
+            scipy
+            # pandas
+          ];
         };
       }
     );

@@ -100,7 +100,7 @@ rec {
       service-type = "org.freedesktop.NetworkManager.openvpn";
       connection-type = "tls";
       dev = "tun";
-      proto-tcp = mkIf (options.tcp) "yes";
+      proto-tcp = mkIf options.tcp "yes";
 
       remote = "$ovpn${id}_remote";
       remote-cert-tls = "server";
@@ -109,19 +109,19 @@ rec {
       ca = config.sops.secrets."openvpn/ovpn${id}/ca".path;
       cert = config.sops.secrets."openvpn/ovpn${id}/cert".path;
       key = config.sops.secrets."openvpn/ovpn${id}/key".path;
-      ta = mkIf (options.ta) config.sops.secrets."openvpn/ovpn${id}/ta".path;
-      ta-dir = mkIf (options.ta) "1";
+      ta = mkIf options.ta config.sops.secrets."openvpn/ovpn${id}/ta".path;
+      ta-dir = mkIf options.ta "1";
 
       cert-pass-flags = "0";
       challenge-response-flags = "0";
 
-      auth = mkIf (options.authSha256) "SHA256";
-      cipher = mkIf (options.cipher) "$ovpn${id}_cipher";
-      data-ciphers = mkIf (options.dataCiphers) "$ovpn${id}_data_ciphers";
-      data-ciphers-fallback = mkIf (options.dataCiphers) "$ovpn${id}_data_ciphers_fallback";
+      auth = mkIf options.authSha256 "SHA256";
+      cipher = mkIf options.cipher "$ovpn${id}_cipher";
+      data-ciphers = mkIf options.dataCiphers "$ovpn${id}_data_ciphers";
+      data-ciphers-fallback = mkIf options.dataCiphers "$ovpn${id}_data_ciphers_fallback";
 
-      remote-random-hostname = mkIf (options.randomHostname) "yes";
-      reneg-seconds = mkIf (options.dontReneg) "0";
+      remote-random-hostname = mkIf options.randomHostname "yes";
+      reneg-seconds = mkIf options.dontReneg "0";
     };
     ipv4 = {
       method = "auto";
