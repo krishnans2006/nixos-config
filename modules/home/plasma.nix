@@ -183,6 +183,17 @@ in
           #virtualDesktops = {}
         };
 
+        window-rules = [
+          {
+            description = "Maximize Everything";
+            match.window-types = [ "normal" ];  # Ignore splash screens, pop-ups, dialogs
+            apply = {
+              maximizehoriz = true;
+              maximizevert = true;
+            };
+          }
+        ];
+
         powerdevil = {
           AC = {
             # Suspend Session
