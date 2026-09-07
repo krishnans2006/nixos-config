@@ -3,8 +3,7 @@
 
   outputs = inputs:
   let
-    system = "x86_64-linux";
-    pkgs = inputs.nixpkgs.legacyPackages.${system};
+    forEachSystem = import ./utils/for-each-system.nix { inherit inputs; };
   in
   {
     nixosConfigurations = {
@@ -19,7 +18,7 @@
       #
     };
 
-    formatter.${system} = import ./formatter { inherit pkgs; };
+    formatter = forEachSystem ({ pkgs }: import ./formatter { inherit pkgs; });
   };
 
   inputs = {
