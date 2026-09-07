@@ -38,6 +38,7 @@ in
         kdePackages.bluedevil
         kdePackages.filelight
         kdePackages.plasma-browser-integration
+        kdePackages.krdc
         # kdePackages.kdenlive
         # krita
       ];
