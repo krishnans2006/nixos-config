@@ -25,6 +25,7 @@ in
         ".local/share/baloo"  # File Indexing
         ".local/share/kwalletd"  # Wallet
         ".local/state/wireplumber"  # Audio (volume, devices, etc.) state
+        ".config/kdeconnect"  # KDE Connect
       ];
 
       modules.impermanence.persistFiles = [
