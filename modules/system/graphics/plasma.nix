@@ -12,8 +12,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    # Enable the X11 windowing system.
-    services.xserver.enable = true;
+    # Base graphics config
+    modules.graphics.enable = mkForce true;
 
     # Enable the KDE Plasma Desktop Environment.
     services.displayManager = {
@@ -23,23 +23,10 @@ in
     };
     services.desktopManager.plasma6.enable = true;
 
-    # Fix blurry vscode
-    environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-    # Configure keymap in X11
-    services.xserver.xkb = {
-      layout = "us";
-      variant = "";
-    };
-
     # Enable KDE Connect (Phone Integration)
     programs.kdeconnect.enable = true;
 
     # Enable Partition Manager
     programs.partition-manager.enable = true;
-
-    # Enable flatpak
-    # This is here instead of base/ since it requires a desktop environment
-    services.flatpak.enable = true;
   };
 }

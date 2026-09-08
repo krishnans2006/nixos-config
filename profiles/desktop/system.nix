@@ -13,6 +13,7 @@
     enablePresetPassword = true;
   };
 
+  modules.graphics.enable = true;
   modules.plasma.enable = true;
   modules.audio.enable = true;
   modules.bluetooth.enable = true;
