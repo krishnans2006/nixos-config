@@ -17,6 +17,12 @@ home-manager.lib.homeManagerConfiguration {
     sops-nix.homeManagerModules.sops
     plasma-manager.homeModules.plasma-manager
     nix-flatpak.homeManagerModules.nix-flatpak
+
+    nix-index-database.homeModules.nix-index
+    {
+      programs.nix-index-database.comma.enable = true;
+    }
+
     ./home.nix
   ];
 }
