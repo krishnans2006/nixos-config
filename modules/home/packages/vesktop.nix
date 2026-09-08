@@ -46,7 +46,7 @@ in
     ];
 
     # Vesktop rewrites state.json at runtime; seed defaults only if missing/symlink
-    home.activation = import "${root}/utils/seed-file.nix" { inherit lib config; } [
+    home.activation = import (root + "/utils/seed-file.nix") { inherit lib config; } [
       {
         name = "seedVesktopState";
         file = ".config/vesktop/state.json";

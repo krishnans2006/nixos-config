@@ -57,7 +57,7 @@ in
     # impermanence file symlinks and loses safeStorage pickle keys on reboot
     # So, use systemd-persist
     systemd.user.services =
-      import "${root}/utils/systemd-persist.nix" { inherit lib pkgs config; }
+      import (root + "/utils/systemd-persist.nix") { inherit lib pkgs config; }
         [
           {
             name = "element-electron-config";

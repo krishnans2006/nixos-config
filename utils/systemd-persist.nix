@@ -7,7 +7,7 @@ with lib;
 # replaces impermanence file symlinks. No-ops when impermanence is disabled.
 #
 # Usage:
-#   systemd.user.services = import "${root}/utils/systemd-persist.nix" { inherit lib pkgs config; } [
+#   systemd.user.services = import (root + "/utils/systemd-persist.nix") { inherit lib pkgs config; } [
 #     {
 #       name = "element-electron-config";
 #       file = ".config/Element/electron-config.json";

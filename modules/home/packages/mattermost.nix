@@ -36,7 +36,7 @@ in
 
     # Mattermost rewrites these JSON files at runtime (writeFileSync)
     # xdg.configFile would make them read-only store symlinks and break the app
-    home.activation = import "${root}/utils/seed-file.nix" { inherit lib config; } [
+    home.activation = import (root + "/utils/seed-file.nix") { inherit lib config; } [
       {
         name = "seedMattermostConfig";
         file = ".config/Mattermost/config.json";
@@ -116,7 +116,7 @@ in
     # Mattermost rewrites bounds-info.json at runtime, replacing impermanence
     # file symlinks — same failure mode as Element's electron-config.json
     systemd.user.services =
-      import "${root}/utils/systemd-persist.nix" { inherit lib pkgs config; }
+      import (root + "/utils/systemd-persist.nix") { inherit lib pkgs config; }
         [
           {
             name = "mattermost-bounds-info";

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -38,7 +38,7 @@ in
         shell = pkgs.zsh;
 
         # See ssh-server.nix
-        openssh.authorizedKeys.keyFiles = [ ../../dotfiles/authorized_keys ];
+        openssh.authorizedKeys.keyFiles = [ (root + "/dotfiles/authorized_keys") ];
       };
       security.sudo.wheelNeedsPassword = false;
 

@@ -2,8 +2,8 @@
 
 {
   imports = [
-    "${root}/profiles/base/home.nix"
-    "${root}/profiles/home-only/home.nix"
+    (root + "/profiles/base/home.nix")
+    (root + "/profiles/home-only/home.nix")
   ];
 
   home = {

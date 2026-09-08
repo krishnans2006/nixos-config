@@ -10,7 +10,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {
     inherit inputs;
     inherit (inputs) import-tree;
-    root = inputs.self;
+    root = ../..;
   };
 
   modules = [
@@ -28,7 +28,7 @@ nixpkgs.lib.nixosSystem {
       home-manager.extraSpecialArgs = {
         inherit inputs;
         inherit (inputs) import-tree;
-        root = inputs.self;
+        root = ../..;
       };
 
       home-manager.sharedModules = [

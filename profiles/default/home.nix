@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, root, ... }:
 
 let
-  custom-nixfmt = pkgs.callPackage ../../formatter/package.nix { };
+  custom-nixfmt = pkgs.callPackage (root + "/formatter/package.nix") { };
 in
 {
   # Packages that should be installed to the user profile.

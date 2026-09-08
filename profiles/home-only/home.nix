@@ -2,7 +2,7 @@
 
 {
   imports = [
-    (import-tree "${root}/modules/home")
+    (import-tree (root + "/modules/home"))
     #
   ];
 

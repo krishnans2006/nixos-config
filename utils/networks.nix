@@ -5,7 +5,7 @@ with lib;
 # NetworkManager profile builders for WiFi and VPN connections.
 #
 # Usage:
-#   inherit (import "${root}/utils/networks.nix" { inherit lib config; })
+#   inherit (import (root + "/utils/networks.nix") { inherit lib config; })
 #     mkOpenNetworkProfileConfig
 #     mkPSKNetworkProfileConfig
 #     mkEAPNetworkProfileConfig

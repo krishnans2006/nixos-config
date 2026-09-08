@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -13,10 +13,10 @@ let
   # of the root flake as a dependency (which technically works, but forces a
   # full rebuild of zed whenever anything in this repo changes)
   zed-editor-patched = pkgs.zed-editor.overrideAttrs (prev: {
-    patches = prev.patches ++ [ ../../../custom/zed-editor-copilot.patch ];
+    patches = prev.patches ++ [ (root + "/custom/zed-editor-copilot.patch") ];
   });
 
-  nixfmt = pkgs.callPackage ../../../formatter/package.nix { };
+  nixfmt = pkgs.callPackage (root + "/formatter/package.nix") { };
 in
 {
   options.modules.packages.zed-editor = {

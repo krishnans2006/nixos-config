@@ -6,7 +6,7 @@ let
   cfg = config.modules.networks;
 
   # Network profile helpers
-  inherit (import "${root}/utils/networks.nix" { inherit lib config; })
+  inherit (import (root + "/utils/networks.nix") { inherit lib config; })
     mkOpenNetworkProfileConfig
     mkPSKNetworkProfileConfig
     mkEAPNetworkProfileConfig

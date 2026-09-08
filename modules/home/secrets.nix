@@ -20,7 +20,7 @@ in
   config = mkIf cfg.enable {
     sops = {
       age.keyFile = "${optionalString useImpermanence "/persist"}/home/krishnan/.config/sops/age/keys.txt";
-      defaultSopsFile = "${root}/secrets/home.yaml";
+      defaultSopsFile = root + "/secrets/home.yaml";
       defaultSopsFormat = "yaml";
 
       age.sshKeyPaths = [ ];

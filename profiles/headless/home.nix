@@ -3,7 +3,7 @@
 {
   imports = [
     # Custom modules
-    (import-tree "${root}/modules/home")
+    (import-tree (root + "/modules/home"))
   ];
 
   modules.secrets.enable = true;

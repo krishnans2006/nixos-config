@@ -5,12 +5,12 @@ with inputs;
 {
   imports = [
     # Profiles
-    "${root}/profiles/base/home.nix"
-    "${root}/profiles/default/home.nix"
-    "${root}/profiles/desktop/home.nix"
+    (root + "/profiles/base/home.nix")
+    (root + "/profiles/default/home.nix")
+    (root + "/profiles/desktop/home.nix")
 
     # Custom modules
-    (import-tree "${root}/modules/home")
+    (import-tree (root + "/modules/home"))
   ];
 
   # Custom config

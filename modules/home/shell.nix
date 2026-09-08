@@ -85,7 +85,7 @@ in
     (mkIf cfg.enableDotfiles {
       # link all files in `./dotfiles` to `~/.dotfiles`
       home.file.".dotfiles" = {
-        source = "${root}/dotfiles";
+        source = root + "/dotfiles";
         recursive = true;  # link recursively
         executable = true;  # make all files executable
       };

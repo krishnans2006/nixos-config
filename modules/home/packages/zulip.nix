@@ -16,7 +16,7 @@ in
 
     # Zulip rewrites settings.json on startup
     # xdg.configFile would make it a read-only store symlink and hang on load
-    home.activation = import "${root}/utils/seed-file.nix" { inherit lib config; } [
+    home.activation = import (root + "/utils/seed-file.nix") { inherit lib config; } [
       {
         name = "seedZulipSettings";
         file = ".config/Zulip/config/settings.json";

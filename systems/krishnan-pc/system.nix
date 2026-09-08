@@ -8,12 +8,12 @@ with inputs;
     ./hardware.nix
 
     # Profiles
-    "${root}/profiles/base/system.nix"
-    "${root}/profiles/default/system.nix"
-    "${root}/profiles/desktop/system.nix"
+    (root + "/profiles/base/system.nix")
+    (root + "/profiles/default/system.nix")
+    (root + "/profiles/desktop/system.nix")
 
     # Custom modules
-    (import-tree "${root}/modules/system")
+    (import-tree (root + "/modules/system"))
   ];
 
   # Custom config

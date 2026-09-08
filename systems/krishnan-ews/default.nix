@@ -7,7 +7,7 @@ home-manager.lib.homeManagerConfiguration {
 
   extraSpecialArgs = {
     inherit (inputs) import-tree;
-    root = self;
+    root = ../..;
   };
 
   modules = [

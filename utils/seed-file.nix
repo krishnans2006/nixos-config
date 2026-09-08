@@ -7,7 +7,7 @@ with lib;
 # its config at runtime and a read-only xdg.configFile symlink would break it.
 #
 # Usage:
-#   home.activation = import "${root}/utils/seed-file.nix" { inherit lib config; } [
+#   home.activation = import (root + "/utils/seed-file.nix") { inherit lib config; } [
 #     {
 #       name = "seedZulipSettings";
 #       file = ".config/Zulip/config/settings.json";

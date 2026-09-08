@@ -5,8 +5,8 @@ with lib;
 let
   cfg = config.modules.vivo-kbd-rgb;
 
-  vrgb = pkgs.callPackage "${root}/custom/vrgb.nix" { };
-  vrgb-rainbow = pkgs.callPackage "${root}/custom/vrgb-rainbow.nix" { inherit vrgb; };
+  vrgb = pkgs.callPackage (root + "/custom/vrgb.nix") { };
+  vrgb-rainbow = pkgs.callPackage (root + "/custom/vrgb-rainbow.nix") { inherit vrgb; };
 in
 {
   options.modules.vivo-kbd-rgb = {
