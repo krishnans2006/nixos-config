@@ -2,7 +2,7 @@
 # Any changes made here will affect all systems that use this common configuration.
 # Be very careful!
 
-{ inputs, ... }:
+{ inputs, root, ... }:
 
 with inputs;
 
@@ -10,7 +10,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {
     inherit inputs;
     inherit (inputs) import-tree;
-    root = ../..;
+    inherit root;
   };
 
   modules = [
@@ -28,7 +28,7 @@ nixpkgs.lib.nixosSystem {
       home-manager.extraSpecialArgs = {
         inherit inputs;
         inherit (inputs) import-tree;
-        root = ../..;
+        inherit root;
       };
 
       home-manager.sharedModules = [

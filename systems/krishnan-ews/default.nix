@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, root, ... }:
 
 with inputs;
 
@@ -7,7 +7,7 @@ home-manager.lib.homeManagerConfiguration {
 
   extraSpecialArgs = {
     inherit (inputs) import-tree;
-    root = ../..;
+    inherit root;
   };
 
   modules = [

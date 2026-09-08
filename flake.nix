@@ -3,18 +3,19 @@
 
   outputs = inputs:
   let
+    root = ./.;
     forEachSystem = import ./utils/for-each-system.nix { inherit inputs; };
   in
   {
     nixosConfigurations = {
-      krishnan-lap = import ./systems/krishnan-lap { inherit inputs; };
-      krishnan-pc = import ./systems/krishnan-pc { inherit inputs; };
-      krishnan-vivo = import ./systems/krishnan-vivo { inherit inputs; };
-      krishnan-mew = import ./systems/krishnan-mew { inherit inputs; };
+      krishnan-lap = import ./systems/krishnan-lap { inherit inputs root; };
+      krishnan-pc = import ./systems/krishnan-pc { inherit inputs root; };
+      krishnan-vivo = import ./systems/krishnan-vivo { inherit inputs root; };
+      krishnan-mew = import ./systems/krishnan-mew { inherit inputs root; };
     };
 
     homeConfigurations = {
-      krishnan-ews = import ./systems/krishnan-ews { inherit inputs; };
+      krishnan-ews = import ./systems/krishnan-ews { inherit inputs root; };
       #
     };
 
