@@ -96,6 +96,11 @@ in
             PreviewSize = 16;
           };
         };
+        # See window-rules below for explanation
+        kwinrulesrc."1" = {
+          hastransientparent = false;
+          hastransientparentmatch = 1;  # ExactBoolMatch
+        };
       };
 
       dataFile = {
@@ -183,7 +188,9 @@ in
       window-rules = [
         {
           description = "Maximize Everything";
-          match.window-types = [ "normal" ];  # Ignore splash screens, pop-ups, dialogs
+          # Ignore splash screens, pop-ups, dialogs
+          # Many Qt dialogs are still typed as "normal", see kwinrulesrc."1" above for extra filtering
+          match.window-types = [ "normal" ];
           apply = {
             maximizehoriz = true;
             maximizevert = true;
