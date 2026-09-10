@@ -60,5 +60,6 @@
     libreoffice.enable = true;
     jetbrains.enableAll = false;
     zed-editor.enable = true;
+    fastx-client.enable = true;
   };
 }
