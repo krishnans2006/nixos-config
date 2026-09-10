@@ -23,6 +23,9 @@ in
       ]
     ))
 
+    pandoc
+    texliveMedium
+
     # kicad
     # gimp
 
