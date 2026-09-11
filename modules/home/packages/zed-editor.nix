@@ -34,22 +34,32 @@ in
       package = zed-editor-patched;
       installRemoteServer = true;
 
-      extraPackages = with pkgs; [
-        nil
-        nixd
-        nixfmt
-        ruff
-        texlab
-        package-version-server
-        tinymist
-        rust-analyzer
+      extraPackages =
+        with pkgs;
+        let
+          # See https://github.com/RowanTL/nix-configuration/blob/02bc4da9e6b0d5a0b3c1bf7a19199506c0ef589c/modules/home/ide/zed.nix#L13-L17
+          matlab_ls = pkgs.writeShellScriptBin "matlab_ls" ''
+            exec ${lib.getExe pkgs.matlab-language-server} "$@"
+          '';
+        in
+        [
+          nil
+          nixd
+          nixfmt
+          ruff
+          texlab
+          package-version-server
+          matlab-language-server
+          matlab_ls
+          tinymist
+          rust-analyzer
 
-        cursor-cli
+          cursor-cli
 
-        zed-discord-presence
-        zed-wakatime-ls
-        copilot-language-server
-      ];
+          zed-discord-presence
+          zed-wakatime-ls
+          copilot-language-server
+        ];
 
       mutableUserSettings = false;
       mutableUserKeymaps = false;
@@ -73,6 +83,7 @@ in
         #jupyter??
         "latex"
         "linkerscript"
+        "matlab"
         "nix"
         "toml"
         "typst"
