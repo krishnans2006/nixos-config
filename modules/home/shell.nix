@@ -176,7 +176,7 @@ in
       };
 
       # Impermanence
-      # modules.impermanence.persistFiles = [ ".local/share/zoxide/db.zo" ];
+      modules.impermanence.persistDirs = [ ".local/share/zoxide" ];  # db.zo
     })
   ]);
 }
