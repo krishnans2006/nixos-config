@@ -55,6 +55,8 @@ in
           rust-analyzer
 
           cursor-cli
+          antigravity-acp
+          antigravity-cli
 
           zed-discord-presence
           zed-wakatime-ls
@@ -240,6 +242,15 @@ in
             args = [ "--force" "--approve-mcps" "acp" ];
             env."CURSOR_AGENT_EXECUTABLE" = "${pkgs.cursor-cli}/bin/cursor-agent";
             default_config_options.model = "claude-opus-4-8[thinking=true,context=300k,effort=high,fast=false]";
+          };
+
+          # Can't use type=registry due to lack of nix-ld
+          # See https://discuss.ai.google.dev/t/179763 for env vars
+          "antigravity-acp" = {
+            type = "custom";
+            command = "${pkgs.antigravity-acp}/bin/agy_acp_server";
+            args = [ "--uid=" ];
+            env.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
           };
         };
       };
