@@ -252,6 +252,7 @@ in
             command = "${pkgs.antigravity-acp}/bin/agy_acp_server";
             args = [ "--uid=" ];
             env.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+            default_mode = "yolo";  # default, auto_edit
           };
         };
       };
