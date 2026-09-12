@@ -87,6 +87,7 @@ in
         "linkerscript"
         "matlab"
         "nix"
+        "proto"
         "toml"
         "typst"
         "verilog"
