@@ -263,11 +263,11 @@ in
 
     # Impermanence
     # ~/.config/zed doesn't need persistence since it's declaratively configured
-    # .gemini holds OAuth + history for Antigravity (ACP, CLI, etc.)
     modules.impermanence.persistDirs = [
       ".local/share/zed"
-      ".config/cursor"
-      ".gemini"
+      ".config/github-copilot"  # Copilot OAuth
+      ".config/cursor"  # Cursor OAuth
+      ".gemini"  # Antigravity OAuth + history
     ];
   };
 }
