@@ -42,4 +42,6 @@ in
 
   programs.vscode.enable = true;
   programs.java.enable = true;
+
+  modules.impermanence.persistDirs = [ ".config/Code" ".vscode" ];
 }
