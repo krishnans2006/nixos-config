@@ -16,7 +16,7 @@
 
     homeConfigurations = {
       krishnan-ews = import ./systems/krishnan-ews { inherit inputs root; };
-      #
+      krishnan-janux = import ./systems/krishnan-janux { inherit inputs root; };
     };
 
     formatter = forEachSystem ({ pkgs }: import ./formatter { inherit pkgs; });
