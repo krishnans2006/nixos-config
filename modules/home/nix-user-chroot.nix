@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -8,6 +8,7 @@ let
   homeDirectory = config.home.homeDirectory;
   nixProfileDirectory = "${homeDirectory}/.nix-profile";
   launcherPath = "${homeDirectory}/.local/bin/home-only-shell";
+  sshConfigFile = "${homeDirectory}/.ssh/config";
 
   launcherContent = ''
     #!/bin/sh
@@ -33,6 +34,23 @@ let
     "${homeDirectory}/.zshrc"
     #
   ];
+
+  # Inside the user namespace, root-owned host files under /etc/ssh appear as
+  # nobody:nobody. OpenSSH rejects those configs; -F skips the system file.
+  opensshChrootSafe = hiPrio (
+    pkgs.symlinkJoin {
+      name = "openssh-nix-user-chroot";
+      paths = [ pkgs.openssh ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        for bin in ssh scp sftp; do
+          wrapProgram "$out/bin/$bin" \
+            --add-flags -F \
+            --add-flags ${escapeShellArg sshConfigFile}
+        done
+      '';
+    }
+  );
 in
 {
   options.modules.nix-user-chroot = {
@@ -57,5 +75,7 @@ in
         '';
 
     programs.zsh.localVariables.ZSH_DISABLE_COMPFIX = true;
+
+    home.packages = [ opensshChrootSafe ];
   };
 }
