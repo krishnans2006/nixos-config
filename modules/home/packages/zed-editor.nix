@@ -171,7 +171,7 @@ in
         lsp = {
           "tinymist" = {
             # 127.0.0.1:23635
-            initialization_options.preview.background.enabled = true;
+            initialization_options.preview.background.enabled = false;
 
             settings.formatterMode = "typstyle";  # "typstfmt"
           };
