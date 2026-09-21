@@ -333,6 +333,13 @@ in
       };
     };
 
+    # API Keys
+    sops.secrets."api/lumen" = { };
+    ## This is an internal home-manager variable to add to hm-session-vars.sh
+    home.sessionVariablesExtra = ''
+      export LUMEN_API_KEY="$(cat ${config.sops.secrets."api/lumen".path})"
+    '';
+
     # Impermanence
     # ~/.config/zed doesn't need persistence since it's declaratively configured
     modules.impermanence.persistDirs = [
