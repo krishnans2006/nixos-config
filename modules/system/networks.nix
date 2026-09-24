@@ -76,6 +76,11 @@ in
 
           wg0 = mkWireguardVPNProfileConfig "0" { autoconnect = true; };
           wg1 = mkWireguardVPNProfileConfig "1" { autoconnect = false; };
+          wg2 = mkWireguardVPNProfileConfig "2" {
+            autoconnect = false;
+            psk = true;
+            ipv6 = true;
+          };
 
           ovpn0 = mkOpenVPNProfileConfig "0" {
             dns = true;
