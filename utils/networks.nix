@@ -51,6 +51,8 @@ rec {
 
   # Options:
   # - autoconnect: boolean, whether to autoconnect on startup
+  # - psk: boolean, whether to use a preshared key
+  # - ipv6: boolean, whether to configure IPv6 interface address and DNS
   mkWireguardVPNProfileConfig = id: options: {
     connection = {
       id = "$wg${id}_name";
@@ -62,6 +64,8 @@ rec {
     "wireguard-peer\.$wg${id}_peer" = {
       endpoint = "$wg${id}_endpoint";
       allowed-ips = "$wg${id}_allowed_ips";
+      preshared-key = mkIf (options ? psk) "$wg${id}_psk";
+      preshared-key-flags = mkIf (options ? psk) "0";
     };
     ipv4 = {
       method = "manual";
@@ -70,7 +74,10 @@ rec {
       dns-search = "$wg${id}_dns_names";
     };
     ipv6 = {
-      method = "disabled";
+      method = if (options ? ipv6) then "manual" else "disabled";
+      address1 = mkIf (options ? ipv6) "$wg${id}_ipv6_address";
+      dns = mkIf (options ? ipv6) "$wg${id}_ipv6_dns_ips";
+      dns-search = mkIf (options ? ipv6) "$wg${id}_dns_names";
       addr-gen-mode = "stable-privacy";
     };
   };
