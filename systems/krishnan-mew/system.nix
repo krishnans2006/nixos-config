@@ -40,4 +40,7 @@ with inputs;
     ];
   };
   networking.defaultGateway = "23.152.236.1";
+
+  # QEMU Guest Agent
+  services.qemuGuest.enable = true;
 }
