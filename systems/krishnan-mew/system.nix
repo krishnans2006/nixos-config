@@ -30,7 +30,7 @@ with inputs;
 
   # Static IP
   networking.useDHCP = false;
-  networking.interfaces.lo = {
+  networking.interfaces."ens18" = {
     useDHCP = false;
     ipv4.addresses = [
       {
