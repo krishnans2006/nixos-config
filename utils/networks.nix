@@ -159,7 +159,10 @@ rec {
       cookie-flags = "2";
       gateway-flags = "2";
       gwcert-flags = "2";
+      lasthost-flags = "0";
       stoken_string-flags = "0";
+      "form:main:password-flags" = "0";
+      "form:main:secondary_password-flags" = "0";
 
       enable_csd_trojan = "no";
       pem_passphrase_fsid = "no";
@@ -167,8 +170,9 @@ rec {
     };
     vpn-secrets = {
       autoconnect = "yes";
-      save_passwords = "no";
+      save_passwords = "yes";
       save_plaintext_cookies = "no";
+      lasthost = "$cisco${id}_gateway";
       "form:main:group_list" = "$cisco${id}_group";
       "form:main:username" = "$cisco${id}_username";
       "form:main:password" = "$cisco${id}_password";
@@ -177,7 +181,7 @@ rec {
     ipv4.method = "auto";
     ipv6 = {
       method = "auto";
-      addr-gen-mode = "default";
+      addr-gen-mode = "stable-privacy";
     };
   };
 }
