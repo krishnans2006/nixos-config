@@ -34,10 +34,10 @@ with inputs;
     useDHCP = false;
     ipv4.addresses = [
       {
-        address = "23.152.236.67";
-        prefixLength = 25;
+        address = "23.152.236.215";
+        prefixLength = 24;
       }
     ];
   };
-  networking.defaultGateway = "23.152.236.64";
+  networking.defaultGateway = "23.152.236.1";
 }
