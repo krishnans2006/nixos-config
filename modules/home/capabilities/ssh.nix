@@ -74,6 +74,18 @@ in
             HostName = "ras2.tjhsst.edu";  # 198.38.18.201
             User = "2024kshankar";
           };
+          "janux-spr5" = {
+            HostName = "janux-spr5.csl.illinois.edu";
+            User = "ks128";
+          };
+          "janux-emr2" = {
+            HostName = "janux-emr2-01.csl.illinois.edu";
+            User = "ks128";
+          };
+          "janux-08" = {
+            HostName = "janux-00.csl.illinois.edu";
+            User = "ks128";
+          };
         };
       };
     }
