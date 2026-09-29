@@ -25,6 +25,11 @@
     enableNMIntegration = true;
   };
 
+  modules.fs-mounts = {
+    tjcsl = true;
+    # ews = true;
+  };
+
   modules.printing.enable = true;
   modules.docker.enable = true;
   modules.iphone.enable = true;

@@ -24,10 +24,6 @@
   };
   modules.ssh.enable = true;
   modules.tailscale.enable = true;
-  modules.fs-mounts = {
-    tjcsl = true;
-    # ews = true;
-  };
 
   modules.fonts.enable = true;
 
