@@ -89,18 +89,10 @@ stdenv.mkDerivation (finalAttrs: {
       exec = "fastx5";
       icon = "fastx";
       terminal = false;
-      categories = [
-        "Network"
-        "RemoteAccess"
-      ];
+      categories = [ "Network" "RemoteAccess" ];
       startupNotify = true;
       startupWMClass = "fastx5";
-      keywords = [
-        "fastx"
-        "remote"
-        "ssh"
-        "vnc"
-      ];
+      keywords = [ "fastx" "remote" "ssh" "vnc" ];
     })
     (makeDesktopItem {
       name = "fastx-uri";

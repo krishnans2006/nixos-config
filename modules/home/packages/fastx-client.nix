@@ -15,10 +15,7 @@ in
     home.packages = [ fastxClient ];
 
     # Qt QStandardPaths + client data
-    modules.impermanence.persistDirs = [
-      ".config/StarNet Communications"
-      ".FastX"
-    ];
+    modules.impermanence.persistDirs = [ ".config/StarNet Communications" ".FastX" ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/fastx" = [ "fastx-uri.desktop" ];
