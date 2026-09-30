@@ -47,9 +47,10 @@ in
   options.modules.fs-mounts = {
     tjcsl = mkEnableOption "Enable systemd user mounts for TJ CSL filesystem";
     ews = mkEnableOption "Enable systemd user mounts for UIUC EWS filesystem";
+    janux = mkEnableOption "Enable systemd user mounts for Janux filesystem";
   };
 
-  config = mkIf (cfg.tjcsl || cfg.ews) {
+  config = mkIf (cfg.tjcsl || cfg.ews || cfg.janux) {
     home.packages = [ pkgs.sshfs ];
 
     systemd.user.services = mkMerge [
@@ -57,7 +58,15 @@ in
         "mount-tjcsl" = mkSSHFSService {
           description = "SSHFS mount for TJ CSL filesystem";
           what = "2024kshankar@ras2.tjhsst.edu:/csl/users/2024kshankar";
-          where = "/home/krishnan/Filesystems/tjCSL";
+          where = "${config.home.homeDirectory}/Filesystems/tjCSL";
+        };
+      })
+
+      (mkIf cfg.janux {
+        "mount-janux" = mkSSHFSService {
+          description = "SSHFS mount for Janux filesystem";
+          what = "janux-spr5:/fast-lab-share/ks128";
+          where = "${config.home.homeDirectory}/Filesystems/janux";
         };
       })
 
@@ -66,7 +75,7 @@ in
       #   "mount-ews" = mkSSHFSService {
       #     description = "SSHFS mount for UIUC EWS filesystem";
       #     what = "ks128@linux.ews.illinois.edu:/home/ks128";
-      #     where = "/home/krishnan/Filesystems/EWS";
+      #     where = "${config.home.homeDirectory}/Filesystems/EWS";
       #   };
       # })
     ];
