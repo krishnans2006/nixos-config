@@ -53,6 +53,7 @@ in
           matlab_ls
           tinymist
           rust-analyzer
+          slang-server
 
           cursor-cli
           antigravity-acp
