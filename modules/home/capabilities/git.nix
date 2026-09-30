@@ -24,6 +24,8 @@ in
           core.autocrlf = "input";
           pull.rebase = false;
           push.autoSetupRemote = true;
+
+          safe.directory = "/mnt/*";
         };
 
         signing = {
