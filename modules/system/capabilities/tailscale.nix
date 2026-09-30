@@ -12,7 +12,7 @@ in
     enableTaildrive = mkEnableOption "Enable Tailscale Taildrive";
     taildrivePath = mkOption {
       type = types.str;
-      default = "/home/krishnan/Filesystems/Tailscale";
+      default = "/home/krishnan/Filesystems/tailscale";
       description = "Path to mount Taildrive";
     };
   };

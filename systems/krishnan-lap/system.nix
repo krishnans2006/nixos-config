@@ -27,10 +27,7 @@ with inputs;
 
   modules.impermanence.enable = true;
 
-  modules.tailscale = {
-    enableTaildrive = true;
-    taildrivePath = "/home/krishnan/Filesystems/Tailscale";
-  };
+  modules.tailscale.enableTaildrive = true;
 
   modules.gaming.enable = false;
   modules.waydroid.enable = false;
