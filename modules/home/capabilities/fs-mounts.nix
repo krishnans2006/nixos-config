@@ -58,7 +58,7 @@ in
         "mount-tjcsl" = mkSSHFSService {
           description = "SSHFS mount for TJ CSL filesystem";
           what = "2024kshankar@ras2.tjhsst.edu:/csl/users/2024kshankar";
-          where = "${config.home.homeDirectory}/Filesystems/tjCSL";
+          where = "${config.home.homeDirectory}/Filesystems/tjcsl";
         };
       })
 
