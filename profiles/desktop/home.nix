@@ -27,7 +27,7 @@
   modules.fs-mounts = {
     tjcsl = true;
     janux = true;
-    # ews = true;
+    ews = true;
   };
 
   modules.fonts.enable = true;

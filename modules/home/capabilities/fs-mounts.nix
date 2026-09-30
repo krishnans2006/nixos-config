@@ -34,6 +34,8 @@ let
           "UserKnownHostsFile=/dev/null"
           "-o"
           "BatchMode=yes"
+          "-o"
+          "ssh_command=ssh -o RemoteCommand=none -o RequestTTY=no"
         ];
         ExecStop = escapeShellArgs [ "/run/wrappers/bin/fusermount" "-u" where ];
         Restart = "on-failure";
@@ -70,21 +72,13 @@ in
         };
       })
 
-      # EWS server hangs during non-interactive SFTP/sshfs auth
-      # (mkIf cfg.ews {
-      #   "mount-ews" = mkSSHFSService {
-      #     description = "SSHFS mount for UIUC EWS filesystem";
-      #     what = "ks128@linux.ews.illinois.edu:/home/ks128";
-      #     where = "${config.home.homeDirectory}/Filesystems/EWS";
-      #   };
-      # })
-    ];
-
-    assertions = [
-      {
-        assertion = !cfg.ews;
-        message = "EWS filesystem is broken";
-      }
+      (mkIf cfg.ews {
+        "mount-ews" = mkSSHFSService {
+          description = "SSHFS mount for UIUC EWS filesystem";
+          what = "ews:/home/ks128";
+          where = "${config.home.homeDirectory}/Filesystems/ews";
+        };
+      })
     ];
   };
 }
