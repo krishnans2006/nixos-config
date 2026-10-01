@@ -24,8 +24,6 @@ let
           where
           "-f"
           "-o"
-          "reconnect"
-          "-o"
           "ConnectTimeout=5"
           "-o"
           "ServerAliveInterval=15"
