@@ -10,6 +10,7 @@ let
     {
       Unit = {
         Description = description;
+        PartOf = [ "fs-mounts.target" ];
         Wants = [ "network-online.target" ];
         After = [ "network-online.target" ];
       };
@@ -25,6 +26,8 @@ let
           "-o"
           "reconnect"
           "-o"
+          "ConnectTimeout=5"
+          "-o"
           "ServerAliveInterval=15"
           "-o"
           "ServerAliveCountMax=3"
@@ -35,14 +38,20 @@ let
           "-o"
           "BatchMode=yes"
           "-o"
-          "ssh_command=ssh -o RemoteCommand=none -o RequestTTY=no"
+          "auto_unmount"
+          "-o"
+          "ssh_command=ssh -o RemoteCommand=none -o RequestTTY=no -o ConnectTimeout=5"
         ];
-        ExecStop = escapeShellArgs [ "/run/wrappers/bin/fusermount" "-u" where ];
-        Restart = "on-failure";
-        RestartSec = "5";
+        ExecStop = escapeShellArgs [
+          "/run/wrappers/bin/fusermount"
+          "-u"
+          "-z"
+          where
+        ];
+        Restart = "no";
       };
 
-      Install.WantedBy = [ "default.target" ];
+      Install.WantedBy = [ "default.target" "fs-mounts.target" ];
     };
 in
 {
@@ -54,6 +63,15 @@ in
 
   config = mkIf (cfg.tjcsl || cfg.ews || cfg.janux) {
     home.packages = [ pkgs.sshfs ];
+
+    systemd.user.targets.fs-mounts = {
+      Unit = {
+        Description = "Remote SSHFS mounts target";
+        Wants = [ "network-online.target" ];
+        After = [ "network-online.target" ];
+      };
+      Install.WantedBy = [ "default.target" ];
+    };
 
     systemd.user.services = mkMerge [
       (mkIf cfg.tjcsl {
