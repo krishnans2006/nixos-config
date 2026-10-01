@@ -15,6 +15,14 @@ let
         After = [ "network-online.target" ];
       };
 
+      # The idea here is to fail very quickly
+      # If the initial connection doesn't succeed within 5 seconds, we fail
+      # If we get disconnected for 5 * 3 = 15 seconds, we fail
+      # There are two ways to "bring it back up":
+      # - Run `systemctl --user start fs-mounts.target`
+      # - Trigger the NetworkManager dispatcher script in modules/system/capabilities/fs-mounts.nix
+      #   by connecting to a VPN or network
+      # This is all so that the filesystem rarely hangs waiting for the connection
       Service = {
         Type = "simple";
         ExecStartPre = escapeShellArgs [ "${pkgs.coreutils}/bin/mkdir" "-p" where ];
@@ -26,7 +34,7 @@ let
           "-o"
           "ConnectTimeout=5"
           "-o"
-          "ServerAliveInterval=15"
+          "ServerAliveInterval=5"
           "-o"
           "ServerAliveCountMax=3"
           "-o"

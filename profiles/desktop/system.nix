@@ -24,6 +24,7 @@
     enable = true;
     enableNMIntegration = true;
   };
+  modules.fs-mounts.enable = true;
 
   modules.printing.enable = true;
   modules.docker.enable = true;
