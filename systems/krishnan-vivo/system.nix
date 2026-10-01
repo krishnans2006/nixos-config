@@ -27,6 +27,8 @@ with inputs;
 
   modules.impermanence.enable = true;
 
+  modules.plasma.autoLogin = true;
+
   modules.tailscale.enableTaildrive = true;
 
   modules.gaming.enable = false;

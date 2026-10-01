@@ -8,7 +8,11 @@ in
 {
   options.modules.plasma = {
     enable = mkEnableOption "Enable a customized KDE Plasma 6 DE";
-    #
+    autoLogin = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether to enable auto-login for user krishnan";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -18,7 +22,7 @@ in
     # Enable the KDE Plasma Desktop Environment.
     services.displayManager = {
       sddm.enable = true;
-      autoLogin.enable = true;
+      autoLogin.enable = cfg.autoLogin;
       autoLogin.user = "krishnan";
     };
     services.desktopManager.plasma6.enable = true;

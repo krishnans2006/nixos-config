@@ -162,7 +162,7 @@ in
         passwordRequiredDelay = 0;
 
         # Startup
-        lockOnStartup = true;
+        lockOnStartup = false;
       };
 
       kwin = {
