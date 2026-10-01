@@ -25,7 +25,7 @@ in
           pull.rebase = false;
           push.autoSetupRemote = true;
 
-          safe.directory = "/mnt/*";
+          safe.directory = "${config.home.homeDirectory}/Filesystems/*";
         };
 
         signing = {
