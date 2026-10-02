@@ -31,14 +31,8 @@ in
         wifi.backend = "wpa_supplicant";
 
         plugins = with pkgs; [
-          # Enabled by default, just here to be explicit
-          networkmanager-fortisslvpn
-          networkmanager-iodine
-          networkmanager-l2tp
           networkmanager-openconnect
           networkmanager-openvpn
-          networkmanager-vpnc
-          networkmanager-sstp
         ];
       };
     };
