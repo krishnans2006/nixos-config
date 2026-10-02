@@ -1,6 +1,8 @@
+diff --git a/src/Nixfmt/Pretty.hs b/src/Nixfmt/Pretty.hs
+index f8ebd96..c2a69dc 100644
 --- a/src/Nixfmt/Pretty.hs
 +++ b/src/Nixfmt/Pretty.hs
-@@ -76,7 +76,7 @@
+@@ -69,7 +69,7 @@ import Nixfmt.Types (
    tokenText,
   )
  import Nixfmt.Util (isSpaces)
@@ -9,7 +11,7 @@
  import Prelude hiding (String)
  
  toLineComment :: TrailingComment -> Trivium
-@@ -105,7 +105,8 @@
+@@ -98,7 +98,8 @@ firstTokenLine = snd . mapFirstToken' (\a -> (a, sourceLine a))
  
  instance Pretty TrailingComment where
    pretty (TrailingComment c) =
@@ -19,7 +21,7 @@
  
  instance Pretty Trivium where
    pretty EmptyLine = emptyline
-@@ -169,6 +170,40 @@
+@@ -162,6 +163,40 @@ hasOnlyComments (Items xs) = not (null xs) && all isComment xs
      isComment (Comments _) = True
      isComment _ = False
  
@@ -60,7 +62,7 @@
  -- Render a list given the separator between items
  renderList :: Doc -> Ann Token -> Items Term -> Ann Token -> Doc
  renderList itemSep paropen@Ann{trailComment = post} items parclose =
-@@ -181,7 +216,10 @@
+@@ -174,7 +209,10 @@ renderList itemSep paropen@Ann{trailComment = post} items parclose =
        | hasOnlyComments items = hardline -- If the list has only comments, use hardline to ensure idempotency. https://github.com/NixOS/nixfmt/issues/362
        | hasTrivia paropen && null items = hardline -- even if the comment got associated with the opening bracket, keep the hardline
        | null items = hardspace -- making sure we're not potentially adding extra newlines for empty lists
@@ -71,7 +73,7 @@
  
  instance Pretty Trivia where
    pretty [] = mempty
-@@ -256,18 +294,30 @@
+@@ -249,18 +287,30 @@ prettySet _ (krec, paropen@(LoneAnn _), Items [], parclose@Ann{preTrivia = []})
  -- Singleton sets are allowed to fit onto one line,
  -- but apart from that always expand.
  prettySet wide (krec, paropen@Ann{trailComment = post}, binders, parclose) =
@@ -112,7 +114,7 @@
  
  prettyTermWide :: Term -> Doc
  prettyTermWide (Set krec paropen items parclose) = prettySet True (krec, paropen, items, parclose)
-@@ -305,8 +355,13 @@
+@@ -298,8 +348,13 @@ prettyTerm (List paropen@Ann{trailComment = Nothing} (Items []) parclose@Ann{pre
      sep = if sourceLine paropen /= sourceLine parclose then hardline else hardspace
  -- General list
  -- Always expand if len > 1
@@ -128,7 +130,7 @@
  prettyTerm (Set krec paropen items parclose) = prettySet False (krec, paropen, items, parclose)
  -- Parentheses
  prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
-@@ -329,6 +384,7 @@
+@@ -322,6 +377,7 @@ prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
  
  instance Pretty Term where
    pretty l@List{} = group $ prettyTerm l
@@ -136,7 +138,7 @@
    pretty x = prettyTerm x
  
  -- Does not move around comments, nor does it inject a trailing comma
-@@ -487,8 +543,10 @@
+@@ -484,8 +540,10 @@ prettyApp indentFunction pre hasPost f a =
        -- If lists have only simple items, try to render them single-line instead of expanding
        -- Uses renderList with `line` separator instead of `hardline`
        absorbInner (Term (List paropen items parclose))
@@ -149,7 +151,7 @@
        absorbInner expr = pretty expr
  
        -- Render the last argument of a function call
-@@ -641,14 +699,25 @@
+@@ -638,14 +696,25 @@ prettyWith _ _ = error "unreachable"
  -- braces must be on the same source line, and up to 2 attrs without defaults,
  -- with an optional ellipsis.
  canFlattenAttrs :: Ann a -> [ParamAttr] -> Ann b -> Bool
@@ -178,19 +180,19 @@
        [ParamAttr _ Nothing _] -> True
        [ParamAttr _ Nothing _, ParamEllipsis _] -> True
        [ParamAttr _ Nothing _, ParamAttr _ Nothing _] -> True
-@@ -667,7 +736,7 @@
-   (Abstraction (IDParameter _) _ body@(Abstraction{})) -> isAbsorbableExpr body
+@@ -665,7 +734,7 @@ isAbsorbableExpr expr = case expr of
    -- Absorb function declarations with attribute set parameters if the attribute set is simple enough, and the body is absorbable.
-   (Abstraction (SetParameter bopen attrs bclose) colon body)
+   -- Parameters with a context identifier are never absorbed.
+   (Abstraction (SetParameter Nothing bopen attrs bclose Nothing) colon body)
 -    | canFlattenAttrs bopen attrs bclose,
 +    | canAbsorbAttrs bopen attrs bclose,
        not (hasPreTrivia bopen), -- Comments on the opening brace force a line break, preventing absorption
        isNothing (trailComment bopen),
        sourceLine colon == firstTokenLine body -> -- If the colon and body are on different lines, keep them like that
-@@ -854,7 +923,7 @@
- 
-   -- Set parameter: absorb if flattenable and on the same line, force multiline otherwise
-   pretty (Abstraction param@(SetParameter bopen attrs bclose) colon body)
+@@ -853,7 +922,7 @@ instance Pretty Expression where
+   -- Set parameter without context identifier: absorb if flattenable and on
+   -- the same line, force multiline otherwise
+   pretty (Abstraction param@(SetParameter Nothing bopen attrs bclose Nothing) colon body)
 -    | canFlattenAttrs bopen attrs bclose,
 +    | canAbsorbAttrs bopen attrs bclose,
        sourceLine colon == firstTokenLine body,

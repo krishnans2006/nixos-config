@@ -1,6 +1,8 @@
+diff --git a/src/Nixfmt/Pretty.hs b/src/Nixfmt/Pretty.hs
+index c2a69dc..c92d99f 100644
 --- a/src/Nixfmt/Pretty.hs
 +++ b/src/Nixfmt/Pretty.hs
-@@ -355,6 +355,11 @@
+@@ -369,6 +369,11 @@ prettyTerm (Parenthesized paropen expr parclose@Ann{preTrivia = closePre}) =
          _ | isAbsorbableExpr expr -> group $ absorbExpr False expr
          -- Parenthesized application
          (Application f a) -> prettyApp True mempty True f a
@@ -12,8 +14,8 @@
          -- Same thing for selections
          (Term (Selection t _ _)) | isAbsorbable t -> line' <> group expr <> line'
          (Term (Selection{})) -> group expr <> line'
-@@ -527,6 +532,10 @@
-             in renderList line paropen' items parclose'
+@@ -546,6 +551,10 @@ prettyApp indentFunction pre hasPost f a =
+             in if fitsWrapWidth compactDoc then compactDoc else renderList hardline paropen items parclose
        absorbInner expr = pretty expr
  
 +      isCompactParenUpdateOp (Term (Parenthesized _ (Operation (Term t) (Ann{value = op'}) _) _)) =
@@ -23,7 +25,7 @@
        -- Render the last argument of a function call
        absorbLast :: Expression -> Doc
        absorbLast (Term t)
-@@ -610,7 +619,11 @@
+@@ -629,7 +638,11 @@ prettyApp indentFunction pre hasPost f a =
             renderSimple
               (absorbApp fWithoutComment)
               (\fRendered -> group' RegularG $ fRendered <> hardspace <> absorbLast a)
@@ -36,7 +38,7 @@
         <> (if hasPost && not (null comment') then hardline else mempty)
  
  prettyOp :: Bool -> Expression -> Leaf -> Doc
-@@ -624,6 +637,7 @@
+@@ -643,6 +656,7 @@ prettyOp forceFirstTermWide operation op =
  
        sep
          | isPipe op, _ : _ <- drop 3 (flatten Nothing operation) = hardline
@@ -44,7 +46,7 @@
          | otherwise = line
  
        -- Called on every operand except the first one (a.k.a. RHS)
-@@ -645,6 +659,10 @@
+@@ -664,6 +678,10 @@ prettyOp forceFirstTermWide operation op =
    in group' RegularG $
         (concatMap prettyOperation . flatten Nothing) operation
    where
@@ -55,7 +57,7 @@
      isPipe (Ann{value = TPipeForward}) = True
      isPipe (Ann{value = TPipeBackward}) = True
      isPipe _ = False
-@@ -748,25 +766,38 @@
+@@ -768,25 +786,38 @@ isAbsorbable _ = False
  isAbsorbableTerm :: Term -> Bool
  isAbsorbableTerm = isAbsorbable
  
@@ -111,7 +113,7 @@
  
  -- Note that unlike for absorbable terms which can be force-absorbed, some expressions
  -- may turn out to not be absorbable. In that case, they should start with a line' so that
-@@ -816,6 +847,9 @@
+@@ -836,6 +867,9 @@ absorbRHS expr = case expr of
    (Operation l (LoneAnn op) (Term t))
      | isAbsorbable t && isUpdateConcatPlus op ->
          nest $ group' RegularG $ line <> pretty l <> line <> group' Transparent (pretty op <> hardspace <> group' Priority (prettyTermWide t))
@@ -121,7 +123,7 @@
    -- Everything else:
    -- If it fits on one line, it fits
    -- If it fits on one line but with a newline after the `=`, it fits (including semicolon)
-@@ -888,16 +922,18 @@
+@@ -908,16 +942,18 @@ instance Pretty Expression where
  
    -- Simple parameter
    pretty (Abstraction (IDParameter param) colon body) =
@@ -141,5 +143,5 @@
 +        | depth <= 2 = hardspace <> group' Priority (pretty x)
 +        | otherwise = hardline <> pretty x
  
-   -- Set parameter: absorb if flattenable and on the same line, force multiline otherwise
-   pretty (Abstraction param@(SetParameter bopen attrs bclose) colon body)
+   -- Set parameter without context identifier: absorb if flattenable and on
+   -- the same line, force multiline otherwise
