@@ -61,6 +61,7 @@ in
             "x-systemd.idle-timeout=1min"
             "x-systemd.mount-timeout=5s"
             "x-systemd.show"
+            "X-mount.idmap=u:33563571:1000:1 g:2024:100:1"  # Map 2024kshankar:tj24 to krishnan:users
             "_netdev"
           ];
         };
