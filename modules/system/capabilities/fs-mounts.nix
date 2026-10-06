@@ -43,7 +43,7 @@ in
         system.fsPackages = [ pkgs.ceph ];
 
         fileSystems."/mnt/tjcsl" = {
-          device = "198.38.17.88,198.38.17.89,198.38.17.84:/";
+          device = "198.38.17.88,198.38.17.89,198.38.17.84:/nfs/users/2024kshankar";
           fsType = "ceph";
           options = [
             "name=admin"
