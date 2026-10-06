@@ -24,7 +24,10 @@
     enable = true;
     enableNMIntegration = true;
   };
-  modules.fs-mounts.enable = true;
+  modules.fs-mounts = {
+    enable = true;
+    tjcsl = true;
+  };
 
   modules.printing.enable = true;
   modules.docker.enable = true;

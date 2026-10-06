@@ -25,7 +25,6 @@
   modules.ssh.enable = true;
   modules.tailscale.enable = true;
   modules.fs-mounts = {
-    tjcsl = true;
     janux = true;
     ews = true;
   };

@@ -62,17 +62,16 @@ let
 in
 {
   options.modules.fs-mounts = {
-    tjcsl = mkEnableOption "Enable systemd user mounts for TJ CSL filesystem";
     ews = mkEnableOption "Enable systemd user mounts for UIUC EWS filesystem";
     janux = mkEnableOption "Enable systemd user mounts for Janux filesystem";
   };
 
-  config = mkIf (cfg.tjcsl || cfg.ews || cfg.janux) {
+  config = mkIf (cfg.ews || cfg.janux) {
     home.packages = [ pkgs.sshfs ];
 
     systemd.user.targets.fs-mounts = {
       Unit = {
-        Description = "Remote SSHFS mounts target";
+        Description = "Remote mounts target";
         Wants = [ "network-online.target" ];
         After = [ "network-online.target" ];
       };
@@ -80,14 +79,6 @@ in
     };
 
     systemd.user.services = mkMerge [
-      (mkIf cfg.tjcsl {
-        "mount-tjcsl" = mkSSHFSService {
-          description = "SSHFS mount for TJ CSL filesystem";
-          what = "2024kshankar@ras2.tjhsst.edu:/csl/users/2024kshankar";
-          where = "${config.home.homeDirectory}/Filesystems/tjcsl";
-        };
-      })
-
       (mkIf cfg.janux {
         "mount-janux" = mkSSHFSService {
           description = "SSHFS mount for Janux filesystem";

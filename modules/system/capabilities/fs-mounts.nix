@@ -8,23 +8,63 @@ in
 {
   options.modules.fs-mounts = {
     enable = mkEnableOption "Enable system-level NetworkManager dispatcher for SSHFS user mounts";
+    tjcsl = mkEnableOption "Enable system-level CephFS mount for TJ CSL filesystem";
   };
 
-  config = mkIf cfg.enable {
-    networking.networkmanager.dispatcherScripts = [
-      {
-        source = pkgs.writeShellScript "fs-mounts-dispatcher" ''
-          if [ "$2" = "up" ] || [ "$2" = "vpn-up" ]; then
-            for u in /run/user/[0-9]*; do
-              uid=$(basename "$u")
-              if [ -d "$u/systemd" ]; then
-                ${pkgs.systemd}/bin/systemctl --machine="''${uid}@.host" --user start fs-mounts.target 2>/dev/null || true
-              fi
-            done
-          fi
+  config = mkMerge [
+    (mkIf cfg.enable {
+      networking.networkmanager.dispatcherScripts = [
+        {
+          source = pkgs.writeShellScript "fs-mounts-dispatcher" ''
+            if [ "$2" = "up" ] || [ "$2" = "vpn-up" ]; then
+              for u in /run/user/[0-9]*; do
+                uid=$(basename "$u")
+                if [ -d "$u/systemd" ]; then
+                  ${pkgs.systemd}/bin/systemctl --machine="''${uid}@.host" --user start fs-mounts.target 2>/dev/null || true
+                fi
+              done
+            fi
+          '';
+          type = "basic";
+        }
+      ];
+    })
+
+    (mkIf cfg.tjcsl (
+      let
+        tjcslCephConf = pkgs.writeText "tjcsl-ceph.conf" ''
+          [global]
+          mon_host = 198.38.17.88, 198.38.17.89, 198.38.17.84
         '';
-        type = "basic";
+      in
+      {
+        sops.secrets."fs-mounts/tjcsl" = { };
+
+        system.fsPackages = [ pkgs.ceph ];
+
+        fileSystems."/mnt/tjcsl" = {
+          device = "198.38.17.88,198.38.17.89,198.38.17.84:/";
+          fsType = "ceph";
+          options = [
+            "name=admin"
+            "secretfile=${config.sops.secrets."fs-mounts/tjcsl".path}"
+            "conf=${tjcslCephConf}"
+            "mount_timeout=5"
+            "osdkeepalive=5"
+            "osd_idle_ttl=15"
+            "caps_wanted_delay_max=5"
+            "recover_session=clean"
+            "nowsync"
+            "norbytes"
+            "noauto"
+            "x-systemd.automount"
+            "x-systemd.idle-timeout=1min"
+            "x-systemd.mount-timeout=5s"
+            "x-systemd.show"
+            "_netdev"
+          ];
+        };
       }
-    ];
-  };
+    ))
+  ];
 }
