@@ -42,7 +42,7 @@ in
             id = nmConnectionName;
             type = "wireguard";
             interface-name = nmInterfaceName;
-            autoconnect = "true";
+            autoconnect = "false";
           };
           wireguard.private-key = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
           ipv4.method = "disabled";
