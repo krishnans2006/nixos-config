@@ -97,7 +97,7 @@ in
           };
         };
         # See window-rules below for explanation
-        kwinrulesrc."1" = {
+        kwinrulesrc."2" = {
           hastransientparent = false;
           hastransientparentmatch = 1;  # ExactBoolMatch
         };
@@ -187,9 +187,30 @@ in
 
       window-rules = [
         {
+          description = "Zen Browser";
+          match = {
+            window-class = {
+              value = "app.zen_browser.zen";
+              type = "substring";
+              match-whole = false;
+            };
+            window-types = [ "normal" ];
+          };
+          apply = {
+            maximizehoriz = {
+              value = false;
+              apply = "do-not-affect";
+            };
+            maximizevert = {
+              value = false;
+              apply = "do-not-affect";
+            };
+          };
+        }
+        {
           description = "Maximize Everything";
           # Ignore splash screens, pop-ups, dialogs
-          # Many Qt dialogs are still typed as "normal", see kwinrulesrc."1" above for extra filtering
+          # Many Qt dialogs are still typed as "normal", see kwinrulesrc."2" above for extra filtering
           match.window-types = [ "normal" ];
           apply = {
             maximizehoriz = true;
