@@ -13,6 +13,15 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
+      home.packages = with pkgs; [
+        gh
+        git-lfs
+        git-subrepo
+        git-filter-repo
+        meld
+        kdiff3
+      ];
+
       programs.git = {
         enable = true;
 

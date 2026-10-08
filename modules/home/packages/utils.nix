@@ -52,13 +52,6 @@ in
 
       libxml2
 
-      gh
-      git-lfs
-      git-subrepo
-      git-filter-repo
-      meld
-      kdiff3
-
       rclone
 
       lm_sensors  # for `sensors` command
