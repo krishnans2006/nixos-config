@@ -43,5 +43,10 @@ in
   programs.vscode.enable = true;
   programs.java.enable = true;
 
-  modules.impermanence.persistDirs = [ ".config/Code" ".vscode" ];
+  modules.impermanence.persistDirs = [
+    ".config/Code/User"
+    ".vscode"
+    ".vscode-shared"
+  ];
+  modules.impermanence.persistFiles = [ ".config/Code/machineid" ];
 }
