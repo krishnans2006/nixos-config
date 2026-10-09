@@ -1,4 +1,4 @@
-{ inputs, root, ... }:
+{ inputs, pkgs, root, ... }:
 
 with inputs;
 
@@ -27,4 +27,6 @@ with inputs;
     "krishnan-pc";
 
   services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];
+
+  home.packages = with pkgs; [ llama-cpp-rocm ];
 }
