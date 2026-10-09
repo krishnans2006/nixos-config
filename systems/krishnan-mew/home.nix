@@ -15,5 +15,6 @@ with inputs;
 
   modules.secrets.enable = lib.mkForce false;  # Secrets-free config
 
+  modules.git.enableGithubCLIAutoLogin = lib.mkForce false;  # (needs secrets)
   modules.shell.enableAtuin = lib.mkForce false;  # (needs secrets)
 }

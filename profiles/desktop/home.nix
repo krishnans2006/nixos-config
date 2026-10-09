@@ -21,6 +21,8 @@
   modules.git = {
     enable = true;
     enablePdfDiff = true;
+    enableGithubCLI = true;
+    enableGithubCLIAutoLogin = true;
   };
   modules.ssh.enable = true;
   modules.tailscale.enable = true;

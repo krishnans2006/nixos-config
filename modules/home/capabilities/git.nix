@@ -9,12 +9,13 @@ in
   options.modules.git = {
     enable = mkEnableOption "Enable custom git configuration";
     enablePdfDiff = mkEnableOption "Enable visual PDF diffs with diff-pdf";
+    enableGithubCLI = mkEnableOption "Enable GitHub CLI (gh)";
+    enableGithubCLIAutoLogin = mkEnableOption "Enable GitHub CLI auto-login (requires secrets)";
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
       home.packages = with pkgs; [
-        gh
         git-lfs
         git-subrepo
         git-filter-repo
@@ -53,6 +54,25 @@ in
         settings."diff \"diff-pdf\"".command = ''f() { diff-pdf --view "$2" "$5"; }; f'';
         attributes = [ "*.pdf diff=diff-pdf" ];
       };
+    })
+
+    (mkIf cfg.enableGithubCLI {
+      programs.gh = {
+        enable = true;
+        hosts."github.com".user = "krishnans2006";
+        settings = {
+          git_protocol = "ssh";
+          telemetry = "disabled";
+        };
+      };
+    })
+
+    (mkIf cfg.enableGithubCLIAutoLogin {
+      sops.secrets."api/github" = { };
+      ## This is an internal home-manager variable to add to hm-session-vars.sh
+      home.sessionVariablesExtra = ''
+        export GH_TOKEN="$(cat ${config.sops.secrets."api/github".path})"
+      '';
     })
   ]);
 }
