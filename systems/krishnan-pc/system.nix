@@ -38,7 +38,10 @@ with inputs;
 
   modules.amd-rx6600xt.enable = true;
 
-  modules.packages.logic2 = true;
+  modules.packages = {
+    logic2 = true;
+    aethersdr.enable = true;
+  };
 
   hardware.rtl-sdr.enable = true;
 }
