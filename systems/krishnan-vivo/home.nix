@@ -25,7 +25,10 @@ with inputs;
     enableMinecraft = true;
   };
 
-  modules.packages.zed-editor.fontSize = 14;
+  modules.packages = {
+    aethersdr.enable = true;
+    zed-editor.fontSize = 14;
+  };
 
   programs.plasma.configFile.kwinrc.Xwayland.Scale = "1.25";
   programs.plasma.input.keyboard.model = "asus_laptop";
