@@ -7,6 +7,13 @@
     forEachSystem = import ./utils/for-each-system.nix { inherit inputs; };
   in
   {
+    packages = forEachSystem (
+      { pkgs }: {
+        aethersdr = pkgs.callPackage ./custom/aethersdr.nix { };
+        fastx-client = pkgs.qt6Packages.callPackage ./custom/fastx-client.nix { };
+      }
+    );
+
     nixosConfigurations = {
       krishnan-lap = import ./systems/krishnan-lap { inherit inputs root; };
       krishnan-pc = import ./systems/krishnan-pc { inherit inputs root; };
