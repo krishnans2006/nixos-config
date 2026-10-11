@@ -7,13 +7,6 @@
     forEachSystem = import ./utils/for-each-system.nix { inherit inputs; };
   in
   {
-    packages = forEachSystem (
-      { pkgs }: {
-        aethersdr = pkgs.callPackage ./custom/aethersdr.nix { };
-        fastx-client = pkgs.qt6Packages.callPackage ./custom/fastx-client.nix { };
-      }
-    );
-
     nixosConfigurations = {
       krishnan-lap = import ./systems/krishnan-lap { inherit inputs root; };
       krishnan-pc = import ./systems/krishnan-pc { inherit inputs root; };
@@ -25,6 +18,15 @@
       krishnan-ews = import ./systems/krishnan-ews { inherit inputs root; };
       krishnan-janux = import ./systems/krishnan-janux { inherit inputs root; };
     };
+
+    packages = forEachSystem (
+      { pkgs }: rec {
+        aethersdr = pkgs.callPackage ./custom/aethersdr.nix { };
+        fastx-client = pkgs.qt6Packages.callPackage ./custom/fastx-client.nix { };
+        vrgb = pkgs.callPackage ./custom/vrgb.nix { };
+        vrgb-rainbow = pkgs.callPackage ./custom/vrgb-rainbow.nix { inherit vrgb; };
+      }
+    );
 
     formatter = forEachSystem ({ pkgs }: import ./formatter { inherit pkgs; });
   };
