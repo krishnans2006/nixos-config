@@ -72,14 +72,14 @@ Note: This list is incomplete. Also, it would be nice to automate these into a `
 ### Rebuild system after changes
 
 ```bash
-sudo nixos-rebuild switch --flake '.?submodules=1'
+nixos-rebuild switch --sudo
 ```
 
 ### Update package versions
 
 ```bash
 sudo nix flake update
-sudo nixos-rebuild switch --flake '.?submodules=1'
+nixos-rebuild switch --sudo
 ```
 
 ### Update secrets
@@ -120,7 +120,7 @@ Finally, re-encrypt the secrets:
 ```bash
 sops updatekeys secrets/secrets.yaml
 sops updatekeys secrets/secrets-home.yaml
-sudo nixos-rebuild switch --flake '.?submodules=1'
+nixos-rebuild switch --sudo
 ```
 
 ### Configure disks + install without secrets
