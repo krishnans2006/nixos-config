@@ -42,6 +42,7 @@ with inputs;
     enable = true;
     chargeLimit = 80;
   };
+  modules.mt7921e.enable = true;
   modules.vivo-kbd-rgb = {
     # M5406WA uses ITE5570 HID LampArray
     enable = true;
