@@ -71,6 +71,7 @@ in
           matlab-language-server
           matlab_ls
           tinymist
+          clang-tools
           rust-analyzer
           slang-server
 
