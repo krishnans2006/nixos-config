@@ -30,6 +30,8 @@
   };
 
   inputs = {
+    self.submodules = true;
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     import-tree.url = "github:vic/import-tree";
