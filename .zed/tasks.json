@@ -2,7 +2,7 @@
 [
     {
         "label": "nixos-rebuild switch",
-        "command": "nixos-rebuild switch --sudo",
+        "command": "nixos-rebuild switch --sudo --flake",
         //"args": [],
         // Current working directory to spawn the command into, defaults to current project root.
         //"cwd": "/path/to/working/directory",
