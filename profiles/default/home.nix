@@ -40,6 +40,8 @@ in
     claude-code
   ];
 
+  programs.nh.enable = true;
+
   programs.vscode.enable = true;
   programs.java.enable = true;
 
