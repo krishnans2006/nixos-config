@@ -16,6 +16,10 @@ in
 
     services.flatpak.packages = [ "com.bitwarden.desktop" ];
 
+    # Bitwarden's default key store is memfd_secret, but this disables hibernation
+    services.flatpak.overrides."com.bitwarden.desktop".Environment.SECURE_KEY_CONTAINER_BACKEND =
+      "mlock";
+
     # Autostart
     xdg.configFile."autostart/bitwarden.desktop" = mkIf cfg.autostart {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/flatpak/exports/share/applications/com.bitwarden.desktop.desktop";
