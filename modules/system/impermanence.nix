@@ -94,7 +94,12 @@ in
           description = "Set up impermanence and rollback root and home subvolumes";
           wantedBy = [ "initrd.target" ];
           requires = [ (toSystemdDevice root.device) ];
-          after = [ (toSystemdDevice root.device) ];
+          after = [
+            (toSystemdDevice root.device)
+            # Don't rollback when resuming from hibernation
+            # This works because a successful resume never returns
+            "systemd-hibernate-resume.service"
+          ];
           before = [ "sysroot.mount" ];
           unitConfig.DefaultDependencies = "no";
           serviceConfig.Type = "oneshot";
