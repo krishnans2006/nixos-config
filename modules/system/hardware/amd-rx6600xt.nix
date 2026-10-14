@@ -12,7 +12,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    # Enable ROCm support across nixpkgs
+    nixpkgs.config.rocmSupport = true;
+
     hardware.amdgpu.opencl.enable = true;
+
     environment.variables = {
       HSA_OVERRIDE_GFX_VERSION = "10.3.0";  # AMD RX 6600 XT (RDNA 2)
       HSA_ENABLE_SDMA = "0";

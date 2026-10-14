@@ -32,5 +32,6 @@ with inputs;
 
   services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];
 
+  nixpkgs.config.rocmSupport = true;
   home.packages = with pkgs; [ llama-cpp-rocm ];
 }
