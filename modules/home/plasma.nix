@@ -31,6 +31,7 @@ in
       ".local/state/kactivitymanagerdstaterc"  # Active activity UUID
       ".config/kactivitymanagerdrc"  # Activity definitions
       ".config/kactivitymanagerd-statsrc"  # Activity stats query cache
+      ".config/kwinoutputconfig.json"  # Display layout, refresh rate, and scaling
     ];
 
     # KDE Packages
