@@ -22,6 +22,9 @@
     probe-rs-tools
   ];
 
+  # Sync nixpkgs.config to /etc/nix/nixpkgs-config.nix for comma, nix-shell, etc.
+  modules.nixpkgs-config.enable = true;
+
   # Temporary fix until Zulip upgrades to Electron 40+
   # Must be set at the system level since home-manager.useGlobalPkgs = true
   nixpkgs.config.permittedInsecurePackages = [ "electron-39.8.10" ];

@@ -17,9 +17,6 @@
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Nixpkgs config (this applies to comma, etc.)
-  nixpkgs.config.allowUnfree = true;
-
   # Nanorc
   home.file.".nanorc".text = ''
     set autoindent

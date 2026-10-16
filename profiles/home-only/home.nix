@@ -6,6 +6,9 @@
     #
   ];
 
+  # Standalone Home Manager nixpkgs config (only for non-NixOS hosts without useGlobalPkgs)
+  nixpkgs.config.allowUnfree = true;
+
   modules.nix-user-chroot.enable = true;
 
   modules.plasma.enable = false;
