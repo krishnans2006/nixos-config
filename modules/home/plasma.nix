@@ -24,10 +24,13 @@ in
       ".local/share/kwalletd"  # Wallet
       ".local/state/wireplumber"  # Audio (volume, devices, etc.) state
       ".config/kdeconnect"  # KDE Connect
+      ".local/share/kactivitymanagerd"  # Activity stats (most used pages, recent documents)
     ];
     modules.impermanence.persistFiles = [
       ".local/state/konsolestaterc"
-      #
+      ".local/state/kactivitymanagerdstaterc"  # Active activity UUID
+      ".config/kactivitymanagerdrc"  # Activity definitions
+      ".config/kactivitymanagerd-statsrc"  # Activity stats query cache
     ];
 
     # KDE Packages
