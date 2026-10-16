@@ -9,6 +9,9 @@
   # Standalone Home Manager nixpkgs config (only for non-NixOS hosts without useGlobalPkgs)
   nixpkgs.config.allowUnfree = true;
 
+  # Sync nixpkgs.config to ~/.config/nixpkgs/config.nix for comma, nix-shell, etc.
+  modules.nixpkgs-config.enable = true;
+
   modules.nix-user-chroot.enable = true;
 
   modules.plasma.enable = false;
