@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.modules.packages.zed-editor;
+  cfg = config.modules.zed-editor;
 
   # This patch modifies zed-editor to use copilot-language-server from PATH
   # instead of npm-installing it into ~/.local/share/zed/copilot
@@ -38,7 +38,7 @@ let
   });
 in
 {
-  options.modules.packages.zed-editor = {
+  options.modules.zed-editor = {
     enable = mkEnableOption "Install Zed code editor";
     fontSize = mkOption {
       type = types.int;

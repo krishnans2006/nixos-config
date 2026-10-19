@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.element;
+  cfg = config.modules.element;
 in
 {
-  options.modules.packages.element = {
+  options.modules.element = {
     enable = mkEnableOption "Install Element (Matrix client)";
     autostart = mkEnableOption "Enable autostart for Element";
   };

@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.modules.packages.jetbrains;
+  cfg = config.modules.jetbrains;
 
   anyDisabled =
     !cfg.enablePyCharm
@@ -14,7 +14,7 @@ let
     || !cfg.enableRustRover;
 in
 {
-  options.modules.packages.jetbrains = {
+  options.modules.jetbrains = {
     enableAll = mkOption {
       type = types.bool;
       default = false;
@@ -56,7 +56,7 @@ in
     assertions = [
       {
         assertion = !(cfg.enableAll && anyDisabled);
-        message = "modules.packages.jetbrains: enableAll=true cannot be combined with any per-IDE option set to false";
+        message = "modules.jetbrains: enableAll=true cannot be combined with any per-IDE option set to false";
       }
     ];
 

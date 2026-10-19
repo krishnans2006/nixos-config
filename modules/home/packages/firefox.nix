@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.firefox;
+  cfg = config.modules.firefox;
 in
 {
-  options.modules.packages.firefox = {
+  options.modules.firefox = {
     enable = mkEnableOption "Enable Firefox web browser";
     #
   };

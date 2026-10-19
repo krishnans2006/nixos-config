@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.bitwarden-desktop;
+  cfg = config.modules.bitwarden-desktop;
 in
 {
-  options.modules.packages.bitwarden-desktop = {
+  options.modules.bitwarden-desktop = {
     enable = mkEnableOption "Install Bitwarden Desktop Flatpak";
     autostart = mkEnableOption "Enable autostart for Bitwarden Desktop";
   };

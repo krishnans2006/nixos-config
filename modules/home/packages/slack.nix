@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.slack;
+  cfg = config.modules.slack;
 in
 {
-  options.modules.packages.slack = {
+  options.modules.slack = {
     enable = mkEnableOption "Install Slack";
     autostart = mkEnableOption "Enable autostart for Slack";
   };

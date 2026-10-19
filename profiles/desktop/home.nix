@@ -33,17 +33,23 @@
 
   modules.fonts.enable = true;
 
-  modules.packages = {
-    utils.enable = true;
-    vesktop.enable = true;
-    vesktop.autostart = true;
-    slack.enable = true;
-    slack.autostart = true;
-    element.enable = true;
-    element.autostart = true;
-    mattermost.enable = true;
-    mattermost.autostart = true;
-    mattermost.servers = [
+  modules.utils.enable = true;
+  modules.vesktop = {
+    enable = true;
+    autostart = true;
+  };
+  modules.slack = {
+    enable = true;
+    autostart = true;
+  };
+  modules.element = {
+    enable = true;
+    autostart = true;
+  };
+  modules.mattermost = {
+    enable = true;
+    autostart = true;
+    servers = [
       {
         name = "TJ CSL";
         url = "https://mattermost.tjhsst.edu/";
@@ -53,15 +59,21 @@
         url = "https://matterless.tjhsst.edu/";
       }
     ];
-    zulip.enable = true;
-    zulip.autostart = true;
-    zen-browser.enable = true;
-    zen-browser.autostart = true;
-    bitwarden-desktop.enable = true;
-    bitwarden-desktop.autostart = true;
-    libreoffice.enable = true;
-    jetbrains.enableAll = false;
-    zed-editor.enable = true;
-    fastx-client.enable = true;
   };
+  modules.zulip = {
+    enable = true;
+    autostart = true;
+  };
+  modules.zen-browser = {
+    enable = true;
+    autostart = true;
+  };
+  modules.bitwarden-desktop = {
+    enable = true;
+    autostart = true;
+  };
+  modules.libreoffice.enable = true;
+  modules.jetbrains.enableAll = false;
+  modules.zed-editor.enable = true;
+  modules.fastx-client.enable = true;
 }

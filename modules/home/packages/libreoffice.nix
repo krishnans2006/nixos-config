@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.libreoffice;
+  cfg = config.modules.libreoffice;
 in
 {
-  options.modules.packages.libreoffice = {
+  options.modules.libreoffice = {
     enable = mkEnableOption "Enable the LibreOffice suite";
     #
   };

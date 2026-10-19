@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.vesktop;
+  cfg = config.modules.vesktop;
 in
 {
-  options.modules.packages.vesktop = {
+  options.modules.vesktop = {
     enable = mkEnableOption "Install Vesktop (Discord client)";
     autostart = mkEnableOption "Enable autostart for Vesktop";
   };

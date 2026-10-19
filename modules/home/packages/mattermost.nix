@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.mattermost;
+  cfg = config.modules.mattermost;
 in
 {
-  options.modules.packages.mattermost = {
+  options.modules.mattermost = {
     enable = mkEnableOption "Install Mattermost Desktop";
     autostart = mkEnableOption "Enable autostart for Mattermost";
 

@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.zulip;
+  cfg = config.modules.zulip;
 in
 {
-  options.modules.packages.zulip = {
+  options.modules.zulip = {
     enable = mkEnableOption "Install Zulip";
     autostart = mkEnableOption "Enable autostart for Zulip";
   };

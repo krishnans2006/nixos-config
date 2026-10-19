@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.modules.packages.fastx-client;
+  cfg = config.modules.fastx-client;
   fastxClient = pkgs.qt6Packages.callPackage (root + "/custom/fastx-client.nix") { };
 in
 {
-  options.modules.packages.fastx-client = {
+  options.modules.fastx-client = {
     enable = mkEnableOption "Install FastX Client";
   };
 

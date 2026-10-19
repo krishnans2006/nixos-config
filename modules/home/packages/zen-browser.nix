@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.zen-browser;
+  cfg = config.modules.zen-browser;
 in
 {
-  options.modules.packages.zen-browser = {
+  options.modules.zen-browser = {
     enable = mkEnableOption "Install Zen Browser Flatpak";
     autostart = mkEnableOption "Enable autostart for Zen Browser";
   };

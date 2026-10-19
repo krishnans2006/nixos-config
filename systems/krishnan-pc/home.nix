@@ -22,10 +22,8 @@ with inputs;
     enableMinecraft = true;
   };
 
-  modules.packages = {
-    firefox.enable = true;
-    aethersdr.enable = true;
-  };
+  modules.firefox.enable = true;
+  modules.aethersdr.enable = true;
 
   programs.firefox.profiles.default.settings."identity.fxaccounts.account.device.name" =
     "krishnan-pc";

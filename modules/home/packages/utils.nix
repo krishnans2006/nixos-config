@@ -3,10 +3,10 @@
 with lib;
 
 let
-  cfg = config.modules.packages.utils;
+  cfg = config.modules.utils;
 in
 {
-  options.modules.packages.utils = {
+  options.modules.utils = {
     enable = mkEnableOption "Enable common shell utilities";
     #
   };

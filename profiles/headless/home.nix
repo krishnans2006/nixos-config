@@ -23,5 +23,5 @@
   modules.ssh.enable = true;
   modules.tailscale.enable = true;
 
-  modules.packages.utils.enable = true;
+  modules.utils.enable = true;
 }

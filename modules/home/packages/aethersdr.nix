@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.modules.packages.aethersdr;
+  cfg = config.modules.aethersdr;
 
   aethersdr = pkgs.callPackage (root + "/custom/aethersdr.nix") { };
 
@@ -15,7 +15,7 @@ let
   };
 in
 {
-  options.modules.packages.aethersdr = {
+  options.modules.aethersdr = {
     enable = mkEnableOption "Install AetherSDR";
   };
 
