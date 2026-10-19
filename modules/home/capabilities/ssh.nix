@@ -90,24 +90,25 @@ in
       };
     }
 
-    (mkIf config.modules.ssh.enableAuthorizedKeys {
-      assertions = [
-        {
-          assertion =
-            osConfig == null
-            || !(osConfig.modules.krishnan-user.enable && osConfig.modules.ssh-server.enable);
-          message = "modules.ssh.enableAuthorizedKeys must be disabled when openssh server is enabled in system config";
-        }
-      ];
-
-      # SELinux-confined sshd cannot follow a Nix store symlink
-      home.activation.installAuthorizedKeys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        install -d -m 0700 ${escapeShellArg "${config.home.homeDirectory}/.ssh"}
-        rm -f ${escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys"}
-        install -m 0600 ${
-          root + "/dotfiles/authorized_keys"
-        } ${escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys"}
-      '';
-    })
+    (mkIf cfg.enableAuthorizedKeys (
+      let
+        verify-system = import (root + "/utils/verify-system.nix") {
+          inherit lib osConfig;
+          option = "modules.ssh-server.enable";
+          type = "forbidden";
+          reason = "conflicts with modules.ssh.enableAuthorizedKeys";
+        };
+      in
+      verify-system.apply {
+        # SELinux-confined sshd cannot follow a Nix store symlink
+        home.activation.installAuthorizedKeys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          install -d -m 0700 ${escapeShellArg "${config.home.homeDirectory}/.ssh"}
+          rm -f ${escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys"}
+          install -m 0600 ${
+            root + "/dotfiles/authorized_keys"
+          } ${escapeShellArg "${config.home.homeDirectory}/.ssh/authorized_keys"}
+        '';
+      }
+    ))
   ]);
 }
