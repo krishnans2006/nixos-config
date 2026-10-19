@@ -39,10 +39,8 @@ with inputs;
 
   modules.hp-pen.enable = true;
 
-  modules.packages = {
-    logic2 = true;
-    chipwhisperer = true;
-  };
+  modules.logic2.enable = true;
+  modules.chipwhisperer.enable = true;
 
   # TODO: Maybe the first is unnecessary
   systemd.tpm2.enable = false;
