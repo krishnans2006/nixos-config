@@ -82,8 +82,20 @@ in
             HostName = "janux-emr2-01.csl.illinois.edu";
             User = "ks128";
           };
+          "janux-emr3" = {
+            HostName = "janux-emr3-02.csl.illinois.edu";
+            User = "ks128";
+          };
           "janux-08" = {
             HostName = "janux-00.csl.illinois.edu";
+            User = "ks128";
+          };
+          "janux-gnr3" = {
+            HostName = "janux-gnr3.csl.illinois.edu";
+            User = "ks128";
+          };
+          "janux-styx" = {
+            HostName = "csl-213-04.csl.illinois.edu";
             User = "ks128";
           };
         };
