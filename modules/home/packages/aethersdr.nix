@@ -4,18 +4,23 @@ with lib;
 
 let
   cfg = config.modules.packages.aethersdr;
-  osCfg = osConfig.modules.aethersdr;
 
   aethersdr = pkgs.callPackage (root + "/custom/aethersdr.nix") { };
+
+  verify-system = import (root + "/utils/verify-system.nix") {
+    inherit lib osConfig;
+    option = "modules.aethersdr.enable";
+    type = "optional";
+    reason = "to open firewall ports for AetherSDR and FlexRadio";
+  };
 in
 {
   options.modules.packages.aethersdr = {
     enable = mkEnableOption "Install AetherSDR";
   };
 
-  # Must be enabled in system config
   config = mkIf cfg.enable (
-    mkAssert osCfg.enable "modules.aethersdr is not enabled in system config" {
+    verify-system.apply {
       home.packages = [ aethersdr ];
 
       modules.impermanence.persistDirs = [ ".config/AetherSDR" ];

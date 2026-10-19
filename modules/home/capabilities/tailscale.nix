@@ -1,10 +1,16 @@
-{ config, lib, osConfig, ... }:
+{ config, lib, osConfig, root, ... }:
 
 with lib;
 
 let
   cfg = config.modules.tailscale;
-  osCfg = osConfig.modules.tailscale;
+
+  verify-system = import (root + "/utils/verify-system.nix") {
+    inherit lib osConfig;
+    option = "modules.tailscale.enable";
+    type = "required";
+    reason = "requires system-level Tailscale service";
+  };
 in
 {
   options.modules.tailscale = {
@@ -14,7 +20,7 @@ in
 
   # Must be enabled in system config
   config = mkIf cfg.enable (
-    mkAssert osCfg.enable "modules.tailscale is not enabled in system config" {
+    verify-system.apply {
       programs.ssh.settings = {
         "pc" = {
           HostName = "krishnan-pc.emperor-snares.ts.net";
