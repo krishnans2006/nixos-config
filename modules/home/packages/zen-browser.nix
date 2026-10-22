@@ -34,6 +34,13 @@ in
 
           # Don't show about:config warning
           "browser.aboutConfig.showWarning" = false;
+
+          # Skip startup tutorial / welcome screen
+          "zen.welcome-screen.seen" = true;
+          "browser.aboutwelcome.enabled" = false;
+
+          # Vertical tabs on the right side
+          "zen.tabs.vertical.right-side" = true;
         };
 
         # Declarative mods (theme store UUIDs)
