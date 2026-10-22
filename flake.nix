@@ -83,6 +83,12 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     ronix.url = "github:caniko/ronix";
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   # nixConfig = {

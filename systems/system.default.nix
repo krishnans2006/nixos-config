@@ -35,6 +35,7 @@ nixpkgs.lib.nixosSystem {
         sops-nix.homeManagerModules.sops
         plasma-manager.homeModules.plasma-manager
         nix-flatpak.homeManagerModules.nix-flatpak
+        zen-browser.homeModules.default
       ];
 
       home-manager.users.krishnan.imports = [ ./home.nix ];

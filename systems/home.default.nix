@@ -21,6 +21,7 @@ home-manager.lib.homeManagerConfiguration {
     sops-nix.homeManagerModules.sops
     plasma-manager.homeModules.plasma-manager
     nix-flatpak.homeManagerModules.nix-flatpak
+    zen-browser.homeModules.default
 
     nix-index-database.homeModules.nix-index
     {
