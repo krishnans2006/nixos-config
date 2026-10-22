@@ -35,6 +35,9 @@ in
           # Don't show about:config warning
           "browser.aboutConfig.showWarning" = false;
 
+          # Disable default browser prompt
+          "browser.shell.checkDefaultBrowser" = false;
+
           # Skip startup tutorial / welcome screen
           "zen.welcome-screen.seen" = true;
           "browser.aboutwelcome.enabled" = false;
@@ -158,6 +161,20 @@ in
     # Flatpak Zen Browser (imperative version for reference/testing)
     # modules.flatpak.enable = mkForce true;
     # services.flatpak.packages = [ "app.zen_browser.zen" ];
+
+    # Set as default browser
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "text/html" = [ "zen-beta.desktop" ];
+        "text/xml" = [ "zen-beta.desktop" ];
+        "application/xhtml+xml" = [ "zen-beta.desktop" ];
+        "x-scheme-handler/http" = [ "zen-beta.desktop" ];
+        "x-scheme-handler/https" = [ "zen-beta.desktop" ];
+        "x-scheme-handler/about" = [ "zen-beta.desktop" ];
+        "x-scheme-handler/unknown" = [ "zen-beta.desktop" ];
+      };
+    };
 
     # Autostart declarative version
     xdg.configFile."autostart/zen-beta.desktop" = mkIf cfg.autostart {
