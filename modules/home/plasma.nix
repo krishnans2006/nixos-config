@@ -190,7 +190,7 @@ in
           description = "Zen Browser";
           match = {
             window-class = {
-              value = "app.zen_browser.zen";
+              value = "zen-beta";
               type = "substring";
               match-whole = false;
             };
@@ -330,7 +330,7 @@ in
                 launchers = [
                   "applications:org.kde.dolphin.desktop"
                   "applications:org.kde.konsole.desktop"
-                  "applications:app.zen_browser.zen.desktop"
+                  "applications:zen-beta.desktop"
                   "applications:vesktop.desktop"
                   "applications:code.desktop"
                   "applications:dev.zed.Zed.desktop"
