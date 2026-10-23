@@ -73,9 +73,9 @@ in
         # Declarative extension buttons placement: keep only 3 pinned, move all others to panel
         extensionButtons = {
           "nav-bar" = [
+            "addon_darkreader_org-browser-action"
             "ublock0_raymondhill_net-browser-action"
             "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
-            "addon_darkreader_org-browser-action"
           ];
           "unified-extensions-area" = [
             "sponsorblocker_ajay_app-browser-action"
