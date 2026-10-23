@@ -23,14 +23,14 @@ in
             slug = "darkreader";
             pinned = true;
           };
-          ublock-origin = {
-            id = "uBlock0@raymondhill.net";
-            slug = "ublock-origin";
-            pinned = true;
-          };
           bitwarden = {
             id = "{446900e4-71c2-419f-a6a7-df9c091e268b}";
             slug = "bitwarden-password-manager";
+            pinned = true;
+          };
+          ublock-origin = {
+            id = "uBlock0@raymondhill.net";
+            slug = "ublock-origin";
             pinned = true;
           };
 
@@ -166,8 +166,8 @@ in
           extensionButtons = {
             "nav-bar" = [
               extensions.darkreader.id
-              extensions.ublock-origin.id
               extensions.bitwarden.id
+              extensions.ublock-origin.id
             ];
           };
 
