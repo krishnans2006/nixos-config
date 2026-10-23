@@ -124,7 +124,14 @@ in
         enable = true;
 
         # Fully declarative extensions via enterprise policies
-        policies.ExtensionSettings = extensionSettings;
+        policies = {
+          ExtensionSettings = extensionSettings;
+          "3rdparty".Extensions = {
+            "${extensions.ublock-origin.id}" = {
+              userSettings = [ [ "showIconBadge" "false" ] ];
+            };
+          };
+        };
 
         profiles.default = {
           id = 0;
