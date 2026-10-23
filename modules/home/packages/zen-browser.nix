@@ -16,6 +16,16 @@ in
     programs.zen-browser = {
       enable = true;
 
+      # Enforce default_area = "menupanel" (unpinned) for all synced/new extensions
+      policies = {
+        ExtensionSettings = {
+          "*" = { default_area = "menupanel"; };
+          "uBlock0@raymondhill.net" = { default_area = "navbar"; };
+          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = { default_area = "navbar"; };
+          "addon@darkreader.org" = { default_area = "navbar"; };
+        };
+      };
+
       profiles.default = {
         id = 0;
         name = "default";
@@ -44,6 +54,9 @@ in
 
           # Vertical tabs on the right side
           "zen.tabs.vertical.right-side" = true;
+
+          # Show unified extensions (puzzle piece) button for unpinned extensions
+          "zen.theme.hide-unified-extensions-button" = false;
         };
 
         # Declarative mods (theme store UUIDs)
@@ -57,12 +70,29 @@ in
           "7d577b21-4685-4db2-bb17-d39d08eec199"  # Bleeding Corners Fix
         ];
 
-        # Declarative pinned extensions on toolbar
+        # Declarative extension buttons placement: keep only 3 pinned, move all others to panel
         extensionButtons = {
           "nav-bar" = [
             "ublock0_raymondhill_net-browser-action"
             "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
             "addon_darkreader_org-browser-action"
+          ];
+          "unified-extensions-area" = [
+            "sponsorblocker_ajay_app-browser-action"
+            "moz-addon-prod_7tv_app-browser-action"
+            "_3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf_-browser-action"
+            "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
+            "_e839c3f9-298e-4cd0-99e0-464431cb7c34_-browser-action"
+            "_6b1d4418-eff5-4ede-ae7c-950ab7476049_-browser-action"
+            "_0d7cafdd-501c-49ca-8ebb-e3341caaa55e_-browser-action"
+            "_c3c10168-4186-445c-9c5b-63f12b8e2c87_-browser-action"
+            "_8927f234-4dd9-48b1-bf76-44a9e153eee0_-browser-action"
+            "foxyproxy_eric_h_jung-browser-action"
+            "_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action"
+            "_71e91189-9cd2-4e46-895d-bcc38f0053c4_-browser-action"
+            "_8e1ef2d7-d78f-47f9-9b69-c2806eb534fc_-browser-action"
+            "_6a65273e-2b26-40f5-b66e-8eed317307da_-browser-action"
+            "tab-unloader-we_afnankhan-browser-action"
           ];
         };
 
