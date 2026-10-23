@@ -13,180 +13,255 @@ in
 
   config = mkIf cfg.enable {
     # Declarative Zen Browser from flake
-    programs.zen-browser = {
-      enable = true;
+    programs.zen-browser =
+      let
+        # Declarative extensions definition with readable aliases
+        extensions = {
+          # Pinned to nav-bar
+          darkreader = {
+            id = "addon@darkreader.org";
+            slug = "darkreader";
+            pinned = true;
+          };
+          ublock-origin = {
+            id = "uBlock0@raymondhill.net";
+            slug = "ublock-origin";
+            pinned = true;
+          };
+          bitwarden = {
+            id = "{446900e4-71c2-419f-a6a7-df9c091e268b}";
+            slug = "bitwarden-password-manager";
+            pinned = true;
+          };
 
-      # Enforce default_area = "menupanel" (unpinned) for all synced/new extensions
-      policies = {
-        ExtensionSettings = {
-          "*" = { default_area = "menupanel"; };
-          "uBlock0@raymondhill.net" = { default_area = "navbar"; };
-          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = { default_area = "navbar"; };
-          "addon@darkreader.org" = { default_area = "navbar"; };
+          # Unpinned (unified extensions panel)
+          sponsorblock = {
+            id = "sponsorBlocker@ajay.app";
+            slug = "sponsorblock";
+          };
+          seven-tv = {
+            id = "moz-addon-prod@7tv.app";
+            slug = "7tv-extension";
+          };
+          improve-youtube = {
+            id = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
+            slug = "youtube-addon";
+          };
+          violentmonkey = {
+            id = "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}";
+            slug = "violentmonkey";
+          };
+          foxy-gestures = {
+            id = "{e839c3f9-298e-4cd0-99e0-464431cb7c34}";
+            slug = "foxy-gestures";
+          };
+          working-vpn = {
+            id = "{6b1d4418-eff5-4ede-ae7c-950ab7476049}";
+            slug = "workingvpn";
+          };
+          youtube-nonstop = {
+            id = "{0d7cafdd-501c-49ca-8ebb-e3341caaa55e}";
+            slug = "youtube-nonstop";
+          };
+          cookie-editor = {
+            id = "{c3c10168-4186-445c-9c5b-63f12b8e2c87}";
+            slug = "cookie-editor";
+          };
+          auto-claim-twitch-points = {
+            id = "{8e1ef2d7-d78f-47f9-9b69-c2806eb534fc}";
+            slug = "auto-claim-twitch-chnnl-points";
+          };
+          return-youtube-dislike = {
+            id = "{762f9885-5a13-4abd-9c77-433dcd38b8fd}";
+            slug = "return-youtube-dislikes";
+          };
+          foxyproxy = {
+            id = "foxyproxy@eric.h.jung";
+            slug = "foxyproxy-standard";
+          };
+          tab-unloader = {
+            id = "tab-unloader-we@afnankhan";
+            slug = "tab-unloader-we";
+          };
+          ttv-ad-blocker = {
+            id = "{71e91189-9cd2-4e46-895d-bcc38f0053c4}";
+            slug = "ttv-ab-twitch-ad-blocker";
+          };
+          wakatime = {
+            id = "addons@wakatime.com";
+            slug = "wakatimes";
+          };
         };
-      };
 
-      profiles.default = {
-        id = 0;
-        name = "default";
-        isDefault = true;
-
-        settings = {
-          # Firefox Sync configuration
-          "services.sync.username" = "krishnans2006@gmail.com";
-          "services.sync.engine.addons" = true;
-          "services.sync.engine.history" = true;
-          "services.sync.engine.prefs" = false;
-
-          # Window sync required for essentials
-          "zen.window-sync.enabled" = true;
-          "zen.window-sync.sync-only-pinned-tabs" = true;
-
-          # Don't show about:config warning
-          "browser.aboutConfig.showWarning" = false;
-
-          # Disable default browser prompt
-          "browser.shell.checkDefaultBrowser" = false;
-
-          # Skip startup tutorial / welcome screen
-          "zen.welcome-screen.seen" = true;
-          "browser.aboutwelcome.enabled" = false;
-
-          # Vertical tabs on the right side
-          "zen.tabs.vertical.right-side" = true;
-
-          # Show unified extensions (puzzle piece) button for unpinned extensions
-          "zen.theme.hide-unified-extensions-button" = false;
+        # Construct enterprise policy settings for an individual extension
+        mkExtensionPolicy = ext: {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/${ext.slug}/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = if (ext.pinned or false) then "navbar" else "menupanel";
         };
 
-        # Declarative mods (theme store UUIDs)
-        mods = [
-          "378ba8b9-cd36-45f5-88df-595df5288795"  # Add new tab urlbar icon
-          "f7c71d9a-bce2-420f-ae44-a64bd92975ab"  # Better Unloaded Tabs
-          "5bb07b6e-c89f-4f4a-a0ed-e483cc535594"  # Custom MenuButton
-          "ad97bb70-0066-4e42-9b5f-173a5e42c6fc"  # SuperPins
-          "4c2bec61-7f6c-4e5c-bdc6-c9ad1aba1827"  # Vertical Split Tab Groups
-          "1e86cf37-a127-4f24-b919-d265b5ce29a0"  # Lean
-          "7d577b21-4685-4db2-bb17-d39d08eec199"  # Bleeding Corners Fix
-        ];
+        # Build the complete ExtensionSettings policy attribute set
+        extensionSettings =
+          let
+            installedExtensions = mapAttrs' (
+              _: ext: nameValuePair ext.id (mkExtensionPolicy ext)
+            ) extensions;
+          in
+          { "*" = { default_area = "menupanel"; }; } // installedExtensions;
 
-        # Declarative extension buttons placement: keep only 3 pinned, move all others to panel
-        extensionButtons = {
-          "nav-bar" = [
-            "addon_darkreader_org-browser-action"
-            "ublock0_raymondhill_net-browser-action"
-            "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
+        # Declarative Zen theme store mods
+        mods = {
+          add-new-tab-urlbar-icon = "378ba8b9-cd36-45f5-88df-595df5288795";
+          better-unloaded-tabs = "f7c71d9a-bce2-420f-ae44-a64bd92975ab";
+          custom-menubutton = "5bb07b6e-c89f-4f4a-a0ed-e483cc535594";
+          superpins = "ad97bb70-0066-4e42-9b5f-173a5e42c6fc";
+          vertical-split-tab-groups = "4c2bec61-7f6c-4e5c-bdc6-c9ad1aba1827";
+          lean = "1e86cf37-a127-4f24-b919-d265b5ce29a0";
+          bleeding-corners-fix = "7d577b21-4685-4db2-bb17-d39d08eec199";
+        };
+      in
+      {
+        enable = true;
+
+        # Fully declarative extensions via enterprise policies
+        policies.ExtensionSettings = extensionSettings;
+
+        profiles.default = {
+          id = 0;
+          name = "default";
+          isDefault = true;
+
+          settings = {
+            # Firefox Sync configuration
+            "services.sync.username" = "krishnans2006@gmail.com";
+            "services.sync.engine.addons" = false;
+            "services.sync.engine.history" = true;
+            "services.sync.engine.prefs" = false;
+
+            # Window sync required for essentials
+            "zen.window-sync.enabled" = true;
+            "zen.window-sync.sync-only-pinned-tabs" = true;
+
+            # Don't show about:config warning
+            "browser.aboutConfig.showWarning" = false;
+
+            # Disable default browser prompt
+            "browser.shell.checkDefaultBrowser" = false;
+
+            # Skip startup tutorial / welcome screen
+            "zen.welcome-screen.seen" = true;
+            "browser.aboutwelcome.enabled" = false;
+
+            # Vertical tabs on the right side
+            "zen.tabs.vertical.right-side" = true;
+
+            # Show unified extensions (puzzle piece) button for unpinned extensions
+            "zen.theme.hide-unified-extensions-button" = false;
+          };
+
+          # Declarative mods (theme store)
+          mods = attrValues mods;
+
+          # Declarative pinned extension buttons order on toolbar
+          extensionButtons = {
+            "nav-bar" = [
+              extensions.darkreader.id
+              extensions.ublock-origin.id
+              extensions.bitwarden.id
+            ];
+          };
+
+          # Declarative keyboard shortcuts (only modified ones)
+          keyboardShortcutsVersion = 21;
+          keyboardShortcuts = [
+            {
+              id = "zen-compact-mode-toggle";
+              key = "c";
+              modifiers = {
+                accel = true;
+                alt = true;
+              };
+            }
           ];
-          "unified-extensions-area" = [
-            "sponsorblocker_ajay_app-browser-action"
-            "moz-addon-prod_7tv_app-browser-action"
-            "_3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf_-browser-action"
-            "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
-            "_e839c3f9-298e-4cd0-99e0-464431cb7c34_-browser-action"
-            "_6b1d4418-eff5-4ede-ae7c-950ab7476049_-browser-action"
-            "_0d7cafdd-501c-49ca-8ebb-e3341caaa55e_-browser-action"
-            "_c3c10168-4186-445c-9c5b-63f12b8e2c87_-browser-action"
-            "_8927f234-4dd9-48b1-bf76-44a9e153eee0_-browser-action"
-            "foxyproxy_eric_h_jung-browser-action"
-            "_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action"
-            "_71e91189-9cd2-4e46-895d-bcc38f0053c4_-browser-action"
-            "_8e1ef2d7-d78f-47f9-9b69-c2806eb534fc_-browser-action"
-            "_6a65273e-2b26-40f5-b66e-8eed317307da_-browser-action"
-            "tab-unloader-we_afnankhan-browser-action"
-          ];
-        };
 
-        # Declarative keyboard shortcuts (only modified ones)
-        keyboardShortcutsVersion = 21;
-        keyboardShortcuts = [
-          {
-            id = "zen-compact-mode-toggle";
-            key = "c";
-            modifiers = {
-              accel = true;
-              alt = true;
+          # Declarative workspaces (6 workspaces with circle icons and default dark gray theme)
+          spacesForce = true;
+          spaces = {
+            "1" = {
+              id = "11111111-0001-4000-8000-000000000001";
+              name = "";
+              icon = "🔴";
+              position = 1000;
             };
-          }
-        ];
+            "2" = {
+              id = "11111111-0001-4000-8000-000000000002";
+              name = "";
+              icon = "🟠";
+              position = 2000;
+            };
+            "3" = {
+              id = "11111111-0001-4000-8000-000000000003";
+              name = "";
+              icon = "🟡";
+              position = 3000;
+            };
+            "4" = {
+              id = "11111111-0001-4000-8000-000000000004";
+              name = "";
+              icon = "🟢";
+              position = 4000;
+            };
+            "5" = {
+              id = "11111111-0001-4000-8000-000000000005";
+              name = "";
+              icon = "🔵";
+              position = 5000;
+            };
+            "6" = {
+              id = "11111111-0001-4000-8000-000000000006";
+              name = "";
+              icon = "🟣";
+              position = 6000;
+            };
+          };
 
-        # Declarative workspaces (6 workspaces with circle icons and default dark gray theme)
-        spacesForce = true;
-        spaces = {
-          "1" = {
-            id = "11111111-0001-4000-8000-000000000001";
-            name = "";
-            icon = "🔴";
-            position = 1000;
-          };
-          "2" = {
-            id = "11111111-0001-4000-8000-000000000002";
-            name = "";
-            icon = "🟠";
-            position = 2000;
-          };
-          "3" = {
-            id = "11111111-0001-4000-8000-000000000003";
-            name = "";
-            icon = "🟡";
-            position = 3000;
-          };
-          "4" = {
-            id = "11111111-0001-4000-8000-000000000004";
-            name = "";
-            icon = "🟢";
-            position = 4000;
-          };
-          "5" = {
-            id = "11111111-0001-4000-8000-000000000005";
-            name = "";
-            icon = "🔵";
-            position = 5000;
-          };
-          "6" = {
-            id = "11111111-0001-4000-8000-000000000006";
-            name = "";
-            icon = "🟣";
-            position = 6000;
-          };
-        };
-
-        # Declarative essentials (pinned tabs)
-        pinsForce = true;
-        pinsForceAction = "remove";
-        pins = {
-          "Gmail" = {
-            id = "22222222-0001-4000-8000-000000000001";
-            url = "https://mail.google.com/mail/u/0/";
-            isEssential = true;
-            position = 1;
-          };
-          "School Mail" = {
-            id = "22222222-0001-4000-8000-000000000002";
-            url = "https://mail.google.com/mail/u/1/";
-            isEssential = true;
-            position = 2;
-          };
-          "Google Calendar" = {
-            id = "22222222-0001-4000-8000-000000000003";
-            url = "https://calendar.google.com/calendar/u/0/r";
-            isEssential = true;
-            position = 3;
-          };
-          "YouTube" = {
-            id = "22222222-0001-4000-8000-000000000004";
-            url = "https://www.youtube.com/";
-            isEssential = true;
-            position = 4;
-          };
-          "YouTube Music" = {
-            id = "22222222-0001-4000-8000-000000000005";
-            url = "https://music.youtube.com/";
-            isEssential = true;
-            position = 5;
+          # Declarative essentials (pinned tabs)
+          pinsForce = true;
+          pinsForceAction = "remove";
+          pins = {
+            "Gmail" = {
+              id = "22222222-0001-4000-8000-000000000001";
+              url = "https://mail.google.com/mail/u/0/";
+              isEssential = true;
+              position = 1;
+            };
+            "School Mail" = {
+              id = "22222222-0001-4000-8000-000000000002";
+              url = "https://mail.google.com/mail/u/1/";
+              isEssential = true;
+              position = 2;
+            };
+            "Google Calendar" = {
+              id = "22222222-0001-4000-8000-000000000003";
+              url = "https://calendar.google.com/calendar/u/0/r";
+              isEssential = true;
+              position = 3;
+            };
+            "YouTube" = {
+              id = "22222222-0001-4000-8000-000000000004";
+              url = "https://www.youtube.com/";
+              isEssential = true;
+              position = 4;
+            };
+            "YouTube Music" = {
+              id = "22222222-0001-4000-8000-000000000005";
+              url = "https://music.youtube.com/";
+              isEssential = true;
+              position = 5;
+            };
           };
         };
       };
-    };
 
     # Flatpak Zen Browser (imperative version for reference/testing)
     # modules.flatpak.enable = mkForce true;
