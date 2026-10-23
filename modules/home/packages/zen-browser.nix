@@ -130,6 +130,9 @@ in
             "${extensions.ublock-origin.id}" = {
               userSettings = [ [ "showIconBadge" "false" ] ];
             };
+            "${extensions.bitwarden.id}" = {
+              environment.base = "https://vault.krishy.dev";
+            };
           };
         };
 
