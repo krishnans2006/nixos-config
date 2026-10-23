@@ -155,9 +155,6 @@ in
             # Vertical tabs on the right side
             "zen.tabs.vertical.right-side" = true;
 
-            # Show unified extensions (puzzle piece) button for unpinned extensions
-            "zen.theme.hide-unified-extensions-button" = false;
-
             # SuperPins mod configuration
             "uc.essentials.grid-count" = true;
             "mod.superpins.essentials.grid-count" = "5";
