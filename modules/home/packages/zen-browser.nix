@@ -156,6 +156,14 @@ in
             # Don't show about:config warning
             "browser.aboutConfig.showWarning" = false;
 
+            # Disable passwords and autofill (conflicts with Bitwarden)
+            "signon.rememberSignons" = false;
+            "signon.autofillForms" = false;
+            "signon.generation.enabled" = false;
+            "signon.management.page.breach-alerts.enabled" = false;
+            "extensions.formautofill.creditCards.enabled" = false;
+            "extensions.formautofill.addresses.enabled" = false;
+
             # Disable default browser prompt
             "browser.shell.checkDefaultBrowser" = false;
 
