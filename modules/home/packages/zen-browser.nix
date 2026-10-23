@@ -12,12 +12,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    # Declarative Zen Browser from flake
     programs.zen-browser =
       let
-        # Declarative extensions definition with readable aliases
+        # Aliases for extensions
         extensions = {
-          # Pinned to nav-bar
+          # Pinned
           darkreader = {
             id = "addon@darkreader.org";
             slug = "darkreader";
@@ -34,7 +33,7 @@ in
             pinned = true;
           };
 
-          # Unpinned (unified extensions panel)
+          # Unpinned
           sponsorblock = {
             id = "sponsorBlocker@ajay.app";
             slug = "sponsorblock";
@@ -109,7 +108,7 @@ in
           in
           { "*" = { default_area = "menupanel"; }; } // installedExtensions;
 
-        # Declarative Zen theme store mods
+        # Declarative Zen Mods
         mods = {
           add-new-tab-urlbar-icon = "378ba8b9-cd36-45f5-88df-595df5288795";
           better-unloaded-tabs = "f7c71d9a-bce2-420f-ae44-a64bd92975ab";
@@ -123,9 +122,11 @@ in
       {
         enable = true;
 
-        # Fully declarative extensions via enterprise policies
+        # Extensions via enterprise policies
         policies = {
           ExtensionSettings = extensionSettings;
+
+          # Some in-extension settings
           "3rdparty".Extensions = {
             "${extensions.ublock-origin.id}" = {
               userSettings = [ [ "showIconBadge" "false" ] ];
@@ -174,10 +175,10 @@ in
             "mod.lean.bottom-buttons" = true;
           };
 
-          # Declarative mods (theme store)
+          # Zen Mods
           mods = attrValues mods;
 
-          # Declarative pinned extension buttons order on toolbar
+          # Pinned extension buttons (ordered)
           extensionButtons = {
             "nav-bar" = [
               extensions.darkreader.id
@@ -186,7 +187,7 @@ in
             ];
           };
 
-          # Declarative keyboard shortcuts (only modified ones)
+          # Keyboard shortcuts
           keyboardShortcutsVersion = 21;
           keyboardShortcuts = [
             {
@@ -199,7 +200,7 @@ in
             }
           ];
 
-          # Declarative workspaces (6 workspaces with circle icons and default dark gray theme)
+          # Workspaces
           spacesForce = true;
           spaces = {
             "1" = {
@@ -240,7 +241,7 @@ in
             };
           };
 
-          # Declarative essentials (pinned tabs)
+          # Essentials (pinned tabs)
           pinsForce = true;
           pinsForceAction = "remove";
           pins = {
@@ -278,10 +279,6 @@ in
         };
       };
 
-    # Flatpak Zen Browser (imperative version for reference/testing)
-    # modules.flatpak.enable = mkForce true;
-    # services.flatpak.packages = [ "app.zen_browser.zen" ];
-
     # Set as default browser
     xdg.mimeApps = {
       enable = true;
@@ -296,15 +293,12 @@ in
       };
     };
 
-    # Autostart declarative version
+    # Autostart
     xdg.configFile."autostart/zen-beta.desktop" = mkIf cfg.autostart {
       source = "${config.programs.zen-browser.package}/share/applications/zen-beta.desktop";
     };
 
-    # Persistence: both declarative (~/.config/zen) and Flatpak (~/.var/app/app.zen_browser.zen)
-    modules.impermanence.persistDirs = [
-      ".config/zen"
-      # ".var/app/app.zen_browser.zen"
-    ];
+    # Impermanence
+    modules.impermanence.persistDirs = [ ".config/zen" ];
   };
 }
