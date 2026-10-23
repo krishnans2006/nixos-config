@@ -161,6 +161,10 @@ in
             # SuperPins mod configuration
             "uc.essentials.grid-count" = true;
             "mod.superpins.essentials.grid-count" = "5";
+
+            # Lean mod configuration
+            "mod.lean.top-workspace" = true;
+            "mod.lean.bottom-buttons" = true;
           };
 
           # Declarative mods (theme store)
