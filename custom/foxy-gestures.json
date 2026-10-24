@@ -1,0 +1,57 @@
+{
+  "blacklistUrlPatterns": [
+    "onshape.com",
+    "https://github.com/*.ipynb",
+    "https://github.com/*.pdf"
+  ],
+  "chordGestures": true,
+  "chordMappings": [
+    {
+      "chord": [
+        0,
+        2
+      ],
+      "mapping": {
+        "command": "historyForward"
+      }
+    },
+    {
+      "chord": [
+        2,
+        0
+      ],
+      "mapping": {
+        "command": "historyBack"
+      }
+    }
+  ],
+  "gestureTimeout": 0,
+  "mouseMappings": [
+    {
+      "gesture": "DR",
+      "command": "closeTab"
+    },
+    {
+      "command": "openLinkInNewBackgroundTab",
+      "gesture": "DU"
+    },
+    {
+      "command": "reload",
+      "gesture": "UD"
+    },
+    {
+      "command": "duplicateTabInBackground",
+      "gesture": "URDL"
+    },
+    {
+      "command": "undoClose",
+      "gesture": "UR"
+    },
+    {
+      "command": "openLinkInNewForegroundTab|newTab",
+      "gesture": "D"
+    }
+  ],
+  "sawXSSWarning": true,
+  "trailColor": "teal"
+}
