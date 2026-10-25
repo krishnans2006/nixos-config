@@ -36,10 +36,6 @@ in
           assertion = root.fsType == "btrfs";
           message = "Must have a btrfs root filesystem to use Impermanence";
         }
-        {
-          assertion = config.boot.initrd.systemd.enable == true;
-          message = "The impermanence module doesn't work with non-systemd initrd";
-        }
         # TODO: Add assertion for postCreateHook in disk.nix to make sure
         # root-blank and home-blank snapshots are created correctly
       ];
@@ -87,8 +83,6 @@ in
         # So, some subvolumes are deleted (/var/cache)
         # Some are deleted and restored from a blank snapshot (/ and /home)
         # And some are persisted (/persist, /var/log, /var/lib, /swap)
-        #
-        # Note: This is specific to boot.initrd.systemd.enable
         # See https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/common/optional/ephemeral-btrfs.nix
         systemd.services.impermanence-setup = {
           description = "Set up impermanence and rollback root and home subvolumes";
