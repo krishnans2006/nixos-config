@@ -27,8 +27,8 @@ let
       python3 -c '
       with open("agy_acp_server.par", "r+b") as f:
           data = f.read()
-          pattern = bytes([103, 3, 0, 0, 28, 0, 75, 28, 0, 0, 86, 2, 80, 1])
-          replacement = bytes([103, 3, 0, 0, 28, 0, 27, 0, 27, 0, 86, 2, 80, 1])
+          pattern = bytes([103, 3, 0, 0, 28, 0, 75, 41, 0, 0, 86, 3, 80, 1])
+          replacement = bytes([103, 3, 0, 0, 28, 0, 27, 0, 27, 0, 86, 3, 80, 1])
           idx = data.find(pattern)
           assert idx != -1, "Target pattern not found in agy_acp_server.par"
           f.seek(idx)
