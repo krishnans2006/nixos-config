@@ -71,6 +71,8 @@ stdenv.mkDerivation (finalAttrs: {
     zlib
   ];
 
+  patchelfFlags = [ "--no-sort" ];
+
   dontBuild = true;
   dontStrip = true;
 
