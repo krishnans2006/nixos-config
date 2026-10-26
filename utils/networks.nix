@@ -151,6 +151,7 @@ rec {
     vpn = {
       service-type = "org.freedesktop.NetworkManager.openconnect";
       protocol = "anyconnect";
+      persistent = "true";
 
       gateway = "$cisco${id}_gateway";
       reported_os = "";
