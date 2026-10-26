@@ -23,6 +23,7 @@
       { pkgs }: rec {
         aethersdr = pkgs.callPackage ./custom/aethersdr.nix { };
         fastx-client = pkgs.qt6Packages.callPackage ./custom/fastx-client.nix { };
+        jellybox = pkgs.callPackage ./custom/jellybox.nix { };
         vrgb = pkgs.callPackage ./custom/vrgb.nix { };
         vrgb-rainbow = pkgs.callPackage ./custom/vrgb-rainbow.nix { inherit vrgb; };
       }
