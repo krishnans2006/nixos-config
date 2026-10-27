@@ -143,6 +143,11 @@ in
           isDefault = true;
 
           settings = {
+            # Restore previous session on startup
+            "browser.startup.page" = 3;
+            # Remember active tab/workspace
+            "zen.workspaces.continue-where-left-off" = true;
+
             # Firefox Sync configuration
             "services.sync.username" = "krishnans2006@gmail.com";
             "services.sync.engine.addons" = false;
