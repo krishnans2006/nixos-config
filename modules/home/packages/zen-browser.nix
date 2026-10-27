@@ -168,9 +168,11 @@ in
             "extensions.formautofill.creditCards.enabled" = false;
             "extensions.formautofill.addresses.enabled" = false;
 
-            # Extension storage migration for Foxy Gestures
+            # Extension storage migration
             "extensions.webextensions.keepStorageOnUninstall" = true;
             "extensions.webextensions.ExtensionStorageIDB.migrated.${extensions.foxy-gestures.id}" =
+              false;
+            "extensions.webextensions.ExtensionStorageIDB.migrated.${extensions.improve-youtube.id}" =
               false;
 
             # Disable default browser prompt
@@ -301,6 +303,10 @@ in
         {
           id = extensions.foxy-gestures.id;
           json = ../../../custom/foxy-gestures.json;
+        }
+        {
+          id = extensions.improve-youtube.id;
+          json = ../../../custom/improve-youtube.json;
         }
       ];
 
