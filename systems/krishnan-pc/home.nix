@@ -30,5 +30,9 @@ with inputs;
 
   services.flatpak.packages = [ "org.raspberrypi.rpi-imager" ];
 
-  home.packages = with pkgs; [ llama-cpp-rocm ];
+  home.packages = with pkgs; [
+    llama-cpp-rocm
+    dolphin-emu
+    #
+  ];
 }
