@@ -1,6 +1,7 @@
 {
   "blacklistUrlPatterns": [
     "onshape.com",
+    "lichess.org",
     "https://github.com/*.ipynb",
     "https://github.com/*.pdf"
   ],
