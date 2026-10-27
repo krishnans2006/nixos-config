@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, root, ... }:
 
 with lib;
 
@@ -292,9 +292,13 @@ in
         };
       };
 
-      # Declarative initial extension storage for Foxy Gestures
-      home.file.".config/zen/default/browser-extension-data/${extensions.foxy-gestures.id}/storage.js".source =
-        ../../../custom/foxy-gestures.json;
+      # Declarative extension storage
+      home = import (root + "/utils/zen-extension-update.nix") { inherit lib; } [
+        {
+          id = extensions.foxy-gestures.id;
+          json = ../../../custom/foxy-gestures.json;
+        }
+      ];
 
       # Set as default browser
       xdg.mimeApps = {
