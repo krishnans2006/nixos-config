@@ -1,4 +1,4 @@
-{ config, lib, root, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -143,9 +143,8 @@ in
           isDefault = true;
 
           settings = {
-            # Restore previous session on startup
+            # Restore previous session on startup (keep tabs and workspaces across restarts)
             "browser.startup.page" = 3;
-            # Remember active tab/workspace
             "zen.workspaces.continue-where-left-off" = true;
 
             # Firefox Sync configuration
@@ -298,7 +297,7 @@ in
       };
 
       # Declarative extension storage
-      home = import (root + "/utils/zen-extension-update.nix") { inherit lib; } [
+      home = import (root + "/utils/zen-extension-update.nix") { inherit lib pkgs; } [
         {
           id = extensions.foxy-gestures.id;
           json = ../../../custom/foxy-gestures.json;

@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 with lib;
 
@@ -11,7 +11,7 @@ with lib;
 # If Zen is running, it safely skips the cleanup to prevent disrupting active extension storage.
 #
 # Usage:
-#   home = import (root + "/utils/zen-extension-update.nix") { inherit lib; } [
+#   home = import (root + "/utils/zen-extension-update.nix") { inherit lib pkgs; } [
 #     {
 #       id = extensions.foxy-gestures.id;
 #       json = ../../../custom/foxy-gestures.json;
@@ -35,10 +35,11 @@ let
       hm.dag.entryAfter [ "writeBoundary" ] ''
         PROFILE_DIR="$HOME/${profileDir}"
         PREFS_FILE="$PROFILE_DIR/prefs.js"
+        LOCK_FILE="$PROFILE_DIR/.parentlock"
 
         if [ -d "$PROFILE_DIR" ] && [ -f "$PREFS_FILE" ]; then
-          if [ -L "$PROFILE_DIR/lock" ] || [ -f "$PROFILE_DIR/.parentlock" ]; then
-            echo "zen-browser-extension-update: Zen Browser is running; skipping storage cleanup for ${id}."
+          if [ -f "$LOCK_FILE" ] && ${getExe pkgs.lsof} "$LOCK_FILE" >/dev/null 2>&1; then
+            echo "zen-browser-extension-update: Zen Browser appears to be running; skipping storage cleanup for ${id}."
             echo "zen-browser-extension-update: Close Zen Browser and rebuild to apply extension storage changes."
           else
             EXT_ID=${escapeShellArg id}
