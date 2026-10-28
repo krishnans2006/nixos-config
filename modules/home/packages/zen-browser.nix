@@ -143,6 +143,50 @@ in
         ) jsonExtensions
       );
 
+      # Workspaces
+      spaces = [
+        {
+          name = "";
+          icon = "🔴";
+        }
+        {
+          name = "";
+          icon = "🟠";
+        }
+        {
+          name = "";
+          icon = "🟡";
+        }
+        {
+          name = "";
+          icon = "🟢";
+        }
+        {
+          name = "";
+          icon = "🔵";
+        }
+        {
+          name = "";
+          icon = "🟣";
+        }
+      ];
+
+      # Helper to construct workspace definitions with auto-generated IDs and positions
+      mkSpaces = spaces: listToAttrs (
+        imap1 (
+          idx: space:
+          let
+            s = "000000000000" + toString idx;
+            pad = substring (stringLength s - 12) 12 s;
+          in
+          nameValuePair (toString idx) {
+            id = "11111111-0001-4000-8000-${pad}";
+            inherit (space) name icon;
+            position = idx * 1000;
+          }
+        ) spaces
+      );
+
       # Declarative Zen Mods
       mods = {
         add-new-tab-urlbar-icon = "378ba8b9-cd36-45f5-88df-595df5288795";
@@ -236,44 +280,7 @@ in
 
           # Workspaces
           spacesForce = true;
-          spaces = {
-            "1" = {
-              id = "11111111-0001-4000-8000-000000000001";
-              name = "";
-              icon = "🔴";
-              position = 1000;
-            };
-            "2" = {
-              id = "11111111-0001-4000-8000-000000000002";
-              name = "";
-              icon = "🟠";
-              position = 2000;
-            };
-            "3" = {
-              id = "11111111-0001-4000-8000-000000000003";
-              name = "";
-              icon = "🟡";
-              position = 3000;
-            };
-            "4" = {
-              id = "11111111-0001-4000-8000-000000000004";
-              name = "";
-              icon = "🟢";
-              position = 4000;
-            };
-            "5" = {
-              id = "11111111-0001-4000-8000-000000000005";
-              name = "";
-              icon = "🔵";
-              position = 5000;
-            };
-            "6" = {
-              id = "11111111-0001-4000-8000-000000000006";
-              name = "";
-              icon = "🟣";
-              position = 6000;
-            };
-          };
+          spaces = mkSpaces spaces;
 
           # Essentials (pinned tabs)
           pinsForce = true;
