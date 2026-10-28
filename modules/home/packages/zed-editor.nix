@@ -280,6 +280,17 @@ in
               mode = "yolo";  # default, auto_edit
             };
           };
+
+          "codex-acp" = {
+            type = "custom";
+            command = "codex-acp";
+            args = [ ];
+            default_config_options = {
+              model = "gpt-6.1-sol";
+              reasoning_effort = "high";  # low, medium, high, xhigh, max, ultra
+              mode = "agent-full-access";  # read-only, agent, agent-full-access
+            };
+          };
         };
 
         language_models.openai_compatible."lumen" = {
@@ -370,6 +381,7 @@ in
       ".config/github-copilot"  # Copilot OAuth
       ".config/cursor"  # Cursor OAuth
       ".gemini"  # Antigravity OAuth + history
+      ".codex"  # Codex auth, state, history
     ];
   };
 }
