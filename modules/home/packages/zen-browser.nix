@@ -49,7 +49,7 @@ in
         improve-youtube = {
           id = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
           slug = "youtube-addon";
-          localConfigFile = ../../../custom/improve-youtube.json;
+          localConfigFile = ../../../data/improve-youtube.json;
         };
         violentmonkey = {
           id = "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}";
@@ -58,7 +58,7 @@ in
         foxy-gestures = {
           id = "{e839c3f9-298e-4cd0-99e0-464431cb7c34}";
           slug = "foxy-gestures";
-          localConfigFile = ../../../custom/foxy-gestures.json;
+          localConfigFile = ../../../data/foxy-gestures.json;
         };
         working-vpn = {
           id = "{6b1d4418-eff5-4ede-ae7c-950ab7476049}";
