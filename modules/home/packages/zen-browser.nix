@@ -122,21 +122,6 @@ in
       programs.zen-browser = {
         enable = true;
 
-        # Extensions via enterprise policies
-        policies = {
-          ExtensionSettings = extensionSettings;
-
-          # Some in-extension settings
-          "3rdparty".Extensions = {
-            "${extensions.ublock-origin.id}" = {
-              userSettings = [ [ "showIconBadge" "false" ] ];
-            };
-            "${extensions.bitwarden.id}" = {
-              environment.base = "https://vault.krishy.dev";
-            };
-          };
-        };
-
         profiles.default = {
           id = 0;
           name = "default";
@@ -296,9 +281,27 @@ in
             };
           };
         };
+
+        # Extension config via enterprise policies
+        policies = {
+          ExtensionSettings = extensionSettings;
+
+          # Some in-extension settings
+          "3rdparty".Extensions = {
+            "${extensions.ublock-origin.id}" = {
+              userSettings = [ [ "showIconBadge" "false" ] ];
+            };
+            "${extensions.bitwarden.id}" = {
+              environment.base = "https://vault.krishy.dev";
+            };
+          };
+        };
       };
 
-      # Declarative extension storage
+      # Extension config via JSON -> local storage migration
+      # This is a "workaround" for extensions that have their own backup/restore settings
+      # and only use Gecko's IndexedDB for storing configuration
+      # Make sure to set extensions.webextensions.ExtensionStorageIDB.migrated above
       home = import (root + "/utils/zen-extension-update.nix") { inherit lib pkgs; } [
         {
           id = extensions.foxy-gestures.id;
