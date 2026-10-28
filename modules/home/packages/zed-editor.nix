@@ -78,6 +78,8 @@ in
           cursor-cli
           antigravity-acp-unlocked
           antigravity-cli
+          codex-acp
+          codex
 
           zed-discord-presence
           zed-wakatime-ls
