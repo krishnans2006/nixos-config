@@ -187,6 +187,32 @@ in
         ) spaces
       );
 
+      # Essentials
+      essentials = [
+        "https://mail.google.com/mail/u/0/"
+        "https://mail.google.com/mail/u/1/"
+        "https://calendar.google.com/calendar/u/0/r"
+        "https://www.youtube.com/"
+        "https://music.youtube.com/"
+      ];
+
+      # Helper to construct essential pin definitions with auto-generated IDs and positions
+      mkEssentials = urls: listToAttrs (
+        imap1 (
+          idx: url:
+          let
+            s = "000000000000" + toString idx;
+            pad = substring (stringLength s - 12) 12 s;
+          in
+          nameValuePair (toString idx) {
+            id = "22222222-0001-4000-8000-${pad}";
+            inherit url;
+            isEssential = true;
+            position = idx;
+          }
+        ) urls
+      );
+
       # Declarative Zen Mods
       mods = {
         add-new-tab-urlbar-icon = "378ba8b9-cd36-45f5-88df-595df5288795";
@@ -282,41 +308,10 @@ in
           spacesForce = true;
           spaces = mkSpaces spaces;
 
-          # Essentials (pinned tabs)
+          # Essentials (configured as part of pinned tabs)
           pinsForce = true;
           pinsForceAction = "remove";
-          pins = {
-            "Gmail" = {
-              id = "22222222-0001-4000-8000-000000000001";
-              url = "https://mail.google.com/mail/u/0/";
-              isEssential = true;
-              position = 1;
-            };
-            "School Mail" = {
-              id = "22222222-0001-4000-8000-000000000002";
-              url = "https://mail.google.com/mail/u/1/";
-              isEssential = true;
-              position = 2;
-            };
-            "Google Calendar" = {
-              id = "22222222-0001-4000-8000-000000000003";
-              url = "https://calendar.google.com/calendar/u/0/r";
-              isEssential = true;
-              position = 3;
-            };
-            "YouTube" = {
-              id = "22222222-0001-4000-8000-000000000004";
-              url = "https://www.youtube.com/";
-              isEssential = true;
-              position = 4;
-            };
-            "YouTube Music" = {
-              id = "22222222-0001-4000-8000-000000000005";
-              url = "https://music.youtube.com/";
-              isEssential = true;
-              position = 5;
-            };
-          };
+          pins = mkEssentials essentials;
         };
 
         # Extension config via enterprise policies
