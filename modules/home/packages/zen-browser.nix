@@ -341,6 +341,7 @@ in
           "x-scheme-handler/unknown" = [ "zen-beta.desktop" ];
         };
       };
+      xdg.configFile."mimeapps.list".force = true;
 
       # Autostart
       xdg.configFile."autostart/zen-beta.desktop" = mkIf cfg.autostart {
