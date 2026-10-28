@@ -13,23 +13,28 @@ in
 
   config = mkIf cfg.enable (
     let
-      # Aliases for extensions
+      # Extension specifications
       extensions = {
         # Pinned
         darkreader = {
           id = "addon@darkreader.org";
           slug = "darkreader";
           pinned = true;
+          pinOrder = 1;
         };
         bitwarden = {
           id = "{446900e4-71c2-419f-a6a7-df9c091e268b}";
           slug = "bitwarden-password-manager";
           pinned = true;
+          pinOrder = 2;
+          enterpriseConfig.environment.base = "https://vault.krishy.dev";
         };
         ublock-origin = {
           id = "uBlock0@raymondhill.net";
           slug = "ublock-origin";
           pinned = true;
+          pinOrder = 3;
+          enterpriseConfig.userSettings = [ [ "showIconBadge" "false" ] ];
         };
 
         # Unpinned
@@ -44,6 +49,7 @@ in
         improve-youtube = {
           id = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
           slug = "youtube-addon";
+          localConfigFile = ../../../custom/improve-youtube.json;
         };
         violentmonkey = {
           id = "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}";
@@ -52,6 +58,7 @@ in
         foxy-gestures = {
           id = "{e839c3f9-298e-4cd0-99e0-464431cb7c34}";
           slug = "foxy-gestures";
+          localConfigFile = ../../../custom/foxy-gestures.json;
         };
         working-vpn = {
           id = "{6b1d4418-eff5-4ede-ae7c-950ab7476049}";
@@ -99,13 +106,42 @@ in
       };
 
       # Build the complete ExtensionSettings policy attribute set
-      extensionSettings =
+      baseExtensionSettings =
         let
           installedExtensions = mapAttrs' (
             _: ext: nameValuePair ext.id (mkExtensionPolicy ext)
           ) extensions;
         in
         { "*" = { default_area = "menupanel"; }; } // installedExtensions;
+
+      # Pinned extension IDs ordered by pinOrder (lower = left, higher = right)
+      sortedPinnedExtensionIds =
+        let
+          pinned = filter (ext: ext.pinned or false) (attrValues extensions);
+          sorted = sort (a: b: (a.pinOrder or 0) < (b.pinOrder or 0)) pinned;
+        in
+        map (ext: ext.id) sorted;
+
+      # In-extension enterprise policy settings ("3rdparty".Extensions)
+      enterpriseExtensionSettings = mapAttrs' (_: ext: nameValuePair ext.id ext.enterpriseConfig) (
+        filterAttrs (_: ext: ext ? enterpriseConfig) extensions
+      );
+
+      # Extensions configured via JSON storage
+      jsonExtensions = filter (ext: ext ? localConfigFile) (attrValues extensions);
+
+      # Extension data list formatted for zen-extension-update utility
+      jsonExtensionData = map (ext: {
+        inherit (ext) id;
+        json = ext.localConfigFile;
+      }) jsonExtensions;
+
+      # Profile settings to force Gecko IndexedDB migration for JSON-configured extensions
+      jsonExtensionSettings = listToAttrs (
+        map (
+          ext: nameValuePair "extensions.webextensions.ExtensionStorageIDB.migrated.${ext.id}" false
+        ) jsonExtensions
+      );
 
       # Declarative Zen Mods
       mods = {
@@ -127,69 +163,63 @@ in
           name = "default";
           isDefault = true;
 
-          settings = {
-            # Restore previous session on startup (keep tabs and workspaces across restarts)
-            "browser.startup.page" = 3;
-            "zen.workspaces.continue-where-left-off" = true;
+          settings = mkMerge [
+            {
+              # Restore previous session on startup (keep tabs and workspaces across restarts)
+              "browser.startup.page" = 3;
+              "zen.workspaces.continue-where-left-off" = true;
 
-            # Firefox Sync configuration
-            "services.sync.username" = "krishnans2006@gmail.com";
-            "services.sync.engine.addons" = false;
-            "services.sync.engine.history" = true;
-            "services.sync.engine.prefs" = false;
+              # Firefox Sync configuration
+              "services.sync.username" = "krishnans2006@gmail.com";
+              "services.sync.engine.addons" = false;
+              "services.sync.engine.history" = true;
+              "services.sync.engine.prefs" = false;
 
-            # Window sync required for essentials
-            "zen.window-sync.enabled" = true;
-            "zen.window-sync.sync-only-pinned-tabs" = true;
+              # Window sync required for essentials
+              "zen.window-sync.enabled" = true;
+              "zen.window-sync.sync-only-pinned-tabs" = true;
 
-            # Don't show about:config warning
-            "browser.aboutConfig.showWarning" = false;
+              # Don't show about:config warning
+              "browser.aboutConfig.showWarning" = false;
 
-            # Disable passwords and autofill (conflicts with Bitwarden)
-            "signon.rememberSignons" = false;
-            "signon.autofillForms" = false;
-            "signon.generation.enabled" = false;
-            "signon.management.page.breach-alerts.enabled" = false;
-            "extensions.formautofill.creditCards.enabled" = false;
-            "extensions.formautofill.addresses.enabled" = false;
+              # Disable passwords and autofill (conflicts with Bitwarden)
+              "signon.rememberSignons" = false;
+              "signon.autofillForms" = false;
+              "signon.generation.enabled" = false;
+              "signon.management.page.breach-alerts.enabled" = false;
+              "extensions.formautofill.creditCards.enabled" = false;
+              "extensions.formautofill.addresses.enabled" = false;
 
-            # Extension storage migration
-            "extensions.webextensions.keepStorageOnUninstall" = true;
-            "extensions.webextensions.ExtensionStorageIDB.migrated.${extensions.foxy-gestures.id}" =
-              false;
-            "extensions.webextensions.ExtensionStorageIDB.migrated.${extensions.improve-youtube.id}" =
-              false;
+              # Extension storage migration
+              "extensions.webextensions.keepStorageOnUninstall" = true;
 
-            # Disable default browser prompt
-            "browser.shell.checkDefaultBrowser" = false;
+              # Disable default browser prompt
+              "browser.shell.checkDefaultBrowser" = false;
 
-            # Skip startup tutorial / welcome screen
-            "zen.welcome-screen.seen" = true;
-            "browser.aboutwelcome.enabled" = false;
+              # Skip startup tutorial / welcome screen
+              "zen.welcome-screen.seen" = true;
+              "browser.aboutwelcome.enabled" = false;
 
-            # Vertical tabs on the right side
-            "zen.tabs.vertical.right-side" = true;
+              # Vertical tabs on the right side
+              "zen.tabs.vertical.right-side" = true;
 
-            # SuperPins mod configuration
-            "uc.essentials.grid-count" = true;
-            "mod.superpins.essentials.grid-count" = "5";
+              # SuperPins mod configuration
+              "uc.essentials.grid-count" = true;
+              "mod.superpins.essentials.grid-count" = "5";
 
-            # Lean mod configuration
-            "mod.lean.top-workspace" = true;
-            "mod.lean.bottom-buttons" = true;
-          };
+              # Lean mod configuration
+              "mod.lean.top-workspace" = true;
+              "mod.lean.bottom-buttons" = true;
+            }
+
+            jsonExtensionSettings
+          ];
 
           # Zen Mods
           mods = attrValues mods;
 
           # Pinned extension buttons (ordered)
-          extensionButtons = {
-            "nav-bar" = [
-              extensions.darkreader.id
-              extensions.bitwarden.id
-              extensions.ublock-origin.id
-            ];
-          };
+          extensionButtons."nav-bar" = sortedPinnedExtensionIds;
 
           # Keyboard shortcuts
           keyboardShortcutsVersion = 21;
@@ -284,34 +314,17 @@ in
 
         # Extension config via enterprise policies
         policies = {
-          ExtensionSettings = extensionSettings;
-
-          # Some in-extension settings
-          "3rdparty".Extensions = {
-            "${extensions.ublock-origin.id}" = {
-              userSettings = [ [ "showIconBadge" "false" ] ];
-            };
-            "${extensions.bitwarden.id}" = {
-              environment.base = "https://vault.krishy.dev";
-            };
-          };
+          ExtensionSettings = baseExtensionSettings;
+          "3rdparty".Extensions = enterpriseExtensionSettings;
         };
       };
 
       # Extension config via JSON -> local storage migration
       # This is a "workaround" for extensions that have their own backup/restore settings
       # and only use Gecko's IndexedDB for storing configuration
-      # Make sure to set extensions.webextensions.ExtensionStorageIDB.migrated above
-      home = import (root + "/utils/zen-extension-update.nix") { inherit lib pkgs; } [
-        {
-          id = extensions.foxy-gestures.id;
-          json = ../../../custom/foxy-gestures.json;
-        }
-        {
-          id = extensions.improve-youtube.id;
-          json = ../../../custom/improve-youtube.json;
-        }
-      ];
+      home = import (root + "/utils/zen-extension-update.nix") {
+        inherit lib pkgs;
+      } jsonExtensionData;
 
       # Set as default browser
       xdg.mimeApps = {
