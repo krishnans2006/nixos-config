@@ -1,5 +1,4 @@
 diff --git a/src/Nixfmt/Predoc.hs b/src/Nixfmt/Predoc.hs
-index b6754dc..5816aed 100644
 --- a/src/Nixfmt/Predoc.hs
 +++ b/src/Nixfmt/Predoc.hs
 @@ -645,6 +645,8 @@ layoutGreedy tw iw doc = Text.concat $ evalState (go [Group RegularG doc] []) (0
@@ -25,11 +24,23 @@ index b6754dc..5816aed 100644
                           putText' [" "]
                       | otherwise -> putNL 1
               Group ann ys ->
-@@ -752,15 +754,18 @@ layoutGreedy tw iw doc = Text.concat $ evalState (go [Group RegularG doc] []) (0
+@@ -736,3 +738,11 @@ layoutGreedy tw iw doc = Text.concat $ evalState (go [Group RegularG doc] []) (0
++    -- Predict the indentation putText will use at the start of a line,
++    -- including a pending nesting increase or a return to an outer level.
++    indentFor :: Int -> NonEmpty (Int, Int) -> Int
++    indentFor level ((ci, nl) :| parents)
++      | level > nl = ci + iw
++      | level == nl = ci
++      | otherwise = indentFor level (NonEmpty.fromList parents)
++
+     -- Try to fit the group onto a single line, while accounting for the fact that the first
+     -- bits of rest must fit as well (until the first possibility for a line break within rest).
+     -- Any whitespace within the group is treated as "compact".
+@@ -752,15 +762,18 @@ layoutGreedy tw iw doc = Text.concat $ evalState (go [Group RegularG doc] []) (0
                  _ -> grp
                (nl, off) = nextIndent grp'
  
-+              lineStart = fst (NonEmpty.head ci) + off
++              lineStart = indentFor nl ci + off
 +
                indentWillIncrease = if fst (nextIndent rest) > lineNL then iw else 0
                  where
