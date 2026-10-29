@@ -12,8 +12,7 @@ let
     mkEAPNetworkProfileConfig
     mkWireguardVPNProfileConfig
     mkOpenVPNProfileConfig
-    mkCiscoVPNProfileConfig
-    ;
+    mkCiscoVPNProfileConfig;
 in
 {
   options.modules.networks = {

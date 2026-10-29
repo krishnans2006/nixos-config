@@ -14,12 +14,7 @@ in
   config = mkIf cfg.enable (
     let
       data = import (root + "/data/zen-browser.nix");
-      inherit (data)
-        extensions
-        spaces
-        essentials
-        mods
-        ;
+      inherit (data) extensions spaces essentials mods;
 
       # Construct enterprise policy settings for an individual extension
       mkExtensionPolicy = ext: {
