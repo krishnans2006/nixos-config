@@ -12,7 +12,7 @@ from the repository root uses it automatically.
 The wrapper in `package.nix` runs `nixfmt` with:
 
 - `--strict`
-- `--width=120`
+- `--width=100`
 - `wrapWidth = 45` as an extra project-specific compaction limit
 
 `wrapWidth` is a build-time setting used only by the compact-list and
