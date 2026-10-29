@@ -1,0 +1,40 @@
+diff --git a/src/Nixfmt/Pretty.hs b/src/Nixfmt/Pretty.hs
+--- a/src/Nixfmt/Pretty.hs
++++ b/src/Nixfmt/Pretty.hs
+@@ -235,29 +235,18 @@
+     pretty dot <> pretty sel
+ 
+ instance Pretty Binder where
+-  -- `inherit bar` statement
+-  pretty (Inherit inherit Nothing ids semicolon) =
+-    group $
+-      pretty inherit
+-        <> sep
+-        <> nest (sepBy sep ids <> nosep <> pretty semicolon)
+-    where
+-      -- Only allow a single line if it's already on a single line and has few enough elements
+-      (sep, nosep) = if sourceLine inherit == sourceLine semicolon && length ids < 4 then (line, line') else (hardline, hardline)
+-  -- `inherit (foo) bar` statement
+-  pretty (Inherit inherit (Just source) ids semicolon) =
++  -- Both `inherit bar` and `inherit (foo) bar` statements.
++  -- Project style: use the rendered line width, regardless of the original
++  -- layout or number of names, and keep the semicolon with the final name.
++  pretty (Inherit inherit source ids semicolon) =
+     group $
+       pretty inherit
+         <> nest
+-          ( group' RegularG (line <> pretty source)
+-              <> sep
+-              <> sepBy sep ids
+-              <> nosep
++          ( maybe mempty (\from -> group' RegularG (line <> pretty from)) source
++              <> (if null ids then mempty else line)
++              <> sepBy line ids
+               <> pretty semicolon
+           )
+-    where
+-      -- Only allow a single line if it's already on a single line and has few enough elements
+-      (sep, nosep) = if sourceLine inherit == sourceLine semicolon && length ids < 4 then (line, line') else (hardline, hardline)
+   -- `foo = bar`
+   pretty (Assignment selectors assign expr semicolon) =
+     group $

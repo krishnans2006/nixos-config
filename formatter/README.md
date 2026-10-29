@@ -181,9 +181,28 @@ logic is also patched.
 Stock `nixfmt` can decide that something fits because it measures only the text
 added after the current indentation. This formatter counts the full rendered
 line length, including indentation, when deciding whether soft breaks should
-collapse.
+collapse. It accounts for indentation increases at the start of a block and
+returns to outer indentation levels.
 
 This makes width decisions closer to what a human sees on screen.
+
+### 8. Inherit statements use the line width
+
+Both `inherit names;` and `inherit (source) names;` stay on one line whenever
+the whole statement fits within `--width`, including indentation and the semicolon.
+The number of inherited names and the input's line breaks do not force expansion.
+This rule uses `--width`, independently of the collection-specific `wrapWidth`.
+
+```nix
+data = import (root + "/data/zen-browser.nix");
+inherit (data) extensions spaces essentials mods;
+inherit pkgs lib config root;
+```
+
+When a statement exceeds the line width, the names expand onto separate lines.
+The semicolon stays attached to the final name. Comments and multiline source
+expressions can still require line breaks; comments before the semicolon or
+after the final name can put the semicolon on its own line.
 
 ## Patch map
 
@@ -196,6 +215,9 @@ This makes width decisions closer to what a human sees on screen.
 - `nixfmt-lambda.patch`
   Keeps common lambda/update forms such as `args // { ... }` and
   `name = arg:` more compact when they still read well.
+- `nixfmt-inherit.patch`
+  Formats all inherit statements by the full line width and attaches their
+  semicolons to the final name when comments allow it.
 
 ## Usage
 
