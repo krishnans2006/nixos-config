@@ -33,6 +33,7 @@ with inputs;
   home.packages = with pkgs; [
     llama-cpp-rocm
     dolphin-emu
+    eden
     #
   ];
 }
