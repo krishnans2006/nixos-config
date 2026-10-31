@@ -115,9 +115,9 @@ in
               "services.sync.engine.history" = true;
               "services.sync.engine.prefs" = false;
 
-              # Window sync required for essentials
+              # Sync workspaces, essentials, and tabs across windows
               "zen.window-sync.enabled" = true;
-              "zen.window-sync.sync-only-pinned-tabs" = true;
+              "zen.window-sync.sync-only-pinned-tabs" = false;
 
               # Don't show about:config warning
               "browser.aboutConfig.showWarning" = false;
