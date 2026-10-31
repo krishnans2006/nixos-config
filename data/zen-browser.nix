@@ -118,7 +118,7 @@
     "https://mail.google.com/mail/u/1/"
     "https://calendar.google.com/calendar/u/0/r"
     "https://www.youtube.com/"
-    "https://music.youtube.com/"
+    "https://music.krishy.dev/"
   ];
 
   # Declarative Zen Mods
