@@ -122,6 +122,8 @@ in
         homeUserMatch = builtins.match "^/home/([^/]+)(/.*)?$" cfg.taildrivePath;
         homeUser = if homeUserMatch != null then builtins.head homeUserMatch else null;
         parentDir = dirOf cfg.taildrivePath;
+        
+        taildriveUrl = "http://100.100.100.100:8080/krishnans2006@gmail.com/";
       in
       {
         services.davfs2 = {
@@ -151,8 +153,7 @@ in
 
         systemd.mounts = [
           {
-            # what = "http://100.100.100.100:8080/krishnans2006%%40gmail.com";  # %40 = @
-            what = "http://100.100.100.100:8080";
+            what = taildriveUrl;
             where = "${cfg.taildrivePath}";
             type = "davfs";
 
@@ -180,7 +181,7 @@ in
 
         environment.etc."davfs2/secrets" = {
           enable = true;
-          text = "http://100.100.100.100:8080 \"\" \"\"";
+          text = "${taildriveUrl} \"\" \"\"";
           mode = "0600";
         };
       }
