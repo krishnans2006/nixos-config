@@ -291,7 +291,7 @@ in
             default_config_options = {
               model = "gpt-6.1-sol";
               reasoning_effort = "high";  # low, medium, high, xhigh, max, ultra
-              mode = "agent-full-access";  # read-only, agent, agent-full-access
+              mode = "agent";  # read-only, agent, agent-full-access
             };
           };
         };
