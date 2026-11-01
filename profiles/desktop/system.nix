@@ -26,7 +26,7 @@
   };
   modules.fs-mounts = {
     enable = true;
-    tjcsl = true;
+    tjcsl = false;  # TEMPORARY: See https://github.com/NixOS/nixpkgs/pull/581319
   };
 
   modules.printing.enable = true;
