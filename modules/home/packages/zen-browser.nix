@@ -13,8 +13,10 @@ in
 
   config = mkIf cfg.enable (
     let
-      data = import (root + "/data/zen-browser.nix");
-      inherit (data) extensions spaces essentials mods;
+      data = import (root + "/data/zen-browser.nix") {
+        homeDirectory = config.home.homeDirectory;
+      };
+      inherit (data) settings mods modSettings extensions spaces essentials;
 
       # Construct enterprise policy settings for an individual extension
       mkExtensionPolicy = ext: {
@@ -104,59 +106,8 @@ in
           isDefault = true;
 
           settings = mkMerge [
-            {
-              # Restore previous session on startup (keep tabs and workspaces across restarts)
-              "browser.startup.page" = 3;
-              "zen.workspaces.continue-where-left-off" = true;
-
-              # Downloads save to ~/Downloads/Zen
-              "browser.download.dir" = "${config.home.homeDirectory}/Downloads/Zen";
-              "browser.download.folderList" = 2;
-              "browser.download.useDownloadDir" = true;
-
-              # Firefox Sync configuration
-              "services.sync.username" = "krishnans2006@gmail.com";
-              "services.sync.engine.addons" = false;
-              "services.sync.engine.history" = true;
-              "services.sync.engine.prefs" = false;
-
-              # Sync workspaces, essentials, and tabs across windows
-              "zen.window-sync.enabled" = true;
-              "zen.window-sync.sync-only-pinned-tabs" = false;
-
-              # Don't show about:config warning
-              "browser.aboutConfig.showWarning" = false;
-
-              # Disable passwords and autofill (conflicts with Bitwarden)
-              "signon.rememberSignons" = false;
-              "signon.autofillForms" = false;
-              "signon.generation.enabled" = false;
-              "signon.management.page.breach-alerts.enabled" = false;
-              "extensions.formautofill.creditCards.enabled" = false;
-              "extensions.formautofill.addresses.enabled" = false;
-
-              # Extension storage migration
-              "extensions.webextensions.keepStorageOnUninstall" = true;
-
-              # Disable default browser prompt
-              "browser.shell.checkDefaultBrowser" = false;
-
-              # Skip startup tutorial / welcome screen
-              "zen.welcome-screen.seen" = true;
-              "browser.aboutwelcome.enabled" = false;
-
-              # Vertical tabs on the right side
-              "zen.tabs.vertical.right-side" = true;
-
-              # SuperPins mod configuration
-              "uc.essentials.grid-count" = true;
-              "mod.superpins.essentials.grid-count" = "5";
-
-              # Lean mod configuration
-              "mod.lean.top-workspace" = true;
-              "mod.lean.bottom-buttons" = true;
-            }
-
+            settings
+            modSettings
             jsonExtensionSettings
           ];
 

@@ -1,4 +1,74 @@
+{ homeDirectory }:
+
 {
+  # Browser preferences
+  settings = {
+    # Restore previous session on startup (keep tabs and workspaces across restarts)
+    "browser.startup.page" = 3;
+    "zen.workspaces.continue-where-left-off" = true;
+
+    # Downloads save to ~/Downloads/Zen
+    "browser.download.dir" = "${homeDirectory}/Downloads/Zen";
+    "browser.download.folderList" = 2;
+    "browser.download.useDownloadDir" = true;
+
+    # Firefox Sync configuration
+    "services.sync.username" = "krishnans2006@gmail.com";
+    "services.sync.engine.addons" = false;
+    "services.sync.engine.history" = true;
+    "services.sync.engine.prefs" = false;
+
+    # Sync workspaces, essentials, and tabs across windows
+    "zen.window-sync.enabled" = true;
+    "zen.window-sync.sync-only-pinned-tabs" = false;
+
+    # Don't show about:config warning
+    "browser.aboutConfig.showWarning" = false;
+
+    # Disable passwords and autofill (conflicts with Bitwarden)
+    "signon.rememberSignons" = false;
+    "signon.autofillForms" = false;
+    "signon.generation.enabled" = false;
+    "signon.management.page.breach-alerts.enabled" = false;
+    "extensions.formautofill.creditCards.enabled" = false;
+    "extensions.formautofill.addresses.enabled" = false;
+
+    # Extension storage migration
+    "extensions.webextensions.keepStorageOnUninstall" = true;
+
+    # Disable default browser prompt
+    "browser.shell.checkDefaultBrowser" = false;
+
+    # Skip startup tutorial / welcome screen
+    "zen.welcome-screen.seen" = true;
+    "browser.aboutwelcome.enabled" = false;
+
+    # Vertical tabs on the right side
+    "zen.tabs.vertical.right-side" = true;
+  };
+
+  # Declarative Zen Mods
+  mods = {
+    add-new-tab-urlbar-icon = "378ba8b9-cd36-45f5-88df-595df5288795";
+    better-unloaded-tabs = "f7c71d9a-bce2-420f-ae44-a64bd92975ab";
+    custom-menubutton = "5bb07b6e-c89f-4f4a-a0ed-e483cc535594";
+    superpins = "ad97bb70-0066-4e42-9b5f-173a5e42c6fc";
+    vertical-split-tab-groups = "4c2bec61-7f6c-4e5c-bdc6-c9ad1aba1827";
+    lean = "1e86cf37-a127-4f24-b919-d265b5ce29a0";
+    bleeding-corners-fix = "7d577b21-4685-4db2-bb17-d39d08eec199";
+  };
+
+  # Zen Mod settings
+  modSettings = {
+    # SuperPins mod configuration
+    "uc.essentials.grid-count" = true;
+    "mod.superpins.essentials.grid-count" = "5";
+
+    # Lean mod configuration
+    "mod.lean.top-workspace" = true;
+    "mod.lean.bottom-buttons" = true;
+  };
+
   # Extension specifications
   extensions = {
     # Pinned
@@ -120,15 +190,4 @@
     "https://www.youtube.com/"
     "https://music.krishy.dev/"
   ];
-
-  # Declarative Zen Mods
-  mods = {
-    add-new-tab-urlbar-icon = "378ba8b9-cd36-45f5-88df-595df5288795";
-    better-unloaded-tabs = "f7c71d9a-bce2-420f-ae44-a64bd92975ab";
-    custom-menubutton = "5bb07b6e-c89f-4f4a-a0ed-e483cc535594";
-    superpins = "ad97bb70-0066-4e42-9b5f-173a5e42c6fc";
-    vertical-split-tab-groups = "4c2bec61-7f6c-4e5c-bdc6-c9ad1aba1827";
-    lean = "1e86cf37-a127-4f24-b919-d265b5ce29a0";
-    bleeding-corners-fix = "7d577b21-4685-4db2-bb17-d39d08eec199";
-  };
 }
