@@ -109,6 +109,11 @@ in
               "browser.startup.page" = 3;
               "zen.workspaces.continue-where-left-off" = true;
 
+              # Downloads save to ~/Downloads/Zen
+              "browser.download.dir" = "${config.home.homeDirectory}/Downloads/Zen";
+              "browser.download.folderList" = 2;
+              "browser.download.useDownloadDir" = true;
+
               # Firefox Sync configuration
               "services.sync.username" = "krishnans2006@gmail.com";
               "services.sync.engine.addons" = false;
