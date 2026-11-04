@@ -1,4 +1,4 @@
-{ import-tree, root, ... }:
+{ import-tree, root, pkgs, ... }:
 
 {
   imports = [
@@ -77,4 +77,6 @@
   modules.zed-editor.enable = true;
   modules.fastx-client.enable = true;
   modules.jellybox.enable = true;
+
+  home.packages = with pkgs; [ feishin ];
 }
