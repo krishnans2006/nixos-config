@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.modules.element;
 
-  settings = import (root + "/data/element.nix");
+  settings = import (root + "/data/element-settings.nix");
 in
 {
   options.modules.element = {

@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.modules.shell;
 
-  atuinSettings = import (root + "/data/atuin.nix") { inherit config; };
+  atuinSettings = import (root + "/data/atuin-settings.nix") { inherit config; };
 in
 {
   options.modules.shell = {

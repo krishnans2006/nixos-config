@@ -5,11 +5,10 @@ with lib;
 let
   cfg = config.modules.mattermost;
 
-  data = import (root + "/data/mattermost.nix") {
+  settings = import (root + "/data/mattermost-settings.nix") {
     home = config.home.homeDirectory;
     inherit (cfg) autostart;
   };
-  inherit (data) settings bounds;
 in
 {
   options.modules.mattermost = {
@@ -76,7 +75,11 @@ in
       {
         name = "seedMattermostBounds";
         file = ".config/Mattermost/bounds-info.json";
-        source = (pkgs.formats.json { }).generate "bounds-info.json" bounds;
+        source = (pkgs.formats.json { }).generate "bounds-info.json" {
+          maximized = true;
+          fullscreen = false;
+          # Just don't set x, y, width, height (they get auto-set by Mattermost)
+        };
       }
     ];
 

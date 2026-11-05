@@ -5,8 +5,7 @@ with lib;
 let
   cfg = config.modules.vesktop;
 
-  data = import (root + "/data/vesktop.nix");
-  inherit (data) settings state;
+  settings = import (root + "/data/vesktop-settings.nix");
 in
 {
   options.modules.vesktop = {
@@ -39,7 +38,11 @@ in
       {
         name = "seedVesktopState";
         file = ".config/vesktop/state.json";
-        source = (pkgs.formats.json { }).generate "state.json" state;
+        source = (pkgs.formats.json { }).generate "state.json" {
+          firstLaunch = false;
+          maximized = true;
+          minimized = false;
+        };
       }
     ];
 

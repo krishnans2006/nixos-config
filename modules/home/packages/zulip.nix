@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.modules.zulip;
 
-  settings = import (root + "/data/zulip.nix") { home = config.home.homeDirectory; };
+  settings = import (root + "/data/zulip-settings.nix") { home = config.home.homeDirectory; };
 in
 {
   options.modules.zulip = {

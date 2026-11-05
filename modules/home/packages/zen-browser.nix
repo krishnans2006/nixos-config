@@ -4,6 +4,9 @@ with lib;
 
 let
   cfg = config.modules.zen-browser;
+
+  data = import (root + "/data/zen-browser-config.nix") { home = config.home.homeDirectory; };
+  inherit (data) settings mods modSettings extensions spaces essentials;
 in
 {
   options.modules.zen-browser = {
@@ -13,9 +16,6 @@ in
 
   config = mkIf cfg.enable (
     let
-      data = import (root + "/data/zen-browser.nix") { home = config.home.homeDirectory; };
-      inherit (data) settings mods modSettings extensions spaces essentials;
-
       # Construct enterprise policy settings for an individual extension
       mkExtensionPolicy = ext: {
         install_url = "https://addons.mozilla.org/firefox/downloads/latest/${ext.slug}/latest.xpi";
