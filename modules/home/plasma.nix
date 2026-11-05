@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, root, ... }:
 
 with lib;
 
@@ -452,6 +452,93 @@ in
             "Terminal Features".BellMode = "0";
           };
         };
+      };
+    };
+
+    # Dolphin Places
+    xdg.dataFile."user-places.xbel" = {
+      force = true;
+      text = import (root + "/utils/gen-user-places-xbel.nix") { inherit lib; } {
+        places = [
+          {
+            "Home" = {
+              href = "file://${config.home.homeDirectory}";
+              icon = "user-home";
+            };
+          }
+          {
+            "Desktop" = {
+              href = "file://${config.home.homeDirectory}/Desktop";
+              icon = "user-desktop";
+            };
+          }
+          {
+            "Documents" = {
+              href = "file://${config.home.homeDirectory}/Documents";
+              icon = "folder-documents";
+            };
+          }
+          {
+            "Downloads" = {
+              href = "file://${config.home.homeDirectory}/Downloads";
+              icon = "folder-downloads";
+            };
+          }
+          {
+            "Music" = {
+              href = "file://${config.home.homeDirectory}/Music";
+              icon = "folder-music";
+            };
+          }
+          {
+            "Pictures" = {
+              href = "file://${config.home.homeDirectory}/Pictures";
+              icon = "folder-pictures";
+            };
+          }
+          {
+            "Videos" = {
+              href = "file://${config.home.homeDirectory}/Videos";
+              icon = "folder-videos";
+            };
+          }
+          {
+            "Network" = {
+              href = "remote:/";
+              icon = "folder-network";
+            };
+          }
+          {
+            "Trash" = {
+              href = "trash:/";
+              icon = "user-trash";
+            };
+          }
+          {
+            "School" = {
+              href = "file://${config.home.homeDirectory}/School";
+              icon = "inode-directory";
+            };
+          }
+          {
+            "Tech" = {
+              href = "file://${config.home.homeDirectory}/Tech";
+              icon = "inode-directory";
+            };
+          }
+          {
+            "Recent Files" = {
+              href = "recentlyused:/files";
+              icon = "document-open-recent";
+            };
+          }
+          {
+            "Recent Locations" = {
+              href = "recentlyused:/locations";
+              icon = "folder-open-recent";
+            };
+          }
+        ];
       };
     };
   };
