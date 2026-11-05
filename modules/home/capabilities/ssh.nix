@@ -5,8 +5,7 @@ with lib;
 let
   cfg = config.modules.ssh;
 
-  data = import (root + "/data/ssh.nix");
-  inherit (data) sshConfig;
+  sshConfig = import (root + "/data/ssh-config.nix");
 in
 {
   options.modules.ssh = {
