@@ -10,6 +10,7 @@ let
     inherit lib;
     inherit (cfg) hasBattery;
   };
+  konsoleProfile = import (root + "/data/konsole-profile.nix");
 in
 {
   options.modules.plasma = {
@@ -330,23 +331,7 @@ in
     programs.konsole = {
       enable = true;
       defaultProfile = "Krishnan";
-
-      profiles = {
-        Krishnan = {
-          name = "Krishnan";
-          command = "/run/current-system/sw/bin/zsh";
-          font = {
-            name = "Hack";
-            size = 10;
-          };
-
-          extraConfig = {
-            General.Parent = "FALLBACK/";
-            Scrolling.HistoryMode = "2";
-            "Terminal Features".BellMode = "0";
-          };
-        };
-      };
+      profiles."Krishnan" = konsoleProfile;
     };
 
     # Dolphin Places
