@@ -5,8 +5,7 @@ with lib;
 let
   cfg = config.modules.zulip;
 
-  data = import (root + "/data/zulip.nix") { home = config.home.homeDirectory; };
-  inherit (data) settings;
+  settings = import (root + "/data/zulip.nix") { home = config.home.homeDirectory; };
 in
 {
   options.modules.zulip = {

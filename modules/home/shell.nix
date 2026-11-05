@@ -5,8 +5,7 @@ with lib;
 let
   cfg = config.modules.shell;
 
-  data = import (root + "/data/atuin.nix") { inherit config; };
-  inherit (data) settings;
+  atuinSettings = import (root + "/data/atuin.nix") { inherit config; };
 in
 {
   options.modules.shell = {
@@ -127,7 +126,7 @@ in
       programs.atuin = {
         enable = true;
         forceOverwriteSettings = true;
-        settings = settings;
+        settings = atuinSettings;
 
         #daemon.enable = true;
       };

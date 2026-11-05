@@ -2,38 +2,37 @@
 
 {
   # https://docs.atuin.sh/configuration/config/
-  settings = {
-    db_path = "~/.local/share/atuin/history.db";
-    key_path = config.sops.secrets."atuin/key_b64".path;
-    session_path = "~/.local/share/atuin/session";
-    dialect = "us";
 
-    auto_sync = true;
-    update_check = false;
-    sync_address = "https://atuin.krishy.dev";
-    sync_frequency = "5m";
+  db_path = "~/.local/share/atuin/history.db";
+  key_path = config.sops.secrets."atuin/key_b64".path;
+  session_path = "~/.local/share/atuin/session";
+  dialect = "us";
 
-    search_mode = "fuzzy";
-    filter_mode = "global";
-    workspaces = false;  # Filter mode for when in a git repository
+  auto_sync = true;
+  update_check = false;
+  sync_address = "https://atuin.krishy.dev";
+  sync_frequency = "5m";
 
-    style = "auto";  # Full when possible
-    invert = false;
-    inline_height = 0;
-    show_preview = true;
-    max_preview_height = 4;
-    show_help = true;
-    show_tabs = false;
-    exit_mode = "return-original";
+  search_mode = "fuzzy";
+  filter_mode = "global";
+  workspaces = false;  # Filter mode for when in a git repository
 
-    store_failed = true;
-    secrets_filter = true;
+  style = "auto";  # Full when possible
+  invert = false;
+  inline_height = 0;
+  show_preview = true;
+  max_preview_height = 4;
+  show_help = true;
+  show_tabs = false;
+  exit_mode = "return-original";
 
-    network_timeout = 30;
-    network_connect_timeout = 5;
-    local_timeout = 5;
+  store_failed = true;
+  secrets_filter = true;
 
-    enter_accept = true;
-    sync.records = true;
-  };
+  network_timeout = 30;
+  network_connect_timeout = 5;
+  local_timeout = 5;
+
+  enter_accept = true;
+  sync.records = true;
 }

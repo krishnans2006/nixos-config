@@ -5,8 +5,7 @@ with lib;
 let
   cfg = config.modules.element;
 
-  data = import (root + "/data/element.nix");
-  inherit (data) settings;
+  settings = import (root + "/data/element.nix");
 in
 {
   options.modules.element = {
@@ -17,7 +16,6 @@ in
   config = mkIf cfg.enable {
     programs.element-desktop = {
       enable = true;
-
       settings = settings;
     };
 
