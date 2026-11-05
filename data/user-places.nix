@@ -45,12 +45,6 @@
       };
     }
     {
-      "Network" = {
-        href = "remote:/";
-        icon = "folder-network";
-      };
-    }
-    {
       "Trash" = {
         href = "trash:/";
         icon = "user-trash";
@@ -66,6 +60,12 @@
       "Tech" = {
         href = "file://${home}/Tech";
         icon = "inode-directory";
+      };
+    }
+    {
+      "Network" = {
+        href = "remote:/";
+        icon = "folder-network";
       };
     }
     {
