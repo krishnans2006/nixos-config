@@ -13,9 +13,7 @@ in
 
   config = mkIf cfg.enable (
     let
-      data = import (root + "/data/zen-browser.nix") {
-        homeDirectory = config.home.homeDirectory;
-      };
+      data = import (root + "/data/zen-browser.nix") { home = config.home.homeDirectory; };
       inherit (data) settings mods modSettings extensions spaces essentials;
 
       # Construct enterprise policy settings for an individual extension

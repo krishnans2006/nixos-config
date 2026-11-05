@@ -1,4 +1,4 @@
-{ homeDirectory }:
+{ home }:
 
 {
   # Browser preferences
@@ -8,7 +8,7 @@
     "zen.workspaces.continue-where-left-off" = true;
 
     # Downloads save to ~/Downloads/Zen
-    "browser.download.dir" = "${homeDirectory}/Downloads/Zen";
+    "browser.download.dir" = "${home}/Downloads/Zen";
     "browser.download.folderList" = 2;
     "browser.download.useDownloadDir" = true;
 

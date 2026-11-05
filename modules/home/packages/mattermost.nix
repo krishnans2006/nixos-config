@@ -4,6 +4,12 @@ with lib;
 
 let
   cfg = config.modules.mattermost;
+
+  data = import (root + "/data/mattermost.nix") {
+    home = config.home.homeDirectory;
+    inherit (cfg) autostart;
+  };
+  inherit (data) settings bounds;
 in
 {
   options.modules.mattermost = {
@@ -41,44 +47,17 @@ in
         name = "seedMattermostConfig";
         file = ".config/Mattermost/config.json";
         force = true;
-        source = (pkgs.formats.json { }).generate "config.json" {
-          version = 4;
-          servers = imap0 (order: s: {
-            inherit (s) name url;
-            inherit order;
-            # isPredefined in config.json is only honored when the same URL also
-            # exists in buildConfig/GPO; otherwise Mattermost drops the server and
-            # rewrites servers to []
-            isPredefined = false;
-          }) cfg.servers;
-          showTrayIcon = true;
-          trayIconTheme = "light";
-          minimizeToTray = true;
-          notifications = {
-            flashWindow = 2;
-            bounceIcon = true;
-            bounceIconType = "informational";
-          };
-          showUnreadBadge = true;
-          useSpellChecker = true;
-          enableHardwareAcceleration = true;
-          inherit (cfg) autostart;
-          hideOnStart = cfg.autostart;
-          spellCheckerLocales = [ ];
-          darkMode = true;
-          lastActiveServer = 0;
-          downloadLocation = "${config.home.homeDirectory}/Downloads/Mattermost";
-          startInFullscreen = false;
-          logLevel = "info";
-          enableMetrics = false;
-          viewLimit = 15;
-          themeSyncing = true;
-          autoCheckForUpdates = true;
-          alwaysMinimize = true;
-          enableSentry = true;
-          skippedVersions = [ ];
-          useNativeTitleBar = false;
-        };
+        source =
+          (pkgs.formats.json { }).generate "config.json" (settings // {
+            servers = imap0 (order: s: {
+              inherit (s) name url;
+              inherit order;
+              # isPredefined in config.json is only honored when the same URL also
+              # exists in buildConfig/GPO; otherwise Mattermost drops the server and
+              # rewrites servers to []
+              isPredefined = false;
+            }) cfg.servers;
+          });
       }
       {
         name = "seedMattermostPermissions";
@@ -97,11 +76,7 @@ in
       {
         name = "seedMattermostBounds";
         file = ".config/Mattermost/bounds-info.json";
-        source = (pkgs.formats.json { }).generate "bounds-info.json" {
-          maximized = true;
-          fullscreen = false;
-          # Just don't set x, y, width, height (they get auto-set by Mattermost)
-        };
+        source = (pkgs.formats.json { }).generate "bounds-info.json" bounds;
       }
     ];
 

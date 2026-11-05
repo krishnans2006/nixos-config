@@ -4,6 +4,9 @@ with lib;
 
 let
   cfg = config.modules.vesktop;
+
+  data = import (root + "/data/vesktop.nix");
+  inherit (data) settings state;
 in
 {
   options.modules.vesktop = {
@@ -15,21 +18,7 @@ in
     programs.vesktop = {
       enable = true;
 
-      settings = {
-        discordBranch = "stable";
-        arRPC = true;
-
-        customTitleBar = true;
-        hardwareVideoAcceleration = true;
-
-        minimizeToTray = true;
-        autoStartMinimized = false;
-        clickTrayToShowHide = true;
-        enableTaskbarFlashing = true;
-
-        # splashColor = "rgb(239, 239, 241)";
-        # splashBackground = "rgb(18, 18, 20)";
-      };
+      settings = settings;
 
       # This is handled by settings sync
       # vencord.settings = { ... }
@@ -50,11 +39,7 @@ in
       {
         name = "seedVesktopState";
         file = ".config/vesktop/state.json";
-        source = (pkgs.formats.json { }).generate "state.json" {
-          firstLaunch = false;
-          maximized = true;
-          minimized = false;
-        };
+        source = (pkgs.formats.json { }).generate "state.json" state;
       }
     ];
 

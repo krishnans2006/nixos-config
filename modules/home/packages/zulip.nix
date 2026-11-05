@@ -4,6 +4,9 @@ with lib;
 
 let
   cfg = config.modules.zulip;
+
+  data = import (root + "/data/zulip.nix") { home = config.home.homeDirectory; };
+  inherit (data) settings;
 in
 {
   options.modules.zulip = {
@@ -20,37 +23,7 @@ in
       {
         name = "seedZulipSettings";
         file = ".config/Zulip/config/settings.json";
-        source = (pkgs.formats.json { }).generate "settings.json" {
-          appLanguage = "en";
-          enableSpellchecker = true;
-          spellcheckerLanguages = null;
-          autoHideMenubar = true;
-          silent = false;
-          startMinimized = true;
-          trayIcon = true;
-          useSystemProxy = false;
-          useManualProxy = false;
-          autoUpdate = true;
-          showSidebar = true;
-          badgeOption = true;
-          startAtLogin = true;  # Maybe false?
-          showNotification = true;
-          betaUpdate = false;
-          errorReporting = false;
-          customCSS = false;
-          lastActiveTab = 0;
-          dnd = false;
-          dndPreviousSettings = {
-            showNotification = true;
-            silent = false;
-          };
-          downloadsPath = "${config.home.homeDirectory}/Downloads/Zulip";
-          quitOnClose = false;
-          promptDownload = false;
-          proxyPAC = "";
-          proxyRules = "";
-          proxyBypass = "";
-        };
+        source = (pkgs.formats.json { }).generate "settings.json" settings;
       }
     ];
 
