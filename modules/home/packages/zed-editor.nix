@@ -5,8 +5,7 @@ with lib;
 let
   cfg = config.modules.zed-editor;
 
-  lumen-models = import (root + "/data/lumen-models.nix");
-  inherit (lumen-models) lumenModelsList;
+  lumenModelsList = import (root + "/data/lumen-models.nix");
 
   # This patch modifies zed-editor to use copilot-language-server from PATH
   # instead of npm-installing it into ~/.local/share/zed/copilot
