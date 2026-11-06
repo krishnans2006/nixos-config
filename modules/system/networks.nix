@@ -110,6 +110,24 @@ in
             randomHostname = true;
             dontReneg = true;
           };
+          ovpn3 = mkOpenVPNProfileConfig "3" {
+            tcp = true;
+            ta = false;
+            authSha256 = false;
+            cipher = true;
+            dataCiphers = false;
+            randomHostname = true;
+            dontReneg = true;
+          };
+          ovpn4 = mkOpenVPNProfileConfig "4" {
+            tcp = false;
+            ta = false;
+            authSha256 = false;
+            cipher = true;
+            dataCiphers = false;
+            randomHostname = true;
+            dontReneg = true;
+          };
 
           cisco0 = mkCiscoVPNProfileConfig "0";
         };
@@ -138,6 +156,13 @@ in
         "openvpn/ovpn2/ca" = sharedOpenVPN "ovpn1-2" "ca";
         "openvpn/ovpn2/cert" = sharedOpenVPN "ovpn1-2" "cert";
         "openvpn/ovpn2/key" = sharedOpenVPN "ovpn1-2" "key";
+
+        "openvpn/ovpn3/ca" = sharedOpenVPN "ovpn3-4" "ca";
+        "openvpn/ovpn3/cert" = sharedOpenVPN "ovpn3-4" "cert";
+        "openvpn/ovpn3/key" = sharedOpenVPN "ovpn3-4" "key";
+        "openvpn/ovpn4/ca" = sharedOpenVPN "ovpn3-4" "ca";
+        "openvpn/ovpn4/cert" = sharedOpenVPN "ovpn3-4" "cert";
+        "openvpn/ovpn4/key" = sharedOpenVPN "ovpn3-4" "key";
       };
   };
 }
