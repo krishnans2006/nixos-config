@@ -5,6 +5,13 @@ with lib;
 let
   cfg = config.modules.jetbrains;
 
+  anyEnabled =
+    cfg.enablePyCharm
+    || cfg.enableWebStorm
+    || cfg.enableIdea
+    || cfg.enableClion
+    || cfg.enableGoLand
+    || cfg.enableRustRover;
   anyDisabled =
     !cfg.enablePyCharm
     || !cfg.enableWebStorm
@@ -67,6 +74,12 @@ in
       (mkIf cfg.enableClion [ pkgs.jetbrains.clion ])
       (mkIf cfg.enableGoLand [ pkgs.jetbrains.goland ])
       (mkIf cfg.enableRustRover [ pkgs.jetbrains.rust-rover ])
+    ];
+
+    # Impermanence
+    modules.impermanence.persistDirs = mkIf anyEnabled [
+      ".config/JetBrains"
+      ".local/share/JetBrains"
     ];
   };
 }
