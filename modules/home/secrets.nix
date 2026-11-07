@@ -43,5 +43,8 @@ in
       ssh-to-age
       #
     ];
+
+    # Impermanence
+    modules.impermanence.persistDirs = [ ".wakatime" ];
   };
 }
