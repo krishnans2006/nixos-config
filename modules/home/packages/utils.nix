@@ -59,5 +59,8 @@ in
 
       devenv
     ];
+
+    # Impermanence
+    modules.impermanence.persistDirs = [ ".config/rclone" ];
   };
 }
