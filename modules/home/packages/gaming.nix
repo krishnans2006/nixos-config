@@ -11,17 +11,24 @@ in
     enableMinecraft = mkEnableOption "Minecraft via Prism Launcher";
   };
 
-  config = {
-    home.packages = mkMerge [
-      (mkIf cfg.enableLutris [
-        pkgs.lutris-free
-        #
-      ])
+  config = mkMerge [
+    (mkIf cfg.enableLutris {
+      home.packages = [ pkgs.lutris-free ];
 
-      (mkIf cfg.enableMinecraft [
-        pkgs.prismlauncher
-        #
-      ])
-    ];
-  };
+      # Impermanence
+      modules.impermanence.persistDirs = [
+        ".config/lutris"
+        ".local/share/lutris"
+        "Games"
+        ".wine"
+      ];
+    })
+
+    (mkIf cfg.enableMinecraft {
+      home.packages = [ pkgs.prismlauncher ];
+
+      # Impermanence
+      modules.impermanence.persistDirs = [ ".local/share/PrismLauncher" ];
+    })
+  ];
 }
