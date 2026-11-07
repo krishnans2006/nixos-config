@@ -25,5 +25,8 @@ in
         settings = settings;
       };
     };
+
+    # Impermanence
+    modules.impermanence.persistDirs = [ ".config/mozilla/firefox" ];
   };
 }
