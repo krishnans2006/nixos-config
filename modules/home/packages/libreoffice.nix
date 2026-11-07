@@ -18,5 +18,8 @@ in
       hunspellDicts.en_US
       #
     ];
+
+    # Impermanence
+    modules.impermanence.persistDirs = [ ".config/libreoffice" ];
   };
 }
