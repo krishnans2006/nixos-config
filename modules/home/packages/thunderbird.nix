@@ -26,5 +26,8 @@ in
         "mailnews.message_display.disable_remote_image" = false;
       };
     };
+
+    # Impermanence
+    modules.impermanence.persistDirs = [ ".thunderbird" ];
   };
 }
