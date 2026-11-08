@@ -81,7 +81,10 @@
           shown = [
             "org.kde.plasma.bluetooth"
           ] ++ lib.optional hasBattery "org.kde.plasma.battery";
-          hidden = [ "org.kde.plasma.addons.katesessions" ];
+          hidden = [
+            "org.kde.plasma.addons.katesessions"
+            "org.kde.merkuro.contact.applet"
+          ];
         };
       };
     }
