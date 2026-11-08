@@ -75,6 +75,8 @@ in
           tinymist
           clang-tools
           rust-analyzer
+          go
+          gopls
           slang-server
 
           cursor-cli
