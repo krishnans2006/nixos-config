@@ -116,7 +116,6 @@ in
           extensionButtons."nav-bar" = sortedPinnedExtensionIds;
 
           # Keyboard shortcuts
-          keyboardShortcutsVersion = 21;
           keyboardShortcuts = [
             {
               id = "zen-compact-mode-toggle";
