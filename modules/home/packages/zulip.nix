@@ -38,7 +38,7 @@ in
 
     # Autostart
     xdg.configFile."autostart/zulip.desktop" = mkIf cfg.autostart {
-      text = builtins.readFile "${pkgs.zulip}/share/applications/zulip.desktop";
+      text = builtins.readFile "${pkgs.zulip}/share/applications/org.zulip.Zulip.desktop";
     };
   };
 }
