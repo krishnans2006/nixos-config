@@ -42,4 +42,6 @@ with inputs;
   modules.aethersdr.enable = true;
 
   hardware.rtl-sdr.enable = true;
+
+  networking.firewall.allowedUDPPorts = [ 2626 ];
 }
