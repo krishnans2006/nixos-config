@@ -11,6 +11,7 @@ let
     inherit (cfg) hasBattery;
   };
   konsoleProfile = import (root + "/data/konsole-profile.nix");
+  dolphinSettings = import (root + "/data/dolphin-settings.nix");
 in
 {
   options.modules.plasma = {
@@ -111,19 +112,7 @@ in
       };
 
       dataFile = {
-        "dolphin/view_properties/global/.directory" = {
-          Settings.HiddenFilesShown = true;
-          Dolphin = {
-            ViewMode = 1;  # View Style: Details
-            PreviewsShown = true;
-            GroupedSorting = false;
-            SortRole = "text";
-            SortOrder = 0;  # Qt::AscendingOrder (maybe)
-            SortFoldersFirst = true;
-            SortHiddenLast = true;
-            DynamicViewPassed = false;
-          };
-        };
+        "dolphin/view_properties/global/.directory" = dolphinSettings;
       };
 
       shortcuts = {
