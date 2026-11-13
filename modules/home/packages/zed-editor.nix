@@ -109,6 +109,7 @@ in
         "django"
         "git-firefly"
         "html"
+        "ini"
         #jupyter??
         "latex"
         "linkerscript"
