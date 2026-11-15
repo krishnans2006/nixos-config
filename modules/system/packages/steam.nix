@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.modules.gaming;
+  cfg = config.modules.steam;
 in
 {
-  options.modules.gaming = {
-    enable = mkEnableOption "Enable gaming-related packages and configuration";
+  options.modules.steam = {
+    enable = mkEnableOption "Steam";
     #
   };
 

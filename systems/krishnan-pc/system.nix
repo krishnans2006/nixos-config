@@ -30,7 +30,7 @@ with inputs;
   };
   modules.ssh-server.enable = true;
 
-  modules.gaming.enable = true;
+  modules.steam.enable = true;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;

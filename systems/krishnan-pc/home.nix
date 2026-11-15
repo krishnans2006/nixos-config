@@ -17,10 +17,8 @@ with inputs;
 
   modules.plasma.hasBattery = false;
 
-  modules.gaming = {
-    enableLutris = true;
-    enableMinecraft = true;
-  };
+  modules.lutris.enable = true;
+  modules.minecraft.enable = true;
 
   modules.firefox.enable = true;
   modules.aethersdr.enable = true;

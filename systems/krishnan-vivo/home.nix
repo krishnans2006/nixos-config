@@ -20,10 +20,8 @@ with inputs;
 
   modules.impermanence.enable = true;
 
-  modules.gaming = {
-    enableLutris = false;
-    enableMinecraft = true;
-  };
+  modules.lutris.enable = false;
+  modules.minecraft.enable = true;
 
   modules.aethersdr.enable = true;
   modules.zed-editor.fontSize = 14;

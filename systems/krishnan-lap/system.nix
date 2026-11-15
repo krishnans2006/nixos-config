@@ -31,7 +31,7 @@ with inputs;
 
   modules.tailscale.enableTaildrive = true;
 
-  modules.gaming.enable = false;
+  modules.steam.enable = false;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;

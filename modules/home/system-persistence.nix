@@ -14,7 +14,7 @@ let
     type = "optional";
   };
 
-  gaming = verify "modules.gaming.enable";
+  steam = verify "modules.steam.enable";
   localsend = verify "modules.localsend.enable";
   logic2 = verify "modules.logic2.enable";
   virtualbox = verify "modules.virtualbox.enable";
@@ -27,7 +27,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (mkIf gaming.satisfied {
+    (mkIf steam.satisfied {
       modules.impermanence.persistDirs = [ ".steam" ".local/share/Steam" ];
     })
 
