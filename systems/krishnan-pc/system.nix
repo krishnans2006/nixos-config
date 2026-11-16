@@ -32,6 +32,7 @@ with inputs;
 
   modules.steam.enable = true;
   modules.dolphin-emu.enable = true;
+  modules.eden-emu.enable = true;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
