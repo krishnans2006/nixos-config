@@ -42,6 +42,7 @@ with inputs;
 
   modules.logic2.enable = true;
   modules.aethersdr.enable = true;
+  modules.shurectl.enable = true;
 
   hardware.rtl-sdr.enable = true;
 }
