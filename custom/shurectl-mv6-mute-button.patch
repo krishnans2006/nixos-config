@@ -1,0 +1,88 @@
+--- a/src/device.rs
++++ b/src/device.rs
+@@ -801,8 +801,23 @@
+         self.run_getters(getters, readback)?;
+         self.query_playback_mix(readback)?;
+ 
++        // This MV6 did not answer the Mute Button GET in a state read on
++        // 2026-11-16. Leave it unknown instead of rejecting all other settings.
++        let need = match self.model {
++            DeviceModel::Mv6 => Need::Optional,
++            DeviceModel::Mvx2u
++            | DeviceModel::Mvx2uGen2
++            | DeviceModel::Mv6Gen2
++            | DeviceModel::Mv7
++            | DeviceModel::Mv7Plus => Need::Required,
++        };
++        self.query_as(
++            &cmd_get_mv6_mute_btn_disable(self.next_seq()),
++            need,
++            readback,
++        )?;
++
+         let getters: &[fn(u8) -> Vec<u8>] = &[
+-            cmd_get_mv6_mute_btn_disable,
+             cmd_get_device_name,
+             cmd_get_firmware_version,
+             cmd_get_serial,
+--- a/src/fake_hid.rs
++++ b/src/fake_hid.rs
+@@ -115,6 +115,8 @@
+     /// Feature whose GETs are answered with an unknown address, as `refuse`
+     /// does, until cleared.
+     pub refused_get: Option<String>,
++    /// Binary feature whose GET receives no reply, until cleared.
++    pub unanswered_get: Option<String>,
+     /// Firmware version for FIRMWARE GETs to answer with, until cleared.
+     pub firmware_version: Option<String>,
+     /// GET replies to hold back until just before the next GET's, as a reply
+@@ -660,11 +662,14 @@
+                 let firmware_version = (feature == "FIRMWARE")
+                     .then_some(self.faults.firmware_version.as_deref())
+                     .flatten();
++                let silent = self.faults.unanswered_get.as_deref() == Some(feature.as_str());
+                 self.log.push(Packet {
+                     raw,
+                     kind: PacketKind::Get { feature },
+                 });
+-                let reply = if refused {
++                let reply = if silent {
++                    None
++                } else if refused {
+                     let unknown = Key {
+                         addr: UNKNOWN_ADDR,
+                         ..key
+@@ -1302,12 +1307,32 @@
+     }
+ 
+     #[test]
++    fn unread_mv6_mute_button_leaves_other_settings_readable() {
++        for silent in [false, true] {
++            let seeded = distinct_state(DeviceModel::Mv6);
++            let fake = FakeDevice::with_state(DeviceModel::Mv6, seeded.clone());
++            fake.faults_mut(|faults| {
++                if silent {
++                    faults.unanswered_get = Some("MUTE_BUTTON".into());
++                } else {
++                    faults.refused_get = Some("MUTE_BUTTON".into());
++                }
++            });
++            let readback = fake.open().get_state().expect("the rest reads back");
++            let mut expected = clean_readback(DeviceModel::Mv6, &seeded);
++            expected.mute_btn_disabled = None;
++            assert_eq!(readback.state, expected);
++            assert_eq!(readback.skipped.len(), 1);
++            assert!(readback.skipped[0].contains("Mute Button"));
++        }
++    }
++
++    #[test]
+     fn refused_required_get_still_fails_readback() {
+         for (model, feature, label) in [
+             (DeviceModel::Mv7Plus, "GAIN", "Gain"),
+             // Required on the MV7+: its echo of prefix 0x03 is captured.
+             (DeviceModel::Mv7Plus, "PLAYBACK_LEVEL", "Playback Level"),
+-            (DeviceModel::Mv6, "MUTE_BUTTON", "Mute Button"),
+             (DeviceModel::Mv6Gen2, "MUTE_BUTTON", "Mute Button"),
+         ] {
+             let fake = FakeDevice::new(model);

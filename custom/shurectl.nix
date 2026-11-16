@@ -13,6 +13,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   cargoHash = "sha256-i86oDGJelXOdolpV5xs0nhDNPt4BFMMKKUIHxxh30xY=";
 
+  # Keep the MV6 usable when its Mute Button query goes unanswered.
+  patches = [ ./shurectl-mv6-mute-button.patch ];
+
   nativeBuildInputs = [ pkg-config ];
 
   buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ alsa-lib udev ];
