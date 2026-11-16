@@ -20,6 +20,13 @@ in
   config = mkIf cfg.enable (
     verify-system.apply {
       home.packages = [ pkgs.eden ];
+
+      # Settings/controller profiles, saves/NAND/keys/mods, and game library.
+      modules.impermanence.persistDirs = [
+        ".config/eden"
+        ".local/share/eden"
+        "Games"
+      ];
     }
   );
 }

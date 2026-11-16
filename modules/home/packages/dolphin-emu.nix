@@ -20,6 +20,13 @@ in
   config = mkIf cfg.enable (
     verify-system.apply {
       home.packages = [ pkgs.dolphin-emu ];
+
+      # Settings/controller profiles, saves/NAND/save states, and game library.
+      modules.impermanence.persistDirs = [
+        ".config/dolphin-emu"
+        ".local/share/dolphin-emu"
+        "Games"
+      ];
     }
   );
 }
