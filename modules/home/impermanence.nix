@@ -18,13 +18,13 @@ in
       type = with types; listOf (either str attrs);
       default = [ ];
       description = "List of directories to persist in home.";
-      # apply = unique;
+      apply = unique;
     };
     persistFiles = mkOption {
       type = with types; listOf (either str attrs);
       default = [ ];
       description = "List of files to persist in home.";
-      # apply = unique;
+      apply = unique;
     };
   };
 
