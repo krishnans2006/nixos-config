@@ -31,6 +31,7 @@ with inputs;
   modules.ssh-server.enable = true;
 
   modules.steam.enable = true;
+  modules.dolphin-emu.enable = true;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
@@ -42,6 +43,4 @@ with inputs;
   modules.aethersdr.enable = true;
 
   hardware.rtl-sdr.enable = true;
-
-  networking.firewall.allowedUDPPorts = [ 2626 ];
 }

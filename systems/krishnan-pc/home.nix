@@ -19,6 +19,7 @@ with inputs;
 
   modules.lutris.enable = true;
   modules.minecraft.enable = true;
+  modules.dolphin-emu.enable = true;
 
   modules.firefox.enable = true;
   modules.aethersdr.enable = true;
@@ -30,7 +31,6 @@ with inputs;
 
   home.packages = with pkgs; [
     llama-cpp-rocm
-    dolphin-emu
     eden
     #
   ];
