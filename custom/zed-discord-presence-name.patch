@@ -1,0 +1,373 @@
+diff --git a/README.md b/README.md
+index 8aa96b0..c1ba132 100644
+--- a/README.md
++++ b/README.md
+@@ -83,6 +83,23 @@ The `application_id` is required for the rich presence to work. It should be kep
+ "application_id": "1263505205522337886"
+ ```
+ 
++### Activity Name
++
++The optional `name` field overrides the main activity title independently of
++`details` and `state`. It supports all [placeholders](#available-placeholders):
++
++```jsonc
++"name": "Working on {workspace}"
++```
++
++Omit `name` or set it to `null` to use the Discord application's registered name
++("Zed" with the default application ID). The activity type's "Playing" prefix is
++controlled by Discord and is separate from this title.
++
++Language configurations inherit the top-level `name` unless they supply their
++own value (including `null`). Workspace overrides also accept `name`; idle
++activities can set a separate `idle.name`.
++
+ ### Base Icons URL
+ 
+ The `base_icons_url` is the base URL for all language icons. This URL points to the location where the icons are stored.
+@@ -151,7 +168,7 @@ The `action` determines what happens when you go idle:
+ - `change_activity` changes the activity to idle with the specified details
+ - `clear_activity` hides the activity
+ 
+-The `state`, `details`, `large_image`, `large_text`, `small_image`, and `small_text` options specify the messages and images to display when idle. All of these can use [placeholders](#available-placeholders).
++The `name`, `state`, `details`, `large_image`, `large_text`, `small_image`, and `small_text` options specify the messages and images to display when idle. All of these can use [placeholders](#available-placeholders).
+ 
+ ```jsonc
+ "idle": {
+@@ -201,7 +218,7 @@ The `git_host_overrides` option allows you to replace specific hostnames in your
+ ### Per-Language Configuration
+ 
+ The `languages` field allows you to override the default activity settings for specific languages.
+-Each key must be the **language name in lowercase**, and the value is an object containing options `state`, `details`, `large_image`, `large_text`, `small_image` and `small_text`. All of these can use [placeholders](#available-placeholders).
++Each key must be the **language name in lowercase**, and the value is an object containing options `name`, `state`, `details`, `large_image`, `large_text`, `small_image` and `small_text`. All of these can use [placeholders](#available-placeholders).
+ 
+ ```jsonc
+ "languages": {
+@@ -235,6 +252,7 @@ If a language is not specified in the `languages` map, the default top-level `ac
+         // Base URL for all language icons
+         "base_icons_url": "https://raw.githubusercontent.com/xhyrom/zed-discord-presence/main/assets/icons/",
+ 
++        "name": "Working on {workspace}",
+         "state": "Working on {filename}",
+         "details": "In {workspace}",
+         // URL for the large image
+diff --git a/lsp/src/activity/fields.rs b/lsp/src/activity/fields.rs
+index 3d24730..1a55da8 100644
+--- a/lsp/src/activity/fields.rs
++++ b/lsp/src/activity/fields.rs
+@@ -22,6 +22,7 @@ use crate::util::Placeholders;
+ 
+ #[derive(Debug, Clone, PartialEq, Eq)]
+ pub struct ActivityFields {
++    pub name: Option<String>,
+     pub state: Option<String>,
+     pub details: Option<String>,
+     pub large_image: Option<String>,
+@@ -33,6 +34,7 @@ pub struct ActivityFields {
+ impl From<&Activity> for ActivityFields {
+     fn from(config: &Activity) -> Self {
+         Self {
++            name: config.name.clone(),
+             state: config.state.clone(),
+             details: config.details.clone(),
+             large_image: config.large_image.clone(),
+@@ -46,6 +48,7 @@ impl From<&Activity> for ActivityFields {
+ impl ActivityFields {
+     pub fn resolve_placeholders(self, placeholders: &Placeholders) -> Self {
+         Self {
++            name: self.name.map(|name| placeholders.replace(&name)),
+             state: self.state.map(|s| placeholders.replace(&s)),
+             details: self.details.map(|d| placeholders.replace(&d)),
+             large_image: self.large_image.map(|img| placeholders.replace(&img)),
+@@ -66,6 +69,7 @@ mod tests {
+         let details = Some("In {workspace}".to_string());
+ 
+         let activity = Activity {
++            name: None,
+             state: state.clone(),
+             details: details.clone(),
+             large_image: None,
+diff --git a/lsp/src/activity/mod.rs b/lsp/src/activity/mod.rs
+index 1fc39ae..9fa4dbe 100644
+--- a/lsp/src/activity/mod.rs
++++ b/lsp/src/activity/mod.rs
+@@ -91,6 +91,7 @@ fn apply_override_fields(fields: &mut ActivityFields, ov: &WorkspaceOverride) {
+             }
+         };
+     }
++    apply!(name);
+     apply!(state);
+     apply!(details);
+     apply!(large_image);
+@@ -98,3 +99,107 @@ fn apply_override_fields(fields: &mut ActivityFields, ov: &WorkspaceOverride) {
+     apply!(small_image);
+     apply!(small_text);
+ }
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn test_activity_name_tracks_workspace_independently_of_details() {
++        let mut config = Configuration::default();
++        config
++            .update(Some(serde_json::json!({
++                "name": "Working on {workspace}",
++                "details": "Using Zed",
++                "state": "Editing"
++            })))
++            .unwrap();
++
++        let nix = ActivityManager::build_activity_fields(
++            None,
++            &config,
++            "NixOS",
++            "/work/NixOS",
++            None,
++            None,
++        );
++        let other = ActivityManager::build_activity_fields(
++            None,
++            &config,
++            "Other",
++            "/work/Other",
++            None,
++            None,
++        );
++
++        assert_eq!(nix.name.as_deref(), Some("Working on NixOS"));
++        assert_eq!(other.name.as_deref(), Some("Working on Other"));
++        assert_eq!(nix.details.as_deref(), Some("Using Zed"));
++        assert_eq!(nix.state.as_deref(), Some("Editing"));
++        // A title change must invalidate the Discord activity cache.
++        assert_ne!(nix, other);
++    }
++
++    #[test]
++    fn test_activity_name_defaults_to_application_name_and_can_be_cleared() {
++        let mut config = Configuration::default();
++        assert!(config.activity.name.is_none());
++
++        config
++            .update(Some(
++                serde_json::json!({ "name": "Working on {workspace}" }),
++            ))
++            .unwrap();
++        config
++            .update(Some(serde_json::json!({ "name": null })))
++            .unwrap();
++
++        let fields = ActivityManager::build_activity_fields(
++            None,
++            &config,
++            "NixOS",
++            "/work/NixOS",
++            None,
++            None,
++        );
++        assert!(fields.name.is_none());
++    }
++
++    #[test]
++    fn test_workspace_name_overrides_support_set_clear_and_inherit() {
++        let mut config = Configuration::default();
++        config
++            .update(Some(serde_json::json!({
++                "name": "Working on {workspace}",
++                "overrides": [
++                    { "match": { "paths": ["/work/"] }, "name": "Work: {workspace}" },
++                    { "match": { "paths": ["/private/"] }, "name": null }
++                ]
++            })))
++            .unwrap();
++
++        for (path, expected) in [
++            ("/work/NixOS", Some("Work: NixOS")),
++            ("/private/NixOS", None),
++            ("/personal/NixOS", Some("Working on NixOS")),
++        ] {
++            let fields =
++                ActivityManager::build_activity_fields(None, &config, "NixOS", path, None, None);
++            assert_eq!(fields.name.as_deref(), expected);
++        }
++    }
++
++    #[test]
++    fn test_idle_name_resolves_workspace_separately() {
++        let mut config = Configuration::default();
++        config
++            .update(Some(serde_json::json!({
++                "name": "Working on {workspace}",
++                "idle": { "name": "Idling in {workspace}" }
++            })))
++            .unwrap();
++
++        let fields = ActivityManager::build_idle_activity_fields(None, &config, "NixOS", None);
++        assert_eq!(fields.name.as_deref(), Some("Idling in NixOS"));
++    }
++}
+diff --git a/lsp/src/config/activity.rs b/lsp/src/config/activity.rs
+index e6a98fe..5bd0819 100644
+--- a/lsp/src/config/activity.rs
++++ b/lsp/src/config/activity.rs
+@@ -5,6 +5,7 @@ use crate::error::Result;
+ 
+ #[derive(Debug, Clone)]
+ pub struct Activity {
++    pub name: Option<String>,
+     pub state: Option<String>,
+     pub details: Option<String>,
+     pub large_image: Option<String>,
+@@ -16,6 +17,7 @@ pub struct Activity {
+ impl Default for Activity {
+     fn default() -> Self {
+         Self {
++            name: None,
+             state: Some(String::from("Working on {filename}")),
+             details: Some(String::from("In {workspace}")),
+             large_image: Some(String::from("{base_icons_url}/{language:lo}.png")),
+@@ -28,6 +30,7 @@ impl Default for Activity {
+ 
+ impl UpdateFromJson for Activity {
+     fn update_from_json(&mut self, json: &Value) -> Result<()> {
++        update_optional_string_field!(self, json, name, "name");
+         update_optional_string_field!(self, json, state, "state");
+         update_optional_string_field!(self, json, details, "details");
+         update_optional_string_field!(self, json, large_image, "large_image");
+diff --git a/lsp/src/config/idle.rs b/lsp/src/config/idle.rs
+index cfb41ae..9b41589 100644
+--- a/lsp/src/config/idle.rs
++++ b/lsp/src/config/idle.rs
+@@ -45,6 +45,7 @@ impl Default for Idle {
+             timeout: Duration::from_secs(DEFAULT_IDLE_TIMEOUT),
+             action: IdleAction::default(),
+             activity: Activity {
++                name: None,
+                 state: Some("Idling".to_string()),
+                 details: Some("In Zed".to_string()),
+                 large_image: Some("{base_icons_url}/zed.png".to_string()),
+diff --git a/lsp/src/config/mod.rs b/lsp/src/config/mod.rs
+index b392d7f..f4994d5 100644
+--- a/lsp/src/config/mod.rs
++++ b/lsp/src/config/mod.rs
+@@ -106,7 +106,10 @@ impl UpdateFromJson for Configuration {
+ 
+         if let Some(languages) = json.get("languages") {
+             for (key, value) in languages.as_object().unwrap_or(&Map::default()) {
+-                let mut activity = Activity::default();
++                let mut activity = Activity {
++                    name: self.activity.name.clone(),
++                    ..Activity::default()
++                };
+ 
+                 if let Err(e) = activity.update_from_json(value) {
+                     error!("Failed to update config for {} language: {}", key, e);
+@@ -207,4 +210,29 @@ mod tests {
+         assert_eq!(py_cfg.state.as_deref(), Some("Scripting Python"));
+         assert_eq!(py_cfg.details.as_deref(), Some("In {workspace}"));
+     }
++
++    #[test]
++    fn test_language_name_inherits_overrides_and_clears_global_name() {
++        let mut config = Configuration::default();
++        config
++            .update(Some(serde_json::json!({
++                "name": "Working on {workspace}",
++                "languages": {
++                    "rust": { "name": "Rust in {workspace}" },
++                    "python": { "state": "Writing Python" },
++                    "nix": { "name": null }
++                }
++            })))
++            .unwrap();
++
++        assert_eq!(
++            config.languages["rust"].name.as_deref(),
++            Some("Rust in {workspace}")
++        );
++        assert_eq!(
++            config.languages["python"].name.as_deref(),
++            Some("Working on {workspace}")
++        );
++        assert!(config.languages["nix"].name.is_none());
++    }
+ }
+diff --git a/lsp/src/config/workspace_override.rs b/lsp/src/config/workspace_override.rs
+index 66a4da2..0e15593 100644
+--- a/lsp/src/config/workspace_override.rs
++++ b/lsp/src/config/workspace_override.rs
+@@ -74,6 +74,7 @@ pub struct HideFields {
+ #[derive(Debug, Clone, Default)]
+ pub struct WorkspaceOverride {
+     pub match_: WorkspaceOverrideMatch,
++    pub name: OverrideField,
+     pub state: OverrideField,
+     pub details: OverrideField,
+     pub large_image: OverrideField,
+@@ -157,6 +158,7 @@ fn parse_one(json: &Value) -> WorkspaceOverride {
+         }
+     }
+ 
++    ov.name = OverrideField::from_json(json, "name");
+     ov.state = OverrideField::from_json(json, "state");
+     ov.details = OverrideField::from_json(json, "details");
+     ov.large_image = OverrideField::from_json(json, "large_image");
+diff --git a/lsp/src/discord.rs b/lsp/src/discord.rs
+index 8873ac5..2dd7111 100644
+--- a/lsp/src/discord.rs
++++ b/lsp/src/discord.rs
+@@ -267,6 +267,8 @@ impl Discord {
+                     .unwrap_or_default(),
+             );
+ 
++        let activity =
++            util::set_optional_field(activity, activity_fields.name.as_deref(), Activity::name);
+         let activity =
+             util::set_optional_field(activity, activity_fields.state.as_deref(), Activity::state);
+         let activity = util::set_optional_field(
+@@ -361,6 +363,7 @@ mod tests {
+ 
+     fn sample_fields() -> ActivityFields {
+         ActivityFields {
++            name: None,
+             state: Some("state".to_string()),
+             details: Some("details".to_string()),
+             large_image: None,
+diff --git a/lsp/src/service/presence_service.rs b/lsp/src/service/presence_service.rs
+index 190b028..7f6f420 100644
+--- a/lsp/src/service/presence_service.rs
++++ b/lsp/src/service/presence_service.rs
+@@ -278,14 +278,13 @@ mod tests {
+ 
+     #[tokio::test]
+     async fn test_rapid_updates_batched_into_single_discord_call() {
+-        use std::path::PathBuf;
+         use tower_lsp::lsp_types::Url;
+ 
+         let state = Arc::new(AppState::new());
+         let config = PresenceConfig::default();
+         let service = PresenceService::new(Arc::clone(&state), config);
+ 
+-        let workspace_root = PathBuf::from("C:/test");
++        let workspace_root = std::env::temp_dir().join("discord-presence-test");
+ 
+         // Call update_presence 5 times rapidly (simulates rapid file switches)
+         for i in 0..5 {
+@@ -312,14 +311,13 @@ mod tests {
+ 
+     #[tokio::test]
+     async fn test_latest_document_sent_after_debounce() {
+-        use std::path::PathBuf;
+         use tower_lsp::lsp_types::Url;
+ 
+         let state = Arc::new(AppState::new());
+         let config = PresenceConfig::default();
+         let service = PresenceService::new(Arc::clone(&state), config);
+ 
+-        let workspace_root = PathBuf::from("C:/test");
++        let workspace_root = std::env::temp_dir().join("discord-presence-test");
+ 
+         // Send doc1
+         let file_path1 = workspace_root.join("file1.rs");

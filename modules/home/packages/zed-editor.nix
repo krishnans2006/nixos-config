@@ -18,6 +18,11 @@ let
     patches = prev.patches ++ [ (root + "/custom/zed-editor-copilot.patch") ];
   });
 
+  zed-discord-presence-patched = pkgs.zed-discord-presence.overrideAttrs (prev: {
+    patches = (prev.patches or [ ]) ++ [ (root + "/custom/zed-discord-presence-name.patch") ];
+    cargoTestFlags = [ "--package" "discord-presence-lsp" ];
+  });
+
   nixfmt = pkgs.callPackage (root + "/formatter/package.nix") { };
 
   # agy_acp_server hardcodes a check filtering out any models that do not start with "gemini"
@@ -85,7 +90,7 @@ in
           codex-acp
           codex
 
-          zed-discord-presence
+          zed-discord-presence-patched
           zed-wakatime-ls
           copilot-language-server
         ];
@@ -210,6 +215,7 @@ in
           nil.settings.nix.flake.autoArchive = true;
 
           "discord_presence".initialization_options = {
+            name = "Working on {workspace}";
             details = "In {workspace}";
             state = "Editing {filename}";
             idle = {
