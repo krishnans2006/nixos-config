@@ -208,6 +208,15 @@ in
           # nixd.initialization_options.formatting.command = [ "nixfmt" ];
 
           nil.settings.nix.flake.autoArchive = true;
+
+          "discord_presence".initialization_options = {
+            details = "In {workspace}";
+            state = "Editing {filename}";
+            idle = {
+              timeout = 900;  # 15 minutes
+              action = "clear_activity";  # change_activity
+            };
+          };
         };
 
         # Window & Layout
