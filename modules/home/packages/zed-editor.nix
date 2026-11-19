@@ -300,8 +300,8 @@ in
             command = "codex-acp";
             args = [ ];
             default_config_options = {
-              model = "gpt-6.1-sol";
-              reasoning_effort = "high";  # low, medium, high, xhigh, max, ultra
+              model = "gpt-6.2-sol";
+              reasoning_effort = "xhigh";  # low, medium, high, xhigh, max, ultra
               mode = "agent";  # read-only, agent, agent-full-access
             };
           };
