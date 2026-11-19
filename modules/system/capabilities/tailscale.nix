@@ -12,7 +12,6 @@ in
     enableTaildrive = mkEnableOption "Enable Tailscale Taildrive";
     taildrivePath = mkOption {
       type = types.str;
-      default = "/home/krishnan/Filesystems/tailscale";
       description = "Path to mount Taildrive";
     };
   };
@@ -122,7 +121,7 @@ in
         homeUserMatch = builtins.match "^/home/([^/]+)(/.*)?$" cfg.taildrivePath;
         homeUser = if homeUserMatch != null then builtins.head homeUserMatch else null;
         parentDir = dirOf cfg.taildrivePath;
-        
+
         taildriveUrl = "http://100.100.100.100:8080/krishnans2006@gmail.com/";
       in
       {

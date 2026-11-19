@@ -29,7 +29,10 @@ with inputs;
 
   modules.plasma.autoLogin = true;
 
-  modules.tailscale.enableTaildrive = true;
+  modules.tailscale = {
+    enableTaildrive = true;
+    taildrivePath = "/home/krishnan/Filesystems/tailscale";
+  };
 
   modules.aethersdr.enable = true;
   modules.steam.enable = false;
