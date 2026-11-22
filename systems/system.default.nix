@@ -22,7 +22,7 @@ nixpkgs.lib.nixosSystem {
     sops-nix.nixosModules.sops
 
     home-manager.nixosModules.home-manager
-    {
+    ({ config, ... }: {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = {
@@ -38,8 +38,8 @@ nixpkgs.lib.nixosSystem {
         zen-browser.homeModules.default
       ];
 
-      home-manager.users.krishnan.imports = [ ./home.nix ];
-    }
+      home-manager.users.${config.modules.krishnan-user.username}.imports = [ ./home.nix ];
+    })
 
     nix-index-database.nixosModules.nix-index
     {

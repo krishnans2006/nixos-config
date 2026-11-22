@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # Bootloader.
@@ -35,7 +35,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Allow custom caches
-  nix.settings.trusted-users = [ "krishnan" ];  # root is already trusted (see /etc/nix/nix.conf)
+  nix.settings.trusted-users = [ config.modules.krishnan-user.username ];  # root is already trusted (see /etc/nix/nix.conf)
 
   # Enable the Flakes feature and the accompanying new nix command-line tool
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

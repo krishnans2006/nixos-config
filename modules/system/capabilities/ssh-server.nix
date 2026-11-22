@@ -19,7 +19,7 @@ in
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
         PermitRootLogin = "no";
-        AllowUsers = [ "krishnan" ];
+        AllowUsers = [ config.modules.krishnan-user.username ];
       };
     };
   };

@@ -7,11 +7,16 @@ let
 in
 {
   options.modules.krishnan-user = {
-    enable = mkEnableOption "Enable the krishnan user (with zsh)";
+    enable = mkEnableOption "the primary local user account (with zsh)";
+    username = mkOption {
+      type = types.str;
+      default = "krishnan";
+      description = "Username of the primary local account";
+    };
     enablePresetPassword = mkOption {
       type = types.bool;
       default = true;
-      description = "Set the krishnan user's password from secrets";
+      description = "Set the primary local user's password from secrets";
     };
   };
 
@@ -25,7 +30,7 @@ in
 
       users.groups.fuse = { };
 
-      users.users."krishnan" = {
+      users.users.${cfg.username} = {
         uid = 1000;
         isNormalUser = true;
         description = "Krishnan Shankar";
@@ -55,7 +60,7 @@ in
 
       # Hashed password from secrets
       sops.secrets."password".neededForUsers = true;
-      users.users."krishnan".hashedPasswordFile = config.sops.secrets."password".path;
+      users.users.${cfg.username}.hashedPasswordFile = config.sops.secrets."password".path;
     })
   ]);
 }

@@ -11,7 +11,7 @@ in
     autoLogin = mkOption {
       type = types.bool;
       default = false;
-      description = "Whether to enable auto-login for user krishnan";
+      description = "Whether to enable auto-login for the primary local user";
     };
   };
 
@@ -23,7 +23,7 @@ in
     services.displayManager = {
       sddm.enable = true;
       autoLogin.enable = cfg.autoLogin;
-      autoLogin.user = "krishnan";
+      autoLogin.user = config.modules.krishnan-user.username;
     };
     services.desktopManager.plasma6.enable = true;
 

@@ -4,6 +4,8 @@ with lib;
 
 let
   cfg = config.modules.tailscale;
+  inherit (config.modules.krishnan-user) username;
+  user = config.users.users.${username};
 in
 {
   options.modules.tailscale = {
@@ -12,6 +14,7 @@ in
     enableTaildrive = mkEnableOption "Enable Tailscale Taildrive";
     taildrivePath = mkOption {
       type = types.str;
+      default = "${user.home}/Filesystems/tailscale";
       description = "Path to mount Taildrive";
     };
   };
@@ -119,7 +122,10 @@ in
     (mkIf cfg.enableTaildrive (
       let
         homeUserMatch = builtins.match "^/home/([^/]+)(/.*)?$" cfg.taildrivePath;
-        homeUser = if homeUserMatch != null then builtins.head homeUserMatch else null;
+        homeUser =
+          if hasPrefix "${user.home}/" cfg.taildrivePath then username
+          else if homeUserMatch != null then builtins.head homeUserMatch
+          else null;
         parentDir = dirOf cfg.taildrivePath;
 
         taildriveUrl = "http://100.100.100.100:8080/krishnans2006@gmail.com/";
@@ -129,7 +135,7 @@ in
           enable = true;
           davGroup = "davfs2";
         };
-        users.users."krishnan".extraGroups = [ "davfs2" ];
+        users.users.${username}.extraGroups = [ "davfs2" ];
 
         systemd.tmpfiles.settings = mkIf (homeUser != null) {
           "10-taildrive" = mkMerge [
@@ -165,7 +171,7 @@ in
               "file_mode=0664"
               "dir_mode=2775"
               "user"
-              "uid=${toString config.users.users."krishnan".uid}"
+              "uid=${toString user.uid}"
               "grpid"
             ];
           }

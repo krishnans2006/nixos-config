@@ -32,6 +32,8 @@ in
 
     (mkIf cfg.tjcsl (
       let
+        user = config.users.users.${config.modules.krishnan-user.username};
+        group = config.users.groups.${user.group};
         tjcslCephConf = pkgs.writeText "tjcsl-ceph.conf" ''
           [global]
           mon_host = 198.38.17.88, 198.38.17.89, 198.38.17.84
@@ -62,7 +64,7 @@ in
             "x-systemd.idle-timeout=1min"
             "x-systemd.mount-timeout=5s"
             "x-systemd.show"
-            "X-mount.idmap=u:33563571:1000:1 g:2024:100:1"  # Map 2024kshankar:tj24 to krishnan:users
+            "X-mount.idmap=u:33563571:${toString user.uid}:1 g:2024:${toString group.gid}:1"  # Map 2024kshankar:tj24 to the local user and group
             "_netdev"
           ];
         };

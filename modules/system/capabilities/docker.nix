@@ -14,7 +14,7 @@ in
   config = mkIf cfg.enable {
     virtualisation.docker.enable = true;
 
-    users.users."krishnan".extraGroups = [ "docker" ];
+    users.users.${config.modules.krishnan-user.username}.extraGroups = [ "docker" ];
 
     # Containers, images, and volumes are stored in /var/lib/docker
     # So no need to persist anything
