@@ -26,7 +26,7 @@ with inputs;
 
   modules.secrets.enable = lib.mkForce false;  # Secrets-free config
 
-  modules.krishnan-user.enablePresetPassword = lib.mkForce false;  # (needs secrets)
+  modules.primary-user.enablePresetPassword = lib.mkForce false;  # (needs secrets)
 
   # Static IP
   networking.useDHCP = false;

@@ -1,6 +1,13 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
+  modules.primary-user = {
+    enable = true;
+    username = lib.mkDefault "krishnan";
+    fullname = lib.mkDefault "Krishnan Shankar";
+    enablePresetPassword = lib.mkDefault true;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -35,7 +42,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Allow custom caches
-  nix.settings.trusted-users = [ config.modules.krishnan-user.username ];  # root is already trusted (see /etc/nix/nix.conf)
+  nix.settings.trusted-users = [ config.modules.primary-user.username ];  # root is already trusted (see /etc/nix/nix.conf)
 
   # Enable the Flakes feature and the accompanying new nix command-line tool
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

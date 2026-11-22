@@ -8,11 +8,6 @@
 
   modules.secrets.enable = true;
 
-  modules.krishnan-user = {
-    enable = true;
-    enablePresetPassword = true;
-  };
-
   modules.graphics.enable = true;
   modules.plasma.enable = true;
   modules.audio.enable = true;

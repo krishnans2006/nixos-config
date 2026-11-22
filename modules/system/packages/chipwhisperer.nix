@@ -12,7 +12,7 @@ in
 
   config = mkIf cfg.enable {
     users.groups."chipwhisperer" = { };
-    users.users.${config.modules.krishnan-user.username}.extraGroups = [ "chipwhisperer" ];
+    users.users.${config.modules.primary-user.username}.extraGroups = [ "chipwhisperer" ];
 
     services.udev.extraRules = ''
       ## NewAE .rules file to enable ChipWhisperer to easily take control

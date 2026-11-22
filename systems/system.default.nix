@@ -38,7 +38,7 @@ nixpkgs.lib.nixosSystem {
         zen-browser.homeModules.default
       ];
 
-      home-manager.users.${config.modules.krishnan-user.username}.imports = [ ./home.nix ];
+      home-manager.users.${config.modules.primary-user.username}.imports = [ ./home.nix ];
     })
 
     nix-index-database.nixosModules.nix-index

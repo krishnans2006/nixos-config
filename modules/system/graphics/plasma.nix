@@ -23,7 +23,7 @@ in
     services.displayManager = {
       sddm.enable = true;
       autoLogin.enable = cfg.autoLogin;
-      autoLogin.user = config.modules.krishnan-user.username;
+      autoLogin.user = config.modules.primary-user.username;
     };
     services.desktopManager.plasma6.enable = true;
 

@@ -8,11 +8,6 @@
 
   modules.secrets.enable = true;
 
-  modules.krishnan-user = {
-    enable = true;
-    enablePresetPassword = true;
-  };
-
   modules.networking.enable = true;
   modules.ssh-server.enable = true;
   modules.tailscale = {

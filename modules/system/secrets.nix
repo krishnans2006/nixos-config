@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.modules.secrets;
-  user = config.users.users.${config.modules.krishnan-user.username};
+  user = config.users.users.${config.modules.primary-user.username};
 
   # Sops runs sops-install-secrets before impermanence creates a bind mount
   # So when sops runs under impermanence, /home/krishnan/.config/sops/age/keys.txt

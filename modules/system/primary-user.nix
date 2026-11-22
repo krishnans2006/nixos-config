@@ -3,15 +3,20 @@
 with lib;
 
 let
-  cfg = config.modules.krishnan-user;
+  cfg = config.modules.primary-user;
 in
 {
-  options.modules.krishnan-user = {
+  options.modules.primary-user = {
     enable = mkEnableOption "the primary local user account (with zsh)";
     username = mkOption {
-      type = types.str;
-      default = "krishnan";
+      type = types.nonEmptyStr;
       description = "Username of the primary local account";
+    };
+    fullname = mkOption {
+      type = types.str;
+      default = cfg.username;
+      defaultText = literalExpression "config.modules.primary-user.username";
+      description = "Full name of the primary local user";
     };
     enablePresetPassword = mkOption {
       type = types.bool;
@@ -33,7 +38,7 @@ in
       users.users.${cfg.username} = {
         uid = 1000;
         isNormalUser = true;
-        description = "Krishnan Shankar";
+        description = cfg.fullname;
 
         # networkmanager, wheel: initially set (in configuration.nix)
         # dialout: for serial/USB ports

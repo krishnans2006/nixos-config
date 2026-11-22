@@ -32,7 +32,7 @@ in
 
     (mkIf cfg.tjcsl (
       let
-        user = config.users.users.${config.modules.krishnan-user.username};
+        user = config.users.users.${config.modules.primary-user.username};
         group = config.users.groups.${user.group};
         tjcslCephConf = pkgs.writeText "tjcsl-ceph.conf" ''
           [global]

@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.modules.tailscale;
-  inherit (config.modules.krishnan-user) username;
+  inherit (config.modules.primary-user) username;
   user = config.users.users.${username};
 in
 {
