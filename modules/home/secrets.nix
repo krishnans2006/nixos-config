@@ -4,6 +4,7 @@ with lib;
 
 let
   cfg = config.modules.secrets;
+  inherit (config.home) homeDirectory;
 
   # Sops runs sops-install-secrets before impermanence creates a bind mount
   # So when sops runs under impermanence, /home/krishnan/.config/sops/age/keys.txt
@@ -19,7 +20,7 @@ in
 
   config = mkIf cfg.enable {
     sops = {
-      age.keyFile = "${optionalString useImpermanence "/persist"}/home/krishnan/.config/sops/age/keys.txt";
+      age.keyFile = "${optionalString useImpermanence "/persist"}${homeDirectory}/.config/sops/age/keys.txt";
       defaultSopsFile = root + "/secrets/home.yaml";
       defaultSopsFormat = "yaml";
 
@@ -28,11 +29,11 @@ in
 
       secrets = {
         # Yubikey auth (see modules/system/yubikey-auth.nix)
-        "yubikey/u2f_keys".path = "/home/krishnan/.config/Yubico/u2f_keys";
+        "yubikey/u2f_keys".path = "${homeDirectory}/.config/Yubico/u2f_keys";
 
         # WakaTime config (pick one to use)
         "wakatime/wakatime" = { };  # Unused
-        "wakatime/wakapi".path = "/home/krishnan/.wakatime.cfg";
+        "wakatime/wakapi".path = "${homeDirectory}/.wakatime.cfg";
         "wakatime/hackatime" = { };  # Unused
       };
     };

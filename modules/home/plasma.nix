@@ -319,8 +319,8 @@ in
 
     programs.konsole = {
       enable = true;
-      defaultProfile = "Krishnan";
-      profiles."Krishnan" = konsoleProfile;
+      defaultProfile = konsoleProfile.name;
+      profiles.${konsoleProfile.name} = konsoleProfile;
     };
 
     # Dolphin Places
