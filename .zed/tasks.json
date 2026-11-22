@@ -2,8 +2,10 @@
 [
     {
         "label": "switch",
-        "command": "nh os switch .",
-        //"args": [],
+        "command": "ptime",
+        "args": ["nh", "os", "switch", "."],
+        // Env overrides for the command, will be appended to the terminal's environment from the settings.
+        "env": { "PTIME_PREFIX": "\n⏵ Time elapsed: " },
         // Current working directory to spawn the command into, defaults to current project root.
         //"cwd": "/path/to/working/directory",
         // Whether to use a new terminal tab or reuse the existing one to spawn the process, defaults to `false`.
