@@ -41,11 +41,19 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Allow custom caches
-  nix.settings.trusted-users = [ config.modules.primary-user.username ];  # root is already trusted (see /etc/nix/nix.conf)
+  nix.settings = {
+    # Enable the Flakes feature and the accompanying new nix command-line tool
+    experimental-features = [ "nix-command" "flakes" ];
 
-  # Enable the Flakes feature and the accompanying new nix command-line tool
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    # Allow custom caches
+    trusted-users = [ config.modules.primary-user.username ];  # root is already trusted (see /etc/nix/nix.conf)
+
+    # Set up binary cache (nixcache.krishy.dev)
+    extra-substituters = [ "https://nixcache.krishy.dev" ];
+    extra-trusted-public-keys = [
+      "nixcache.krishy.dev:oBY+iTZ6JvHT4lHj12RLdTG75Azcgx+tt14y1ELUct4="
+    ];
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
