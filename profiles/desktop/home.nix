@@ -76,7 +76,7 @@
   modules.jetbrains.enableAll = false;
   modules.zed-editor.enable = true;
   modules.fastx-client.enable = true;
-  modules.jellybox.enable = true;
+  modules.jellybox.enable = false;
 
   home.packages = with pkgs; [ feishin ];
 }
