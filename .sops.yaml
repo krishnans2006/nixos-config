@@ -8,7 +8,7 @@ keys:
   # ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPq+VOBAuixPFzSLtG1G1C65dcrY7stkvriEW13atE50 krishnans2006@gmail.com
   - &krishnan-mew age14q096t8kj6vjttpxw9wfu3608dwn0k6au6agkwg49vhd72gffqdqnsm9df
 creation_rules:
-  - path_regex: ^secrets/krishnan-mew\.(yaml|json|env|ini)$
+  - path_regex: ^secrets/nix-cache\.(yaml|json|env|ini)$
     key_groups:
       - age:
         - *krishnan-pc
