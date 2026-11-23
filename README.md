@@ -54,7 +54,7 @@ Note: This list is incomplete. Also, it would be nice to automate these into a `
 
 - `nix-shell -p git age ssh-to-age`
 - Generate a user SSH key, copy it to GitHub and all remotes that are SSHFS-mounted
-- `git clone git@github.com:krishnans2006/nixos-config.git ~/NixOS`
+- `git clone ssh://git@github.com/krishnans2006/nixos-config.git ~/NixOS`
 - Follow instructions below to allow secrets access (using key derived from SSH key)
 - Import gpg.key from an external source
 - Remove the password for `kdewallet` (KWallet)
@@ -149,7 +149,7 @@ It also assumes a valid `.ssh/id_ed25519` key exists and secrets access has been
 eval `ssh-agent -s`
 ssh-add
 ssh -T git@github.com  # Test SSH access to GitHub
-git clone --recurse-submodules git@github.com:krishnans2006/nixos-config.git ~/NixOS
+git clone --recurse-submodules ssh://git@github.com/krishnans2006/nixos-config.git ~/NixOS
 cd NixOS
 
 sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake '.#krishnan-<SYSTEM>'
