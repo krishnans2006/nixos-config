@@ -29,6 +29,7 @@ with inputs;
   modules.primary-user.enablePresetPassword = lib.mkForce false;  # (needs secrets)
 
   modules.nix-cache.enable = true;
+  modules.nix-cache-update.enable = true;
 
   # Static IP
   networking.useDHCP = false;
