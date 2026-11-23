@@ -20,11 +20,11 @@ in
         pkgs.bash
         pkgs.git
         pkgs.nh
-        pkgs.openssh
         config.nix.package
       ];
       environment = {
-        GIT_SSH_COMMAND = "ssh -o BatchMode=yes -o StrictHostKeyChecking=yes";
+        GIT_CONFIG_COUNT = "1";
+        GIT_CONFIG_KEY_0 = "http.https://github.com/krishnans2006/.extraHeader";
         GIT_TERMINAL_PROMPT = "0";
         NH_ROM = "off";
       };
@@ -32,14 +32,17 @@ in
         Type = "oneshot";
         User = config.modules.primary-user.username;
         NoNewPrivileges = true;
+        LoadCredential = "github-pat:/var/lib/secrets/nix-cache-update-pat.txt";
         StateDirectory = "nix-cache-update";
         StateDirectoryMode = "0700";
         RuntimeDirectory = "nix-cache-update";
         RuntimeDirectoryMode = "0700";
       };
       script = ''
+        auth=$(printf 'krishnans2006:%s' "$(<"$CREDENTIALS_DIRECTORY/github-pat")" | base64 -w0)
+        export GIT_CONFIG_VALUE_0="Authorization: Basic $auth"
         exec bash ${root + "/scripts/update-cache.sh"} \
-          git@github.com:krishnans2006/nixos-config.git \
+          https://github.com/krishnans2006/nixos-config.git \
           ${root + "/scripts/build-cache.sh"}
       '';
     };
