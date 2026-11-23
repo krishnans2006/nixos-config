@@ -13,8 +13,6 @@ with inputs;
     (import-tree (root + "/modules/home"))
   ];
 
-  modules.secrets.enable = lib.mkForce false;  # Secrets-free config
-
-  modules.git.enableGithubCLIAutoLogin = lib.mkForce false;  # (needs secrets)
-  modules.shell.enableAtuin = lib.mkForce false;  # (needs secrets)
+  modules.git.enableGithubCLIAutoLogin = lib.mkForce false;  # (needs home.yaml secrets)
+  modules.shell.enableAtuin = lib.mkForce false;  # (needs home.yaml secrets)
 }
