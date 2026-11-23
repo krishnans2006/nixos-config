@@ -5,8 +5,17 @@ keys:
   - &krishnan-lap age1eeafyyhzw59fhrnd8v87lrk4yvsu42uk4glmgpzdy7k59huzpquq0zvjz7
   # ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjk4Ah+IsWbXjwpA89sL1s01UdJoobtFlpeBxcHJkTj krishnans2006@gmail.com
   - &krishnan-vivo age1gvwfxfnmvev2tlrzm7jc2rmeynrsehfsa2yt69lg4ajdygfaqccshtek4z
+  # ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPq+VOBAuixPFzSLtG1G1C65dcrY7stkvriEW13atE50 krishnans2006@gmail.com
+  - &krishnan-mew age14q096t8kj6vjttpxw9wfu3608dwn0k6au6agkwg49vhd72gffqdqnsm9df
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: ^secrets/krishnan-mew\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+        - *krishnan-pc
+        - *krishnan-lap
+        - *krishnan-vivo
+        - *krishnan-mew
+  - path_regex: ^secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
         - *krishnan-pc
