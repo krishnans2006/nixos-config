@@ -28,9 +28,6 @@ in
       gnupg.sshKeyPaths = [ ];
 
       secrets = {
-        # Yubikey auth (see modules/system/yubikey-auth.nix)
-        "yubikey/u2f_keys".path = "${homeDirectory}/.config/Yubico/u2f_keys";
-
         # WakaTime config (pick one to use)
         "wakatime/wakatime" = { };  # Unused
         "wakatime/wakapi".path = "${homeDirectory}/.wakatime.cfg";

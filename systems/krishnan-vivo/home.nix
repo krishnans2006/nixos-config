@@ -19,6 +19,7 @@ with inputs;
     "krishnan-vivo";
 
   modules.impermanence.enable = true;
+  modules.yubikey-auth.enable = true;
 
   modules.lutris.enable = false;
   modules.minecraft.enable = true;

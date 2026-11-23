@@ -19,6 +19,7 @@ with inputs;
     "krishnan-lap";
 
   modules.impermanence.enable = true;
+  modules.yubikey-auth.enable = true;
 
   modules.plasma.hasBattery = false;
 

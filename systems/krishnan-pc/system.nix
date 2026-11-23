@@ -36,7 +36,6 @@ with inputs;
   modules.waydroid.enable = false;
   modules.virtualbox.enable = false;
   modules.vmware.enable = false;
-  modules.yubikey-auth.enable = false;
 
   modules.amd-rx6600xt.enable = true;
 
