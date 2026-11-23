@@ -11,10 +11,15 @@ in
   };
 
   config = mkIf cfg.enable {
+    sops.secrets."nix-cache/secret" = {
+      sopsFile = root + "/secrets/nix-cache.yaml";
+      restartUnits = [ "harmonia.service" ];
+    };
+
     services.harmonia.cache = {
       enable = true;
       settings.bind = "127.0.0.1:5000";
-      signKeyPaths = [ "/var/lib/secrets/nixcache.secret" ];
+      signKeyPaths = [ config.sops.secrets."nix-cache/secret".path ];
     };
 
     security.acme = {

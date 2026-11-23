@@ -24,9 +24,7 @@ with inputs;
   networking.hostName = "krishnan-mew";  # Define your hostname.
   time.timeZone = "America/Chicago";
 
-  modules.secrets.enable = lib.mkForce false;  # Secrets-free config
-
-  modules.primary-user.enablePresetPassword = lib.mkForce false;  # (needs secrets)
+  modules.primary-user.enablePresetPassword = lib.mkForce false;  # (needs system.yaml secrets)
 
   modules.nix-cache.enable = true;
   modules.nix-cache-update.enable = true;

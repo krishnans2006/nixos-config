@@ -11,6 +11,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    sops.secrets."nix-cache/update-pat" = {
+      sopsFile = root + "/secrets/nix-cache.yaml";
+    };
+
     systemd.services.nix-cache-update = {
       description = "Build and publish daily Nix cache updates";
       startAt = "*-*-* 03:00:00";
@@ -32,7 +36,7 @@ in
         Type = "oneshot";
         User = config.modules.primary-user.username;
         NoNewPrivileges = true;
-        LoadCredential = "github-pat:/var/lib/secrets/nix-cache-update-pat.txt";
+        LoadCredential = "github-pat:${config.sops.secrets."nix-cache/update-pat".path}";
         StateDirectory = "nix-cache-update";
         StateDirectoryMode = "0700";
         RuntimeDirectory = "nix-cache-update";
