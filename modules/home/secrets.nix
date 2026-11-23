@@ -26,13 +26,6 @@ in
 
       age.sshKeyPaths = [ ];
       gnupg.sshKeyPaths = [ ];
-
-      secrets = {
-        # WakaTime config (pick one to use)
-        "wakatime/wakatime" = { };  # Unused
-        "wakatime/wakapi".path = "${homeDirectory}/.wakatime.cfg";
-        "wakatime/hackatime" = { };  # Unused
-      };
     };
 
     home.packages = with pkgs; [
@@ -41,8 +34,5 @@ in
       ssh-to-age
       #
     ];
-
-    # Impermanence
-    modules.impermanence.persistDirs = [ ".wakatime" ];
   };
 }

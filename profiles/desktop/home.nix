@@ -18,6 +18,7 @@
     enableZoxide = true;
   };
   modules.direnv.enable = true;
+  modules.wakatime.enable = true;
   modules.git = {
     enable = true;
     enablePdfDiff = true;
