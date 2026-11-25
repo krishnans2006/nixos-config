@@ -21,13 +21,11 @@ export NIX_CACHE_CHECKOUT="$PWD"
 echo "Building main at $main_revision"
 NIX_CACHE_ROOTS="$roots/main" bash "$build_cache" --no-update-lock-file --diff never
 
-nix flake update
 git switch -c auto-update
-git add -- flake.lock
-if ! git diff --cached --quiet; then
-  git -c user.name="Nix Cache" -c user.email=nixcache@krishy.dev \
-    commit --no-gpg-sign -m "Update flake"
-fi
+git config --local user.name "Nix Cache"
+git config --local user.email nixcache@krishy.dev
+git config --local commit.gpgSign false
+nix flake update --commit-lock-file --option commit-lock-file-summary "Update flake"
 
 update_revision=$(git rev-parse HEAD)
 echo "Building auto-update at $update_revision"
