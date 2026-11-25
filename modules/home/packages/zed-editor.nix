@@ -173,6 +173,10 @@ in
 
         # Languages & Tools
 
+        file_types = {
+          "Lisp" = [ "kbd" ];  # Kanata
+        };
+
         languages = {
           "Nix" = {
             formatter.external.command = "nixfmt";
