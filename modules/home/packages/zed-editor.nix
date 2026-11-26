@@ -200,6 +200,8 @@ in
             hard_tabs = true;
             tab_size = 4;
           };
+
+          "Clojure" = { enable_language_server = false; };
         };
 
         lsp = {
