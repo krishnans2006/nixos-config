@@ -78,6 +78,7 @@ in
           go
           gopls
           slang-server
+          clojure-lsp
 
           cursor-cli
           antigravity-acp-unlocked
@@ -106,6 +107,7 @@ in
         "svelte"
 
         "caddyfile"
+        "clojure"
         "django"
         "git-firefly"
         "html"
@@ -174,7 +176,7 @@ in
         # Languages & Tools
 
         file_types = {
-          "Lisp" = [ "kbd" ];  # Kanata
+          "Clojure" = [ "kbd" ];  # Kanata
         };
 
         languages = {
