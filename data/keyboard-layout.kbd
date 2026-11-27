@@ -1,0 +1,119 @@
+;; Graphite ANSI Angle + Wide + Dual-Alt Thumb Layers
+;; - Base: Graphite (Angle + Wide), Esc/Tab swapped, One-Shot LShift, Super on RShift
+;; - Hold RAlt: ESDF Navigation, Browsing, Wide Home-Row Mods, Left-Thumb Enter
+;; - Hold LAlt: Right-Index Backspace/Delete, Coding & CLI Symbols
+;; - Hold LAlt + RAlt: Symmetric Home-Row Numbers, Aligned F1-F12, Media, CapsWord
+;; - Emergency Exit (physical keys): Left Ctrl + Space + Escape
+
+(defcfg
+  process-unmapped-keys yes
+  concurrent-tap-hold   yes   ;; Required for defchordsv2 (Copilot -> Repeat)
+)
+
+(defsrc
+  grv    1      2      3      4      5             6      7      8      9      0      min    eql    bspc
+  tab    q      w      e      r      t             y      u      i      o      p      lbrc   rbrc   bksl
+  caps   a      s      d      f      g             h      j      k      l      scln   apos          ret
+  lsft          z      x      c      v      b      n      m      comm   .      /                    rsft
+  lctl          lmet   lalt                 spc                  ralt   ;;copilot, arrow keys
+)
+
+(defalias
+  ;; Core modifiers & triggers
+  sft  (one-shot 1000 lsft)            ;; Tap: capitalize next key | Hold: normal Shift
+  sym  (layer-while-held lalt-sym)     ;; Left thumb trigger
+  nav  (layer-while-held ralt-nav)     ;; Right thumb trigger
+  bth  (layer-while-held both-num)     ;; Both thumbs held
+  cw   (caps-word 2000)                ;; Auto-caps one WORD_NAME, ends on Space/idle
+
+  ;; Editing & CLI shortcuts
+  und  C-z
+  cut  C-x
+  cpy  C-c       ;; Hold K (Shift) on ralt-nav for Linux terminal Ctrl+Shift+C
+  pst  C-v       ;; Hold K (Shift) on ralt-nav for Linux terminal Ctrl+Shift+V
+  wbs  C-bspc    ;; Delete previous word
+  wdl  C-del     ;; Delete next word
+  url  C-l       ;; Browser address bar / clear Linux terminal
+  fnd  C-f       ;; Find
+
+  ;; Browser & system shortcuts
+  ntw  C-t       ;; New tab
+  ctb  C-w       ;; Close tab
+  reo  C-S-t     ;; Reopen closed tab
+  ptb  C-pgup    ;; Previous tab
+  ntb  C-pgdn    ;; Next tab
+  bck  A-left    ;; Browser back
+  fwd  A-rght    ;; Browser forward
+  rld  C-r       ;; Reload page
+  zmo  C-min     ;; Zoom out
+  zmi  C-eql     ;; Zoom in
+  lck  M-l       ;; Lock screen (standard Linux Super+L)
+
+  ;; Toggle between QWERTY and BASE (actual layout)
+  ;; This is done with backtick + backspace (see defchordsv2 below)
+  tog (switch
+    ((base-layer qwerty)) (layer-switch base)   break
+    ()                    (layer-switch qwerty) break
+  )
+)
+
+;; Copilot key (physical LWin + LShift + F23) -> Repeat last key
+(defchordsv2
+  (lmet lsft f23) rpt  25 first-release (qwerty)
+  (grv bspc)      @tog 80 first-release ()
+)
+
+;; ---------------------------------------------------------------------------
+;; LAYER 0: QWERTY Fallback
+;; ---------------------------------------------------------------------------
+(deflayer qwerty
+  _      _      _      _      _      _             _      _      _      _      _      _      _      _
+  _      _      _      _      _      _             _      _      _      _      _      _      _      _
+  _      _      _      _      _      _             _      _      _      _      _      _             _
+  _             _      _      _      _      _      _      _      _      _      _                    _
+  _             _      _                    _                    _
+)
+
+;; ---------------------------------------------------------------------------
+;; LAYER 1: BASE (Graphite ANSI Angle + Wide + Revised Peripherals)
+;; ---------------------------------------------------------------------------
+(deflayer base
+  grv    1      2      3      4      5             6      7      8      9      0      rbrc   eql    bspc
+  esc    b      l      d      w      z             lbrc   apos   f      o      u      j      scln   bksl
+  tab    n      r      t      s      g             min    y      h      a      e      i             ret
+  @sft          x      m      c      v      q      /      k      p      comm   .                    lmet
+  lalt          lctl   @sym                 spc                  @nav
+)
+
+;; ---------------------------------------------------------------------------
+;; LAYER 2: HOLD RALT (ESDF Navigation, Editing, Browsing, Left-Thumb Enter)
+;; ---------------------------------------------------------------------------
+(deflayer ralt-nav
+  _      _      _      _      _      _             _      _      _      _      _      _      _      _
+  esc    pgup   home   up     end    @url          XX     @reo   @bck   @ptb   @ntb   @fwd   @ctb   XX
+  tab    pgdn   left   down   rght   @fnd          XX     XX     lsft   lctl   lalt   lmet          ret
+  lsft          @und   @cut   @cpy   @pst   XX     XX     @ntw   @rld   @zmo   @zmi                 lmet
+  _             _      @bth                 ret                  _
+)
+
+;; ---------------------------------------------------------------------------
+;; LAYER 3: HOLD LALT (Right-Index Backspace/Delete + Coding & CLI Symbols)
+;; ---------------------------------------------------------------------------
+(deflayer lalt-sym
+  _      _      _      _      _      _             _      _      _      _      _      _      _      _
+  esc    grv    S-2    S-3    S-4    S-5           XX     @wdl   del    S-lbrc S-rbrc S-bksl S-apos XX
+  tab    S-scln S-1    S-comm S-.    S-eql         XX     @wbs   bspc   S-9    S-0    S-min         ret
+  lsft          S-6    S-7    S-grv  S-8    S-/    XX     eql    lbrc   rbrc   bksl                 lmet
+  _             _      _                    spc                  @bth
+)
+
+;; ---------------------------------------------------------------------------
+;; LAYER 4: HOLD BOTH ALTS (Home-Row Numbers, Aligned F1-F12, Media, Live Reload)
+;; ---------------------------------------------------------------------------
+(deflayer both-num
+  XX     prev   next   brdown brup   ins           @lck   menu   XX     XX     XX     XX     lrld   bspc
+  esc    f1     f2     f3     f4     f5            prtsc  f6     f7     f8     f9     f10    f11    f12
+  tab    1      2      3      4      5             min    6      7      8      9      0             ret
+  lsft          mute   vold   volu   pp     @cw    /      S-scln S-eql  comm   .                    lmet
+  _             _      _                    XX                   _
+)

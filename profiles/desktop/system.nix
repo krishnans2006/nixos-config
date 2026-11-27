@@ -12,6 +12,7 @@
   modules.plasma.enable = true;
   modules.audio.enable = true;
   modules.bluetooth.enable = true;
+  modules.keyboard-layout.enable = true;
 
   modules.networking.enable = true;
   modules.networks.enable = true;
