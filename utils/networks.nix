@@ -64,8 +64,8 @@ rec {
     "wireguard-peer\.$wg${id}_peer" = {
       endpoint = "$wg${id}_endpoint";
       allowed-ips = "$wg${id}_allowed_ips";
-      preshared-key = mkIf (options ? psk) "$wg${id}_psk";
-      preshared-key-flags = mkIf (options ? psk) "0";
+      preshared-key = mkIf (options.psk or false) "$wg${id}_psk";
+      preshared-key-flags = mkIf (options.psk or false) "0";
     };
     ipv4 = {
       method = "manual";
@@ -74,10 +74,10 @@ rec {
       dns-search = "$wg${id}_dns_names";
     };
     ipv6 = {
-      method = if (options ? ipv6) then "manual" else "disabled";
-      address1 = mkIf (options ? ipv6) "$wg${id}_ipv6_address";
-      dns = mkIf (options ? ipv6) "$wg${id}_ipv6_dns_ips";
-      dns-search = mkIf (options ? ipv6) "$wg${id}_dns_names";
+      method = if (options.ipv6 or false) then "manual" else "disabled";
+      address1 = mkIf (options.ipv6 or false) "$wg${id}_ipv6_address";
+      dns = mkIf (options.ipv6 or false) "$wg${id}_ipv6_dns_ips";
+      dns-search = mkIf (options.ipv6 or false) "$wg${id}_dns_names";
       addr-gen-mode = "stable-privacy";
     };
   };
@@ -133,9 +133,9 @@ rec {
     ipv4 = {
       method = "auto";
       never-default = "true";
-      ignore-auto-dns = mkIf (options ? dns) "true";
-      dns = mkIf (options ? dns) "$ovpn${id}_dns_ips";
-      dns-search = mkIf (options ? domains) "$ovpn${id}_dns_names";
+      ignore-auto-dns = mkIf (options.dns or false) "true";
+      dns = mkIf (options.dns or false) "$ovpn${id}_dns_ips";
+      dns-search = mkIf (options.domains or false) "$ovpn${id}_dns_names";
     };
     ipv6 = {
       method = "disabled";
