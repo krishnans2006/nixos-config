@@ -27,6 +27,7 @@ stdenvNoCC.mkDerivation {
   buildInputs = [ python3 ];
 
   nativeInstallCheckInputs = [ udevCheckHook ];
+  doInstallCheck = true;
 
   dontConfigure = true;
   dontBuild = true;
