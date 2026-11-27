@@ -25,6 +25,7 @@ with inputs;
 
   time.timeZone = "America/New_York";
 
+  modules.btrfs.enable = true;
   modules.impermanence.enable = true;
 
   modules.plasma.autoLogin = true;
@@ -61,10 +62,5 @@ with inputs;
   boot.tmp = {
     useTmpfs = true;
     tmpfsSize = "50%";
-  };
-
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
   };
 }

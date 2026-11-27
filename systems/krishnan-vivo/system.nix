@@ -25,6 +25,7 @@ with inputs;
 
   time.timeZone = "America/New_York";
 
+  modules.btrfs.enable = true;
   modules.impermanence.enable = true;
 
   modules.plasma.autoLogin = true;
