@@ -1,7 +1,7 @@
 # Inspired by:
 # - https://github.com/Misterio77/nix-config/blob/ffd3478bda5dbe53235d25898ba39585f9e088f4/hosts/common/optional/ephemeral-btrfs.nix
 # - https://github.com/nix-community/impermanence#btrfs-subvolumes
-{ config, lib, ... }:
+{ config, lib, utils, ... }:
 
 with lib;
 
@@ -9,11 +9,8 @@ let
   cfg = config.modules.impermanence;
 
   root = config.fileSystems."/";
-
-  # Convert a device path to a systemd .device
-  toSystemdDevice = device: lib.concatStringsSep "-" (
-    lib.tail (map (lib.replaceString "-" "\\x2d") (lib.splitString "/" device))
-  ) + ".device";
+  rootDevice = escapeShellArg root.device;
+  rootDeviceUnit = "${utils.escapeSystemdPath root.device}.device";
 in
 {
   options.modules.impermanence = {
@@ -36,8 +33,6 @@ in
           assertion = root.fsType == "btrfs";
           message = "Must have a btrfs root filesystem to use Impermanence";
         }
-        # TODO: Add assertion for postCreateHook in disk.nix to make sure
-        # root-blank and home-blank snapshots are created correctly
       ];
 
       # Info about neededForBoot:
@@ -76,8 +71,6 @@ in
       };
 
       boot.initrd = {
-        supportedFilesystems = [ "btrfs" ];
-
         # A recursive delete isn't used, since we don't want to delete some subvolumes
         # See systems/*/disk.nix
         # So, some subvolumes are deleted (/var/cache)
@@ -87,9 +80,9 @@ in
         systemd.services.impermanence-setup = {
           description = "Set up impermanence and rollback root and home subvolumes";
           wantedBy = [ "initrd.target" ];
-          requires = [ (toSystemdDevice root.device) ];
+          requires = [ rootDeviceUnit ];
           after = [
-            (toSystemdDevice root.device)
+            rootDeviceUnit
             # Don't rollback when resuming from hibernation
             # This works because a successful resume never returns
             "systemd-hibernate-resume.service"
@@ -101,7 +94,7 @@ in
             mkdir -p /tmp
             MOUNTPOINT=$(mktemp -d)
             (
-              mount -t btrfs ${root.device} "$MOUNTPOINT"
+              mount -t btrfs -o subvolid=5 ${rootDevice} "$MOUNTPOINT"
               trap 'umount $MOUNTPOINT; rm -d $MOUNTPOINT' EXIT
 
               echo "Creating needed directories"
@@ -109,6 +102,13 @@ in
               if [ -e "$MOUNTPOINT/dont-wipe" ]; then
                 echo "Skipping wipe since $MOUNTPOINT/dont-wipe exists"
               else
+                for subvolume in root root-blank home home-blank; do
+                  if ! btrfs subvolume show "$MOUNTPOINT/$subvolume" >/dev/null 2>&1; then
+                    echo "Required Btrfs subvolume '$subvolume' is missing" >&2
+                    exit 1
+                  fi
+                done
+
                 echo "Deleting root subvolume (/)"
                 btrfs subvolume delete -R "$MOUNTPOINT/root"
                 echo "Restoring root subvolume from root-blank"
@@ -120,8 +120,11 @@ in
                 btrfs subvolume snapshot "$MOUNTPOINT/home-blank" "$MOUNTPOINT/home"
 
                 echo "Deleting cache subvolume (/var/cache)"
-                btrfs subvolume delete -R "$MOUNTPOINT/var/cache"
+                if btrfs subvolume show "$MOUNTPOINT/var/cache" >/dev/null 2>&1; then
+                  btrfs subvolume delete -R "$MOUNTPOINT/var/cache"
+                fi
                 echo "Recreating empty cache subvolume"
+                mkdir -p "$MOUNTPOINT/var"
                 btrfs subvolume create "$MOUNTPOINT/var/cache"
               fi
             )
