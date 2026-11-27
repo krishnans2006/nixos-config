@@ -103,9 +103,4 @@ in
       };
     };
   };
-
-  boot.initrd.luks.devices.crypt = {
-    device = "/dev/disk/by-partlabel/luks";
-    allowDiscards = true;
-  };
 }
