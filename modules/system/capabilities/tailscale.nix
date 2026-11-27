@@ -13,7 +13,7 @@ in
     enableNMIntegration = mkEnableOption "Enable Tailscale integration with NetworkManager";
     enableTaildrive = mkEnableOption "Enable Tailscale Taildrive";
     taildrivePath = mkOption {
-      type = types.str;
+      type = types.externalPath;
       default = "${user.home}/Filesystems/tailscale";
       description = "Path to mount Taildrive";
     };
@@ -123,9 +123,12 @@ in
       let
         homeUserMatch = builtins.match "^/home/([^/]+)(/.*)?$" cfg.taildrivePath;
         homeUser =
-          if hasPrefix "${user.home}/" cfg.taildrivePath then username
-          else if homeUserMatch != null then builtins.head homeUserMatch
-          else null;
+          if hasPrefix "${user.home}/" cfg.taildrivePath then
+            username
+          else if homeUserMatch != null then
+            builtins.head homeUserMatch
+          else
+            null;
         parentDir = dirOf cfg.taildrivePath;
 
         taildriveUrl = "http://100.100.100.100:8080/krishnans2006@gmail.com/";
