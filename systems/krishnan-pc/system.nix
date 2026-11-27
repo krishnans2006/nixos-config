@@ -1,6 +1,4 @@
-{ inputs, root, ... }:
-
-with inputs;
+{ root, ... }:
 
 {
   imports = [
@@ -11,9 +9,6 @@ with inputs;
     (root + "/profiles/base/system.nix")
     (root + "/profiles/default/system.nix")
     (root + "/profiles/desktop/system.nix")
-
-    # Custom modules
-    (import-tree (root + "/modules/system"))
   ];
 
   # Custom config
