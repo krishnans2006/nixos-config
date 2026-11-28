@@ -29,6 +29,8 @@ in
 
     # Enable KDE Connect (Phone Integration)
     programs.kdeconnect.enable = true;
+    # KDE Connect's external monitor uses KRDP on TCP 5901 by default
+    networking.firewall.allowedTCPPorts = [ 5901 ];
 
     # Enable Partition Manager
     programs.partition-manager.enable = true;
